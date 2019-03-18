@@ -5,12 +5,23 @@ namespace Urbania\AppleNews\Api\Response;
 use Carbon\Carbon;
 use Urbania\AppleNews\Assert;
 
-class SectionLinks extends Response
+/**
+ * See the links returned by the section endpoints.
+ *
+ * @see https://developer.apple.com/documentation/apple_news/sectionlinks
+ */
+class SectionLinks
 {
-    /** @var string */
+    /**
+     * The URL of the channel in which this section appears.
+     * @var string
+     */
     protected $channel;
 
-    /** @var string */
+    /**
+     * The URL at which this resource can be read.
+     * @var string
+     */
     protected $self;
 
     public function __construct(array $data = [])

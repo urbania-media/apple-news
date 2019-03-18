@@ -1,12 +1,19 @@
 {
     "name": "Format\\Intro",
+    "description": "The component for adding introductory text.",
+    "version": "1.7+",
+    "from_class": null,
     "extends": "Format\\Text",
-    "fields": [
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/intro",
+    "properties": [
         {
             "name": "role",
             "type": "string",
+            "required": true,
+            "description": "This component always has a role of intro.",
             "value": "intro",
-            "read_only": true
+            "read_only": true,
+            "version": "1.0"
         }
     ]
 }

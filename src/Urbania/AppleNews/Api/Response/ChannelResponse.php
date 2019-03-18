@@ -5,6 +5,11 @@ namespace Urbania\AppleNews\Api\Response;
 use Carbon\Carbon;
 use Urbania\AppleNews\Assert;
 
+/**
+ * See which objects make up the channel response.
+ *
+ * @see https://developer.apple.com/documentation/apple_news/channelresponse
+ */
 class ChannelResponse extends Channel
 {
     /** @var \Urbania\AppleNews\Api\Response\ChannelLinks */

@@ -1,38 +1,67 @@
 {
     "name": "Format\\Place",
+    "description": "The component for adding a map with a specific point of interest.",
+    "version": "1.7+",
+    "from_class": null,
     "extends": "Format\\Component",
-    "fields": [
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/place",
+    "properties": [
         {
             "name": "accessibilityCaption",
-            "type": "string"
+            "type": "string",
+            "required": false,
+            "description": "Optional caption text describing what is visible on the map. Note that this property differs from caption: although the caption may be displayed to users, the accessibilityCaption is used for voice-over only. The value in this property should describe the contents of the image for non-sighted users. If this property is omitted, the value from caption is used for VoiceOver for iOS.",
+            "version": "1.1"
         },
         {
             "name": "caption",
-            "type": "string"
+            "type": "string",
+            "required": false,
+            "description": "A string that describes the place depicted on the map. For example, if the latitude and longitude point to a park, the caption should contain the name of the park. The caption will be displayed in the full screen version of the map, and could be used for VoiceOver for iOS.",
+            "version": "1.1"
         },
         {
             "name": "latitude",
-            "type": "number"
+            "type": "number",
+            "required": true,
+            "description": "The latitude of the place\u2019s location.",
+            "version": "1.1"
         },
         {
             "name": "longitude",
-            "type": "number"
+            "type": "number",
+            "required": true,
+            "description": "The longitude of the place\u2019s location.",
+            "version": "1.1"
         },
         {
             "name": "mapType",
             "type": "enum:string",
-            "enum_values": ["standard", "hybrid", "satellite"],
-            "value": "standard"
-        },
-        {
-            "name": "span",
-            "type": "Format\\MapSpan"
+            "required": false,
+            "description": "Use this to define the type of map to display by default. Valid values are:",
+            "version": "1.1",
+            "default": "standard",
+            "enum_values": [
+                "standard",
+                "hybrid",
+                "satellite"
+            ]
         },
         {
             "name": "role",
             "type": "string",
+            "required": true,
+            "description": "This component always has a role of place.",
             "value": "place",
-            "read_only": true
+            "read_only": true,
+            "version": "1.1"
+        },
+        {
+            "name": "span",
+            "type": "Format\\MapSpan",
+            "required": false,
+            "description": "Optional configuration for defining the visible area of a map, relative to its center. A span is defined in deltas for latitude and longitude.",
+            "version": "1.1"
         }
     ]
 }

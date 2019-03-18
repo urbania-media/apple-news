@@ -1,12 +1,19 @@
 {
     "name": "Format\\Motion",
-    "extends": "Format\\Behaviour",
-    "fields": [
+    "description": "The behavior whereby a component reacts to the motion of the user\u2019s device.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": "Format\\Behavior",
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/motion",
+    "properties": [
         {
             "name": "type",
             "type": "string",
+            "required": true,
+            "description": "his behavior\u2019s type is always motion.",
             "value": "motion",
-            "read_only": true
+            "read_only": true,
+            "version": "1.0"
         }
     ]
 }

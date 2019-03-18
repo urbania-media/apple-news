@@ -5,6 +5,11 @@ namespace Urbania\AppleNews\Api\Response;
 use Carbon\Carbon;
 use Urbania\AppleNews\Assert;
 
+/**
+ * See which objects make up the section response.
+ *
+ * @see https://developer.apple.com/documentation/apple_news/sectionresponse
+ */
 class SectionResponse extends Section
 {
     /** @var \Urbania\AppleNews\Api\Response\SectionLinks */

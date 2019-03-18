@@ -1,44 +1,110 @@
 {
     "name": "Format\\ComponentLayout",
-    "fields": [
+    "description": "The object for defining the positioning for a specific component within the article\u2019s column system.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": null,
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/componentlayout",
+    "properties": [
         {
             "name": "columnSpan",
-            "type": "integer"
+            "type": "integer",
+            "required": false,
+            "description": "Indicates how many columns the component spans, based on the number of columns in the document.",
+            "version": "1.0",
+            "minimum": 1
         },
         {
             "name": "columnStart",
-            "type": "integer"
+            "type": "integer",
+            "required": false,
+            "description": "Indicates which column the component\u2018s start position is in, based on the number of columns in the document or parent container.",
+            "version": "1.0",
+            "minimum": 0
         },
         {
             "name": "contentInset",
-            "type": ["Format\\ContentInset", "boolean"]
+            "type": [
+                "Format\\ContentInset",
+                "boolean"
+            ],
+            "required": false,
+            "description": "Defines a content inset for the component. If applied, the inset will be equivalent to half the document gutter. For example, if the article\u2019s layout sets the document gutter to 40pt, the content inset will be 20 points. See Layout.",
+            "version": "1.0"
         },
         {
             "name": "horizontalContentAlignment",
             "type": "enum:string",
-            "enum_values": ["left", "center", "right"]
+            "required": false,
+            "description": "Sets the alignment of the content within the component. This property applies only when the width of the content is less than the width of the component.",
+            "version": "1.0",
+            "default": "center",
+            "enum_values": [
+                "left",
+                "center",
+                "right"
+            ]
         },
         {
             "name": "ignoreDocumentGutter",
-            "type": "enum:string|boolean",
-            "enum_values": [true, false, "none", "left", "right", "both"]
+            "type": "enum:boolean|string",
+            "required": false,
+            "description": "Indicates whether the gutters (if any) to the left and right of the component should be ignored. The gutter size is defined in the Layout object at the root level of the document. Use this option if you want to position two components right next to each other without a gutter between them. This property applies only when a gutter actually exists to the left or right of the component. The first column does not have a left gutter, and the last column does not have a right gutter.",
+            "version": "1.0",
+            "default": "none",
+            "enum_values": [
+                true,
+                false,
+                "none",
+                "left",
+                "right",
+                "both"
+            ]
         },
         {
             "name": "ignoreDocumentMargin",
-            "type": "enum:string|boolean",
-            "enum_values": [true, false, "none", "left", "right", "both"]
+            "type": "enum:boolean|string",
+            "required": false,
+            "description": "Indicates whether a document\u2019s margins should be respected or ignored by the parent container. Ignoring document margins will position the component at the edge of the display. This property affects the layout only if the component is in the first or last column.",
+            "version": "1.0",
+            "enum_values": [
+                true,
+                false,
+                "none",
+                "left",
+                "right",
+                "both"
+            ]
         },
         {
             "name": "margin",
-            "type": ["Format\\Margin", "integer"]
+            "type": [
+                "Format\\Margin",
+                "integer"
+            ],
+            "required": false,
+            "description": "Sets the margins for the top and bottom of the component, as a single integer that gets applied to the top and bottom margins, or as an object containing separate properties for top and bottom.",
+            "version": "1.0"
         },
         {
             "name": "maximumContentWidth",
-            "type": "SupportedUnits"
+            "type": [
+                "SupportedUnits",
+                "integer"
+            ],
+            "required": false,
+            "description": "Sets the maximum width of the content within the component. Specify this value as an integer in points or using one of the available units of measure for components. See Specifying Measurements for Components.",
+            "version": "1.0"
         },
         {
             "name": "minimumHeight",
-            "type": "SupportedUnits"
+            "type": [
+                "SupportedUnits",
+                "integer"
+            ],
+            "required": false,
+            "description": "Sets the minimum height of the component. A component will be taller than its defined minimumHeight when the contents require the component to be taller. The minimum height can be defined as an integer in points or using one of the available units of measure for components. See Specifying Measurements for Components.",
+            "version": "1.0"
         }
     ]
 }

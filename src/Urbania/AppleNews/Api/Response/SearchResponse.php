@@ -1,0 +1,154 @@
+<?php
+
+namespace Urbania\AppleNews\Api\Response;
+
+use Carbon\Carbon;
+use Urbania\AppleNews\Assert;
+
+/**
+ * See the fields returned by the search article endpoints.
+ *
+ * @see https://developer.apple.com/documentation/apple_news/searchresponse
+ */
+class SearchResponse
+{
+    /**
+     * A list of article objects.
+     * @var Api\Response\Article[]
+     */
+    protected $articles;
+
+    /**
+     * A list of fields returned by the Search Articles in a Section and
+     * Search Articles in a Channel endpoints.
+     * @var \Urbania\AppleNews\Api\Response\SearchResponseLinks
+     */
+    protected $links;
+
+    /**
+     * The value that should be set for the pageToken parameter as well as
+     * the parameters that were previously sent to get the next page of
+     * results. This field is automatically filled in with the next URL in
+     * the links section.
+     * @var string
+     */
+    protected $meta;
+
+    public function __construct(array $data = [])
+    {
+        if (isset($data['articles'])) {
+            $this->setArticles($data['articles']);
+        }
+
+        if (isset($data['links'])) {
+            $this->setLinks($data['links']);
+        }
+
+        if (isset($data['meta'])) {
+            $this->setMeta($data['meta']);
+        }
+    }
+
+    /**
+     * Get the articles
+     * @return Api\Response\Article[]
+     */
+    public function getArticles()
+    {
+        return $this->articles;
+    }
+
+    /**
+     * Get the links
+     * @return \Urbania\AppleNews\Api\Response\SearchResponseLinks
+     */
+    public function getLinks()
+    {
+        return $this->links;
+    }
+
+    /**
+     * Get the meta
+     * @return string
+     */
+    public function getMeta()
+    {
+        return $this->meta;
+    }
+
+    /**
+     * Set the articles
+     * @param Api\Response\Article[] $articles
+     * @return $this
+     */
+    public function setArticles($articles)
+    {
+        Assert::isArray($articles);
+        Assert::allIsInstanceOfOrArray($articles, Article::class);
+
+        $items = [];
+        foreach ($articles as $key => $item) {
+            $items[$key] = is_array($item) ? new Article($item) : $item;
+        }
+        $this->articles = $items;
+        return $this;
+    }
+
+    /**
+     * Set the links
+     * @param \Urbania\AppleNews\Api\Response\SearchResponseLinks|array $links
+     * @return $this
+     */
+    public function setLinks($links)
+    {
+        if (is_object($links)) {
+            Assert::isInstanceOf($links, SearchResponseLinks::class);
+        } else {
+            Assert::isArray($links);
+        }
+
+        $this->links = is_array($links)
+            ? new SearchResponseLinks($links)
+            : $links;
+        return $this;
+    }
+
+    /**
+     * Set the meta
+     * @param string $meta
+     * @return $this
+     */
+    public function setMeta($meta)
+    {
+        Assert::string($meta);
+
+        $this->meta = $meta;
+        return $this;
+    }
+
+    /**
+     * Get the object as array
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'articles' => !is_null($this->articles)
+                ? array_reduce(
+                    array_keys($this->articles),
+                    function ($items, $key) {
+                        $items[$key] = is_object($this->articles[$key])
+                            ? $this->articles[$key]->toArray()
+                            : $this->articles[$key];
+                        return $items;
+                    },
+                    []
+                )
+                : $this->articles,
+            'links' => is_object($this->links)
+                ? $this->links->toArray()
+                : $this->links,
+            'meta' => $this->meta
+        ];
+    }
+}

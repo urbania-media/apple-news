@@ -5,12 +5,24 @@ namespace Urbania\AppleNews\Api\Response;
 use Carbon\Carbon;
 use Urbania\AppleNews\Assert;
 
-class ChannelLinks extends Response
+/**
+ * See the links returned by the read channel endpoint.
+ *
+ * @see https://developer.apple.com/documentation/apple_news/channellinks
+ */
+class ChannelLinks
 {
-    /** @var string */
+    /**
+     * The URL for this channel’s default section. Every channel has a
+     * default section, even if no others are defined.
+     * @var string
+     */
     protected $defaultSection;
 
-    /** @var string */
+    /**
+     * The URL at which this resource can be read.
+     * @var string
+     */
     protected $self;
 
     public function __construct(array $data = [])

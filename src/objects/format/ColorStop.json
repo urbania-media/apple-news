@@ -1,15 +1,26 @@
 {
-    "name": "Format\\ColorStop",
-    "fields": [
+    "name": "ColorStop",
+    "description": "The object for specifying the color and location for a color stop in a gradient.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": null,
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/colorstop",
+    "properties": [
         {
             "name": "color",
-            "type": "Color"
+            "type": "Color",
+            "required": true,
+            "description": "The color of this color stop.",
+            "version": "1.0"
         },
         {
             "name": "location",
             "type": "number",
-            "min": 0,
-            "max": 100
+            "required": false,
+            "description": "An optional location of the color stop within the gradient, as a percentage of the gradient size. If location is omitted, the length of the stop is calculated by first subtracting color stops with specified locations from the full length, then equally distributing the remaining length.",
+            "version": "1.0",
+            "minimum": 0,
+            "maximum": 100
         }
     ]
 }

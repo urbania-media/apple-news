@@ -21,7 +21,7 @@ class Document
         $links = [];
         $baseUrl = preg_quote('/documentation/apple_news/', '/');
         foreach ($symbols as $symbol) {
-            $href = $symbol->getAttribute('href');
+            $href = preg_replace('/\#([^\/]+)$/', '', $symbol->getAttribute('href'));
             if (preg_match('/^'.$baseUrl.'((apple_news_format\/[^\/]+)|([^\/]+(\/([^\/]+))?))$/', $href) &&
                 !preg_match('/^'.$baseUrl.'apple_news_api/', $href) &&
                 !in_array($href, $links)

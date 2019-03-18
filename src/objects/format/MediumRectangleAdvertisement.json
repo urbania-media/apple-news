@@ -1,12 +1,19 @@
 {
     "name": "Format\\MediumRectangleAdvertisement",
+    "description": "The component for adding a medium, fixed-size rectangle ad.",
+    "version": "1.7+",
+    "from_class": null,
     "extends": "Format\\Component",
-    "fields": [
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/mediumrectangleadvertisement",
+    "properties": [
         {
             "name": "role",
             "type": "string",
+            "required": true,
+            "description": "This component always has a role of medium_rectangle_advertisement.",
             "value": "medium_rectangle_advertisement",
-            "read_only": true
+            "read_only": true,
+            "version": "1.0"
         }
     ]
 }

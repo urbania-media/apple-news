@@ -1,12 +1,19 @@
 {
     "name": "Format\\Caption",
+    "description": "The component for adding caption text.",
+    "version": "1.7+",
+    "from_class": null,
     "extends": "Format\\Text",
-    "fields": [
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/caption",
+    "properties": [
         {
             "name": "role",
             "type": "string",
+            "required": true,
+            "description": "This component always has a role of caption.",
             "value": "caption",
-            "read_only": true
+            "read_only": true,
+            "version": "1.0"
         }
     ]
 }

@@ -1,32 +1,54 @@
 {
     "name": "Format\\Logo",
+    "description": "The component for including a logo image.",
+    "version": "1.7+",
+    "from_class": null,
     "extends": "Format\\Component",
-    "fields": [
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/logo",
+    "properties": [
         {
             "name": "URL",
-            "type": "string"
+            "type": "string",
+            "required": true,
+            "description": "The URL of an image file.",
+            "version": "1.0"
         },
         {
             "name": "accessibilityCaption",
-            "type": "string"
+            "type": "string",
+            "required": false,
+            "description": "A caption that describes the logo. Note that this property differs from caption: although the caption can be displayed to users, the accessibilityCaption is used by VoiceOver for iOS only. If accessibilityCaption is omitted, the caption value is used for VoiceOver for iOS.",
+            "version": "1.0"
         },
         {
             "name": "additions",
-            "type": "array:Format\\ComponentLink"
+            "type": "array:Format\\ComponentLink",
+            "required": false,
+            "description": "An array of ComponentLink objects. This can be used to create a ComponentLink, allowing a link to anywhere in News. Adding a link to a container component will make the entire component interactable. Any links used in its child components will no longer be interactable.",
+            "version": "1.0"
         },
         {
             "name": "caption",
-            "type": "string"
+            "type": "string",
+            "required": false,
+            "description": "A caption that describes the image. This text can be used by VoiceOver for iOS (compare accessibilityCaption).",
+            "version": "1.0"
         },
         {
             "name": "explicitContent",
-            "type": "boolean"
+            "type": "boolean",
+            "required": false,
+            "description": "Indicates that the image may contain explicit content.",
+            "version": "1.0"
         },
         {
             "name": "role",
             "type": "string",
+            "required": true,
+            "description": "This component always has a role of logo.",
             "value": "logo",
-            "read_only": true
+            "read_only": true,
+            "version": "1.0"
         }
     ]
 }

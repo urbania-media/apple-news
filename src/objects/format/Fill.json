@@ -1,10 +1,29 @@
 {
     "name": "Format\\Fill",
-    "fields": [
+    "description": "The object for setting a fill type and attachment for a component\u2019s background fill.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": null,
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/fill",
+    "properties": [
         {
-            "name": "attachement",
+            "name": "attachment",
             "type": "enum:string",
-            "enum_values": ["fixed", "scroll"]
+            "required": false,
+            "description": "Indicates how the fill should behave when a user scrolls. Valid values:",
+            "version": "1.0",
+            "default": "scroll",
+            "enum_values": [
+                "fixed",
+                "scroll"
+            ]
+        },
+        {
+            "name": "type",
+            "type": "string",
+            "required": true,
+            "description": "The type of fill to apply.",
+            "version": "1.0"
         }
     ]
 }

@@ -38,7 +38,8 @@
         "symfony/filesystem": "^4.2",
         "symfony/finder": "^4.2",
         "imangazaliev/didom": "^1.14",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "^6.3",
+        "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
         "psr-0": {

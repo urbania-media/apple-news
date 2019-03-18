@@ -5,33 +5,68 @@ namespace Urbania\AppleNews\Api\Response;
 use Carbon\Carbon;
 use Urbania\AppleNews\Assert;
 
-class Channel extends Response
+/**
+ * See the fields returned by the read channel endpoint.
+ *
+ * @see https://developer.apple.com/documentation/apple_news/channel
+ */
+class Channel
 {
-    /** @var string */
+    /**
+     * The date and time the channel was created.
+     * @var \Carbon\Carbon
+     */
+    protected $createdAt;
+
+    /**
+     * The unique identifier of the channel.
+     * @var string
+     */
     protected $id;
 
-    /** @var string */
-    protected $type = 'Channel';
-
-    /** @var string */
-    protected $name;
-
-    /** @var string */
-    protected $shareUrl;
-
-    /** @var string */
-    protected $website;
-
-    /** @var \Carbon\Carbon */
+    /**
+     * The date and time the channel was last modified.
+     * @var \Carbon\Carbon
+     */
     protected $modifiedAt;
 
-    /** @var \Carbon\Carbon */
-    protected $createdAt;
+    /**
+     * The name of the channel.
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * The URL to the channel within the News app. The shareUrl field applies
+     * only on devices with iOS 9 installed.
+     * @var string
+     */
+    protected $shareUrl;
+
+    /**
+     * The channel.
+     * @var string
+     */
+    protected $type;
+
+    /**
+     * The website that corresponds to this channel.
+     * @var string
+     */
+    protected $website;
 
     public function __construct(array $data = [])
     {
+        if (isset($data['createdAt'])) {
+            $this->setCreatedAt($data['createdAt']);
+        }
+
         if (isset($data['id'])) {
             $this->setId($data['id']);
+        }
+
+        if (isset($data['modifiedAt'])) {
+            $this->setModifiedAt($data['modifiedAt']);
         }
 
         if (isset($data['name'])) {
@@ -42,16 +77,12 @@ class Channel extends Response
             $this->setShareUrl($data['shareUrl']);
         }
 
+        if (isset($data['type'])) {
+            $this->setType($data['type']);
+        }
+
         if (isset($data['website'])) {
             $this->setWebsite($data['website']);
-        }
-
-        if (isset($data['modifiedAt'])) {
-            $this->setModifiedAt($data['modifiedAt']);
-        }
-
-        if (isset($data['createdAt'])) {
-            $this->setCreatedAt($data['createdAt']);
         }
     }
 
@@ -125,15 +156,7 @@ class Channel extends Response
      */
     public function setCreatedAt($createdAt)
     {
-        if (is_object($createdAt)) {
-            Assert::isInstanceOf($createdAt, Carbon::class);
-        } else {
-            Assert::string($createdAt);
-            Assert::regex(
-                $createdAt,
-                '/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?(Z)?$/'
-            );
-        }
+        Assert::isDate($createdAt);
 
         $this->createdAt = is_string($createdAt)
             ? Carbon::parse($createdAt)
@@ -148,7 +171,7 @@ class Channel extends Response
      */
     public function setId($id)
     {
-        Assert::string($id);
+        Assert::uuid($id);
 
         $this->id = $id;
         return $this;
@@ -161,15 +184,7 @@ class Channel extends Response
      */
     public function setModifiedAt($modifiedAt)
     {
-        if (is_object($modifiedAt)) {
-            Assert::isInstanceOf($modifiedAt, Carbon::class);
-        } else {
-            Assert::string($modifiedAt);
-            Assert::regex(
-                $modifiedAt,
-                '/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?(Z)?$/'
-            );
-        }
+        Assert::isDate($modifiedAt);
 
         $this->modifiedAt = is_string($modifiedAt)
             ? Carbon::parse($modifiedAt)
@@ -204,6 +219,19 @@ class Channel extends Response
     }
 
     /**
+     * Set the type
+     * @param string $type
+     * @return $this
+     */
+    public function setType($type)
+    {
+        Assert::string($type);
+
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
      * Set the website
      * @param string $website
      * @return $this
@@ -223,17 +251,17 @@ class Channel extends Response
     public function toArray()
     {
         return [
+            'createdAt' => !is_null($this->createdAt)
+                ? $this->createdAt->toIso8601String()
+                : null,
             'id' => $this->id,
-            'type' => $this->type,
-            'name' => $this->name,
-            'shareUrl' => $this->shareUrl,
-            'website' => $this->website,
             'modifiedAt' => !is_null($this->modifiedAt)
                 ? $this->modifiedAt->toIso8601String()
                 : null,
-            'createdAt' => !is_null($this->createdAt)
-                ? $this->createdAt->toIso8601String()
-                : null
+            'name' => $this->name,
+            'shareUrl' => $this->shareUrl,
+            'type' => $this->type,
+            'website' => $this->website
         ];
     }
 }

@@ -5,92 +5,132 @@ namespace Urbania\AppleNews\Api\Response;
 use Carbon\Carbon;
 use Urbania\AppleNews\Assert;
 
-class Article extends Response
+/**
+ * See the fields returned by the article endpoints.
+ *
+ * @see https://developer.apple.com/documentation/apple_news/article
+ */
+class Article
 {
-    const MATURITY_RATING_KIDS = 'KIDS';
-    const MATURITY_RATING_MATURE = 'MATURE';
-    const MATURITY_RATING_GENERAL = 'GENERAL';
-    const STATE_PROCESSING = 'PROCESSING';
-    const STATE_LIVE = 'LIVE';
-    const STATE_PROCESSING_UPDATE = 'PROCESSING_UPDATE';
-    const STATE_TAKEN_DOWN = 'TAKEN_DOWN';
-    const STATE_FAILED_PROCESSING = 'FAILED_PROCESSING';
-    const STATE_FAILED_PROCESSING_UPDATE = 'FAILED_PROCESSING_UPDATE';
-
-    /** @var string */
-    protected $id;
-
-    /** @var string */
-    protected $type = 'Article';
-
-    /** @var string The title of the article, as specified in the Apple News Format document. */
-    protected $title;
-
-    /** @var string */
+    /**
+     * Text that appears alongside article headlines — author name, channel
+     * name, subtitle, and so on.
+     * @var string
+     */
     protected $accessoryText;
 
-    /** @var string */
+    /**
+     * The date and time the article was created.
+     * @var \Carbon\Carbon
+     */
+    protected $createdAt;
+
+    /**
+     * The content of the article, as an Apple News Format document.
+     * @var string
+     */
     protected $document;
 
-    /** @var string */
-    protected $revision;
+    /**
+     * The unique identifier of the article.
+     * @var string
+     */
+    protected $id;
 
-    /** @var string */
-    protected $shareUrl;
+    /**
+     * Indicates whether or not this article should be considered for
+     * featuring in News. See Creating Articles for Featured Stories.
+     * @var boolean
+     */
+    protected $isCandidateToBeFeatured;
 
-    /** @var string */
+    /**
+     * Indicates whether this article should be public (live) or should be a
+     * preview that is only visible to members of your channel. Set isPreview
+     * to false to publish the article right away and make it visible to all
+     * News users.
+     * @var boolean
+     */
+    protected $isPreview;
+
+    /**
+     * Indicates whether this article consists of sponsored content for
+     * promotional purposes. Sponsored content must be marked as such;
+     * channels that do not follow this policy may be suspended.
+     * @var boolean
+     */
+    protected $isSponsored;
+
+    /**
+     * Indicates the viewing audience for the content. The types of audiences
+     * or ratings are KIDS, MATURE, and GENERAL or null if unspecified. Note
+     * that a MATURE rating indicates explicit content that is only
+     * appropriate for a specific audience.
+     * @var string
+     */
     protected $maturityRating;
 
-    /** @var string */
-    protected $state;
-
-    /** @var boolean */
-    protected $isCandidateToBeFeatured = false;
-
-    /** @var boolean */
-    protected $isPreview = true;
-
-    /** @var boolean */
-    protected $isSponsored = false;
-
-    /** @var \Carbon\Carbon */
+    /**
+     * The date and time this article was last modified.
+     * @var \Carbon\Carbon
+     */
     protected $modifiedAt;
 
-    /** @var \Carbon\Carbon */
-    protected $createdAt;
+    /**
+     * The current revision token for the article.
+     * @var string
+     */
+    protected $revision;
+
+    /**
+     * The URL to the article within the News app. The shareUrl field applies
+     * only on devices with iOS 9 installed.
+     * @var string
+     */
+    protected $shareUrl;
+
+    /**
+     * The current state of the article which can be one of the following:
+     * @var string
+     */
+    protected $state;
+
+    /**
+     * The title of the article, as specified in the Apple News Format
+     * document.
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * Article
+     * @var string
+     */
+    protected $type;
+
+    /**
+     * A list of warning messages indicating problems with the article that
+     * are not fatal.
+     * @var Api\Response\Warning[]
+     */
+    protected $warnings;
 
     public function __construct(array $data = [])
     {
-        if (isset($data['id'])) {
-            $this->setId($data['id']);
-        }
-
-        if (isset($data['title'])) {
-            $this->setTitle($data['title']);
-        }
-
         if (isset($data['accessoryText'])) {
             $this->setAccessoryText($data['accessoryText']);
+        }
+
+        if (isset($data['createdAt'])) {
+            $this->setCreatedAt($data['createdAt']);
         }
 
         if (isset($data['document'])) {
             $this->setDocument($data['document']);
         }
 
-        if (isset($data['revision'])) {
-            $this->setRevision($data['revision']);
-        }
-
-        if (isset($data['shareUrl'])) {
-            $this->setShareUrl($data['shareUrl']);
-        }
-
-        if (isset($data['maturityRating'])) {
-            $this->setMaturityRating($data['maturityRating']);
-        }
-
-        if (isset($data['state'])) {
-            $this->setState($data['state']);
+        if (isset($data['id'])) {
+            $this->setId($data['id']);
         }
 
         if (isset($data['isCandidateToBeFeatured'])) {
@@ -105,12 +145,36 @@ class Article extends Response
             $this->setIsSponsored($data['isSponsored']);
         }
 
+        if (isset($data['maturityRating'])) {
+            $this->setMaturityRating($data['maturityRating']);
+        }
+
         if (isset($data['modifiedAt'])) {
             $this->setModifiedAt($data['modifiedAt']);
         }
 
-        if (isset($data['createdAt'])) {
-            $this->setCreatedAt($data['createdAt']);
+        if (isset($data['revision'])) {
+            $this->setRevision($data['revision']);
+        }
+
+        if (isset($data['shareUrl'])) {
+            $this->setShareUrl($data['shareUrl']);
+        }
+
+        if (isset($data['state'])) {
+            $this->setState($data['state']);
+        }
+
+        if (isset($data['title'])) {
+            $this->setTitle($data['title']);
+        }
+
+        if (isset($data['type'])) {
+            $this->setType($data['type']);
+        }
+
+        if (isset($data['warnings'])) {
+            $this->setWarnings($data['warnings']);
         }
     }
 
@@ -241,6 +305,15 @@ class Article extends Response
     }
 
     /**
+     * Get the warnings
+     * @return Api\Response\Warning[]
+     */
+    public function getWarnings()
+    {
+        return $this->warnings;
+    }
+
+    /**
      * Set the accessoryText
      * @param string $accessoryText
      * @return $this
@@ -260,15 +333,7 @@ class Article extends Response
      */
     public function setCreatedAt($createdAt)
     {
-        if (is_object($createdAt)) {
-            Assert::isInstanceOf($createdAt, Carbon::class);
-        } else {
-            Assert::string($createdAt);
-            Assert::regex(
-                $createdAt,
-                '/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?(Z)?$/'
-            );
-        }
+        Assert::isDate($createdAt);
 
         $this->createdAt = is_string($createdAt)
             ? Carbon::parse($createdAt)
@@ -296,7 +361,7 @@ class Article extends Response
      */
     public function setId($id)
     {
-        Assert::string($id);
+        Assert::uuid($id);
 
         $this->id = $id;
         return $this;
@@ -348,11 +413,7 @@ class Article extends Response
      */
     public function setMaturityRating($maturityRating)
     {
-        Assert::oneOf($maturityRating, [
-            static::MATURITY_RATING_KIDS,
-            static::MATURITY_RATING_MATURE,
-            static::MATURITY_RATING_GENERAL
-        ]);
+        Assert::oneOf($maturityRating, ["KIDS", "MATURE", "GENERAL"]);
 
         $this->maturityRating = $maturityRating;
         return $this;
@@ -365,15 +426,7 @@ class Article extends Response
      */
     public function setModifiedAt($modifiedAt)
     {
-        if (is_object($modifiedAt)) {
-            Assert::isInstanceOf($modifiedAt, Carbon::class);
-        } else {
-            Assert::string($modifiedAt);
-            Assert::regex(
-                $modifiedAt,
-                '/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?(Z)?$/'
-            );
-        }
+        Assert::isDate($modifiedAt);
 
         $this->modifiedAt = is_string($modifiedAt)
             ? Carbon::parse($modifiedAt)
@@ -415,12 +468,12 @@ class Article extends Response
     public function setState($state)
     {
         Assert::oneOf($state, [
-            static::STATE_PROCESSING,
-            static::STATE_LIVE,
-            static::STATE_PROCESSING_UPDATE,
-            static::STATE_TAKEN_DOWN,
-            static::STATE_FAILED_PROCESSING,
-            static::STATE_FAILED_PROCESSING_UPDATE
+            "PROCESSING",
+            "LIVE",
+            "PROCESSING_UPDATE",
+            "TAKEN_DOWN",
+            "FAILED_PROCESSING",
+            "FAILED_PROCESSING_UPDATE"
         ]);
 
         $this->state = $state;
@@ -441,30 +494,73 @@ class Article extends Response
     }
 
     /**
+     * Set the type
+     * @param string $type
+     * @return $this
+     */
+    public function setType($type)
+    {
+        Assert::string($type);
+
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * Set the warnings
+     * @param Api\Response\Warning[] $warnings
+     * @return $this
+     */
+    public function setWarnings($warnings)
+    {
+        Assert::isArray($warnings);
+        Assert::allIsInstanceOfOrArray($warnings, Warning::class);
+
+        $items = [];
+        foreach ($warnings as $key => $item) {
+            $items[$key] = is_array($item) ? new Warning($item) : $item;
+        }
+        $this->warnings = $items;
+        return $this;
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
         return [
-            'id' => $this->id,
-            'type' => $this->type,
-            'title' => $this->title,
             'accessoryText' => $this->accessoryText,
+            'createdAt' => !is_null($this->createdAt)
+                ? $this->createdAt->toIso8601String()
+                : null,
             'document' => $this->document,
-            'revision' => $this->revision,
-            'shareUrl' => $this->shareUrl,
-            'maturityRating' => $this->maturityRating,
-            'state' => $this->state,
+            'id' => $this->id,
             'isCandidateToBeFeatured' => $this->isCandidateToBeFeatured,
             'isPreview' => $this->isPreview,
             'isSponsored' => $this->isSponsored,
+            'maturityRating' => $this->maturityRating,
             'modifiedAt' => !is_null($this->modifiedAt)
                 ? $this->modifiedAt->toIso8601String()
                 : null,
-            'createdAt' => !is_null($this->createdAt)
-                ? $this->createdAt->toIso8601String()
-                : null
+            'revision' => $this->revision,
+            'shareUrl' => $this->shareUrl,
+            'state' => $this->state,
+            'title' => $this->title,
+            'type' => $this->type,
+            'warnings' => !is_null($this->warnings)
+                ? array_reduce(
+                    array_keys($this->warnings),
+                    function ($items, $key) {
+                        $items[$key] = is_object($this->warnings[$key])
+                            ? $this->warnings[$key]->toArray()
+                            : $this->warnings[$key];
+                        return $items;
+                    },
+                    []
+                )
+                : $this->warnings
         ];
     }
 }

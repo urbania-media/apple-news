@@ -1,12 +1,26 @@
 {
     "name": "Format\\Heading",
+    "description": "The text component for adding a heading.",
+    "version": "1.7+",
+    "from_class": null,
     "extends": "Format\\Text",
-    "fields": [
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/heading",
+    "properties": [
         {
             "name": "role",
             "type": "enum:string",
-            "value": "heading",
-            "enum_values": ["heading", "heading1", "heading2", "heading3", "heading4", "heading5", "heading6"]
+            "required": true,
+            "description": "A heading component has one of these values for role: heading, heading1, heading2, heading3, heading4, heading5, or heading6.",
+            "version": "1.0",
+            "enum_values": [
+                "heading",
+                "heading1",
+                "heading2",
+                "heading3",
+                "heading4",
+                "heading5",
+                "heading6"
+            ]
         }
     ]
 }

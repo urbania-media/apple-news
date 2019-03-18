@@ -1,12 +1,19 @@
 {
     "name": "Format\\PullQuote",
+    "description": "The component for including a pull quote.",
+    "version": "1.7+",
+    "from_class": null,
     "extends": "Format\\Text",
-    "fields": [
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/pullquote",
+    "properties": [
         {
             "name": "role",
             "type": "string",
+            "required": true,
+            "description": "This component always has a role of pullquote.",
             "value": "pullquote",
-            "read_only": true
+            "read_only": true,
+            "version": "1.0"
         }
     ]
 }

@@ -1,16 +1,26 @@
 {
     "name": "Format\\FacebookPost",
+    "description": "The component for adding a Facebook post.",
+    "version": "1.7+",
+    "from_class": null,
     "extends": "Format\\Component",
-    "fields": [
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/facebookpost",
+    "properties": [
         {
             "name": "URL",
-            "type": "string"
+            "type": "uri",
+            "required": true,
+            "description": "The URL of the Facebook post you want to embed. URLs for Facebook posts must include the identifier for the post.",
+            "version": "1.2"
         },
         {
             "name": "role",
             "type": "string",
+            "required": true,
+            "description": "This component always has a role of facebook_post.",
             "value": "facebook_post",
-            "read_only": true
+            "read_only": true,
+            "version": "1.2"
         }
     ]
 }

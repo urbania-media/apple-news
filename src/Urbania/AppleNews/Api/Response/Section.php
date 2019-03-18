@@ -5,41 +5,64 @@ namespace Urbania\AppleNews\Api\Response;
 use Carbon\Carbon;
 use Urbania\AppleNews\Assert;
 
-class Section extends Response
+/**
+ * See the fields returned by the section endpoints.
+ *
+ * @see https://developer.apple.com/documentation/apple_news/section
+ */
+class Section
 {
-    /** @var string */
+    /**
+     * The date and time this section was created.
+     * @var \Carbon\Carbon
+     */
+    protected $createdAt;
+
+    /**
+     * The unique identifier of the specified section.
+     * @var string
+     */
     protected $id;
 
-    /** @var string */
-    protected $type = 'Section';
-
-    /** @var string */
-    protected $name;
-
-    /** @var string */
-    protected $shareUrl;
-
-    /** @var boolean */
+    /**
+     * A Boolean value that indicates whether this is the default section for
+     * the channel.
+     * @var boolean
+     */
     protected $isDefault;
 
-    /** @var \Carbon\Carbon */
+    /**
+     * The date and time this section was last modified.
+     * @var \Carbon\Carbon
+     */
     protected $modifiedAt;
 
-    /** @var \Carbon\Carbon */
-    protected $createdAt;
+    /**
+     * The name of the section.
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * The URL of the channel in which this section appears.
+     * @var string
+     */
+    protected $shareUrl;
+
+    /**
+     * Section
+     * @var string
+     */
+    protected $type;
 
     public function __construct(array $data = [])
     {
+        if (isset($data['createdAt'])) {
+            $this->setCreatedAt($data['createdAt']);
+        }
+
         if (isset($data['id'])) {
             $this->setId($data['id']);
-        }
-
-        if (isset($data['name'])) {
-            $this->setName($data['name']);
-        }
-
-        if (isset($data['shareUrl'])) {
-            $this->setShareUrl($data['shareUrl']);
         }
 
         if (isset($data['isDefault'])) {
@@ -50,8 +73,16 @@ class Section extends Response
             $this->setModifiedAt($data['modifiedAt']);
         }
 
-        if (isset($data['createdAt'])) {
-            $this->setCreatedAt($data['createdAt']);
+        if (isset($data['name'])) {
+            $this->setName($data['name']);
+        }
+
+        if (isset($data['shareUrl'])) {
+            $this->setShareUrl($data['shareUrl']);
+        }
+
+        if (isset($data['type'])) {
+            $this->setType($data['type']);
         }
     }
 
@@ -125,15 +156,7 @@ class Section extends Response
      */
     public function setCreatedAt($createdAt)
     {
-        if (is_object($createdAt)) {
-            Assert::isInstanceOf($createdAt, Carbon::class);
-        } else {
-            Assert::string($createdAt);
-            Assert::regex(
-                $createdAt,
-                '/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?(Z)?$/'
-            );
-        }
+        Assert::isDate($createdAt);
 
         $this->createdAt = is_string($createdAt)
             ? Carbon::parse($createdAt)
@@ -148,7 +171,7 @@ class Section extends Response
      */
     public function setId($id)
     {
-        Assert::string($id);
+        Assert::uuid($id);
 
         $this->id = $id;
         return $this;
@@ -174,15 +197,7 @@ class Section extends Response
      */
     public function setModifiedAt($modifiedAt)
     {
-        if (is_object($modifiedAt)) {
-            Assert::isInstanceOf($modifiedAt, Carbon::class);
-        } else {
-            Assert::string($modifiedAt);
-            Assert::regex(
-                $modifiedAt,
-                '/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?(Z)?$/'
-            );
-        }
+        Assert::isDate($modifiedAt);
 
         $this->modifiedAt = is_string($modifiedAt)
             ? Carbon::parse($modifiedAt)
@@ -217,23 +232,36 @@ class Section extends Response
     }
 
     /**
+     * Set the type
+     * @param string $type
+     * @return $this
+     */
+    public function setType($type)
+    {
+        Assert::string($type);
+
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
         return [
+            'createdAt' => !is_null($this->createdAt)
+                ? $this->createdAt->toIso8601String()
+                : null,
             'id' => $this->id,
-            'type' => $this->type,
-            'name' => $this->name,
-            'shareUrl' => $this->shareUrl,
             'isDefault' => $this->isDefault,
             'modifiedAt' => !is_null($this->modifiedAt)
                 ? $this->modifiedAt->toIso8601String()
                 : null,
-            'createdAt' => !is_null($this->createdAt)
-                ? $this->createdAt->toIso8601String()
-                : null
+            'name' => $this->name,
+            'shareUrl' => $this->shareUrl,
+            'type' => $this->type
         ];
     }
 }

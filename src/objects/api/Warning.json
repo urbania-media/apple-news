@@ -1,0 +1,28 @@
+{
+    "name": "Api\\Response\\Warning",
+    "description": "See the properties of a warning returned by the Apple News API.",
+    "version": "1.0.0+",
+    "from_class": null,
+    "extends": null,
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/warning",
+    "properties": [
+        {
+            "name": "keypath",
+            "type": "array:string",
+            "required": false,
+            "description": "An array of field names that uniquely identifies a field in the JSON input of the request."
+        },
+        {
+            "name": "message",
+            "type": "string",
+            "required": false,
+            "description": "A user friendly, detailed explanation of the non-fatal warning."
+        },
+        {
+            "name": "value",
+            "type": "string",
+            "required": false,
+            "description": "If applicable, the value supplied in the request for the field specified by keyPath."
+        }
+    ]
+}

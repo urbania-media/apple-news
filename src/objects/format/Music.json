@@ -1,32 +1,54 @@
 {
-    "name": "Format\\Audio",
+    "name": "Format\\Music",
+    "description": "The component for adding a playable music file.",
+    "version": "1.7+",
+    "from_class": null,
     "extends": "Format\\Component",
-    "fields": [
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/music",
+    "properties": [
         {
             "name": "URL",
-            "type": "string"
+            "type": "uri",
+            "required": true,
+            "description": "The URL of an audio file (HTTP or HTTPS only). This component supports all AVPlayer audio formats, including the following:",
+            "version": "1.0"
         },
         {
             "name": "accessibilityCaption",
-            "type": "string"
+            "type": "string",
+            "required": false,
+            "description": "A caption that describes the content of the audio file. Note that this property differs from caption: although the caption can be displayed to users, the accessibilityCaption is used by VoiceOver for iOS only. If accessibilityCaption is omitted, the caption value is used for VoiceOver for iOS.",
+            "version": "1.0"
         },
         {
             "name": "caption",
-            "type": "string"
+            "type": "string",
+            "required": false,
+            "description": "A caption that describes the content of the audio file. This text can be used by VoiceOver for iOS if accessibilityCaption is not provided, or it can be shown when the audio cannot be played.",
+            "version": "1.0"
         },
         {
             "name": "explicitContent",
-            "type": "boolean"
+            "type": "boolean",
+            "required": false,
+            "description": "Indicates that the audio may contain explicit content.",
+            "version": "1.0"
         },
         {
             "name": "imageURL",
-            "type": "string"
+            "type": "string",
+            "required": false,
+            "description": "The URL of an image file that represents the audio file, such as a cover image.",
+            "version": "1.0"
         },
         {
             "name": "role",
             "type": "string",
+            "required": true,
+            "description": "This component always has a role of music.",
             "value": "music",
-            "read_only": true
+            "read_only": true,
+            "version": "1.0"
         }
     ]
 }

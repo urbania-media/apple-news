@@ -1,33 +1,61 @@
 {
     "name": "Format\\Text",
+    "description": "Properties shared by all text component types.",
+    "version": "1.7+",
+    "from_class": null,
     "extends": "Format\\Component",
-    "fields": [
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/text",
+    "properties": [
         {
             "name": "additions",
-            "type": "array:Format\\ComponentLink"
+            "type": "array:Format\\Addition",
+            "required": false,
+            "description": "An array of Link objects that provide additional information for ranges of text in the text property.",
+            "version": "1.1"
         },
         {
             "name": "format",
             "type": "enum:string",
-            "enum_values": ["markdown", "html", "none"],
-            "value": "none"
+            "required": false,
+            "description": "The formatting or markup method applied to the text.",
+            "version": "1.0",
+            "default": "none",
+            "enum_values": [
+                "markdown",
+                "html",
+                "none"
+            ]
         },
         {
             "name": "inlineTextStyles",
-            "type": "array:Format\\InlineTextStyle"
+            "type": "array:Format\\InlineTextStyle",
+            "required": false,
+            "description": "An array of InlineTextStyle objects you can use to apply different text styles to ranges of text. For each InlineTextStyle, you should supply a rangeStart, rangeLength, and either a text style or the identifier of a text style that is defined at the top level of the document.",
+            "version": "1.0"
         },
         {
             "name": "role",
-            "type": "string"
+            "type": "string",
+            "required": true,
+            "description": "The role of a text component depends on the type of content it contains. For example, a PullQuote should have a role of pullquote, and for text in the article body, the role should be body. See Component.",
+            "version": "1.0"
         },
         {
             "name": "text",
             "type": "string",
-            "required": true
+            "required": true,
+            "description": "The text to display in the article, including any formatting tags depending on the format property.",
+            "version": "1.0"
         },
         {
             "name": "textStyle",
-            "type": ["Format\\ComponentTextStyle", "string"]
+            "type": [
+                "Format\\ComponentTextStyle",
+                "string"
+            ],
+            "required": false,
+            "description": "Either an inline ComponentTextStyle object that contains styling information, or a string reference to a ComponentTextStyle object that is defined at the top level of the document in the componentTextStyles property in Article Document.Component Text Styles.",
+            "version": "1.0"
         }
     ]
 }

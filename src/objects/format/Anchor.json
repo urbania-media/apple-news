@@ -1,31 +1,62 @@
 {
     "name": "Format\\Anchor",
-    "fields": [
+    "description": "The object for anchoring one component to another component in your article\u2019s layout.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": null,
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/anchor",
+    "properties": [
         {
             "name": "originAnchorPosition",
             "type": "enum:string",
-            "enum_values": ["top", "center", "bottom"]
+            "required": false,
+            "description": "Sets which point in the origin component will get anchored to the target component. The originating anchor will be positioned as closely as possible to the intended targetAnchorPosition. If this property is omitted, the value of targetAnchorPosition will be used.",
+            "version": "1.0",
+            "enum_values": [
+                "top",
+                "center",
+                "bottom"
+            ]
         },
         {
             "name": "rangeLength",
-            "type": "integer"
+            "type": "integer",
+            "required": false,
+            "description": "The length of the range of text the component should be anchored to. If rangeLength is specified, rangeStart is required.",
+            "version": "1.0"
         },
         {
             "name": "rangeStart",
-            "type": "integer"
+            "type": "integer",
+            "required": false,
+            "description": "The start index of the range of text the component should be anchored to. When a component is anchored to a component with a role of body, the text might be flowed around the component.",
+            "version": "1.0"
         },
         {
             "name": "target",
-            "type": "string"
+            "type": "string",
+            "required": false,
+            "description": "The id or name attribute of an HTML element in another component. The component containing the target element must have format set to html.",
+            "version": "1.4"
         },
         {
             "name": "targetAnchorPosition",
             "type": "enum:string",
-            "enum_values": ["top", "center", "bottom"]
+            "required": true,
+            "description": "Sets the anchor point in the target component, relative to the originAnchorPosition. Valid values:",
+            "version": "1.0",
+            "enum_values": [
+                "top",
+                "center",
+                "bottom"
+            ]
         },
         {
             "name": "targetComponentIdentifier",
-            "type": "string"
+            "type": "string",
+            "required": false,
+            "description": "The identifier of the component to anchor to. targetComponentIdentifier cannot refer to the current component\u2019s parent, child components, or components in another container. When this property is omitted, the anchor will be applied to the parent component, if one exists.",
+            "version": "1.0"
         }
     ]
 }

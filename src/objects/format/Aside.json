@@ -1,12 +1,40 @@
 {
     "name": "Format\\Aside",
-    "extends": "Format\\Container",
-    "fields": [
+    "description": "The component for setting apart content that is not directly related to the article, such as promotional content.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": "Format\\Component",
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/aside",
+    "properties": [
+        {
+            "name": "additions",
+            "type": "array:Format\\ComponentLink",
+            "required": false,
+            "description": "An array of ComponentLink objects. This can be used to create a ComponentLink, allowing a link to anywhere in News. Adding a link to an aside component will make the entire component interactable. Any links used in its child components will no longer be interactable.",
+            "version": "1.7"
+        },
+        {
+            "name": "components",
+            "type": "array:Format\\Component",
+            "required": false,
+            "description": "An array of components to display as child components. Child components are positioned and rendered relative to their parent component.",
+            "version": "1.0"
+        },
+        {
+            "name": "contentDisplay",
+            "type": "Format\\CollectionDisplay",
+            "required": false,
+            "description": "Defines how child components are positioned within this aside component. For example, this property can allow for displaying child components side-by-side and can make sure they are sized equally.",
+            "version": "1.5"
+        },
         {
             "name": "role",
             "type": "string",
+            "required": true,
+            "description": "This component always has a role of aside.",
             "value": "aside",
-            "read_only": true
+            "read_only": true,
+            "version": "1.5"
         }
     ]
 }

@@ -1,28 +1,50 @@
 {
     "name": "Format\\Portrait",
+    "description": "The component for including a image of a person.",
+    "version": "1.7+",
+    "from_class": null,
     "extends": "Format\\Component",
-    "fields": [
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/portrait",
+    "properties": [
         {
             "name": "URL",
-            "type": "string"
+            "type": "string",
+            "required": true,
+            "description": "The URL of an image file.",
+            "version": "1.0"
         },
         {
             "name": "accessibilityCaption",
-            "type": "string"
+            "type": "string",
+            "required": false,
+            "description": "A caption that describes the portrait. Note that this property differs from caption: although the caption can be displayed to users, the accessibilityCaption is used by VoiceOver for iOS only. If accessibilityCaption is omitted, the caption value is used for VoiceOver for iOS.",
+            "version": "1.0"
         },
         {
             "name": "caption",
-            "type": ["Format\\CaptionDescriptor", "string"]
+            "type": [
+                "Format\\CaptionDescriptor",
+                "string"
+            ],
+            "required": false,
+            "description": "A caption that describes the image. This text can be used by VoiceOver for iOS if accessibilityCaption is not provided..",
+            "version": "1.0"
         },
         {
             "name": "explicitContent",
-            "type": "boolean"
+            "type": "boolean",
+            "required": false,
+            "description": "Indicates that the image may contain explicit content.",
+            "version": "1.0"
         },
         {
             "name": "role",
             "type": "string",
+            "required": true,
+            "description": "This component always has a role of portrait.",
             "value": "portrait",
-            "read_only": true
+            "read_only": true,
+            "version": "1.0"
         }
     ]
 }

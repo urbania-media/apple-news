@@ -6,6 +6,9 @@ use DiDom\Document as DomDocument;
 
 class ObjectDocument extends Document
 {
+    protected $versionPattern = '/Apple News Format ([0-9]+\.[0-9]+\+?)/';
+    protected $namespace = 'Format';
+
     public function getName()
     {
         $name = $this->document
@@ -44,7 +47,7 @@ class ObjectDocument extends Document
             );
             if (!is_null($fromClass) && $property['name'] === '*') {
                 $property['name'] = strtolower($fromClass);
-                $property['type'] = 'map:'.$property['type'];
+                $property['type'] = 'map:' . $property['type'];
             }
             if (is_array($property['type'])) {
                 usort($property['type'], function ($a, $b) {
@@ -81,7 +84,10 @@ class ObjectDocument extends Document
         ]);
         $firstChild = $cell->firstChild();
         $children = $firstChild->classes()->contains('description-wrapper')
-            ? array_merge($firstChild->children(), array_slice($cell->children(), 1))
+            ? array_merge(
+                $firstChild->children(),
+                array_slice($cell->children(), 1)
+            )
             : $cell->children();
         foreach ($children as $child) {
             if ($child->isTextNode()) {
@@ -112,11 +118,15 @@ class ObjectDocument extends Document
                 $text = $this->trim($child->text());
                 if (!isset($property['description'])) {
                     $property['description'] = $text;
-                    if ($readOnlyValue = $this->getReadOnlyValueFromDescription($text)) {
+                    if ($readOnlyValue = $this->getReadOnlyValueFromDescription(
+                        $text
+                    )
+                    ) {
                         $property['value'] = $readOnlyValue;
                         $property['read_only'] = true;
                     }
-                } elseif (preg_match('/^Version ([0-9]+\.[0-9])/', $text, $matches)) {
+                } elseif (preg_match('/^Version ([0-9]+\.[0-9])/', $text, $matches)
+                ) {
                     $property['version'] = $matches[1];
                 }
             }
@@ -127,18 +137,29 @@ class ObjectDocument extends Document
 
     protected function getReadOnlyValueFromDescription($text)
     {
-        if (preg_match('/type is always ([a-zA-Z0-9_-]+)\./', $text, $matches)) {
+        if (preg_match('/type is always ([a-zA-Z0-9_-]+)\./', $text, $matches)
+        ) {
             return $matches[1];
-        } elseif (preg_match('/Should be set to ([a-zA-Z0-9_-]+)\./', $text, $matches)) {
+        } elseif (preg_match('/Should be set to ([a-zA-Z0-9_-]+)\./', $text, $matches)
+        ) {
             return $matches[1];
-        } elseif (preg_match('/should be ([a-zA-Z0-9_-]+) for a/', $text, $matches)) {
+        } elseif (preg_match('/should be ([a-zA-Z0-9_-]+) for a/', $text, $matches)
+        ) {
             return $matches[1];
-        } elseif (preg_match('/This must be ([a-zA-Z0-9_-]+) for a/', $text, $matches)) {
+        } elseif (preg_match('/This must be ([a-zA-Z0-9_-]+) for a/', $text, $matches)
+        ) {
             return $matches[1];
-        } elseif (preg_match('/The type must be ([a-zA-Z0-9_-]+)./', $text, $matches)) {
+        } elseif (preg_match('/The type must be ([a-zA-Z0-9_-]+)./', $text, $matches)
+        ) {
             return $matches[1];
         }
-        return preg_match('/always has (a role of|the type) ([a-zA-Z0-9_-]+)./', $text, $matches) ? $matches[2] : null;
+        return preg_match(
+            '/always has (a role of|the type) ([a-zA-Z0-9_-]+)./',
+            $text,
+            $matches
+        )
+            ? $matches[2]
+            : null;
     }
 
     protected function mergeMetadataProperty($node, $property)
@@ -148,9 +169,9 @@ class ObjectDocument extends Document
         if (preg_match('/^(Default|Minimum|Maximum)\: (.*)$/', $text, $matches)) {
             if (is_numeric($matches[2])) {
                 if ($property['type'] === 'integer') {
-                    $property[strtolower($matches[1])] = (int)$matches[2];
+                    $property[strtolower($matches[1])] = (int) $matches[2];
                 } else {
-                    $property[strtolower($matches[1])] = (float)$matches[2];
+                    $property[strtolower($matches[1])] = (float) $matches[2];
                 }
             } else {
                 $property[strtolower($matches[1])] = $matches[2];
@@ -179,14 +200,21 @@ class ObjectDocument extends Document
     {
         $type = $property['type'] ?? null;
         $property = array_merge($property, [
-            'type' => !is_null($type) ? sprintf('enum:%s', is_array($type) ? implode('|', $type) : $type) : 'enum',
+            'type' => !is_null($type)
+                ? sprintf(
+                    'enum:%s',
+                    is_array($type) ? implode('|', $type) : $type
+                )
+                : 'enum'
         ]);
 
         $children = $node->firstChild()->children();
         $values = $this->getMetadataValues($children);
         $property['enum_values'] = array_map(function ($value) {
             if (is_numeric($value)) {
-                return strpos($value, '.') === false ? (int)$value : (float)$value;
+                return strpos($value, '.') === false
+                    ? (int) $value
+                    : (float) $value;
             } elseif ($value === 'true' || $value === 'false') {
                 return $value === 'true';
             }
@@ -218,8 +246,10 @@ class ObjectDocument extends Document
             return $this->getType(ucfirst($matches[1]));
         } elseif (preg_match('/^Color|SupportedUnits/', $type)) {
             return $type;
+        } elseif (preg_match('/^([A-Z][^\.]+)\.([A-Z][^\.]+)$/', $type, $matches)) {
+            return $this->getType($matches[1].$matches[2]);
         } elseif (preg_match('/^[A-Z]/', $type)) {
-            return 'Format\\' . $type;
+            return $this->namespace . '\\' . $type;
         }
         return $type;
     }
@@ -227,20 +257,38 @@ class ObjectDocument extends Document
     protected function getFromClass()
     {
         $name = $this->getName();
-        if (preg_match('/^(.*?)\.[a-z][a-zA-Z]+(Layouts|Styles)$/', $name, $matches)) {
+        if (preg_match(
+            '/^(.*?)\.[a-z][a-zA-Z]+(Layouts|Styles)$/',
+            $name,
+            $matches
+        )
+        ) {
             return $matches[2];
         }
         return null;
     }
 
-    protected function getExtends()
+    protected function getInherits()
     {
         if ($this->document->has('#inherits-from .symbol-name')) {
-            $node = $this->document->find('#inherits-from .symbol-name');
-            $name = $this->trim($node[0]->text());
-            return $this->getType($name);
+            $nodes = $this->document->find('#inherits-from .symbol-name');
+            return array_map(function ($node) {
+                return $this->trim($node->text());
+            }, $nodes);
         }
         return null;
+    }
+
+    protected function hasMultipleInherits()
+    {
+        $inherits = $this->getInherits();
+        return !is_null($inherits) && sizeof($inherits) > 1;
+    }
+
+    protected function getExtends()
+    {
+        $ihnerits = $this->getInherits();
+        return !is_null($ihnerits) && sizeof($ihnerits) ? $this->getType($ihnerits[0]) : null;
     }
 
     protected function getDescription()
@@ -257,7 +305,7 @@ class ObjectDocument extends Document
         if ($this->document->has('#main .topic-summary .sdk')) {
             $node = $this->document->find('#main .topic-summary .sdk');
             $text = $this->trim($node[0]->text());
-            if (preg_match('/Apple News Format ([0-9]+\.[0-9]+\+?)/', $text, $matches)) {
+            if (preg_match($this->versionPattern, $text, $matches)) {
                 return $matches[1];
             }
             return '1.0+';
@@ -274,7 +322,7 @@ class ObjectDocument extends Document
             'from_class' => $this->getFromClass(),
             'extends' => $this->getExtends(),
             'url' => $this->url,
-            'properties' => $this->getProperties(),
+            'properties' => $this->getProperties()
         ];
     }
 }

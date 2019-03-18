@@ -3,6 +3,7 @@
 namespace Urbania\AppleNews\Scripts;
 
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use GuzzleHttp\Client as HttpClient;
 use Urbania\AppleNews\Scripts\Import\AppleDocumentationParser;
 use Urbania\AppleNews\Scripts\Import\Document;
@@ -13,14 +14,16 @@ use Exception;
 class ObjectsImporter
 {
     protected $filesystem;
+    protected $output;
     protected $client;
     protected $importedObjects = [];
 
-    public function __construct()
+    public function __construct($sdk = null)
     {
         $this->filesystem = new Filesystem();
+        $this->output = new ConsoleOutput();
         $this->client = new HttpClient();
-        $this->parser = new AppleDocumentationParser();
+        $this->parser = new AppleDocumentationParser($sdk);
     }
 
     public function import($startUrl, $outputPath)
@@ -31,6 +34,8 @@ class ObjectsImporter
 
     protected function importDocument($url, $outputPath, $state = null)
     {
+        $this->output->writeln('<comment>Fetching:</comment> '.$url.'...');
+
         if (is_null($state)) {
             $state = new StdClass();
             $state->objects = [];
@@ -43,7 +48,9 @@ class ObjectsImporter
         $document = $this->parser->parse($html, $url);
 
         if ($document instanceof ObjectDocument) {
+            $this->output->writeln('<comment>Writing:</comment> Object '.$document->getName().' from '.$url.'...');
             $state->objects[$document->getName()] = $this->writeObject($document, $outputPath);
+            $this->output->writeln('<info>Imported:</info> Object '.$document->getName().' from '.$url.'.');
         }
 
         $links = $document->getLinks();

@@ -1,7 +1,11 @@
 {
     "name": "Api\\Response\\SectionResponse",
+    "description": "See which objects make up the section response.",
+    "version": "1.0.0+",
+    "from_class": null,
     "extends": "Api\\Response\\Section",
-    "fields": [
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/sectionresponse",
+    "properties": [
         {
             "name": "links",
             "type": "Api\\Response\\SectionLinks"

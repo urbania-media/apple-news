@@ -1,12 +1,19 @@
 {
     "name": "Format\\Title",
+    "description": "The component for adding an article title.",
+    "version": "1.7+",
+    "from_class": null,
     "extends": "Format\\Text",
-    "fields": [
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/title",
+    "properties": [
         {
             "name": "role",
             "type": "string",
+            "required": true,
+            "description": "This component always has a role of title.",
             "value": "title",
-            "read_only": true
+            "read_only": true,
+            "version": "1.0"
         }
     ]
 }
