@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/recordstore
  */
-class RecordStore
+class RecordStore implements \JsonSerializable
 {
     /**
      * Provides information about the data that can be in each data record.
@@ -46,15 +46,6 @@ class RecordStore
     }
 
     /**
-     * Get the records
-     * @return Format\Records[]
-     */
-    public function getRecords()
-    {
-        return $this->records;
-    }
-
-    /**
      * Set the descriptors
      * @param Format\DataDescriptor[] $descriptors
      * @return $this
@@ -70,6 +61,15 @@ class RecordStore
         }
         $this->descriptors = $items;
         return $this;
+    }
+
+    /**
+     * Get the records
+     * @return Format\Records[]
+     */
+    public function getRecords()
+    {
+        return $this->records;
     }
 
     /**
@@ -94,7 +94,7 @@ class RecordStore
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

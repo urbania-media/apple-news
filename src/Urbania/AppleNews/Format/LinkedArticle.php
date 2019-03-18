@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/linkedarticle
  */
-class LinkedArticle
+class LinkedArticle implements \JsonSerializable
 {
     /**
      * The URL for the link. Can be either an Apple News link, like
@@ -50,15 +50,6 @@ class LinkedArticle
     }
 
     /**
-     * Get the URL
-     * @return uri
-     */
-    public function getURL()
-    {
-        return $this->URL;
-    }
-
-    /**
      * Set the relationship
      * @param string $relationship
      * @return $this
@@ -69,6 +60,15 @@ class LinkedArticle
 
         $this->relationship = $relationship;
         return $this;
+    }
+
+    /**
+     * Get the URL
+     * @return uri
+     */
+    public function getURL()
+    {
+        return $this->URL;
     }
 
     /**
@@ -88,7 +88,7 @@ class LinkedArticle
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

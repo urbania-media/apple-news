@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/throttling
  */
-class Throttling
+class Throttling implements \JsonSerializable
 {
     /**
      * Estimate of the number of seconds until this request begins
@@ -70,33 +70,6 @@ class Throttling
     }
 
     /**
-     * Get the isThrottled
-     * @return boolean
-     */
-    public function getIsThrottled()
-    {
-        return $this->isThrottled;
-    }
-
-    /**
-     * Get the queueSize
-     * @return integer
-     */
-    public function getQueueSize()
-    {
-        return $this->queueSize;
-    }
-
-    /**
-     * Get the quotaAvailable
-     * @return integer
-     */
-    public function getQuotaAvailable()
-    {
-        return $this->quotaAvailable;
-    }
-
-    /**
      * Set the estimatedDelayInSeconds
      * @param integer $estimatedDelayInSeconds
      * @return $this
@@ -107,6 +80,15 @@ class Throttling
 
         $this->estimatedDelayInSeconds = $estimatedDelayInSeconds;
         return $this;
+    }
+
+    /**
+     * Get the isThrottled
+     * @return boolean
+     */
+    public function getIsThrottled()
+    {
+        return $this->isThrottled;
     }
 
     /**
@@ -123,6 +105,15 @@ class Throttling
     }
 
     /**
+     * Get the queueSize
+     * @return integer
+     */
+    public function getQueueSize()
+    {
+        return $this->queueSize;
+    }
+
+    /**
      * Set the queueSize
      * @param integer $queueSize
      * @return $this
@@ -133,6 +124,15 @@ class Throttling
 
         $this->queueSize = $queueSize;
         return $this;
+    }
+
+    /**
+     * Get the quotaAvailable
+     * @return integer
+     */
+    public function getQuotaAvailable()
+    {
+        return $this->quotaAvailable;
     }
 
     /**
@@ -152,7 +152,7 @@ class Throttling
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

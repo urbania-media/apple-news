@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/component
  */
-class Component
+class Component implements \JsonSerializable
 {
     protected static $typeProperty = 'role';
 
@@ -161,60 +161,6 @@ class Component
     }
 
     /**
-     * Get the animation
-     * @return \Urbania\AppleNews\Format\ComponentAnimation
-     */
-    public function getAnimation()
-    {
-        return $this->animation;
-    }
-
-    /**
-     * Get the behavior
-     * @return \Urbania\AppleNews\Format\Behavior
-     */
-    public function getBehavior()
-    {
-        return $this->behavior;
-    }
-
-    /**
-     * Get the identifier
-     * @return string
-     */
-    public function getIdentifier()
-    {
-        return $this->identifier;
-    }
-
-    /**
-     * Get the layout
-     * @return \Urbania\AppleNews\Format\ComponentLayout|string
-     */
-    public function getLayout()
-    {
-        return $this->layout;
-    }
-
-    /**
-     * Get the role
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * Get the style
-     * @return \Urbania\AppleNews\Format\ComponentStyle|string
-     */
-    public function getStyle()
-    {
-        return $this->style;
-    }
-
-    /**
      * Set the anchor
      * @param \Urbania\AppleNews\Format\Anchor|array $anchor
      * @return $this
@@ -229,6 +175,15 @@ class Component
 
         $this->anchor = is_array($anchor) ? new Anchor($anchor) : $anchor;
         return $this;
+    }
+
+    /**
+     * Get the animation
+     * @return \Urbania\AppleNews\Format\ComponentAnimation
+     */
+    public function getAnimation()
+    {
+        return $this->animation;
     }
 
     /**
@@ -251,6 +206,15 @@ class Component
     }
 
     /**
+     * Get the behavior
+     * @return \Urbania\AppleNews\Format\Behavior
+     */
+    public function getBehavior()
+    {
+        return $this->behavior;
+    }
+
+    /**
      * Set the behavior
      * @param \Urbania\AppleNews\Format\Behavior|array $behavior
      * @return $this
@@ -270,6 +234,15 @@ class Component
     }
 
     /**
+     * Get the identifier
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    /**
      * Set the identifier
      * @param string $identifier
      * @return $this
@@ -280,6 +253,15 @@ class Component
 
         $this->identifier = $identifier;
         return $this;
+    }
+
+    /**
+     * Get the layout
+     * @return \Urbania\AppleNews\Format\ComponentLayout|string
+     */
+    public function getLayout()
+    {
+        return $this->layout;
     }
 
     /**
@@ -302,6 +284,15 @@ class Component
     }
 
     /**
+     * Get the role
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
      * Set the role
      * @param string $role
      * @return $this
@@ -312,6 +303,15 @@ class Component
 
         $this->role = $role;
         return $this;
+    }
+
+    /**
+     * Get the style
+     * @return \Urbania\AppleNews\Format\ComponentStyle|string
+     */
+    public function getStyle()
+    {
+        return $this->style;
     }
 
     /**
@@ -335,7 +335,7 @@ class Component
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/componentlink
  */
-class ComponentLink extends ComponentAddition
+class ComponentLink extends ComponentAddition implements \JsonSerializable
 {
     /**
      * The URL that should be opened when a user interacts with the
@@ -73,7 +73,7 @@ class ComponentLink extends ComponentAddition
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

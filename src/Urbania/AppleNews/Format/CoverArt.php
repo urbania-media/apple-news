@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/coverart
  */
-class CoverArt
+class CoverArt implements \JsonSerializable
 {
     /**
      * The URL of the image file.
@@ -57,24 +57,6 @@ class CoverArt
     }
 
     /**
-     * Get the type
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Get the URL
-     * @return string
-     */
-    public function getURL()
-    {
-        return $this->URL;
-    }
-
-    /**
      * Set the accessibilityCaption
      * @param string $accessibilityCaption
      * @return $this
@@ -88,6 +70,15 @@ class CoverArt
     }
 
     /**
+     * Get the type
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * Set the type
      * @param string $type
      * @return $this
@@ -98,6 +89,15 @@ class CoverArt
 
         $this->type = $type;
         return $this;
+    }
+
+    /**
+     * Get the URL
+     * @return string
+     */
+    public function getURL()
+    {
+        return $this->URL;
     }
 
     /**
@@ -117,7 +117,7 @@ class CoverArt
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

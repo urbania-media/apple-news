@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/articledocument
  */
-class ArticleDocument
+class ArticleDocument implements \JsonSerializable
 {
     /**
      * The version of Apple News Format used in the JSON document. The
@@ -189,123 +189,6 @@ class ArticleDocument
     }
 
     /**
-     * Get the componentLayouts
-     * @return \Urbania\AppleNews\Format\ComponentLayouts
-     */
-    public function getComponentLayouts()
-    {
-        return $this->componentLayouts;
-    }
-
-    /**
-     * Get the componentStyles
-     * @return \Urbania\AppleNews\Format\ComponentStyles
-     */
-    public function getComponentStyles()
-    {
-        return $this->componentStyles;
-    }
-
-    /**
-     * Get the componentTextStyles
-     * @return \Urbania\AppleNews\Format\ComponentTextStyles
-     */
-    public function getComponentTextStyles()
-    {
-        return $this->componentTextStyles;
-    }
-
-    /**
-     * Get the components
-     * @return Format\Component[]
-     */
-    public function getComponents()
-    {
-        return $this->components;
-    }
-
-    /**
-     * Get the documentStyle
-     * @return \Urbania\AppleNews\Format\DocumentStyle
-     */
-    public function getDocumentStyle()
-    {
-        return $this->documentStyle;
-    }
-
-    /**
-     * Get the identifier
-     * @return string
-     */
-    public function getIdentifier()
-    {
-        return $this->identifier;
-    }
-
-    /**
-     * Get the language
-     * @return string
-     */
-    public function getLanguage()
-    {
-        return $this->language;
-    }
-
-    /**
-     * Get the layout
-     * @return \Urbania\AppleNews\Format\Layout
-     */
-    public function getLayout()
-    {
-        return $this->layout;
-    }
-
-    /**
-     * Get the metadata
-     * @return \Urbania\AppleNews\Format\Metadata
-     */
-    public function getMetadata()
-    {
-        return $this->metadata;
-    }
-
-    /**
-     * Get the subtitle
-     * @return string
-     */
-    public function getSubtitle()
-    {
-        return $this->subtitle;
-    }
-
-    /**
-     * Get the textStyles
-     * @return \Urbania\AppleNews\Format\TextStyles
-     */
-    public function getTextStyles()
-    {
-        return $this->textStyles;
-    }
-
-    /**
-     * Get the title
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Get the version
-     * @return string
-     */
-    public function getVersion()
-    {
-        return $this->version;
-    }
-
-    /**
      * Set the advertisingSettings
      * @param \Urbania\AppleNews\Format\AdvertisingSettings|array $advertisingSettings
      * @return $this
@@ -328,6 +211,15 @@ class ArticleDocument
     }
 
     /**
+     * Get the componentLayouts
+     * @return \Urbania\AppleNews\Format\ComponentLayouts
+     */
+    public function getComponentLayouts()
+    {
+        return $this->componentLayouts;
+    }
+
+    /**
      * Set the componentLayouts
      * @param \Urbania\AppleNews\Format\ComponentLayouts|array $componentLayouts
      * @return $this
@@ -347,6 +239,15 @@ class ArticleDocument
     }
 
     /**
+     * Get the componentStyles
+     * @return \Urbania\AppleNews\Format\ComponentStyles
+     */
+    public function getComponentStyles()
+    {
+        return $this->componentStyles;
+    }
+
+    /**
      * Set the componentStyles
      * @param \Urbania\AppleNews\Format\ComponentStyles|array $componentStyles
      * @return $this
@@ -363,6 +264,15 @@ class ArticleDocument
             ? new ComponentStyles($componentStyles)
             : $componentStyles;
         return $this;
+    }
+
+    /**
+     * Get the componentTextStyles
+     * @return \Urbania\AppleNews\Format\ComponentTextStyles
+     */
+    public function getComponentTextStyles()
+    {
+        return $this->componentTextStyles;
     }
 
     /**
@@ -388,6 +298,15 @@ class ArticleDocument
     }
 
     /**
+     * Get the components
+     * @return Format\Component[]
+     */
+    public function getComponents()
+    {
+        return $this->components;
+    }
+
+    /**
      * Set the components
      * @param Format\Component[] $components
      * @return $this
@@ -405,6 +324,15 @@ class ArticleDocument
         }
         $this->components = $items;
         return $this;
+    }
+
+    /**
+     * Get the documentStyle
+     * @return \Urbania\AppleNews\Format\DocumentStyle
+     */
+    public function getDocumentStyle()
+    {
+        return $this->documentStyle;
     }
 
     /**
@@ -427,6 +355,15 @@ class ArticleDocument
     }
 
     /**
+     * Get the identifier
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    /**
      * Set the identifier
      * @param string $identifier
      * @return $this
@@ -440,6 +377,15 @@ class ArticleDocument
     }
 
     /**
+     * Get the language
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
      * Set the language
      * @param string $language
      * @return $this
@@ -450,6 +396,15 @@ class ArticleDocument
 
         $this->language = $language;
         return $this;
+    }
+
+    /**
+     * Get the layout
+     * @return \Urbania\AppleNews\Format\Layout
+     */
+    public function getLayout()
+    {
+        return $this->layout;
     }
 
     /**
@@ -467,6 +422,15 @@ class ArticleDocument
 
         $this->layout = is_array($layout) ? new Layout($layout) : $layout;
         return $this;
+    }
+
+    /**
+     * Get the metadata
+     * @return \Urbania\AppleNews\Format\Metadata
+     */
+    public function getMetadata()
+    {
+        return $this->metadata;
     }
 
     /**
@@ -489,6 +453,15 @@ class ArticleDocument
     }
 
     /**
+     * Get the subtitle
+     * @return string
+     */
+    public function getSubtitle()
+    {
+        return $this->subtitle;
+    }
+
+    /**
      * Set the subtitle
      * @param string $subtitle
      * @return $this
@@ -499,6 +472,15 @@ class ArticleDocument
 
         $this->subtitle = $subtitle;
         return $this;
+    }
+
+    /**
+     * Get the textStyles
+     * @return \Urbania\AppleNews\Format\TextStyles
+     */
+    public function getTextStyles()
+    {
+        return $this->textStyles;
     }
 
     /**
@@ -521,6 +503,15 @@ class ArticleDocument
     }
 
     /**
+     * Get the title
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
      * Set the title
      * @param string $title
      * @return $this
@@ -531,6 +522,15 @@ class ArticleDocument
 
         $this->title = $title;
         return $this;
+    }
+
+    /**
+     * Get the version
+     * @return string
+     */
+    public function getVersion()
+    {
+        return $this->version;
     }
 
     /**
@@ -550,7 +550,7 @@ class ArticleDocument
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

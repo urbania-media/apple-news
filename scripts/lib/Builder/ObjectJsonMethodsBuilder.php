@@ -21,7 +21,6 @@ class ObjectJsonMethodsBuilder
         $serializeMethod->setBody('return $this->toArray();');
         $serializeMethod->addComment('Convert the object into something JSON serializable.');
         $serializeMethod->addComment('@return array');
-        $serializeMethod->addParameter('options')->setTypeHint('int');
 
         $toJsonMethod = new Method('toJson');
         $toJsonMethod->setVisibility('public');

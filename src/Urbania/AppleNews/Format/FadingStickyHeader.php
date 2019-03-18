@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/fadingstickyheader
  */
-class FadingStickyHeader extends Scene
+class FadingStickyHeader extends Scene implements \JsonSerializable
 {
     /**
      * The color the header background will fade to, defined as a 3- to
@@ -45,15 +45,6 @@ class FadingStickyHeader extends Scene
     }
 
     /**
-     * Get the type
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
      * Set the fadeColor
      * @param string $fadeColor
      * @return $this
@@ -67,10 +58,19 @@ class FadingStickyHeader extends Scene
     }
 
     /**
+     * Get the type
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/inlinetextstyle
  */
-class InlineTextStyle
+class InlineTextStyle implements \JsonSerializable
 {
     /**
      * The length (in characters) of the portion of text to which the
@@ -59,24 +59,6 @@ class InlineTextStyle
     }
 
     /**
-     * Get the rangeStart
-     * @return integer
-     */
-    public function getRangeStart()
-    {
-        return $this->rangeStart;
-    }
-
-    /**
-     * Get the textStyle
-     * @return \Urbania\AppleNews\Format\TextStyle|string
-     */
-    public function getTextStyle()
-    {
-        return $this->textStyle;
-    }
-
-    /**
      * Set the rangeLength
      * @param integer $rangeLength
      * @return $this
@@ -90,6 +72,15 @@ class InlineTextStyle
     }
 
     /**
+     * Get the rangeStart
+     * @return integer
+     */
+    public function getRangeStart()
+    {
+        return $this->rangeStart;
+    }
+
+    /**
      * Set the rangeStart
      * @param integer $rangeStart
      * @return $this
@@ -100,6 +91,15 @@ class InlineTextStyle
 
         $this->rangeStart = $rangeStart;
         return $this;
+    }
+
+    /**
+     * Get the textStyle
+     * @return \Urbania\AppleNews\Format\TextStyle|string
+     */
+    public function getTextStyle()
+    {
+        return $this->textStyle;
     }
 
     /**
@@ -125,7 +125,7 @@ class InlineTextStyle
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

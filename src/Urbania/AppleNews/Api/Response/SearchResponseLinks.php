@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/searchresponse/links
  */
-class SearchResponseLinks
+class SearchResponseLinks implements \JsonSerializable
 {
     /**
      * The URL for the current page of search results.
@@ -48,15 +48,6 @@ class SearchResponseLinks
     }
 
     /**
-     * Get the self
-     * @return string
-     */
-    public function getSelf()
-    {
-        return $this->self;
-    }
-
-    /**
      * Set the next
      * @param string $next
      * @return $this
@@ -67,6 +58,15 @@ class SearchResponseLinks
 
         $this->next = $next;
         return $this;
+    }
+
+    /**
+     * Get the self
+     * @return string
+     */
+    public function getSelf()
+    {
+        return $this->self;
     }
 
     /**
@@ -86,7 +86,7 @@ class SearchResponseLinks
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

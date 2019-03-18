@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/promotearticleresponse
  */
-class PromoteArticleResponse
+class PromoteArticleResponse implements \JsonSerializable
 {
     /**
      * List of URLs for the promoted articles.
@@ -52,7 +52,7 @@ class PromoteArticleResponse
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

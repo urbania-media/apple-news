@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/imagedataformat
  */
-class ImageDataFormat extends DataFormat
+class ImageDataFormat extends DataFormat implements \JsonSerializable
 {
     /**
      * The maximum height of an image in a cell as an integer in points or as
@@ -79,42 +79,6 @@ class ImageDataFormat extends DataFormat
     }
 
     /**
-     * Get the maximumWidth
-     * @return string|integer
-     */
-    public function getMaximumWidth()
-    {
-        return $this->maximumWidth;
-    }
-
-    /**
-     * Get the minimumHeight
-     * @return string|integer
-     */
-    public function getMinimumHeight()
-    {
-        return $this->minimumHeight;
-    }
-
-    /**
-     * Get the minimumWidth
-     * @return string|integer
-     */
-    public function getMinimumWidth()
-    {
-        return $this->minimumWidth;
-    }
-
-    /**
-     * Get the type
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
      * Set the maximumHeight
      * @param string|integer $maximumHeight
      * @return $this
@@ -125,6 +89,15 @@ class ImageDataFormat extends DataFormat
 
         $this->maximumHeight = $maximumHeight;
         return $this;
+    }
+
+    /**
+     * Get the maximumWidth
+     * @return string|integer
+     */
+    public function getMaximumWidth()
+    {
+        return $this->maximumWidth;
     }
 
     /**
@@ -141,6 +114,15 @@ class ImageDataFormat extends DataFormat
     }
 
     /**
+     * Get the minimumHeight
+     * @return string|integer
+     */
+    public function getMinimumHeight()
+    {
+        return $this->minimumHeight;
+    }
+
+    /**
      * Set the minimumHeight
      * @param string|integer $minimumHeight
      * @return $this
@@ -151,6 +133,15 @@ class ImageDataFormat extends DataFormat
 
         $this->minimumHeight = $minimumHeight;
         return $this;
+    }
+
+    /**
+     * Get the minimumWidth
+     * @return string|integer
+     */
+    public function getMinimumWidth()
+    {
+        return $this->minimumWidth;
     }
 
     /**
@@ -167,10 +158,19 @@ class ImageDataFormat extends DataFormat
     }
 
     /**
+     * Get the type
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

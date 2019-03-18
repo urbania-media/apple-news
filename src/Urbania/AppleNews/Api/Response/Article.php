@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/article
  */
-class Article
+class Article implements \JsonSerializable
 {
     /**
      * Text that appears alongside article headlines — author name, channel
@@ -188,132 +188,6 @@ class Article
     }
 
     /**
-     * Get the createdAt
-     * @return \Carbon\Carbon
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Get the document
-     * @return string
-     */
-    public function getDocument()
-    {
-        return $this->document;
-    }
-
-    /**
-     * Get the id
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Get the isCandidateToBeFeatured
-     * @return boolean
-     */
-    public function getIsCandidateToBeFeatured()
-    {
-        return $this->isCandidateToBeFeatured;
-    }
-
-    /**
-     * Get the isPreview
-     * @return boolean
-     */
-    public function getIsPreview()
-    {
-        return $this->isPreview;
-    }
-
-    /**
-     * Get the isSponsored
-     * @return boolean
-     */
-    public function getIsSponsored()
-    {
-        return $this->isSponsored;
-    }
-
-    /**
-     * Get the maturityRating
-     * @return string
-     */
-    public function getMaturityRating()
-    {
-        return $this->maturityRating;
-    }
-
-    /**
-     * Get the modifiedAt
-     * @return \Carbon\Carbon
-     */
-    public function getModifiedAt()
-    {
-        return $this->modifiedAt;
-    }
-
-    /**
-     * Get the revision
-     * @return string
-     */
-    public function getRevision()
-    {
-        return $this->revision;
-    }
-
-    /**
-     * Get the shareUrl
-     * @return string
-     */
-    public function getShareUrl()
-    {
-        return $this->shareUrl;
-    }
-
-    /**
-     * Get the state
-     * @return string
-     */
-    public function getState()
-    {
-        return $this->state;
-    }
-
-    /**
-     * Get the title
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Get the type
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Get the warnings
-     * @return Api\Response\Warning[]
-     */
-    public function getWarnings()
-    {
-        return $this->warnings;
-    }
-
-    /**
      * Set the accessoryText
      * @param string $accessoryText
      * @return $this
@@ -324,6 +198,15 @@ class Article
 
         $this->accessoryText = $accessoryText;
         return $this;
+    }
+
+    /**
+     * Get the createdAt
+     * @return \Carbon\Carbon
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 
     /**
@@ -342,6 +225,15 @@ class Article
     }
 
     /**
+     * Get the document
+     * @return string
+     */
+    public function getDocument()
+    {
+        return $this->document;
+    }
+
+    /**
      * Set the document
      * @param string $document
      * @return $this
@@ -352,6 +244,15 @@ class Article
 
         $this->document = $document;
         return $this;
+    }
+
+    /**
+     * Get the id
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -368,6 +269,15 @@ class Article
     }
 
     /**
+     * Get the isCandidateToBeFeatured
+     * @return boolean
+     */
+    public function getIsCandidateToBeFeatured()
+    {
+        return $this->isCandidateToBeFeatured;
+    }
+
+    /**
      * Set the isCandidateToBeFeatured
      * @param boolean $isCandidateToBeFeatured
      * @return $this
@@ -378,6 +288,15 @@ class Article
 
         $this->isCandidateToBeFeatured = $isCandidateToBeFeatured;
         return $this;
+    }
+
+    /**
+     * Get the isPreview
+     * @return boolean
+     */
+    public function getIsPreview()
+    {
+        return $this->isPreview;
     }
 
     /**
@@ -394,6 +313,15 @@ class Article
     }
 
     /**
+     * Get the isSponsored
+     * @return boolean
+     */
+    public function getIsSponsored()
+    {
+        return $this->isSponsored;
+    }
+
+    /**
      * Set the isSponsored
      * @param boolean $isSponsored
      * @return $this
@@ -407,6 +335,15 @@ class Article
     }
 
     /**
+     * Get the maturityRating
+     * @return string
+     */
+    public function getMaturityRating()
+    {
+        return $this->maturityRating;
+    }
+
+    /**
      * Set the maturityRating
      * @param string $maturityRating
      * @return $this
@@ -417,6 +354,15 @@ class Article
 
         $this->maturityRating = $maturityRating;
         return $this;
+    }
+
+    /**
+     * Get the modifiedAt
+     * @return \Carbon\Carbon
+     */
+    public function getModifiedAt()
+    {
+        return $this->modifiedAt;
     }
 
     /**
@@ -435,6 +381,15 @@ class Article
     }
 
     /**
+     * Get the revision
+     * @return string
+     */
+    public function getRevision()
+    {
+        return $this->revision;
+    }
+
+    /**
      * Set the revision
      * @param string $revision
      * @return $this
@@ -448,6 +403,15 @@ class Article
     }
 
     /**
+     * Get the shareUrl
+     * @return string
+     */
+    public function getShareUrl()
+    {
+        return $this->shareUrl;
+    }
+
+    /**
      * Set the shareUrl
      * @param string $shareUrl
      * @return $this
@@ -458,6 +422,15 @@ class Article
 
         $this->shareUrl = $shareUrl;
         return $this;
+    }
+
+    /**
+     * Get the state
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
     }
 
     /**
@@ -481,6 +454,15 @@ class Article
     }
 
     /**
+     * Get the title
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
      * Set the title
      * @param string $title
      * @return $this
@@ -494,6 +476,15 @@ class Article
     }
 
     /**
+     * Get the type
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * Set the type
      * @param string $type
      * @return $this
@@ -504,6 +495,15 @@ class Article
 
         $this->type = $type;
         return $this;
+    }
+
+    /**
+     * Get the warnings
+     * @return Api\Response\Warning[]
+     */
+    public function getWarnings()
+    {
+        return $this->warnings;
     }
 
     /**
@@ -528,7 +528,7 @@ class Article
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

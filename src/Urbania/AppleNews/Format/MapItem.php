@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/mapitem
  */
-class MapItem
+class MapItem implements \JsonSerializable
 {
     /**
      * The caption for the map item. This caption will be displayed when a
@@ -57,24 +57,6 @@ class MapItem
     }
 
     /**
-     * Get the latitude
-     * @return integer|float
-     */
-    public function getLatitude()
-    {
-        return $this->latitude;
-    }
-
-    /**
-     * Get the longitude
-     * @return integer|float
-     */
-    public function getLongitude()
-    {
-        return $this->longitude;
-    }
-
-    /**
      * Set the caption
      * @param string $caption
      * @return $this
@@ -88,6 +70,15 @@ class MapItem
     }
 
     /**
+     * Get the latitude
+     * @return integer|float
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
      * Set the latitude
      * @param integer|float $latitude
      * @return $this
@@ -98,6 +89,15 @@ class MapItem
 
         $this->latitude = $latitude;
         return $this;
+    }
+
+    /**
+     * Get the longitude
+     * @return integer|float
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
     }
 
     /**
@@ -117,7 +117,7 @@ class MapItem
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

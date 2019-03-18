@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/container
  */
-class Container extends Component
+class Container extends Component implements \JsonSerializable
 {
     /**
      * An array of ComponentLink objects. This can be used to create a
@@ -70,33 +70,6 @@ class Container extends Component
     }
 
     /**
-     * Get the components
-     * @return Format\Component[]
-     */
-    public function getComponents()
-    {
-        return $this->components;
-    }
-
-    /**
-     * Get the contentDisplay
-     * @return \Urbania\AppleNews\Format\CollectionDisplay
-     */
-    public function getContentDisplay()
-    {
-        return $this->contentDisplay;
-    }
-
-    /**
-     * Get the role
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
      * Set the additions
      * @param Format\ComponentLink[] $additions
      * @return $this
@@ -112,6 +85,15 @@ class Container extends Component
         }
         $this->additions = $items;
         return $this;
+    }
+
+    /**
+     * Get the components
+     * @return Format\Component[]
+     */
+    public function getComponents()
+    {
+        return $this->components;
     }
 
     /**
@@ -135,6 +117,15 @@ class Container extends Component
     }
 
     /**
+     * Get the contentDisplay
+     * @return \Urbania\AppleNews\Format\CollectionDisplay
+     */
+    public function getContentDisplay()
+    {
+        return $this->contentDisplay;
+    }
+
+    /**
      * Set the contentDisplay
      * @param \Urbania\AppleNews\Format\CollectionDisplay|array $contentDisplay
      * @return $this
@@ -154,10 +145,19 @@ class Container extends Component
     }
 
     /**
+     * Get the role
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

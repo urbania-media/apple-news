@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/heading
  */
-class Heading extends Text
+class Heading extends Text implements \JsonSerializable
 {
     /**
      * A heading component has one of these values for role: heading,
@@ -62,7 +62,7 @@ class Heading extends Text
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

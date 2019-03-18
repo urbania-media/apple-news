@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/channel
  */
-class Channel
+class Channel implements \JsonSerializable
 {
     /**
      * The date and time the channel was created.
@@ -96,60 +96,6 @@ class Channel
     }
 
     /**
-     * Get the id
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Get the modifiedAt
-     * @return \Carbon\Carbon
-     */
-    public function getModifiedAt()
-    {
-        return $this->modifiedAt;
-    }
-
-    /**
-     * Get the name
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Get the shareUrl
-     * @return string
-     */
-    public function getShareUrl()
-    {
-        return $this->shareUrl;
-    }
-
-    /**
-     * Get the type
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Get the website
-     * @return string
-     */
-    public function getWebsite()
-    {
-        return $this->website;
-    }
-
-    /**
      * Set the createdAt
      * @param \Carbon\Carbon|string $createdAt
      * @return $this
@@ -165,6 +111,15 @@ class Channel
     }
 
     /**
+     * Get the id
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Set the id
      * @param string $id
      * @return $this
@@ -175,6 +130,15 @@ class Channel
 
         $this->id = $id;
         return $this;
+    }
+
+    /**
+     * Get the modifiedAt
+     * @return \Carbon\Carbon
+     */
+    public function getModifiedAt()
+    {
+        return $this->modifiedAt;
     }
 
     /**
@@ -193,6 +157,15 @@ class Channel
     }
 
     /**
+     * Get the name
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * Set the name
      * @param string $name
      * @return $this
@@ -203,6 +176,15 @@ class Channel
 
         $this->name = $name;
         return $this;
+    }
+
+    /**
+     * Get the shareUrl
+     * @return string
+     */
+    public function getShareUrl()
+    {
+        return $this->shareUrl;
     }
 
     /**
@@ -219,6 +201,15 @@ class Channel
     }
 
     /**
+     * Get the type
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * Set the type
      * @param string $type
      * @return $this
@@ -229,6 +220,15 @@ class Channel
 
         $this->type = $type;
         return $this;
+    }
+
+    /**
+     * Get the website
+     * @return string
+     */
+    public function getWebsite()
+    {
+        return $this->website;
     }
 
     /**
@@ -248,7 +248,7 @@ class Channel
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

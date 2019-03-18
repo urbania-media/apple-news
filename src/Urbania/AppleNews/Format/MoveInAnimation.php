@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/moveinanimation
  */
-class MoveInAnimation extends ComponentAnimation
+class MoveInAnimation extends ComponentAnimation implements \JsonSerializable
 {
     /**
      * Indicates which side of the screen should be the starting point of the
@@ -58,6 +58,19 @@ class MoveInAnimation extends ComponentAnimation
     }
 
     /**
+     * Set the preferredStartingPosition
+     * @param string $preferredStartingPosition
+     * @return $this
+     */
+    public function setPreferredStartingPosition($preferredStartingPosition)
+    {
+        Assert::oneOf($preferredStartingPosition, ["left", "right"]);
+
+        $this->preferredStartingPosition = $preferredStartingPosition;
+        return $this;
+    }
+
+    /**
      * Get the type
      * @return string
      */
@@ -73,19 +86,6 @@ class MoveInAnimation extends ComponentAnimation
     public function getUserControllable()
     {
         return $this->userControllable;
-    }
-
-    /**
-     * Set the preferredStartingPosition
-     * @param string $preferredStartingPosition
-     * @return $this
-     */
-    public function setPreferredStartingPosition($preferredStartingPosition)
-    {
-        Assert::oneOf($preferredStartingPosition, ["left", "right"]);
-
-        $this->preferredStartingPosition = $preferredStartingPosition;
-        return $this;
     }
 
     /**
@@ -105,7 +105,7 @@ class MoveInAnimation extends ComponentAnimation
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

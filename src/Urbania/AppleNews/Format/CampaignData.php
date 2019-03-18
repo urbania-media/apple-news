@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/metadata/campaigndata
  */
-class CampaignData
+class CampaignData implements \JsonSerializable
 {
     public function __construct(array $data = [])
     {
@@ -20,7 +20,7 @@ class CampaignData
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

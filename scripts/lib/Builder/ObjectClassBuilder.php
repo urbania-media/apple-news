@@ -60,6 +60,8 @@ class ObjectClassBuilder
             $class = new ClassType($baseClassName);
         }
 
+        $class->addImplement('JsonSerializable');
+
         if (!is_null($typed)) {
             $typedMembers = $this->buildTyped($typed);
             foreach ($typedMembers as $typedMember) {
@@ -78,7 +80,7 @@ class ObjectClassBuilder
             if (!empty($description)) {
                 $class->addComment('');
             }
-            $class->addComment('@see '.$url);
+            $class->addComment('@see ' . $url);
         }
 
         if (!is_null($extends)) {
@@ -104,7 +106,10 @@ class ObjectClassBuilder
             $class->addMember($constructMethod);
         }
 
-        $propertiesMethods = $this->buildPropertiesMethods($properties, $baseNamespace);
+        $propertiesMethods = $this->buildPropertiesMethods(
+            $properties,
+            $baseNamespace
+        );
         foreach ($propertiesMethods as $method) {
             $class->addMember($method);
         }
@@ -143,11 +148,17 @@ class ObjectClassBuilder
             if ($method->getDeclaringClass()->getName() === $from->getName()) {
                 $startLine = $method->getStartLine();
                 $endLine = $method->getEndLine();
-                $methodLines = array_slice($lines, $startLine + 1, $endLine - $startLine - 2);
+                $methodLines = array_slice(
+                    $lines,
+                    $startLine + 1,
+                    $endLine - $startLine - 2
+                );
                 $methodLines = array_map(function ($line) {
                     return preg_replace('/^[\s]{4}/', '', $line);
                 }, $methodLines);
-                $methods[$method->getName()]->setBody(implode(PHP_EOL, $methodLines));
+                $methods[$method->getName()]->setBody(
+                    implode(PHP_EOL, $methodLines)
+                );
             }
         }
         return $methods;
@@ -180,7 +191,10 @@ class ObjectClassBuilder
             $methods[] = $this->buildPropertyGetMethod($property);
             $readOnly = $property['read_only'] ?? false;
             if (!$readOnly) {
-                $methods[] = $this->buildPropertySetMethod($property, $baseNamespace);
+                $methods[] = $this->buildPropertySetMethod(
+                    $property,
+                    $baseNamespace
+                );
             }
         }
         return $methods;
@@ -208,9 +222,21 @@ class ObjectClassBuilder
 
     protected function sortMembers($members)
     {
+        $firstMethods = ['__construct', 'createTyped'];
         $lastMethods = ['jsonSerialize', 'toJson', 'toArray'];
         $names = array_keys($members);
-        usort($names, function ($a, $b) use ($lastMethods) {
+        usort($names, function ($a, $b) use ($firstMethods, $lastMethods) {
+
+            $aFirstMethodIndex = array_search($a, $firstMethods);
+            $bFirstMethodIndex = array_search($b, $firstMethods);
+            if ($aFirstMethodIndex !== false && $bFirstMethodIndex !== false) {
+                return $aFirstMethodIndex > $bFirstMethodIndex;
+            } elseif ($aFirstMethodIndex !== false) {
+                return -1;
+            } elseif ($bFirstMethodIndex !== false) {
+                return 1;
+            }
+
             $aLastMethodIndex = array_search($a, $lastMethods);
             $bLastMethodIndex = array_search($b, $lastMethods);
             if ($aLastMethodIndex !== false && $bLastMethodIndex !== false) {
@@ -220,11 +246,20 @@ class ObjectClassBuilder
             } elseif ($bLastMethodIndex !== false) {
                 return -1;
             }
-            return strcmp($a, $b);
+
+            $aPropertyName = preg_replace('/^(get|set|add|remove)/', '', $a);
+            $bPropertyName = preg_replace('/^(get|set|add|remove)/', '', $b);
+            return $aPropertyName !== $bPropertyName
+                ? strcmp($aPropertyName, $bPropertyName)
+                : strcmp($a, $b);
         });
-        return array_reduce($names, function ($newMembers, $name) use ($members) {
-            $newMembers[$name] = $members[$name];
-            return $newMembers;
-        }, []);
+        return array_reduce(
+            $names,
+            function ($newMembers, $name) use ($members) {
+                $newMembers[$name] = $members[$name];
+                return $newMembers;
+            },
+            []
+        );
     }
 }

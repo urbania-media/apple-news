@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/logo
  */
-class Logo extends Component
+class Logo extends Component implements \JsonSerializable
 {
     /**
      * The URL of an image file.
@@ -91,51 +91,6 @@ class Logo extends Component
     }
 
     /**
-     * Get the additions
-     * @return Format\ComponentLink[]
-     */
-    public function getAdditions()
-    {
-        return $this->additions;
-    }
-
-    /**
-     * Get the caption
-     * @return string
-     */
-    public function getCaption()
-    {
-        return $this->caption;
-    }
-
-    /**
-     * Get the explicitContent
-     * @return boolean
-     */
-    public function getExplicitContent()
-    {
-        return $this->explicitContent;
-    }
-
-    /**
-     * Get the role
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * Get the URL
-     * @return string
-     */
-    public function getURL()
-    {
-        return $this->URL;
-    }
-
-    /**
      * Set the accessibilityCaption
      * @param string $accessibilityCaption
      * @return $this
@@ -146,6 +101,15 @@ class Logo extends Component
 
         $this->accessibilityCaption = $accessibilityCaption;
         return $this;
+    }
+
+    /**
+     * Get the additions
+     * @return Format\ComponentLink[]
+     */
+    public function getAdditions()
+    {
+        return $this->additions;
     }
 
     /**
@@ -167,6 +131,15 @@ class Logo extends Component
     }
 
     /**
+     * Get the caption
+     * @return string
+     */
+    public function getCaption()
+    {
+        return $this->caption;
+    }
+
+    /**
      * Set the caption
      * @param string $caption
      * @return $this
@@ -180,6 +153,15 @@ class Logo extends Component
     }
 
     /**
+     * Get the explicitContent
+     * @return boolean
+     */
+    public function getExplicitContent()
+    {
+        return $this->explicitContent;
+    }
+
+    /**
      * Set the explicitContent
      * @param boolean $explicitContent
      * @return $this
@@ -190,6 +172,24 @@ class Logo extends Component
 
         $this->explicitContent = $explicitContent;
         return $this;
+    }
+
+    /**
+     * Get the role
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * Get the URL
+     * @return string
+     */
+    public function getURL()
+    {
+        return $this->URL;
     }
 
     /**
@@ -209,7 +209,7 @@ class Logo extends Component
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

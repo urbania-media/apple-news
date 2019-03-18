@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/lineargradientfill
  */
-class LinearGradientFill extends GradientFill
+class LinearGradientFill extends GradientFill implements \JsonSerializable
 {
     /**
      * The angle of the gradient fill, in degrees. Use the angle to set the
@@ -46,15 +46,6 @@ class LinearGradientFill extends GradientFill
     }
 
     /**
-     * Get the type
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
      * Set the angle
      * @param integer|float $angle
      * @return $this
@@ -68,10 +59,19 @@ class LinearGradientFill extends GradientFill
     }
 
     /**
+     * Get the type
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

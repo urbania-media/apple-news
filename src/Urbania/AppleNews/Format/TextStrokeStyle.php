@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/textstrokestyle
  */
-class TextStrokeStyle
+class TextStrokeStyle implements \JsonSerializable
 {
     /**
      * The stroke color.
@@ -45,15 +45,6 @@ class TextStrokeStyle
     }
 
     /**
-     * Get the width
-     * @return integer
-     */
-    public function getWidth()
-    {
-        return $this->width;
-    }
-
-    /**
      * Set the color
      * @param string $color
      * @return $this
@@ -64,6 +55,15 @@ class TextStrokeStyle
 
         $this->color = $color;
         return $this;
+    }
+
+    /**
+     * Get the width
+     * @return integer
+     */
+    public function getWidth()
+    {
+        return $this->width;
     }
 
     /**
@@ -83,7 +83,7 @@ class TextStrokeStyle
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

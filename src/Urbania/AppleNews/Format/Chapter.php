@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/chapter
  */
-class Chapter extends Component
+class Chapter extends Component implements \JsonSerializable
 {
     /**
      * An array of ComponentLink objects. This can be used to create a
@@ -81,42 +81,6 @@ class Chapter extends Component
     }
 
     /**
-     * Get the components
-     * @return Format\Component[]
-     */
-    public function getComponents()
-    {
-        return $this->components;
-    }
-
-    /**
-     * Get the contentDisplay
-     * @return \Urbania\AppleNews\Format\CollectionDisplay
-     */
-    public function getContentDisplay()
-    {
-        return $this->contentDisplay;
-    }
-
-    /**
-     * Get the role
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * Get the scene
-     * @return \Urbania\AppleNews\Format\Scene
-     */
-    public function getScene()
-    {
-        return $this->scene;
-    }
-
-    /**
      * Set the additions
      * @param Format\ComponentLink[] $additions
      * @return $this
@@ -132,6 +96,15 @@ class Chapter extends Component
         }
         $this->additions = $items;
         return $this;
+    }
+
+    /**
+     * Get the components
+     * @return Format\Component[]
+     */
+    public function getComponents()
+    {
+        return $this->components;
     }
 
     /**
@@ -155,6 +128,15 @@ class Chapter extends Component
     }
 
     /**
+     * Get the contentDisplay
+     * @return \Urbania\AppleNews\Format\CollectionDisplay
+     */
+    public function getContentDisplay()
+    {
+        return $this->contentDisplay;
+    }
+
+    /**
      * Set the contentDisplay
      * @param \Urbania\AppleNews\Format\CollectionDisplay|array $contentDisplay
      * @return $this
@@ -171,6 +153,24 @@ class Chapter extends Component
             ? new CollectionDisplay($contentDisplay)
             : $contentDisplay;
         return $this;
+    }
+
+    /**
+     * Get the role
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * Get the scene
+     * @return \Urbania\AppleNews\Format\Scene
+     */
+    public function getScene()
+    {
+        return $this->scene;
     }
 
     /**
@@ -194,7 +194,7 @@ class Chapter extends Component
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

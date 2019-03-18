@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/textstyle
  */
-class TextStyle
+class TextStyle implements \JsonSerializable
 {
     /**
      * The background color for text lines.
@@ -227,150 +227,6 @@ class TextStyle
     }
 
     /**
-     * Get the fontFamily
-     * @return string
-     */
-    public function getFontFamily()
-    {
-        return $this->fontFamily;
-    }
-
-    /**
-     * Get the fontName
-     * @return string
-     */
-    public function getFontName()
-    {
-        return $this->fontName;
-    }
-
-    /**
-     * Get the fontSize
-     * @return integer
-     */
-    public function getFontSize()
-    {
-        return $this->fontSize;
-    }
-
-    /**
-     * Get the fontStyle
-     * @return string
-     */
-    public function getFontStyle()
-    {
-        return $this->fontStyle;
-    }
-
-    /**
-     * Get the fontWeight
-     * @return integer|string
-     */
-    public function getFontWeight()
-    {
-        return $this->fontWeight;
-    }
-
-    /**
-     * Get the fontWidth
-     * @return string
-     */
-    public function getFontWidth()
-    {
-        return $this->fontWidth;
-    }
-
-    /**
-     * Get the orderedListItems
-     * @return \Urbania\AppleNews\Format\ListItemStyle
-     */
-    public function getOrderedListItems()
-    {
-        return $this->orderedListItems;
-    }
-
-    /**
-     * Get the strikethrough
-     * @return \Urbania\AppleNews\Format\TextDecoration|boolean
-     */
-    public function getStrikethrough()
-    {
-        return $this->strikethrough;
-    }
-
-    /**
-     * Get the stroke
-     * @return \Urbania\AppleNews\Format\TextStrokeStyle
-     */
-    public function getStroke()
-    {
-        return $this->stroke;
-    }
-
-    /**
-     * Get the textColor
-     * @return string
-     */
-    public function getTextColor()
-    {
-        return $this->textColor;
-    }
-
-    /**
-     * Get the textShadow
-     * @return \Urbania\AppleNews\Format\Shadow
-     */
-    public function getTextShadow()
-    {
-        return $this->textShadow;
-    }
-
-    /**
-     * Get the textTransform
-     * @return string
-     */
-    public function getTextTransform()
-    {
-        return $this->textTransform;
-    }
-
-    /**
-     * Get the tracking
-     * @return integer|float
-     */
-    public function getTracking()
-    {
-        return $this->tracking;
-    }
-
-    /**
-     * Get the underline
-     * @return \Urbania\AppleNews\Format\TextDecoration|boolean
-     */
-    public function getUnderline()
-    {
-        return $this->underline;
-    }
-
-    /**
-     * Get the unorderedListItems
-     * @return \Urbania\AppleNews\Format\ListItemStyle
-     */
-    public function getUnorderedListItems()
-    {
-        return $this->unorderedListItems;
-    }
-
-    /**
-     * Get the verticalAlignment
-     * @return string
-     */
-    public function getVerticalAlignment()
-    {
-        return $this->verticalAlignment;
-    }
-
-    /**
      * Set the backgroundColor
      * @param string $backgroundColor
      * @return $this
@@ -381,6 +237,15 @@ class TextStyle
 
         $this->backgroundColor = $backgroundColor;
         return $this;
+    }
+
+    /**
+     * Get the fontFamily
+     * @return string
+     */
+    public function getFontFamily()
+    {
+        return $this->fontFamily;
     }
 
     /**
@@ -397,6 +262,15 @@ class TextStyle
     }
 
     /**
+     * Get the fontName
+     * @return string
+     */
+    public function getFontName()
+    {
+        return $this->fontName;
+    }
+
+    /**
      * Set the fontName
      * @param string $fontName
      * @return $this
@@ -407,6 +281,15 @@ class TextStyle
 
         $this->fontName = $fontName;
         return $this;
+    }
+
+    /**
+     * Get the fontSize
+     * @return integer
+     */
+    public function getFontSize()
+    {
+        return $this->fontSize;
     }
 
     /**
@@ -423,6 +306,15 @@ class TextStyle
     }
 
     /**
+     * Get the fontStyle
+     * @return string
+     */
+    public function getFontStyle()
+    {
+        return $this->fontStyle;
+    }
+
+    /**
      * Set the fontStyle
      * @param string $fontStyle
      * @return $this
@@ -433,6 +325,15 @@ class TextStyle
 
         $this->fontStyle = $fontStyle;
         return $this;
+    }
+
+    /**
+     * Get the fontWeight
+     * @return integer|string
+     */
+    public function getFontWeight()
+    {
+        return $this->fontWeight;
     }
 
     /**
@@ -482,6 +383,15 @@ class TextStyle
     }
 
     /**
+     * Get the fontWidth
+     * @return string
+     */
+    public function getFontWidth()
+    {
+        return $this->fontWidth;
+    }
+
+    /**
      * Set the fontWidth
      * @param string $fontWidth
      * @return $this
@@ -505,6 +415,15 @@ class TextStyle
     }
 
     /**
+     * Get the orderedListItems
+     * @return \Urbania\AppleNews\Format\ListItemStyle
+     */
+    public function getOrderedListItems()
+    {
+        return $this->orderedListItems;
+    }
+
+    /**
      * Set the orderedListItems
      * @param \Urbania\AppleNews\Format\ListItemStyle|array $orderedListItems
      * @return $this
@@ -521,6 +440,15 @@ class TextStyle
             ? new ListItemStyle($orderedListItems)
             : $orderedListItems;
         return $this;
+    }
+
+    /**
+     * Get the strikethrough
+     * @return \Urbania\AppleNews\Format\TextDecoration|boolean
+     */
+    public function getStrikethrough()
+    {
+        return $this->strikethrough;
     }
 
     /**
@@ -543,6 +471,15 @@ class TextStyle
     }
 
     /**
+     * Get the stroke
+     * @return \Urbania\AppleNews\Format\TextStrokeStyle
+     */
+    public function getStroke()
+    {
+        return $this->stroke;
+    }
+
+    /**
      * Set the stroke
      * @param \Urbania\AppleNews\Format\TextStrokeStyle|array $stroke
      * @return $this
@@ -562,6 +499,15 @@ class TextStyle
     }
 
     /**
+     * Get the textColor
+     * @return string
+     */
+    public function getTextColor()
+    {
+        return $this->textColor;
+    }
+
+    /**
      * Set the textColor
      * @param string $textColor
      * @return $this
@@ -572,6 +518,15 @@ class TextStyle
 
         $this->textColor = $textColor;
         return $this;
+    }
+
+    /**
+     * Get the textShadow
+     * @return \Urbania\AppleNews\Format\Shadow
+     */
+    public function getTextShadow()
+    {
+        return $this->textShadow;
     }
 
     /**
@@ -594,6 +549,15 @@ class TextStyle
     }
 
     /**
+     * Get the textTransform
+     * @return string
+     */
+    public function getTextTransform()
+    {
+        return $this->textTransform;
+    }
+
+    /**
      * Set the textTransform
      * @param string $textTransform
      * @return $this
@@ -607,6 +571,15 @@ class TextStyle
     }
 
     /**
+     * Get the tracking
+     * @return integer|float
+     */
+    public function getTracking()
+    {
+        return $this->tracking;
+    }
+
+    /**
      * Set the tracking
      * @param integer|float $tracking
      * @return $this
@@ -617,6 +590,15 @@ class TextStyle
 
         $this->tracking = $tracking;
         return $this;
+    }
+
+    /**
+     * Get the underline
+     * @return \Urbania\AppleNews\Format\TextDecoration|boolean
+     */
+    public function getUnderline()
+    {
+        return $this->underline;
     }
 
     /**
@@ -639,6 +621,15 @@ class TextStyle
     }
 
     /**
+     * Get the unorderedListItems
+     * @return \Urbania\AppleNews\Format\ListItemStyle
+     */
+    public function getUnorderedListItems()
+    {
+        return $this->unorderedListItems;
+    }
+
+    /**
      * Set the unorderedListItems
      * @param \Urbania\AppleNews\Format\ListItemStyle|array $unorderedListItems
      * @return $this
@@ -658,6 +649,15 @@ class TextStyle
     }
 
     /**
+     * Get the verticalAlignment
+     * @return string
+     */
+    public function getVerticalAlignment()
+    {
+        return $this->verticalAlignment;
+    }
+
+    /**
      * Set the verticalAlignment
      * @param string $verticalAlignment
      * @return $this
@@ -674,7 +674,7 @@ class TextStyle
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

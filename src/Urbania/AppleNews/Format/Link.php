@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/link
  */
-class Link extends Addition
+class Link extends Addition implements \JsonSerializable
 {
     /**
      * The URL that should be opened when a user interacts with the range of
@@ -70,7 +70,7 @@ class Link extends Addition
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

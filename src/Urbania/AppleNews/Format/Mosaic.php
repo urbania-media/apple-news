@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/mosaic
  */
-class Mosaic extends Component
+class Mosaic extends Component implements \JsonSerializable
 {
     /**
      * An array of the images that will appear in the mosaic. The order used
@@ -48,15 +48,6 @@ class Mosaic extends Component
     }
 
     /**
-     * Get the role
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
      * Set the items
      * @param Format\GalleryItem[] $items
      * @return $this
@@ -75,10 +66,19 @@ class Mosaic extends Component
     }
 
     /**
+     * Get the role
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

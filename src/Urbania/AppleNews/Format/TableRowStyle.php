@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/tablerowstyle
  */
-class TableRowStyle
+class TableRowStyle implements \JsonSerializable
 {
     /**
      * The background color for the table row.
@@ -68,33 +68,6 @@ class TableRowStyle
     }
 
     /**
-     * Get the conditional
-     * @return Format\ConditionalTableRowStyle[]
-     */
-    public function getConditional()
-    {
-        return $this->conditional;
-    }
-
-    /**
-     * Get the divider
-     * @return \Urbania\AppleNews\Format\TableStrokeStyle
-     */
-    public function getDivider()
-    {
-        return $this->divider;
-    }
-
-    /**
-     * Get the height
-     * @return string|integer
-     */
-    public function getHeight()
-    {
-        return $this->height;
-    }
-
-    /**
      * Set the backgroundColor
      * @param string $backgroundColor
      * @return $this
@@ -105,6 +78,15 @@ class TableRowStyle
 
         $this->backgroundColor = $backgroundColor;
         return $this;
+    }
+
+    /**
+     * Get the conditional
+     * @return Format\ConditionalTableRowStyle[]
+     */
+    public function getConditional()
+    {
+        return $this->conditional;
     }
 
     /**
@@ -131,6 +113,15 @@ class TableRowStyle
     }
 
     /**
+     * Get the divider
+     * @return \Urbania\AppleNews\Format\TableStrokeStyle
+     */
+    public function getDivider()
+    {
+        return $this->divider;
+    }
+
+    /**
      * Set the divider
      * @param \Urbania\AppleNews\Format\TableStrokeStyle|array $divider
      * @return $this
@@ -150,6 +141,15 @@ class TableRowStyle
     }
 
     /**
+     * Get the height
+     * @return string|integer
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    /**
      * Set the height
      * @param string|integer $height
      * @return $this
@@ -166,7 +166,7 @@ class TableRowStyle
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

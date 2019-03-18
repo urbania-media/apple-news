@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/videofill
  */
-class VideoFill extends Fill
+class VideoFill extends Fill implements \JsonSerializable
 {
     /**
      * The URL of a video file that can be played using AV Player. HTTP Live
@@ -103,60 +103,6 @@ class VideoFill extends Fill
     }
 
     /**
-     * Get the horizontalAlignment
-     * @return string
-     */
-    public function getHorizontalAlignment()
-    {
-        return $this->horizontalAlignment;
-    }
-
-    /**
-     * Get the loop
-     * @return boolean
-     */
-    public function getLoop()
-    {
-        return $this->loop;
-    }
-
-    /**
-     * Get the stillURL
-     * @return string
-     */
-    public function getStillURL()
-    {
-        return $this->stillURL;
-    }
-
-    /**
-     * Get the type
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Get the URL
-     * @return uri
-     */
-    public function getURL()
-    {
-        return $this->URL;
-    }
-
-    /**
-     * Get the verticalAlignment
-     * @return string
-     */
-    public function getVerticalAlignment()
-    {
-        return $this->verticalAlignment;
-    }
-
-    /**
      * Set the fillMode
      * @param string $fillMode
      * @return $this
@@ -167,6 +113,15 @@ class VideoFill extends Fill
 
         $this->fillMode = $fillMode;
         return $this;
+    }
+
+    /**
+     * Get the horizontalAlignment
+     * @return string
+     */
+    public function getHorizontalAlignment()
+    {
+        return $this->horizontalAlignment;
     }
 
     /**
@@ -183,6 +138,15 @@ class VideoFill extends Fill
     }
 
     /**
+     * Get the loop
+     * @return boolean
+     */
+    public function getLoop()
+    {
+        return $this->loop;
+    }
+
+    /**
      * Set the loop
      * @param boolean $loop
      * @return $this
@@ -193,6 +157,15 @@ class VideoFill extends Fill
 
         $this->loop = $loop;
         return $this;
+    }
+
+    /**
+     * Get the stillURL
+     * @return string
+     */
+    public function getStillURL()
+    {
+        return $this->stillURL;
     }
 
     /**
@@ -209,6 +182,15 @@ class VideoFill extends Fill
     }
 
     /**
+     * Get the type
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * Set the type
      * @param string $type
      * @return $this
@@ -222,6 +204,15 @@ class VideoFill extends Fill
     }
 
     /**
+     * Get the URL
+     * @return uri
+     */
+    public function getURL()
+    {
+        return $this->URL;
+    }
+
+    /**
      * Set the URL
      * @param uri $URL
      * @return $this
@@ -232,6 +223,15 @@ class VideoFill extends Fill
 
         $this->URL = $URL;
         return $this;
+    }
+
+    /**
+     * Get the verticalAlignment
+     * @return string
+     */
+    public function getVerticalAlignment()
+    {
+        return $this->verticalAlignment;
     }
 
     /**
@@ -251,7 +251,7 @@ class VideoFill extends Fill
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

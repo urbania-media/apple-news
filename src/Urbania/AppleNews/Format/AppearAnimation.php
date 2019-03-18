@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/appearanimation
  */
-class AppearAnimation extends ComponentAnimation
+class AppearAnimation extends ComponentAnimation implements \JsonSerializable
 {
     /**
      * This animation’s type is always appear.
@@ -36,7 +36,7 @@ class AppearAnimation extends ComponentAnimation
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

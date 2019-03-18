@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/anchor
  */
-class Anchor
+class Anchor implements \JsonSerializable
 {
     /**
      * Sets which point in the origin component will get anchored to the
@@ -100,51 +100,6 @@ class Anchor
     }
 
     /**
-     * Get the rangeLength
-     * @return integer
-     */
-    public function getRangeLength()
-    {
-        return $this->rangeLength;
-    }
-
-    /**
-     * Get the rangeStart
-     * @return integer
-     */
-    public function getRangeStart()
-    {
-        return $this->rangeStart;
-    }
-
-    /**
-     * Get the target
-     * @return string
-     */
-    public function getTarget()
-    {
-        return $this->target;
-    }
-
-    /**
-     * Get the targetAnchorPosition
-     * @return string
-     */
-    public function getTargetAnchorPosition()
-    {
-        return $this->targetAnchorPosition;
-    }
-
-    /**
-     * Get the targetComponentIdentifier
-     * @return string
-     */
-    public function getTargetComponentIdentifier()
-    {
-        return $this->targetComponentIdentifier;
-    }
-
-    /**
      * Set the originAnchorPosition
      * @param string $originAnchorPosition
      * @return $this
@@ -155,6 +110,15 @@ class Anchor
 
         $this->originAnchorPosition = $originAnchorPosition;
         return $this;
+    }
+
+    /**
+     * Get the rangeLength
+     * @return integer
+     */
+    public function getRangeLength()
+    {
+        return $this->rangeLength;
     }
 
     /**
@@ -171,6 +135,15 @@ class Anchor
     }
 
     /**
+     * Get the rangeStart
+     * @return integer
+     */
+    public function getRangeStart()
+    {
+        return $this->rangeStart;
+    }
+
+    /**
      * Set the rangeStart
      * @param integer $rangeStart
      * @return $this
@@ -181,6 +154,15 @@ class Anchor
 
         $this->rangeStart = $rangeStart;
         return $this;
+    }
+
+    /**
+     * Get the target
+     * @return string
+     */
+    public function getTarget()
+    {
+        return $this->target;
     }
 
     /**
@@ -197,6 +179,15 @@ class Anchor
     }
 
     /**
+     * Get the targetAnchorPosition
+     * @return string
+     */
+    public function getTargetAnchorPosition()
+    {
+        return $this->targetAnchorPosition;
+    }
+
+    /**
      * Set the targetAnchorPosition
      * @param string $targetAnchorPosition
      * @return $this
@@ -207,6 +198,15 @@ class Anchor
 
         $this->targetAnchorPosition = $targetAnchorPosition;
         return $this;
+    }
+
+    /**
+     * Get the targetComponentIdentifier
+     * @return string
+     */
+    public function getTargetComponentIdentifier()
+    {
+        return $this->targetComponentIdentifier;
     }
 
     /**
@@ -226,7 +226,7 @@ class Anchor
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

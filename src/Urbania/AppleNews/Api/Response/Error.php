@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/error
  */
-class Error
+class Error implements \JsonSerializable
 {
     /**
      * An error code that, in combination with the keyPath, uniquely
@@ -78,42 +78,6 @@ class Error
     }
 
     /**
-     * Get the keyPath
-     * @return string[]
-     */
-    public function getKeyPath()
-    {
-        return $this->keyPath;
-    }
-
-    /**
-     * Get the message
-     * @return string
-     */
-    public function getMessage()
-    {
-        return $this->message;
-    }
-
-    /**
-     * Get the status
-     * @return \Urbania\AppleNews\Api\Response\Status
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Get the value
-     * @return string
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
      * Set the code
      * @param \Urbania\AppleNews\Api\Response\Code|array $code
      * @return $this
@@ -131,6 +95,15 @@ class Error
     }
 
     /**
+     * Get the keyPath
+     * @return string[]
+     */
+    public function getKeyPath()
+    {
+        return $this->keyPath;
+    }
+
+    /**
      * Set the keyPath
      * @param string[] $keyPath
      * @return $this
@@ -145,6 +118,15 @@ class Error
     }
 
     /**
+     * Get the message
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
      * Set the message
      * @param string $message
      * @return $this
@@ -155,6 +137,15 @@ class Error
 
         $this->message = $message;
         return $this;
+    }
+
+    /**
+     * Get the status
+     * @return \Urbania\AppleNews\Api\Response\Status
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**
@@ -175,6 +166,15 @@ class Error
     }
 
     /**
+     * Get the value
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
      * Set the value
      * @param string $value
      * @return $this
@@ -191,7 +191,7 @@ class Error
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

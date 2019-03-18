@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/tablecolumnselector
  */
-class TableColumnSelector
+class TableColumnSelector implements \JsonSerializable
 {
     /**
      * Specifies a column index. The leftmost column of data has an index of
@@ -68,33 +68,6 @@ class TableColumnSelector
     }
 
     /**
-     * Get the descriptor
-     * @return string
-     */
-    public function getDescriptor()
-    {
-        return $this->descriptor;
-    }
-
-    /**
-     * Get the even
-     * @return boolean
-     */
-    public function getEven()
-    {
-        return $this->even;
-    }
-
-    /**
-     * Get the odd
-     * @return boolean
-     */
-    public function getOdd()
-    {
-        return $this->odd;
-    }
-
-    /**
      * Set the columnIndex
      * @param integer $columnIndex
      * @return $this
@@ -105,6 +78,15 @@ class TableColumnSelector
 
         $this->columnIndex = $columnIndex;
         return $this;
+    }
+
+    /**
+     * Get the descriptor
+     * @return string
+     */
+    public function getDescriptor()
+    {
+        return $this->descriptor;
     }
 
     /**
@@ -121,6 +103,15 @@ class TableColumnSelector
     }
 
     /**
+     * Get the even
+     * @return boolean
+     */
+    public function getEven()
+    {
+        return $this->even;
+    }
+
+    /**
      * Set the even
      * @param boolean $even
      * @return $this
@@ -131,6 +122,15 @@ class TableColumnSelector
 
         $this->even = $even;
         return $this;
+    }
+
+    /**
+     * Get the odd
+     * @return boolean
+     */
+    public function getOdd()
+    {
+        return $this->odd;
     }
 
     /**
@@ -150,7 +150,7 @@ class TableColumnSelector
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

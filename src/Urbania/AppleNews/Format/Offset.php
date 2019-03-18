@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/offset
  */
-class Offset
+class Offset implements \JsonSerializable
 {
     /**
      * The x offset, as a value between -50.0 and 50.0. Implementation is
@@ -47,15 +47,6 @@ class Offset
     }
 
     /**
-     * Get the y
-     * @return integer|float
-     */
-    public function getY()
-    {
-        return $this->y;
-    }
-
-    /**
      * Set the x
      * @param integer|float $x
      * @return $this
@@ -66,6 +57,15 @@ class Offset
 
         $this->x = $x;
         return $this;
+    }
+
+    /**
+     * Get the y
+     * @return integer|float
+     */
+    public function getY()
+    {
+        return $this->y;
     }
 
     /**
@@ -85,7 +85,7 @@ class Offset
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

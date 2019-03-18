@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/articledocument/componenttextstyles
  */
-class ComponentTextStyles
+class ComponentTextStyles implements \JsonSerializable
 {
     /**
      * A component text style, with a name you define that can be referred to
@@ -58,7 +58,7 @@ class ComponentTextStyles
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

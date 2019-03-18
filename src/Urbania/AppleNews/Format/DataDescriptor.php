@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/datadescriptor
  */
-class DataDescriptor
+class DataDescriptor implements \JsonSerializable
 {
     /**
      * The data type. Valid values:
@@ -86,42 +86,6 @@ class DataDescriptor
     }
 
     /**
-     * Get the format
-     * @return \Urbania\AppleNews\Format\DataFormat
-     */
-    public function getFormat()
-    {
-        return $this->format;
-    }
-
-    /**
-     * Get the identifier
-     * @return string
-     */
-    public function getIdentifier()
-    {
-        return $this->identifier;
-    }
-
-    /**
-     * Get the key
-     * @return string
-     */
-    public function getKey()
-    {
-        return $this->key;
-    }
-
-    /**
-     * Get the label
-     * @return \Urbania\AppleNews\Format\FormattedText|string
-     */
-    public function getLabel()
-    {
-        return $this->label;
-    }
-
-    /**
      * Set the dataType
      * @param string $dataType
      * @return $this
@@ -139,6 +103,15 @@ class DataDescriptor
 
         $this->dataType = $dataType;
         return $this;
+    }
+
+    /**
+     * Get the format
+     * @return \Urbania\AppleNews\Format\DataFormat
+     */
+    public function getFormat()
+    {
+        return $this->format;
     }
 
     /**
@@ -161,6 +134,15 @@ class DataDescriptor
     }
 
     /**
+     * Get the identifier
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    /**
      * Set the identifier
      * @param string $identifier
      * @return $this
@@ -174,6 +156,15 @@ class DataDescriptor
     }
 
     /**
+     * Get the key
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
      * Set the key
      * @param string $key
      * @return $this
@@ -184,6 +175,15 @@ class DataDescriptor
 
         $this->key = $key;
         return $this;
+    }
+
+    /**
+     * Get the label
+     * @return \Urbania\AppleNews\Format\FormattedText|string
+     */
+    public function getLabel()
+    {
+        return $this->label;
     }
 
     /**
@@ -207,7 +207,7 @@ class DataDescriptor
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

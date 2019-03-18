@@ -12,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/advertisingsettings
  */
-class AdvertisingSettings
+class AdvertisingSettings implements \JsonSerializable
 {
     /**
      * The banner type that should be shown.
@@ -75,33 +75,6 @@ class AdvertisingSettings
     }
 
     /**
-     * Get the distanceFromMedia
-     * @return string|integer
-     */
-    public function getDistanceFromMedia()
-    {
-        return $this->distanceFromMedia;
-    }
-
-    /**
-     * Get the frequency
-     * @return integer
-     */
-    public function getFrequency()
-    {
-        return $this->frequency;
-    }
-
-    /**
-     * Get the layout
-     * @return \Urbania\AppleNews\Format\AdvertisingLayout
-     */
-    public function getLayout()
-    {
-        return $this->layout;
-    }
-
-    /**
      * Set the bannerType
      * @param string $bannerType
      * @return $this
@@ -120,6 +93,15 @@ class AdvertisingSettings
     }
 
     /**
+     * Get the distanceFromMedia
+     * @return string|integer
+     */
+    public function getDistanceFromMedia()
+    {
+        return $this->distanceFromMedia;
+    }
+
+    /**
      * Set the distanceFromMedia
      * @param string|integer $distanceFromMedia
      * @return $this
@@ -133,6 +115,15 @@ class AdvertisingSettings
     }
 
     /**
+     * Get the frequency
+     * @return integer
+     */
+    public function getFrequency()
+    {
+        return $this->frequency;
+    }
+
+    /**
      * Set the frequency
      * @param integer $frequency
      * @return $this
@@ -143,6 +134,15 @@ class AdvertisingSettings
 
         $this->frequency = $frequency;
         return $this;
+    }
+
+    /**
+     * Get the layout
+     * @return \Urbania\AppleNews\Format\AdvertisingLayout
+     */
+    public function getLayout()
+    {
+        return $this->layout;
     }
 
     /**
@@ -168,7 +168,7 @@ class AdvertisingSettings
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

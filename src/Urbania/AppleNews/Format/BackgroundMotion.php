@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/backgroundmotion
  */
-class BackgroundMotion extends Behavior
+class BackgroundMotion extends Behavior implements \JsonSerializable
 {
     /**
      * This behavior’s type is always background_motion.
@@ -37,7 +37,7 @@ class BackgroundMotion extends Behavior
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

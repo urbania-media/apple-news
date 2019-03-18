@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/divider
  */
-class Divider extends Component
+class Divider extends Component implements \JsonSerializable
 {
     /**
      * This component always has the role of divider.
@@ -48,15 +48,6 @@ class Divider extends Component
     }
 
     /**
-     * Get the stroke
-     * @return \Urbania\AppleNews\Format\StrokeStyle
-     */
-    public function getStroke()
-    {
-        return $this->stroke;
-    }
-
-    /**
      * Set the role
      * @param string $role
      * @return $this
@@ -67,6 +58,15 @@ class Divider extends Component
 
         $this->role = $role;
         return $this;
+    }
+
+    /**
+     * Get the stroke
+     * @return \Urbania\AppleNews\Format\StrokeStyle
+     */
+    public function getStroke()
+    {
+        return $this->stroke;
     }
 
     /**
@@ -90,7 +90,7 @@ class Divider extends Component
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

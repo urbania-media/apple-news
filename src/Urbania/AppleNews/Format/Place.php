@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/place
  */
-class Place extends Component
+class Place extends Component implements \JsonSerializable
 {
     /**
      * Optional caption text describing what is visible on the map. Note that
@@ -104,12 +104,38 @@ class Place extends Component
     }
 
     /**
+     * Set the accessibilityCaption
+     * @param string $accessibilityCaption
+     * @return $this
+     */
+    public function setAccessibilityCaption($accessibilityCaption)
+    {
+        Assert::string($accessibilityCaption);
+
+        $this->accessibilityCaption = $accessibilityCaption;
+        return $this;
+    }
+
+    /**
      * Get the caption
      * @return string
      */
     public function getCaption()
     {
         return $this->caption;
+    }
+
+    /**
+     * Set the caption
+     * @param string $caption
+     * @return $this
+     */
+    public function setCaption($caption)
+    {
+        Assert::string($caption);
+
+        $this->caption = $caption;
+        return $this;
     }
 
     /**
@@ -122,6 +148,19 @@ class Place extends Component
     }
 
     /**
+     * Set the latitude
+     * @param integer|float $latitude
+     * @return $this
+     */
+    public function setLatitude($latitude)
+    {
+        Assert::number($latitude);
+
+        $this->latitude = $latitude;
+        return $this;
+    }
+
+    /**
      * Get the longitude
      * @return integer|float
      */
@@ -131,12 +170,38 @@ class Place extends Component
     }
 
     /**
+     * Set the longitude
+     * @param integer|float $longitude
+     * @return $this
+     */
+    public function setLongitude($longitude)
+    {
+        Assert::number($longitude);
+
+        $this->longitude = $longitude;
+        return $this;
+    }
+
+    /**
      * Get the mapType
      * @return string
      */
     public function getMapType()
     {
         return $this->mapType;
+    }
+
+    /**
+     * Set the mapType
+     * @param string $mapType
+     * @return $this
+     */
+    public function setMapType($mapType)
+    {
+        Assert::oneOf($mapType, ["standard", "hybrid", "satellite"]);
+
+        $this->mapType = $mapType;
+        return $this;
     }
 
     /**
@@ -155,71 +220,6 @@ class Place extends Component
     public function getSpan()
     {
         return $this->span;
-    }
-
-    /**
-     * Set the accessibilityCaption
-     * @param string $accessibilityCaption
-     * @return $this
-     */
-    public function setAccessibilityCaption($accessibilityCaption)
-    {
-        Assert::string($accessibilityCaption);
-
-        $this->accessibilityCaption = $accessibilityCaption;
-        return $this;
-    }
-
-    /**
-     * Set the caption
-     * @param string $caption
-     * @return $this
-     */
-    public function setCaption($caption)
-    {
-        Assert::string($caption);
-
-        $this->caption = $caption;
-        return $this;
-    }
-
-    /**
-     * Set the latitude
-     * @param integer|float $latitude
-     * @return $this
-     */
-    public function setLatitude($latitude)
-    {
-        Assert::number($latitude);
-
-        $this->latitude = $latitude;
-        return $this;
-    }
-
-    /**
-     * Set the longitude
-     * @param integer|float $longitude
-     * @return $this
-     */
-    public function setLongitude($longitude)
-    {
-        Assert::number($longitude);
-
-        $this->longitude = $longitude;
-        return $this;
-    }
-
-    /**
-     * Set the mapType
-     * @param string $mapType
-     * @return $this
-     */
-    public function setMapType($mapType)
-    {
-        Assert::oneOf($mapType, ["standard", "hybrid", "satellite"]);
-
-        $this->mapType = $mapType;
-        return $this;
     }
 
     /**
@@ -243,7 +243,7 @@ class Place extends Component
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

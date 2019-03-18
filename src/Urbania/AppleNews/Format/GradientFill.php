@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/gradientfill
  */
-class GradientFill extends Fill
+class GradientFill extends Fill implements \JsonSerializable
 {
     /**
      * An array of color stops. Each stop sets a color and location along the
@@ -48,15 +48,6 @@ class GradientFill extends Fill
     }
 
     /**
-     * Get the type
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
      * Set the colorStops
      * @param Format\ColorStop[] $colorStops
      * @return $this
@@ -72,6 +63,15 @@ class GradientFill extends Fill
         }
         $this->colorStops = $items;
         return $this;
+    }
+
+    /**
+     * Get the type
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
@@ -91,7 +91,7 @@ class GradientFill extends Fill
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

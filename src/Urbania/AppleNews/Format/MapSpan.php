@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/mapspan
  */
-class MapSpan
+class MapSpan implements \JsonSerializable
 {
     /**
      * A float value between 0.0 and 90.0.
@@ -46,15 +46,6 @@ class MapSpan
     }
 
     /**
-     * Get the longitudeDelta
-     * @return integer|float
-     */
-    public function getLongitudeDelta()
-    {
-        return $this->longitudeDelta;
-    }
-
-    /**
      * Set the latitudeDelta
      * @param integer|float $latitudeDelta
      * @return $this
@@ -65,6 +56,15 @@ class MapSpan
 
         $this->latitudeDelta = $latitudeDelta;
         return $this;
+    }
+
+    /**
+     * Get the longitudeDelta
+     * @return integer|float
+     */
+    public function getLongitudeDelta()
+    {
+        return $this->longitudeDelta;
     }
 
     /**
@@ -84,7 +84,7 @@ class MapSpan
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

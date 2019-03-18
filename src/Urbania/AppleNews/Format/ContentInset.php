@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/contentinset
  */
-class ContentInset
+class ContentInset implements \JsonSerializable
 {
     /**
      * Applies an inset to the bottom of the component.
@@ -66,33 +66,6 @@ class ContentInset
     }
 
     /**
-     * Get the left
-     * @return boolean
-     */
-    public function getLeft()
-    {
-        return $this->left;
-    }
-
-    /**
-     * Get the right
-     * @return boolean
-     */
-    public function getRight()
-    {
-        return $this->right;
-    }
-
-    /**
-     * Get the top
-     * @return boolean
-     */
-    public function getTop()
-    {
-        return $this->top;
-    }
-
-    /**
      * Set the bottom
      * @param boolean $bottom
      * @return $this
@@ -103,6 +76,15 @@ class ContentInset
 
         $this->bottom = $bottom;
         return $this;
+    }
+
+    /**
+     * Get the left
+     * @return boolean
+     */
+    public function getLeft()
+    {
+        return $this->left;
     }
 
     /**
@@ -119,6 +101,15 @@ class ContentInset
     }
 
     /**
+     * Get the right
+     * @return boolean
+     */
+    public function getRight()
+    {
+        return $this->right;
+    }
+
+    /**
      * Set the right
      * @param boolean $right
      * @return $this
@@ -129,6 +120,15 @@ class ContentInset
 
         $this->right = $right;
         return $this;
+    }
+
+    /**
+     * Get the top
+     * @return boolean
+     */
+    public function getTop()
+    {
+        return $this->top;
     }
 
     /**
@@ -148,7 +148,7 @@ class ContentInset
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

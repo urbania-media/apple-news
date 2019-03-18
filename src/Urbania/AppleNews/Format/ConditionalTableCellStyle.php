@@ -11,7 +11,8 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/conditionaltablecellstyle
  */
-class ConditionalTableCellStyle extends TableCellStyle
+class ConditionalTableCellStyle extends TableCellStyle implements
+    \JsonSerializable
 {
     /**
      * The background color for the cell.
@@ -138,87 +139,6 @@ class ConditionalTableCellStyle extends TableCellStyle
     }
 
     /**
-     * Get the border
-     * @return \Urbania\AppleNews\Format\TableBorder
-     */
-    public function getBorder()
-    {
-        return $this->border;
-    }
-
-    /**
-     * Get the height
-     * @return string|integer
-     */
-    public function getHeight()
-    {
-        return $this->height;
-    }
-
-    /**
-     * Get the horizontalAlignment
-     * @return string
-     */
-    public function getHorizontalAlignment()
-    {
-        return $this->horizontalAlignment;
-    }
-
-    /**
-     * Get the minimumWidth
-     * @return string|integer
-     */
-    public function getMinimumWidth()
-    {
-        return $this->minimumWidth;
-    }
-
-    /**
-     * Get the padding
-     * @return \Urbania\AppleNews\Format\Padding|string|integer
-     */
-    public function getPadding()
-    {
-        return $this->padding;
-    }
-
-    /**
-     * Get the selectors
-     * @return Format\TableCellSelector[]
-     */
-    public function getSelectors()
-    {
-        return $this->selectors;
-    }
-
-    /**
-     * Get the textStyle
-     * @return \Urbania\AppleNews\Format\ComponentTextStyle|string
-     */
-    public function getTextStyle()
-    {
-        return $this->textStyle;
-    }
-
-    /**
-     * Get the verticalAlignment
-     * @return string
-     */
-    public function getVerticalAlignment()
-    {
-        return $this->verticalAlignment;
-    }
-
-    /**
-     * Get the width
-     * @return integer
-     */
-    public function getWidth()
-    {
-        return $this->width;
-    }
-
-    /**
      * Set the backgroundColor
      * @param string $backgroundColor
      * @return $this
@@ -229,6 +149,15 @@ class ConditionalTableCellStyle extends TableCellStyle
 
         $this->backgroundColor = $backgroundColor;
         return $this;
+    }
+
+    /**
+     * Get the border
+     * @return \Urbania\AppleNews\Format\TableBorder
+     */
+    public function getBorder()
+    {
+        return $this->border;
     }
 
     /**
@@ -249,6 +178,15 @@ class ConditionalTableCellStyle extends TableCellStyle
     }
 
     /**
+     * Get the height
+     * @return string|integer
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    /**
      * Set the height
      * @param string|integer $height
      * @return $this
@@ -259,6 +197,15 @@ class ConditionalTableCellStyle extends TableCellStyle
 
         $this->height = $height;
         return $this;
+    }
+
+    /**
+     * Get the horizontalAlignment
+     * @return string
+     */
+    public function getHorizontalAlignment()
+    {
+        return $this->horizontalAlignment;
     }
 
     /**
@@ -275,6 +222,15 @@ class ConditionalTableCellStyle extends TableCellStyle
     }
 
     /**
+     * Get the minimumWidth
+     * @return string|integer
+     */
+    public function getMinimumWidth()
+    {
+        return $this->minimumWidth;
+    }
+
+    /**
      * Set the minimumWidth
      * @param string|integer $minimumWidth
      * @return $this
@@ -285,6 +241,15 @@ class ConditionalTableCellStyle extends TableCellStyle
 
         $this->minimumWidth = $minimumWidth;
         return $this;
+    }
+
+    /**
+     * Get the padding
+     * @return \Urbania\AppleNews\Format\Padding|string|integer
+     */
+    public function getPadding()
+    {
+        return $this->padding;
     }
 
     /**
@@ -302,6 +267,15 @@ class ConditionalTableCellStyle extends TableCellStyle
 
         $this->padding = is_array($padding) ? new Padding($padding) : $padding;
         return $this;
+    }
+
+    /**
+     * Get the selectors
+     * @return Format\TableCellSelector[]
+     */
+    public function getSelectors()
+    {
+        return $this->selectors;
     }
 
     /**
@@ -325,6 +299,15 @@ class ConditionalTableCellStyle extends TableCellStyle
     }
 
     /**
+     * Get the textStyle
+     * @return \Urbania\AppleNews\Format\ComponentTextStyle|string
+     */
+    public function getTextStyle()
+    {
+        return $this->textStyle;
+    }
+
+    /**
      * Set the textStyle
      * @param \Urbania\AppleNews\Format\ComponentTextStyle|array|string $textStyle
      * @return $this
@@ -344,6 +327,15 @@ class ConditionalTableCellStyle extends TableCellStyle
     }
 
     /**
+     * Get the verticalAlignment
+     * @return string
+     */
+    public function getVerticalAlignment()
+    {
+        return $this->verticalAlignment;
+    }
+
+    /**
      * Set the verticalAlignment
      * @param string $verticalAlignment
      * @return $this
@@ -354,6 +346,15 @@ class ConditionalTableCellStyle extends TableCellStyle
 
         $this->verticalAlignment = $verticalAlignment;
         return $this;
+    }
+
+    /**
+     * Get the width
+     * @return integer
+     */
+    public function getWidth()
+    {
+        return $this->width;
     }
 
     /**
@@ -373,7 +374,7 @@ class ConditionalTableCellStyle extends TableCellStyle
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

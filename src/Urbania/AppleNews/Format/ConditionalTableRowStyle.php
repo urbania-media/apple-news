@@ -11,7 +11,8 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/conditionaltablerowstyle
  */
-class ConditionalTableRowStyle extends TableRowStyle
+class ConditionalTableRowStyle extends TableRowStyle implements
+    \JsonSerializable
 {
     /**
      * The background color for the row.
@@ -71,33 +72,6 @@ class ConditionalTableRowStyle extends TableRowStyle
     }
 
     /**
-     * Get the divider
-     * @return \Urbania\AppleNews\Format\TableStrokeStyle
-     */
-    public function getDivider()
-    {
-        return $this->divider;
-    }
-
-    /**
-     * Get the height
-     * @return string|integer
-     */
-    public function getHeight()
-    {
-        return $this->height;
-    }
-
-    /**
-     * Get the selectors
-     * @return Format\TableRowSelector[]
-     */
-    public function getSelectors()
-    {
-        return $this->selectors;
-    }
-
-    /**
      * Set the backgroundColor
      * @param string $backgroundColor
      * @return $this
@@ -108,6 +82,15 @@ class ConditionalTableRowStyle extends TableRowStyle
 
         $this->backgroundColor = $backgroundColor;
         return $this;
+    }
+
+    /**
+     * Get the divider
+     * @return \Urbania\AppleNews\Format\TableStrokeStyle
+     */
+    public function getDivider()
+    {
+        return $this->divider;
     }
 
     /**
@@ -130,6 +113,15 @@ class ConditionalTableRowStyle extends TableRowStyle
     }
 
     /**
+     * Get the height
+     * @return string|integer
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    /**
      * Set the height
      * @param string|integer $height
      * @return $this
@@ -140,6 +132,15 @@ class ConditionalTableRowStyle extends TableRowStyle
 
         $this->height = $height;
         return $this;
+    }
+
+    /**
+     * Get the selectors
+     * @return Format\TableRowSelector[]
+     */
+    public function getSelectors()
+    {
+        return $this->selectors;
     }
 
     /**
@@ -166,7 +167,7 @@ class ConditionalTableRowStyle extends TableRowStyle
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

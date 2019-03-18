@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/map
  */
-class Map extends Component
+class Map extends Component implements \JsonSerializable
 {
     /**
      * Optional caption text describing what is visible on the map. Note that
@@ -117,69 +117,6 @@ class Map extends Component
     }
 
     /**
-     * Get the caption
-     * @return string
-     */
-    public function getCaption()
-    {
-        return $this->caption;
-    }
-
-    /**
-     * Get the items
-     * @return Format\MapItem[]
-     */
-    public function getItems()
-    {
-        return $this->items;
-    }
-
-    /**
-     * Get the latitude
-     * @return integer|float
-     */
-    public function getLatitude()
-    {
-        return $this->latitude;
-    }
-
-    /**
-     * Get the longitude
-     * @return integer|float
-     */
-    public function getLongitude()
-    {
-        return $this->longitude;
-    }
-
-    /**
-     * Get the mapType
-     * @return string
-     */
-    public function getMapType()
-    {
-        return $this->mapType;
-    }
-
-    /**
-     * Get the role
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * Get the span
-     * @return \Urbania\AppleNews\Format\MapSpan
-     */
-    public function getSpan()
-    {
-        return $this->span;
-    }
-
-    /**
      * Set the accessibilityCaption
      * @param string $accessibilityCaption
      * @return $this
@@ -193,6 +130,15 @@ class Map extends Component
     }
 
     /**
+     * Get the caption
+     * @return string
+     */
+    public function getCaption()
+    {
+        return $this->caption;
+    }
+
+    /**
      * Set the caption
      * @param string $caption
      * @return $this
@@ -203,6 +149,15 @@ class Map extends Component
 
         $this->caption = $caption;
         return $this;
+    }
+
+    /**
+     * Get the items
+     * @return Format\MapItem[]
+     */
+    public function getItems()
+    {
+        return $this->items;
     }
 
     /**
@@ -224,6 +179,15 @@ class Map extends Component
     }
 
     /**
+     * Get the latitude
+     * @return integer|float
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
      * Set the latitude
      * @param integer|float $latitude
      * @return $this
@@ -234,6 +198,15 @@ class Map extends Component
 
         $this->latitude = $latitude;
         return $this;
+    }
+
+    /**
+     * Get the longitude
+     * @return integer|float
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
     }
 
     /**
@@ -250,6 +223,15 @@ class Map extends Component
     }
 
     /**
+     * Get the mapType
+     * @return string
+     */
+    public function getMapType()
+    {
+        return $this->mapType;
+    }
+
+    /**
      * Set the mapType
      * @param string $mapType
      * @return $this
@@ -260,6 +242,24 @@ class Map extends Component
 
         $this->mapType = $mapType;
         return $this;
+    }
+
+    /**
+     * Get the role
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * Get the span
+     * @return \Urbania\AppleNews\Format\MapSpan
+     */
+    public function getSpan()
+    {
+        return $this->span;
     }
 
     /**
@@ -283,7 +283,7 @@ class Map extends Component
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

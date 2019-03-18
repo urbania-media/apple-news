@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/datatablesorting
  */
-class DataTableSorting
+class DataTableSorting implements \JsonSerializable
 {
     /**
      * The identifier property of one of the table’s data descriptors. See
@@ -47,15 +47,6 @@ class DataTableSorting
     }
 
     /**
-     * Get the direction
-     * @return string
-     */
-    public function getDirection()
-    {
-        return $this->direction;
-    }
-
-    /**
      * Set the descriptor
      * @param string $descriptor
      * @return $this
@@ -66,6 +57,15 @@ class DataTableSorting
 
         $this->descriptor = $descriptor;
         return $this;
+    }
+
+    /**
+     * Get the direction
+     * @return string
+     */
+    public function getDirection()
+    {
+        return $this->direction;
     }
 
     /**
@@ -85,7 +85,7 @@ class DataTableSorting
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/listitemstyle
  */
-class ListItemStyle
+class ListItemStyle implements \JsonSerializable
 {
     /**
      * If type is set to character, provide the character to use as the list
@@ -47,15 +47,6 @@ class ListItemStyle
     }
 
     /**
-     * Get the type
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
      * Set the character
      * @param string $character
      * @return $this
@@ -66,6 +57,15 @@ class ListItemStyle
 
         $this->character = $character;
         return $this;
+    }
+
+    /**
+     * Get the type
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
@@ -94,7 +94,7 @@ class ListItemStyle
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

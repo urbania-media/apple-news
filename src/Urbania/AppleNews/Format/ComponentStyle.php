@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/componentstyle
  */
-class ComponentStyle
+class ComponentStyle implements \JsonSerializable
 {
     /**
      * The component's background color. Defaults to transparent.
@@ -83,42 +83,6 @@ class ComponentStyle
     }
 
     /**
-     * Get the border
-     * @return \Urbania\AppleNews\Format\Border
-     */
-    public function getBorder()
-    {
-        return $this->border;
-    }
-
-    /**
-     * Get the fill
-     * @return \Urbania\AppleNews\Format\Fill
-     */
-    public function getFill()
-    {
-        return $this->fill;
-    }
-
-    /**
-     * Get the opacity
-     * @return integer|float
-     */
-    public function getOpacity()
-    {
-        return $this->opacity;
-    }
-
-    /**
-     * Get the tableStyle
-     * @return \Urbania\AppleNews\Format\TableStyle
-     */
-    public function getTableStyle()
-    {
-        return $this->tableStyle;
-    }
-
-    /**
      * Set the backgroundColor
      * @param string $backgroundColor
      * @return $this
@@ -129,6 +93,15 @@ class ComponentStyle
 
         $this->backgroundColor = $backgroundColor;
         return $this;
+    }
+
+    /**
+     * Get the border
+     * @return \Urbania\AppleNews\Format\Border
+     */
+    public function getBorder()
+    {
+        return $this->border;
     }
 
     /**
@@ -149,6 +122,15 @@ class ComponentStyle
     }
 
     /**
+     * Get the fill
+     * @return \Urbania\AppleNews\Format\Fill
+     */
+    public function getFill()
+    {
+        return $this->fill;
+    }
+
+    /**
      * Set the fill
      * @param \Urbania\AppleNews\Format\Fill|array $fill
      * @return $this
@@ -166,6 +148,15 @@ class ComponentStyle
     }
 
     /**
+     * Get the opacity
+     * @return integer|float
+     */
+    public function getOpacity()
+    {
+        return $this->opacity;
+    }
+
+    /**
      * Set the opacity
      * @param integer|float $opacity
      * @return $this
@@ -176,6 +167,15 @@ class ComponentStyle
 
         $this->opacity = $opacity;
         return $this;
+    }
+
+    /**
+     * Get the tableStyle
+     * @return \Urbania\AppleNews\Format\TableStyle
+     */
+    public function getTableStyle()
+    {
+        return $this->tableStyle;
     }
 
     /**
@@ -201,7 +201,7 @@ class ComponentStyle
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

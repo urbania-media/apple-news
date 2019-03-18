@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/portrait
  */
-class Portrait extends Component
+class Portrait extends Component implements \JsonSerializable
 {
     /**
      * The URL of an image file.
@@ -78,42 +78,6 @@ class Portrait extends Component
     }
 
     /**
-     * Get the caption
-     * @return \Urbania\AppleNews\Format\CaptionDescriptor|string
-     */
-    public function getCaption()
-    {
-        return $this->caption;
-    }
-
-    /**
-     * Get the explicitContent
-     * @return boolean
-     */
-    public function getExplicitContent()
-    {
-        return $this->explicitContent;
-    }
-
-    /**
-     * Get the role
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * Get the URL
-     * @return string
-     */
-    public function getURL()
-    {
-        return $this->URL;
-    }
-
-    /**
      * Set the accessibilityCaption
      * @param string $accessibilityCaption
      * @return $this
@@ -124,6 +88,15 @@ class Portrait extends Component
 
         $this->accessibilityCaption = $accessibilityCaption;
         return $this;
+    }
+
+    /**
+     * Get the caption
+     * @return \Urbania\AppleNews\Format\CaptionDescriptor|string
+     */
+    public function getCaption()
+    {
+        return $this->caption;
     }
 
     /**
@@ -146,6 +119,15 @@ class Portrait extends Component
     }
 
     /**
+     * Get the explicitContent
+     * @return boolean
+     */
+    public function getExplicitContent()
+    {
+        return $this->explicitContent;
+    }
+
+    /**
      * Set the explicitContent
      * @param boolean $explicitContent
      * @return $this
@@ -156,6 +138,24 @@ class Portrait extends Component
 
         $this->explicitContent = $explicitContent;
         return $this;
+    }
+
+    /**
+     * Get the role
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * Get the URL
+     * @return string
+     */
+    public function getURL()
+    {
+        return $this->URL;
     }
 
     /**
@@ -175,7 +175,7 @@ class Portrait extends Component
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

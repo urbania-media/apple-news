@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/dropcapstyle
  */
-class DropCapStyle
+class DropCapStyle implements \JsonSerializable
 {
     /**
      * The background color of the drop cap. By default, no background color
@@ -107,60 +107,6 @@ class DropCapStyle
     }
 
     /**
-     * Get the fontName
-     * @return string
-     */
-    public function getFontName()
-    {
-        return $this->fontName;
-    }
-
-    /**
-     * Get the numberOfCharacters
-     * @return integer
-     */
-    public function getNumberOfCharacters()
-    {
-        return $this->numberOfCharacters;
-    }
-
-    /**
-     * Get the numberOfLines
-     * @return integer
-     */
-    public function getNumberOfLines()
-    {
-        return $this->numberOfLines;
-    }
-
-    /**
-     * Get the numberOfRaisedLines
-     * @return integer
-     */
-    public function getNumberOfRaisedLines()
-    {
-        return $this->numberOfRaisedLines;
-    }
-
-    /**
-     * Get the padding
-     * @return integer
-     */
-    public function getPadding()
-    {
-        return $this->padding;
-    }
-
-    /**
-     * Get the textColor
-     * @return string
-     */
-    public function getTextColor()
-    {
-        return $this->textColor;
-    }
-
-    /**
      * Set the backgroundColor
      * @param string $backgroundColor
      * @return $this
@@ -171,6 +117,15 @@ class DropCapStyle
 
         $this->backgroundColor = $backgroundColor;
         return $this;
+    }
+
+    /**
+     * Get the fontName
+     * @return string
+     */
+    public function getFontName()
+    {
+        return $this->fontName;
     }
 
     /**
@@ -187,6 +142,15 @@ class DropCapStyle
     }
 
     /**
+     * Get the numberOfCharacters
+     * @return integer
+     */
+    public function getNumberOfCharacters()
+    {
+        return $this->numberOfCharacters;
+    }
+
+    /**
      * Set the numberOfCharacters
      * @param integer $numberOfCharacters
      * @return $this
@@ -197,6 +161,15 @@ class DropCapStyle
 
         $this->numberOfCharacters = $numberOfCharacters;
         return $this;
+    }
+
+    /**
+     * Get the numberOfLines
+     * @return integer
+     */
+    public function getNumberOfLines()
+    {
+        return $this->numberOfLines;
     }
 
     /**
@@ -213,6 +186,15 @@ class DropCapStyle
     }
 
     /**
+     * Get the numberOfRaisedLines
+     * @return integer
+     */
+    public function getNumberOfRaisedLines()
+    {
+        return $this->numberOfRaisedLines;
+    }
+
+    /**
      * Set the numberOfRaisedLines
      * @param integer $numberOfRaisedLines
      * @return $this
@@ -226,6 +208,15 @@ class DropCapStyle
     }
 
     /**
+     * Get the padding
+     * @return integer
+     */
+    public function getPadding()
+    {
+        return $this->padding;
+    }
+
+    /**
      * Set the padding
      * @param integer $padding
      * @return $this
@@ -236,6 +227,15 @@ class DropCapStyle
 
         $this->padding = $padding;
         return $this;
+    }
+
+    /**
+     * Get the textColor
+     * @return string
+     */
+    public function getTextColor()
+    {
+        return $this->textColor;
     }
 
     /**
@@ -255,7 +255,7 @@ class DropCapStyle
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

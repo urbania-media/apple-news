@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/tablecolumnstyle
  */
-class TableColumnStyle
+class TableColumnStyle implements \JsonSerializable
 {
     /**
      * The background color for the table column.
@@ -81,42 +81,6 @@ class TableColumnStyle
     }
 
     /**
-     * Get the conditional
-     * @return Format\ConditionalTableColumnStyle[]
-     */
-    public function getConditional()
-    {
-        return $this->conditional;
-    }
-
-    /**
-     * Get the divider
-     * @return \Urbania\AppleNews\Format\TableStrokeStyle
-     */
-    public function getDivider()
-    {
-        return $this->divider;
-    }
-
-    /**
-     * Get the minimumWidth
-     * @return string|integer
-     */
-    public function getMinimumWidth()
-    {
-        return $this->minimumWidth;
-    }
-
-    /**
-     * Get the width
-     * @return integer
-     */
-    public function getWidth()
-    {
-        return $this->width;
-    }
-
-    /**
      * Set the backgroundColor
      * @param string $backgroundColor
      * @return $this
@@ -127,6 +91,15 @@ class TableColumnStyle
 
         $this->backgroundColor = $backgroundColor;
         return $this;
+    }
+
+    /**
+     * Get the conditional
+     * @return Format\ConditionalTableColumnStyle[]
+     */
+    public function getConditional()
+    {
+        return $this->conditional;
     }
 
     /**
@@ -153,6 +126,15 @@ class TableColumnStyle
     }
 
     /**
+     * Get the divider
+     * @return \Urbania\AppleNews\Format\TableStrokeStyle
+     */
+    public function getDivider()
+    {
+        return $this->divider;
+    }
+
+    /**
      * Set the divider
      * @param \Urbania\AppleNews\Format\TableStrokeStyle|array $divider
      * @return $this
@@ -172,6 +154,15 @@ class TableColumnStyle
     }
 
     /**
+     * Get the minimumWidth
+     * @return string|integer
+     */
+    public function getMinimumWidth()
+    {
+        return $this->minimumWidth;
+    }
+
+    /**
      * Set the minimumWidth
      * @param string|integer $minimumWidth
      * @return $this
@@ -182,6 +173,15 @@ class TableColumnStyle
 
         $this->minimumWidth = $minimumWidth;
         return $this;
+    }
+
+    /**
+     * Get the width
+     * @return integer
+     */
+    public function getWidth()
+    {
+        return $this->width;
     }
 
     /**
@@ -201,7 +201,7 @@ class TableColumnStyle
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

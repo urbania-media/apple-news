@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/metadata
  */
-class Metadata
+class Metadata implements \JsonSerializable
 {
     /**
      * The authors of this article, who may or may not be shown in the byline
@@ -214,141 +214,6 @@ class Metadata
     }
 
     /**
-     * Get the campaignData
-     * @return \Urbania\AppleNews\Format\CampaignData
-     */
-    public function getCampaignData()
-    {
-        return $this->campaignData;
-    }
-
-    /**
-     * Get the canonicalURL
-     * @return uri
-     */
-    public function getCanonicalURL()
-    {
-        return $this->canonicalURL;
-    }
-
-    /**
-     * Get the coverArt
-     * @return Format\CoverArt[]
-     */
-    public function getCoverArt()
-    {
-        return $this->coverArt;
-    }
-
-    /**
-     * Get the dateCreated
-     * @return \Carbon\Carbon
-     */
-    public function getDateCreated()
-    {
-        return $this->dateCreated;
-    }
-
-    /**
-     * Get the dateModified
-     * @return \Carbon\Carbon
-     */
-    public function getDateModified()
-    {
-        return $this->dateModified;
-    }
-
-    /**
-     * Get the datePublished
-     * @return \Carbon\Carbon
-     */
-    public function getDatePublished()
-    {
-        return $this->datePublished;
-    }
-
-    /**
-     * Get the excerpt
-     * @return string
-     */
-    public function getExcerpt()
-    {
-        return $this->excerpt;
-    }
-
-    /**
-     * Get the generatorIdentifier
-     * @return string
-     */
-    public function getGeneratorIdentifier()
-    {
-        return $this->generatorIdentifier;
-    }
-
-    /**
-     * Get the generatorName
-     * @return string
-     */
-    public function getGeneratorName()
-    {
-        return $this->generatorName;
-    }
-
-    /**
-     * Get the generatorVersion
-     * @return string
-     */
-    public function getGeneratorVersion()
-    {
-        return $this->generatorVersion;
-    }
-
-    /**
-     * Get the keywords
-     * @return string[]
-     */
-    public function getKeywords()
-    {
-        return $this->keywords;
-    }
-
-    /**
-     * Get the links
-     * @return Format\LinkedArticle[]
-     */
-    public function getLinks()
-    {
-        return $this->links;
-    }
-
-    /**
-     * Get the thumbnailURL
-     * @return string
-     */
-    public function getThumbnailURL()
-    {
-        return $this->thumbnailURL;
-    }
-
-    /**
-     * Get the transparentToolbar
-     * @return boolean
-     */
-    public function getTransparentToolbar()
-    {
-        return $this->transparentToolbar;
-    }
-
-    /**
-     * Get the videoURL
-     * @return uri
-     */
-    public function getVideoURL()
-    {
-        return $this->videoURL;
-    }
-
-    /**
      * Set the authors
      * @param string[] $authors
      * @return $this
@@ -360,6 +225,15 @@ class Metadata
 
         $this->authors = $authors;
         return $this;
+    }
+
+    /**
+     * Get the campaignData
+     * @return \Urbania\AppleNews\Format\CampaignData
+     */
+    public function getCampaignData()
+    {
+        return $this->campaignData;
     }
 
     /**
@@ -382,6 +256,15 @@ class Metadata
     }
 
     /**
+     * Get the canonicalURL
+     * @return uri
+     */
+    public function getCanonicalURL()
+    {
+        return $this->canonicalURL;
+    }
+
+    /**
      * Set the canonicalURL
      * @param uri $canonicalURL
      * @return $this
@@ -392,6 +275,15 @@ class Metadata
 
         $this->canonicalURL = $canonicalURL;
         return $this;
+    }
+
+    /**
+     * Get the coverArt
+     * @return Format\CoverArt[]
+     */
+    public function getCoverArt()
+    {
+        return $this->coverArt;
     }
 
     /**
@@ -413,6 +305,15 @@ class Metadata
     }
 
     /**
+     * Get the dateCreated
+     * @return \Carbon\Carbon
+     */
+    public function getDateCreated()
+    {
+        return $this->dateCreated;
+    }
+
+    /**
      * Set the dateCreated
      * @param \Carbon\Carbon|string $dateCreated
      * @return $this
@@ -425,6 +326,15 @@ class Metadata
             ? Carbon::parse($dateCreated)
             : $dateCreated;
         return $this;
+    }
+
+    /**
+     * Get the dateModified
+     * @return \Carbon\Carbon
+     */
+    public function getDateModified()
+    {
+        return $this->dateModified;
     }
 
     /**
@@ -443,6 +353,15 @@ class Metadata
     }
 
     /**
+     * Get the datePublished
+     * @return \Carbon\Carbon
+     */
+    public function getDatePublished()
+    {
+        return $this->datePublished;
+    }
+
+    /**
      * Set the datePublished
      * @param \Carbon\Carbon|string $datePublished
      * @return $this
@@ -455,6 +374,15 @@ class Metadata
             ? Carbon::parse($datePublished)
             : $datePublished;
         return $this;
+    }
+
+    /**
+     * Get the excerpt
+     * @return string
+     */
+    public function getExcerpt()
+    {
+        return $this->excerpt;
     }
 
     /**
@@ -471,6 +399,15 @@ class Metadata
     }
 
     /**
+     * Get the generatorIdentifier
+     * @return string
+     */
+    public function getGeneratorIdentifier()
+    {
+        return $this->generatorIdentifier;
+    }
+
+    /**
      * Set the generatorIdentifier
      * @param string $generatorIdentifier
      * @return $this
@@ -481,6 +418,15 @@ class Metadata
 
         $this->generatorIdentifier = $generatorIdentifier;
         return $this;
+    }
+
+    /**
+     * Get the generatorName
+     * @return string
+     */
+    public function getGeneratorName()
+    {
+        return $this->generatorName;
     }
 
     /**
@@ -497,6 +443,15 @@ class Metadata
     }
 
     /**
+     * Get the generatorVersion
+     * @return string
+     */
+    public function getGeneratorVersion()
+    {
+        return $this->generatorVersion;
+    }
+
+    /**
      * Set the generatorVersion
      * @param string $generatorVersion
      * @return $this
@@ -507,6 +462,15 @@ class Metadata
 
         $this->generatorVersion = $generatorVersion;
         return $this;
+    }
+
+    /**
+     * Get the keywords
+     * @return string[]
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
     }
 
     /**
@@ -521,6 +485,15 @@ class Metadata
 
         $this->keywords = $keywords;
         return $this;
+    }
+
+    /**
+     * Get the links
+     * @return Format\LinkedArticle[]
+     */
+    public function getLinks()
+    {
+        return $this->links;
     }
 
     /**
@@ -542,6 +515,15 @@ class Metadata
     }
 
     /**
+     * Get the thumbnailURL
+     * @return string
+     */
+    public function getThumbnailURL()
+    {
+        return $this->thumbnailURL;
+    }
+
+    /**
      * Set the thumbnailURL
      * @param string $thumbnailURL
      * @return $this
@@ -555,6 +537,15 @@ class Metadata
     }
 
     /**
+     * Get the transparentToolbar
+     * @return boolean
+     */
+    public function getTransparentToolbar()
+    {
+        return $this->transparentToolbar;
+    }
+
+    /**
      * Set the transparentToolbar
      * @param boolean $transparentToolbar
      * @return $this
@@ -565,6 +556,15 @@ class Metadata
 
         $this->transparentToolbar = $transparentToolbar;
         return $this;
+    }
+
+    /**
+     * Get the videoURL
+     * @return uri
+     */
+    public function getVideoURL()
+    {
+        return $this->videoURL;
     }
 
     /**
@@ -584,7 +584,7 @@ class Metadata
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/componentlayout
  */
-class ComponentLayout
+class ComponentLayout implements \JsonSerializable
 {
     /**
      * Indicates how many columns the component spans, based on the number of
@@ -143,78 +143,6 @@ class ComponentLayout
     }
 
     /**
-     * Get the columnStart
-     * @return integer
-     */
-    public function getColumnStart()
-    {
-        return $this->columnStart;
-    }
-
-    /**
-     * Get the contentInset
-     * @return \Urbania\AppleNews\Format\ContentInset|boolean
-     */
-    public function getContentInset()
-    {
-        return $this->contentInset;
-    }
-
-    /**
-     * Get the horizontalContentAlignment
-     * @return string
-     */
-    public function getHorizontalContentAlignment()
-    {
-        return $this->horizontalContentAlignment;
-    }
-
-    /**
-     * Get the ignoreDocumentGutter
-     * @return boolean|string
-     */
-    public function getIgnoreDocumentGutter()
-    {
-        return $this->ignoreDocumentGutter;
-    }
-
-    /**
-     * Get the ignoreDocumentMargin
-     * @return boolean|string
-     */
-    public function getIgnoreDocumentMargin()
-    {
-        return $this->ignoreDocumentMargin;
-    }
-
-    /**
-     * Get the margin
-     * @return \Urbania\AppleNews\Format\Margin|integer
-     */
-    public function getMargin()
-    {
-        return $this->margin;
-    }
-
-    /**
-     * Get the maximumContentWidth
-     * @return string|integer
-     */
-    public function getMaximumContentWidth()
-    {
-        return $this->maximumContentWidth;
-    }
-
-    /**
-     * Get the minimumHeight
-     * @return string|integer
-     */
-    public function getMinimumHeight()
-    {
-        return $this->minimumHeight;
-    }
-
-    /**
      * Set the columnSpan
      * @param integer $columnSpan
      * @return $this
@@ -228,6 +156,15 @@ class ComponentLayout
     }
 
     /**
+     * Get the columnStart
+     * @return integer
+     */
+    public function getColumnStart()
+    {
+        return $this->columnStart;
+    }
+
+    /**
      * Set the columnStart
      * @param integer $columnStart
      * @return $this
@@ -238,6 +175,15 @@ class ComponentLayout
 
         $this->columnStart = $columnStart;
         return $this;
+    }
+
+    /**
+     * Get the contentInset
+     * @return \Urbania\AppleNews\Format\ContentInset|boolean
+     */
+    public function getContentInset()
+    {
+        return $this->contentInset;
     }
 
     /**
@@ -260,6 +206,15 @@ class ComponentLayout
     }
 
     /**
+     * Get the horizontalContentAlignment
+     * @return string
+     */
+    public function getHorizontalContentAlignment()
+    {
+        return $this->horizontalContentAlignment;
+    }
+
+    /**
      * Set the horizontalContentAlignment
      * @param string $horizontalContentAlignment
      * @return $this
@@ -270,6 +225,15 @@ class ComponentLayout
 
         $this->horizontalContentAlignment = $horizontalContentAlignment;
         return $this;
+    }
+
+    /**
+     * Get the ignoreDocumentGutter
+     * @return boolean|string
+     */
+    public function getIgnoreDocumentGutter()
+    {
+        return $this->ignoreDocumentGutter;
     }
 
     /**
@@ -293,6 +257,15 @@ class ComponentLayout
     }
 
     /**
+     * Get the ignoreDocumentMargin
+     * @return boolean|string
+     */
+    public function getIgnoreDocumentMargin()
+    {
+        return $this->ignoreDocumentMargin;
+    }
+
+    /**
      * Set the ignoreDocumentMargin
      * @param boolean|string $ignoreDocumentMargin
      * @return $this
@@ -313,6 +286,15 @@ class ComponentLayout
     }
 
     /**
+     * Get the margin
+     * @return \Urbania\AppleNews\Format\Margin|integer
+     */
+    public function getMargin()
+    {
+        return $this->margin;
+    }
+
+    /**
      * Set the margin
      * @param \Urbania\AppleNews\Format\Margin|array|integer $margin
      * @return $this
@@ -330,6 +312,15 @@ class ComponentLayout
     }
 
     /**
+     * Get the maximumContentWidth
+     * @return string|integer
+     */
+    public function getMaximumContentWidth()
+    {
+        return $this->maximumContentWidth;
+    }
+
+    /**
      * Set the maximumContentWidth
      * @param string|integer $maximumContentWidth
      * @return $this
@@ -340,6 +331,15 @@ class ComponentLayout
 
         $this->maximumContentWidth = $maximumContentWidth;
         return $this;
+    }
+
+    /**
+     * Get the minimumHeight
+     * @return string|integer
+     */
+    public function getMinimumHeight()
+    {
+        return $this->minimumHeight;
     }
 
     /**
@@ -359,7 +359,7 @@ class ComponentLayout
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

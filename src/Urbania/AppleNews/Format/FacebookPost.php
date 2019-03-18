@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/facebookpost
  */
-class FacebookPost extends Component
+class FacebookPost extends Component implements \JsonSerializable
 {
     /**
      * The URL of the Facebook post you want to embed. URLs for Facebook
@@ -69,7 +69,7 @@ class FacebookPost extends Component
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

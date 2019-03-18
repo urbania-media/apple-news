@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/image
  */
-class Image extends Component
+class Image extends Component implements \JsonSerializable
 {
     /**
      * The URL of an image file.
@@ -95,51 +95,6 @@ class Image extends Component
     }
 
     /**
-     * Get the additions
-     * @return Format\ComponentLink[]
-     */
-    public function getAdditions()
-    {
-        return $this->additions;
-    }
-
-    /**
-     * Get the caption
-     * @return string
-     */
-    public function getCaption()
-    {
-        return $this->caption;
-    }
-
-    /**
-     * Get the explicitContent
-     * @return boolean
-     */
-    public function getExplicitContent()
-    {
-        return $this->explicitContent;
-    }
-
-    /**
-     * Get the role
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * Get the URL
-     * @return string
-     */
-    public function getURL()
-    {
-        return $this->URL;
-    }
-
-    /**
      * Set the accessibilityCaption
      * @param string $accessibilityCaption
      * @return $this
@@ -150,6 +105,15 @@ class Image extends Component
 
         $this->accessibilityCaption = $accessibilityCaption;
         return $this;
+    }
+
+    /**
+     * Get the additions
+     * @return Format\ComponentLink[]
+     */
+    public function getAdditions()
+    {
+        return $this->additions;
     }
 
     /**
@@ -171,6 +135,15 @@ class Image extends Component
     }
 
     /**
+     * Get the caption
+     * @return string
+     */
+    public function getCaption()
+    {
+        return $this->caption;
+    }
+
+    /**
      * Set the caption
      * @param string $caption
      * @return $this
@@ -181,6 +154,15 @@ class Image extends Component
 
         $this->caption = $caption;
         return $this;
+    }
+
+    /**
+     * Get the explicitContent
+     * @return boolean
+     */
+    public function getExplicitContent()
+    {
+        return $this->explicitContent;
     }
 
     /**
@@ -197,6 +179,15 @@ class Image extends Component
     }
 
     /**
+     * Get the role
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
      * Set the role
      * @param string $role
      * @return $this
@@ -207,6 +198,15 @@ class Image extends Component
 
         $this->role = $role;
         return $this;
+    }
+
+    /**
+     * Get the URL
+     * @return string
+     */
+    public function getURL()
+    {
+        return $this->URL;
     }
 
     /**
@@ -226,7 +226,7 @@ class Image extends Component
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

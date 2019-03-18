@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/warning
  */
-class Warning
+class Warning implements \JsonSerializable
 {
     /**
      * An array of field names that uniquely identifies a field in the JSON
@@ -57,24 +57,6 @@ class Warning
     }
 
     /**
-     * Get the message
-     * @return string
-     */
-    public function getMessage()
-    {
-        return $this->message;
-    }
-
-    /**
-     * Get the value
-     * @return string
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
      * Set the keypath
      * @param string[] $keypath
      * @return $this
@@ -89,6 +71,15 @@ class Warning
     }
 
     /**
+     * Get the message
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
      * Set the message
      * @param string $message
      * @return $this
@@ -99,6 +90,15 @@ class Warning
 
         $this->message = $message;
         return $this;
+    }
+
+    /**
+     * Get the value
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 
     /**
@@ -118,7 +118,7 @@ class Warning
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

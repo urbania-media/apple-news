@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/section
  */
-class Section
+class Section implements \JsonSerializable
 {
     /**
      * The date and time this section was created.
@@ -96,60 +96,6 @@ class Section
     }
 
     /**
-     * Get the id
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Get the isDefault
-     * @return boolean
-     */
-    public function getIsDefault()
-    {
-        return $this->isDefault;
-    }
-
-    /**
-     * Get the modifiedAt
-     * @return \Carbon\Carbon
-     */
-    public function getModifiedAt()
-    {
-        return $this->modifiedAt;
-    }
-
-    /**
-     * Get the name
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Get the shareUrl
-     * @return string
-     */
-    public function getShareUrl()
-    {
-        return $this->shareUrl;
-    }
-
-    /**
-     * Get the type
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
      * Set the createdAt
      * @param \Carbon\Carbon|string $createdAt
      * @return $this
@@ -162,6 +108,15 @@ class Section
             ? Carbon::parse($createdAt)
             : $createdAt;
         return $this;
+    }
+
+    /**
+     * Get the id
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -178,6 +133,15 @@ class Section
     }
 
     /**
+     * Get the isDefault
+     * @return boolean
+     */
+    public function getIsDefault()
+    {
+        return $this->isDefault;
+    }
+
+    /**
      * Set the isDefault
      * @param boolean $isDefault
      * @return $this
@@ -188,6 +152,15 @@ class Section
 
         $this->isDefault = $isDefault;
         return $this;
+    }
+
+    /**
+     * Get the modifiedAt
+     * @return \Carbon\Carbon
+     */
+    public function getModifiedAt()
+    {
+        return $this->modifiedAt;
     }
 
     /**
@@ -206,6 +179,15 @@ class Section
     }
 
     /**
+     * Get the name
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * Set the name
      * @param string $name
      * @return $this
@@ -219,6 +201,15 @@ class Section
     }
 
     /**
+     * Get the shareUrl
+     * @return string
+     */
+    public function getShareUrl()
+    {
+        return $this->shareUrl;
+    }
+
+    /**
      * Set the shareUrl
      * @param string $shareUrl
      * @return $this
@@ -229,6 +220,15 @@ class Section
 
         $this->shareUrl = $shareUrl;
         return $this;
+    }
+
+    /**
+     * Get the type
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
@@ -248,7 +248,7 @@ class Section
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

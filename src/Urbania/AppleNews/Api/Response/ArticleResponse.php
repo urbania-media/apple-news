@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/articleresponse
  */
-class ArticleResponse extends Article
+class ArticleResponse extends Article implements \JsonSerializable
 {
     /** @var \Urbania\AppleNews\Api\Response\ArticleLinks */
     protected $links;
@@ -42,15 +42,6 @@ class ArticleResponse extends Article
     }
 
     /**
-     * Get the meta
-     * @return \Urbania\AppleNews\Api\Response\Meta
-     */
-    public function getMeta()
-    {
-        return $this->meta;
-    }
-
-    /**
      * Set the links
      * @param \Urbania\AppleNews\Api\Response\ArticleLinks|array $links
      * @return $this
@@ -65,6 +56,15 @@ class ArticleResponse extends Article
 
         $this->links = is_array($links) ? new ArticleLinks($links) : $links;
         return $this;
+    }
+
+    /**
+     * Get the meta
+     * @return \Urbania\AppleNews\Api\Response\Meta
+     */
+    public function getMeta()
+    {
+        return $this->meta;
     }
 
     /**
@@ -88,7 +88,7 @@ class ArticleResponse extends Article
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/meta
  */
-class Meta
+class Meta implements \JsonSerializable
 {
     /**
      * Indicates the process responsible for regulating the rate at which
@@ -59,7 +59,7 @@ class Meta
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

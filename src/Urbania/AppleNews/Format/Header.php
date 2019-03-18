@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/header
  */
-class Header extends Component
+class Header extends Component implements \JsonSerializable
 {
     /**
      * An array of components to display as child components. Child
@@ -58,24 +58,6 @@ class Header extends Component
     }
 
     /**
-     * Get the contentDisplay
-     * @return \Urbania\AppleNews\Format\CollectionDisplay
-     */
-    public function getContentDisplay()
-    {
-        return $this->contentDisplay;
-    }
-
-    /**
-     * Get the role
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
      * Set the components
      * @param Format\Component[] $components
      * @return $this
@@ -93,6 +75,15 @@ class Header extends Component
         }
         $this->components = $items;
         return $this;
+    }
+
+    /**
+     * Get the contentDisplay
+     * @return \Urbania\AppleNews\Format\CollectionDisplay
+     */
+    public function getContentDisplay()
+    {
+        return $this->contentDisplay;
     }
 
     /**
@@ -115,10 +106,19 @@ class Header extends Component
     }
 
     /**
+     * Get the role
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

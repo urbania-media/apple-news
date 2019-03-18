@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/border
  */
-class Border
+class Border implements \JsonSerializable
 {
     /**
      * Defines the stroke properties of the border. Stroke properties cannot
@@ -77,42 +77,6 @@ class Border
     }
 
     /**
-     * Get the bottom
-     * @return boolean
-     */
-    public function getBottom()
-    {
-        return $this->bottom;
-    }
-
-    /**
-     * Get the left
-     * @return boolean
-     */
-    public function getLeft()
-    {
-        return $this->left;
-    }
-
-    /**
-     * Get the right
-     * @return boolean
-     */
-    public function getRight()
-    {
-        return $this->right;
-    }
-
-    /**
-     * Get the top
-     * @return boolean
-     */
-    public function getTop()
-    {
-        return $this->top;
-    }
-
-    /**
      * Set the all
      * @param \Urbania\AppleNews\Format\StrokeStyle|array $all
      * @return $this
@@ -130,6 +94,15 @@ class Border
     }
 
     /**
+     * Get the bottom
+     * @return boolean
+     */
+    public function getBottom()
+    {
+        return $this->bottom;
+    }
+
+    /**
      * Set the bottom
      * @param boolean $bottom
      * @return $this
@@ -140,6 +113,15 @@ class Border
 
         $this->bottom = $bottom;
         return $this;
+    }
+
+    /**
+     * Get the left
+     * @return boolean
+     */
+    public function getLeft()
+    {
+        return $this->left;
     }
 
     /**
@@ -156,6 +138,15 @@ class Border
     }
 
     /**
+     * Get the right
+     * @return boolean
+     */
+    public function getRight()
+    {
+        return $this->right;
+    }
+
+    /**
      * Set the right
      * @param boolean $right
      * @return $this
@@ -166,6 +157,15 @@ class Border
 
         $this->right = $right;
         return $this;
+    }
+
+    /**
+     * Get the top
+     * @return boolean
+     */
+    public function getTop()
+    {
+        return $this->top;
     }
 
     /**
@@ -185,7 +185,7 @@ class Border
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

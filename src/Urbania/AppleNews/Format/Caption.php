@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/caption
  */
-class Caption extends Text
+class Caption extends Text implements \JsonSerializable
 {
     /**
      * This component always has a role of caption.
@@ -36,7 +36,7 @@ class Caption extends Text
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

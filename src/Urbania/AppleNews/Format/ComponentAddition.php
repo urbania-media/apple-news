@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/componentaddition
  */
-class ComponentAddition
+class ComponentAddition implements \JsonSerializable
 {
     /**
      * The type of componentAddition. For example ComponentLink.
@@ -51,7 +51,7 @@ class ComponentAddition
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

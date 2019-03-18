@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/margin
  */
-class Margin
+class Margin implements \JsonSerializable
 {
     /**
      * The bottom margin in points, or with any of the units of measure for
@@ -47,15 +47,6 @@ class Margin
     }
 
     /**
-     * Get the top
-     * @return string|integer
-     */
-    public function getTop()
-    {
-        return $this->top;
-    }
-
-    /**
      * Set the bottom
      * @param string|integer $bottom
      * @return $this
@@ -66,6 +57,15 @@ class Margin
 
         $this->bottom = $bottom;
         return $this;
+    }
+
+    /**
+     * Get the top
+     * @return string|integer
+     */
+    public function getTop()
+    {
+        return $this->top;
     }
 
     /**
@@ -85,7 +85,7 @@ class Margin
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

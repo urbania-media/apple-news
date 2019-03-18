@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/layout
  */
-class Layout
+class Layout implements \JsonSerializable
 {
     /**
      * The number of columns this article was designed for. You must have at
@@ -75,33 +75,6 @@ class Layout
     }
 
     /**
-     * Get the gutter
-     * @return integer
-     */
-    public function getGutter()
-    {
-        return $this->gutter;
-    }
-
-    /**
-     * Get the margin
-     * @return integer
-     */
-    public function getMargin()
-    {
-        return $this->margin;
-    }
-
-    /**
-     * Get the width
-     * @return integer
-     */
-    public function getWidth()
-    {
-        return $this->width;
-    }
-
-    /**
      * Set the columns
      * @param integer $columns
      * @return $this
@@ -112,6 +85,15 @@ class Layout
 
         $this->columns = $columns;
         return $this;
+    }
+
+    /**
+     * Get the gutter
+     * @return integer
+     */
+    public function getGutter()
+    {
+        return $this->gutter;
     }
 
     /**
@@ -128,6 +110,15 @@ class Layout
     }
 
     /**
+     * Get the margin
+     * @return integer
+     */
+    public function getMargin()
+    {
+        return $this->margin;
+    }
+
+    /**
      * Set the margin
      * @param integer $margin
      * @return $this
@@ -138,6 +129,15 @@ class Layout
 
         $this->margin = $margin;
         return $this;
+    }
+
+    /**
+     * Get the width
+     * @return integer
+     */
+    public function getWidth()
+    {
+        return $this->width;
     }
 
     /**
@@ -157,7 +157,7 @@ class Layout
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/imagefill
  */
-class ImageFill extends Fill
+class ImageFill extends Fill implements \JsonSerializable
 {
     /**
      * The URL of the image file to use for filling the component.
@@ -76,12 +76,38 @@ class ImageFill extends Fill
     }
 
     /**
+     * Set the fillMode
+     * @param string $fillMode
+     * @return $this
+     */
+    public function setFillMode($fillMode)
+    {
+        Assert::oneOf($fillMode, ["fit", "cover"]);
+
+        $this->fillMode = $fillMode;
+        return $this;
+    }
+
+    /**
      * Get the horizontalAlignment
      * @return string
      */
     public function getHorizontalAlignment()
     {
         return $this->horizontalAlignment;
+    }
+
+    /**
+     * Set the horizontalAlignment
+     * @param string $horizontalAlignment
+     * @return $this
+     */
+    public function setHorizontalAlignment($horizontalAlignment)
+    {
+        Assert::oneOf($horizontalAlignment, ["left", "center", "right"]);
+
+        $this->horizontalAlignment = $horizontalAlignment;
+        return $this;
     }
 
     /**
@@ -103,41 +129,6 @@ class ImageFill extends Fill
     }
 
     /**
-     * Get the verticalAlignment
-     * @return string
-     */
-    public function getVerticalAlignment()
-    {
-        return $this->verticalAlignment;
-    }
-
-    /**
-     * Set the fillMode
-     * @param string $fillMode
-     * @return $this
-     */
-    public function setFillMode($fillMode)
-    {
-        Assert::oneOf($fillMode, ["fit", "cover"]);
-
-        $this->fillMode = $fillMode;
-        return $this;
-    }
-
-    /**
-     * Set the horizontalAlignment
-     * @param string $horizontalAlignment
-     * @return $this
-     */
-    public function setHorizontalAlignment($horizontalAlignment)
-    {
-        Assert::oneOf($horizontalAlignment, ["left", "center", "right"]);
-
-        $this->horizontalAlignment = $horizontalAlignment;
-        return $this;
-    }
-
-    /**
      * Set the URL
      * @param string $URL
      * @return $this
@@ -148,6 +139,15 @@ class ImageFill extends Fill
 
         $this->URL = $URL;
         return $this;
+    }
+
+    /**
+     * Get the verticalAlignment
+     * @return string
+     */
+    public function getVerticalAlignment()
+    {
+        return $this->verticalAlignment;
     }
 
     /**
@@ -167,7 +167,7 @@ class ImageFill extends Fill
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

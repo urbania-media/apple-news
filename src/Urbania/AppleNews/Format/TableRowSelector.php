@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/tablerowselector
  */
-class TableRowSelector
+class TableRowSelector implements \JsonSerializable
 {
     /**
      * Specifies the identifier of a specific data descriptor. All rows for
@@ -68,33 +68,6 @@ class TableRowSelector
     }
 
     /**
-     * Get the even
-     * @return boolean
-     */
-    public function getEven()
-    {
-        return $this->even;
-    }
-
-    /**
-     * Get the odd
-     * @return boolean
-     */
-    public function getOdd()
-    {
-        return $this->odd;
-    }
-
-    /**
-     * Get the rowIndex
-     * @return integer
-     */
-    public function getRowIndex()
-    {
-        return $this->rowIndex;
-    }
-
-    /**
      * Set the descriptor
      * @param string $descriptor
      * @return $this
@@ -105,6 +78,15 @@ class TableRowSelector
 
         $this->descriptor = $descriptor;
         return $this;
+    }
+
+    /**
+     * Get the even
+     * @return boolean
+     */
+    public function getEven()
+    {
+        return $this->even;
     }
 
     /**
@@ -121,6 +103,15 @@ class TableRowSelector
     }
 
     /**
+     * Get the odd
+     * @return boolean
+     */
+    public function getOdd()
+    {
+        return $this->odd;
+    }
+
+    /**
      * Set the odd
      * @param boolean $odd
      * @return $this
@@ -131,6 +122,15 @@ class TableRowSelector
 
         $this->odd = $odd;
         return $this;
+    }
+
+    /**
+     * Get the rowIndex
+     * @return integer
+     */
+    public function getRowIndex()
+    {
+        return $this->rowIndex;
     }
 
     /**
@@ -150,7 +150,7 @@ class TableRowSelector
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

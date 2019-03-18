@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/instagram
  */
-class Instagram extends Component
+class Instagram extends Component implements \JsonSerializable
 {
     /**
      * The URL of the Instagram post you want to embed.
@@ -68,7 +68,7 @@ class Instagram extends Component
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

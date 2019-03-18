@@ -10,7 +10,8 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/mediumrectangleadvertisement
  */
-class MediumRectangleAdvertisement extends Component
+class MediumRectangleAdvertisement extends Component implements
+    \JsonSerializable
 {
     /**
      * This component always has a role of medium_rectangle_advertisement.
@@ -36,7 +37,7 @@ class MediumRectangleAdvertisement extends Component
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/articlelinks
  */
-class ArticleLinks
+class ArticleLinks implements \JsonSerializable
 {
     /**
      * The URL of the channel in which this article appears.
@@ -55,24 +55,6 @@ class ArticleLinks
     }
 
     /**
-     * Get the sections
-     * @return string[]
-     */
-    public function getSections()
-    {
-        return $this->sections;
-    }
-
-    /**
-     * Get the self
-     * @return string
-     */
-    public function getSelf()
-    {
-        return $this->self;
-    }
-
-    /**
      * Set the channel
      * @param string $channel
      * @return $this
@@ -83,6 +65,15 @@ class ArticleLinks
 
         $this->channel = $channel;
         return $this;
+    }
+
+    /**
+     * Get the sections
+     * @return string[]
+     */
+    public function getSections()
+    {
+        return $this->sections;
     }
 
     /**
@@ -97,6 +88,15 @@ class ArticleLinks
 
         $this->sections = $sections;
         return $this;
+    }
+
+    /**
+     * Get the self
+     * @return string
+     */
+    public function getSelf()
+    {
+        return $this->self;
     }
 
     /**
@@ -116,7 +116,7 @@ class ArticleLinks
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

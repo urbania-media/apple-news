@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/channelresponse
  */
-class ChannelResponse extends Channel
+class ChannelResponse extends Channel implements \JsonSerializable
 {
     /** @var \Urbania\AppleNews\Api\Response\ChannelLinks */
     protected $links;
@@ -54,7 +54,7 @@ class ChannelResponse extends Channel
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

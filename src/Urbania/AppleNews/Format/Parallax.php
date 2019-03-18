@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/parallax
  */
-class Parallax extends Behavior
+class Parallax extends Behavior implements \JsonSerializable
 {
     /**
      * The speed of the component, as a factor of the scroll speed.The value
@@ -46,15 +46,6 @@ class Parallax extends Behavior
     }
 
     /**
-     * Get the type
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
      * Set the factor
      * @param integer|float $factor
      * @return $this
@@ -68,10 +59,19 @@ class Parallax extends Behavior
     }
 
     /**
+     * Get the type
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

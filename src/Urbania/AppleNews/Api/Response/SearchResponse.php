@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/searchresponse
  */
-class SearchResponse
+class SearchResponse implements \JsonSerializable
 {
     /**
      * A list of article objects.
@@ -59,24 +59,6 @@ class SearchResponse
     }
 
     /**
-     * Get the links
-     * @return \Urbania\AppleNews\Api\Response\SearchResponseLinks
-     */
-    public function getLinks()
-    {
-        return $this->links;
-    }
-
-    /**
-     * Get the meta
-     * @return string
-     */
-    public function getMeta()
-    {
-        return $this->meta;
-    }
-
-    /**
      * Set the articles
      * @param Api\Response\Article[] $articles
      * @return $this
@@ -92,6 +74,15 @@ class SearchResponse
         }
         $this->articles = $items;
         return $this;
+    }
+
+    /**
+     * Get the links
+     * @return \Urbania\AppleNews\Api\Response\SearchResponseLinks
+     */
+    public function getLinks()
+    {
+        return $this->links;
     }
 
     /**
@@ -114,6 +105,15 @@ class SearchResponse
     }
 
     /**
+     * Get the meta
+     * @return string
+     */
+    public function getMeta()
+    {
+        return $this->meta;
+    }
+
+    /**
      * Set the meta
      * @param string $meta
      * @return $this
@@ -130,7 +130,7 @@ class SearchResponse
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/tablestyle
  */
-class TableStyle
+class TableStyle implements \JsonSerializable
 {
     /**
      * Defines the styling for individual cells in a table.
@@ -88,51 +88,6 @@ class TableStyle
     }
 
     /**
-     * Get the columns
-     * @return \Urbania\AppleNews\Format\TableColumnStyle
-     */
-    public function getColumns()
-    {
-        return $this->columns;
-    }
-
-    /**
-     * Get the headerCells
-     * @return \Urbania\AppleNews\Format\TableCellStyle
-     */
-    public function getHeaderCells()
-    {
-        return $this->headerCells;
-    }
-
-    /**
-     * Get the headerColumns
-     * @return \Urbania\AppleNews\Format\TableColumnStyle
-     */
-    public function getHeaderColumns()
-    {
-        return $this->headerColumns;
-    }
-
-    /**
-     * Get the headerRows
-     * @return \Urbania\AppleNews\Format\TableRowStyle
-     */
-    public function getHeaderRows()
-    {
-        return $this->headerRows;
-    }
-
-    /**
-     * Get the rows
-     * @return \Urbania\AppleNews\Format\TableRowStyle
-     */
-    public function getRows()
-    {
-        return $this->rows;
-    }
-
-    /**
      * Set the cells
      * @param \Urbania\AppleNews\Format\TableCellStyle|array $cells
      * @return $this
@@ -147,6 +102,15 @@ class TableStyle
 
         $this->cells = is_array($cells) ? new TableCellStyle($cells) : $cells;
         return $this;
+    }
+
+    /**
+     * Get the columns
+     * @return \Urbania\AppleNews\Format\TableColumnStyle
+     */
+    public function getColumns()
+    {
+        return $this->columns;
     }
 
     /**
@@ -169,6 +133,15 @@ class TableStyle
     }
 
     /**
+     * Get the headerCells
+     * @return \Urbania\AppleNews\Format\TableCellStyle
+     */
+    public function getHeaderCells()
+    {
+        return $this->headerCells;
+    }
+
+    /**
      * Set the headerCells
      * @param \Urbania\AppleNews\Format\TableCellStyle|array $headerCells
      * @return $this
@@ -185,6 +158,15 @@ class TableStyle
             ? new TableCellStyle($headerCells)
             : $headerCells;
         return $this;
+    }
+
+    /**
+     * Get the headerColumns
+     * @return \Urbania\AppleNews\Format\TableColumnStyle
+     */
+    public function getHeaderColumns()
+    {
+        return $this->headerColumns;
     }
 
     /**
@@ -207,6 +189,15 @@ class TableStyle
     }
 
     /**
+     * Get the headerRows
+     * @return \Urbania\AppleNews\Format\TableRowStyle
+     */
+    public function getHeaderRows()
+    {
+        return $this->headerRows;
+    }
+
+    /**
      * Set the headerRows
      * @param \Urbania\AppleNews\Format\TableRowStyle|array $headerRows
      * @return $this
@@ -223,6 +214,15 @@ class TableStyle
             ? new TableRowStyle($headerRows)
             : $headerRows;
         return $this;
+    }
+
+    /**
+     * Get the rows
+     * @return \Urbania\AppleNews\Format\TableRowStyle
+     */
+    public function getRows()
+    {
+        return $this->rows;
     }
 
     /**
@@ -246,7 +246,7 @@ class TableStyle
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/galleryitem
  */
-class GalleryItem
+class GalleryItem implements \JsonSerializable
 {
     /**
      * The URL of an image to display in a gallery or mosaic.
@@ -72,33 +72,6 @@ class GalleryItem
     }
 
     /**
-     * Get the caption
-     * @return \Urbania\AppleNews\Format\CaptionDescriptor|string
-     */
-    public function getCaption()
-    {
-        return $this->caption;
-    }
-
-    /**
-     * Get the explicitContent
-     * @return boolean
-     */
-    public function getExplicitContent()
-    {
-        return $this->explicitContent;
-    }
-
-    /**
-     * Get the URL
-     * @return string
-     */
-    public function getURL()
-    {
-        return $this->URL;
-    }
-
-    /**
      * Set the accessibilityCaption
      * @param string $accessibilityCaption
      * @return $this
@@ -109,6 +82,15 @@ class GalleryItem
 
         $this->accessibilityCaption = $accessibilityCaption;
         return $this;
+    }
+
+    /**
+     * Get the caption
+     * @return \Urbania\AppleNews\Format\CaptionDescriptor|string
+     */
+    public function getCaption()
+    {
+        return $this->caption;
     }
 
     /**
@@ -131,6 +113,15 @@ class GalleryItem
     }
 
     /**
+     * Get the explicitContent
+     * @return boolean
+     */
+    public function getExplicitContent()
+    {
+        return $this->explicitContent;
+    }
+
+    /**
      * Set the explicitContent
      * @param boolean $explicitContent
      * @return $this
@@ -141,6 +132,15 @@ class GalleryItem
 
         $this->explicitContent = $explicitContent;
         return $this;
+    }
+
+    /**
+     * Get the URL
+     * @return string
+     */
+    public function getURL()
+    {
+        return $this->URL;
     }
 
     /**
@@ -160,7 +160,7 @@ class GalleryItem
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

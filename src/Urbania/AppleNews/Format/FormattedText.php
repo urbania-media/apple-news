@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/formattedtext
  */
-class FormattedText
+class FormattedText implements \JsonSerializable
 {
     /**
      * An array of Addition objects that supply additional information for
@@ -86,51 +86,6 @@ class FormattedText
     }
 
     /**
-     * Get the format
-     * @return string
-     */
-    public function getFormat()
-    {
-        return $this->format;
-    }
-
-    /**
-     * Get the inlineTextStyles
-     * @return Format\InlineTextStyle[]
-     */
-    public function getInlineTextStyles()
-    {
-        return $this->inlineTextStyles;
-    }
-
-    /**
-     * Get the text
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
-     * Get the textStyle
-     * @return \Urbania\AppleNews\Format\ComponentTextStyle|string
-     */
-    public function getTextStyle()
-    {
-        return $this->textStyle;
-    }
-
-    /**
-     * Get the type
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
      * Set the additions
      * @param Format\Addition[] $additions
      * @return $this
@@ -149,6 +104,15 @@ class FormattedText
     }
 
     /**
+     * Get the format
+     * @return string
+     */
+    public function getFormat()
+    {
+        return $this->format;
+    }
+
+    /**
      * Set the format
      * @param string $format
      * @return $this
@@ -159,6 +123,15 @@ class FormattedText
 
         $this->format = $format;
         return $this;
+    }
+
+    /**
+     * Get the inlineTextStyles
+     * @return Format\InlineTextStyle[]
+     */
+    public function getInlineTextStyles()
+    {
+        return $this->inlineTextStyles;
     }
 
     /**
@@ -183,6 +156,15 @@ class FormattedText
     }
 
     /**
+     * Get the text
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
      * Set the text
      * @param string $text
      * @return $this
@@ -193,6 +175,15 @@ class FormattedText
 
         $this->text = $text;
         return $this;
+    }
+
+    /**
+     * Get the textStyle
+     * @return \Urbania\AppleNews\Format\ComponentTextStyle|string
+     */
+    public function getTextStyle()
+    {
+        return $this->textStyle;
     }
 
     /**
@@ -215,10 +206,19 @@ class FormattedText
     }
 
     /**
+     * Get the type
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

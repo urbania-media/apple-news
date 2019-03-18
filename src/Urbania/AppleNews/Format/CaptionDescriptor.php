@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/captiondescriptor
  */
-class CaptionDescriptor
+class CaptionDescriptor implements \JsonSerializable
 {
     /**
      * An array of Link objects that provide additional information for
@@ -81,42 +81,6 @@ class CaptionDescriptor
     }
 
     /**
-     * Get the format
-     * @return string
-     */
-    public function getFormat()
-    {
-        return $this->format;
-    }
-
-    /**
-     * Get the inlineTextStyles
-     * @return Format\InlineTextStyle[]
-     */
-    public function getInlineTextStyles()
-    {
-        return $this->inlineTextStyles;
-    }
-
-    /**
-     * Get the text
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
-     * Get the textStyle
-     * @return \Urbania\AppleNews\Format\ComponentTextStyle|string
-     */
-    public function getTextStyle()
-    {
-        return $this->textStyle;
-    }
-
-    /**
      * Set the additions
      * @param Format\Addition[] $additions
      * @return $this
@@ -135,6 +99,15 @@ class CaptionDescriptor
     }
 
     /**
+     * Get the format
+     * @return string
+     */
+    public function getFormat()
+    {
+        return $this->format;
+    }
+
+    /**
      * Set the format
      * @param string $format
      * @return $this
@@ -145,6 +118,15 @@ class CaptionDescriptor
 
         $this->format = $format;
         return $this;
+    }
+
+    /**
+     * Get the inlineTextStyles
+     * @return Format\InlineTextStyle[]
+     */
+    public function getInlineTextStyles()
+    {
+        return $this->inlineTextStyles;
     }
 
     /**
@@ -169,6 +151,15 @@ class CaptionDescriptor
     }
 
     /**
+     * Get the text
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
      * Set the text
      * @param string $text
      * @return $this
@@ -179,6 +170,15 @@ class CaptionDescriptor
 
         $this->text = $text;
         return $this;
+    }
+
+    /**
+     * Get the textStyle
+     * @return \Urbania\AppleNews\Format\ComponentTextStyle|string
+     */
+    public function getTextStyle()
+    {
+        return $this->textStyle;
     }
 
     /**
@@ -204,7 +204,7 @@ class CaptionDescriptor
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

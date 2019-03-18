@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/floatdataformat
  */
-class FloatDataFormat extends DataFormat
+class FloatDataFormat extends DataFormat implements \JsonSerializable
 {
     /**
      * The number of digits that can appear after the decimal point. The
@@ -46,15 +46,6 @@ class FloatDataFormat extends DataFormat
     }
 
     /**
-     * Get the type
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
      * Set the decimals
      * @param integer $decimals
      * @return $this
@@ -68,10 +59,19 @@ class FloatDataFormat extends DataFormat
     }
 
     /**
+     * Get the type
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

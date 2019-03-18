@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/addition
  */
-class Addition
+class Addition implements \JsonSerializable
 {
     /**
      * The length of the range of text the component should be anchored to.
@@ -57,24 +57,6 @@ class Addition
     }
 
     /**
-     * Get the rangeStart
-     * @return integer
-     */
-    public function getRangeStart()
-    {
-        return $this->rangeStart;
-    }
-
-    /**
-     * Get the type
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
      * Set the rangeLength
      * @param integer $rangeLength
      * @return $this
@@ -88,6 +70,15 @@ class Addition
     }
 
     /**
+     * Get the rangeStart
+     * @return integer
+     */
+    public function getRangeStart()
+    {
+        return $this->rangeStart;
+    }
+
+    /**
      * Set the rangeStart
      * @param integer $rangeStart
      * @return $this
@@ -98,6 +89,15 @@ class Addition
 
         $this->rangeStart = $rangeStart;
         return $this;
+    }
+
+    /**
+     * Get the type
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
@@ -117,7 +117,7 @@ class Addition
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

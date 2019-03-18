@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/advertisinglayout
  */
-class AdvertisingLayout
+class AdvertisingLayout implements \JsonSerializable
 {
     /**
      * Describes margins on top and bottom as a single integer or as an
@@ -57,7 +57,7 @@ class AdvertisingLayout
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

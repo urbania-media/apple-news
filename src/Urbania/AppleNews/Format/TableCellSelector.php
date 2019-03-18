@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/tablecellselector
  */
-class TableCellSelector
+class TableCellSelector implements \JsonSerializable
 {
     /**
      * Specifies a column index. The leftmost column of data has an index of
@@ -98,60 +98,6 @@ class TableCellSelector
     }
 
     /**
-     * Get the descriptor
-     * @return string
-     */
-    public function getDescriptor()
-    {
-        return $this->descriptor;
-    }
-
-    /**
-     * Get the evenColumns
-     * @return boolean
-     */
-    public function getEvenColumns()
-    {
-        return $this->evenColumns;
-    }
-
-    /**
-     * Get the evenRows
-     * @return boolean
-     */
-    public function getEvenRows()
-    {
-        return $this->evenRows;
-    }
-
-    /**
-     * Get the oddColumns
-     * @return boolean
-     */
-    public function getOddColumns()
-    {
-        return $this->oddColumns;
-    }
-
-    /**
-     * Get the oddRows
-     * @return boolean
-     */
-    public function getOddRows()
-    {
-        return $this->oddRows;
-    }
-
-    /**
-     * Get the rowIndex
-     * @return integer
-     */
-    public function getRowIndex()
-    {
-        return $this->rowIndex;
-    }
-
-    /**
      * Set the columnIndex
      * @param integer $columnIndex
      * @return $this
@@ -162,6 +108,15 @@ class TableCellSelector
 
         $this->columnIndex = $columnIndex;
         return $this;
+    }
+
+    /**
+     * Get the descriptor
+     * @return string
+     */
+    public function getDescriptor()
+    {
+        return $this->descriptor;
     }
 
     /**
@@ -178,6 +133,15 @@ class TableCellSelector
     }
 
     /**
+     * Get the evenColumns
+     * @return boolean
+     */
+    public function getEvenColumns()
+    {
+        return $this->evenColumns;
+    }
+
+    /**
      * Set the evenColumns
      * @param boolean $evenColumns
      * @return $this
@@ -188,6 +152,15 @@ class TableCellSelector
 
         $this->evenColumns = $evenColumns;
         return $this;
+    }
+
+    /**
+     * Get the evenRows
+     * @return boolean
+     */
+    public function getEvenRows()
+    {
+        return $this->evenRows;
     }
 
     /**
@@ -204,6 +177,15 @@ class TableCellSelector
     }
 
     /**
+     * Get the oddColumns
+     * @return boolean
+     */
+    public function getOddColumns()
+    {
+        return $this->oddColumns;
+    }
+
+    /**
      * Set the oddColumns
      * @param boolean $oddColumns
      * @return $this
@@ -217,6 +199,15 @@ class TableCellSelector
     }
 
     /**
+     * Get the oddRows
+     * @return boolean
+     */
+    public function getOddRows()
+    {
+        return $this->oddRows;
+    }
+
+    /**
      * Set the oddRows
      * @param boolean $oddRows
      * @return $this
@@ -227,6 +218,15 @@ class TableCellSelector
 
         $this->oddRows = $oddRows;
         return $this;
+    }
+
+    /**
+     * Get the rowIndex
+     * @return integer
+     */
+    public function getRowIndex()
+    {
+        return $this->rowIndex;
     }
 
     /**
@@ -246,7 +246,7 @@ class TableCellSelector
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

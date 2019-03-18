@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/video
  */
-class Video extends Component
+class Video extends Component implements \JsonSerializable
 {
     /**
      * The URL of a video file that can be played using AVPlayer. HTTP Live
@@ -109,60 +109,6 @@ class Video extends Component
     }
 
     /**
-     * Get the aspectRatio
-     * @return integer|float
-     */
-    public function getAspectRatio()
-    {
-        return $this->aspectRatio;
-    }
-
-    /**
-     * Get the caption
-     * @return string
-     */
-    public function getCaption()
-    {
-        return $this->caption;
-    }
-
-    /**
-     * Get the explicitContent
-     * @return boolean
-     */
-    public function getExplicitContent()
-    {
-        return $this->explicitContent;
-    }
-
-    /**
-     * Get the role
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * Get the stillURL
-     * @return string
-     */
-    public function getStillURL()
-    {
-        return $this->stillURL;
-    }
-
-    /**
-     * Get the URL
-     * @return uri
-     */
-    public function getURL()
-    {
-        return $this->URL;
-    }
-
-    /**
      * Set the accessibilityCaption
      * @param string $accessibilityCaption
      * @return $this
@@ -173,6 +119,15 @@ class Video extends Component
 
         $this->accessibilityCaption = $accessibilityCaption;
         return $this;
+    }
+
+    /**
+     * Get the aspectRatio
+     * @return integer|float
+     */
+    public function getAspectRatio()
+    {
+        return $this->aspectRatio;
     }
 
     /**
@@ -189,6 +144,15 @@ class Video extends Component
     }
 
     /**
+     * Get the caption
+     * @return string
+     */
+    public function getCaption()
+    {
+        return $this->caption;
+    }
+
+    /**
      * Set the caption
      * @param string $caption
      * @return $this
@@ -199,6 +163,15 @@ class Video extends Component
 
         $this->caption = $caption;
         return $this;
+    }
+
+    /**
+     * Get the explicitContent
+     * @return boolean
+     */
+    public function getExplicitContent()
+    {
+        return $this->explicitContent;
     }
 
     /**
@@ -215,6 +188,15 @@ class Video extends Component
     }
 
     /**
+     * Get the role
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
      * Set the role
      * @param string $role
      * @return $this
@@ -228,6 +210,15 @@ class Video extends Component
     }
 
     /**
+     * Get the stillURL
+     * @return string
+     */
+    public function getStillURL()
+    {
+        return $this->stillURL;
+    }
+
+    /**
      * Set the stillURL
      * @param string $stillURL
      * @return $this
@@ -238,6 +229,15 @@ class Video extends Component
 
         $this->stillURL = $stillURL;
         return $this;
+    }
+
+    /**
+     * Get the URL
+     * @return uri
+     */
+    public function getURL()
+    {
+        return $this->URL;
     }
 
     /**
@@ -257,7 +257,7 @@ class Video extends Component
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

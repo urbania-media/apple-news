@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/arkit
  */
-class ARKit extends Component
+class ARKit extends Component implements \JsonSerializable
 {
     /**
      * Valid URL to a Universal Scene Description file (USD) file with
@@ -85,42 +85,6 @@ class ARKit extends Component
     }
 
     /**
-     * Get the caption
-     * @return string
-     */
-    public function getCaption()
-    {
-        return $this->caption;
-    }
-
-    /**
-     * Get the explicitContent
-     * @return boolean
-     */
-    public function getExplicitContent()
-    {
-        return $this->explicitContent;
-    }
-
-    /**
-     * Get the role
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * Get the URL
-     * @return string
-     */
-    public function getURL()
-    {
-        return $this->URL;
-    }
-
-    /**
      * Set the accessibilityCaption
      * @param string $accessibilityCaption
      * @return $this
@@ -131,6 +95,15 @@ class ARKit extends Component
 
         $this->accessibilityCaption = $accessibilityCaption;
         return $this;
+    }
+
+    /**
+     * Get the caption
+     * @return string
+     */
+    public function getCaption()
+    {
+        return $this->caption;
     }
 
     /**
@@ -147,6 +120,15 @@ class ARKit extends Component
     }
 
     /**
+     * Get the explicitContent
+     * @return boolean
+     */
+    public function getExplicitContent()
+    {
+        return $this->explicitContent;
+    }
+
+    /**
      * Set the explicitContent
      * @param boolean $explicitContent
      * @return $this
@@ -160,6 +142,15 @@ class ARKit extends Component
     }
 
     /**
+     * Get the role
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
      * Set the role
      * @param string $role
      * @return $this
@@ -170,6 +161,15 @@ class ARKit extends Component
 
         $this->role = $role;
         return $this;
+    }
+
+    /**
+     * Get the URL
+     * @return string
+     */
+    public function getURL()
+    {
+        return $this->URL;
     }
 
     /**
@@ -189,7 +189,7 @@ class ARKit extends Component
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

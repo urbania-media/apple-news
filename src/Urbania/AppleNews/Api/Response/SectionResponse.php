@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/sectionresponse
  */
-class SectionResponse extends Section
+class SectionResponse extends Section implements \JsonSerializable
 {
     /** @var \Urbania\AppleNews\Api\Response\SectionLinks */
     protected $links;
@@ -54,7 +54,7 @@ class SectionResponse extends Section
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

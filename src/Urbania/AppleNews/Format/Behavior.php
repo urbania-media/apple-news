@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/behavior
  */
-class Behavior
+class Behavior implements \JsonSerializable
 {
     protected static $typeProperty = 'type';
 
@@ -80,7 +80,7 @@ class Behavior
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

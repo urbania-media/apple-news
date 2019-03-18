@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/collectiondisplay
  */
-class CollectionDisplay
+class CollectionDisplay implements \JsonSerializable
 {
     /**
      * Defines how components are aligned within their rows. This is
@@ -122,12 +122,38 @@ class CollectionDisplay
     }
 
     /**
+     * Set the alignment
+     * @param string $alignment
+     * @return $this
+     */
+    public function setAlignment($alignment)
+    {
+        Assert::oneOf($alignment, ["left", "center", "right"]);
+
+        $this->alignment = $alignment;
+        return $this;
+    }
+
+    /**
      * Get the distribution
      * @return string
      */
     public function getDistribution()
     {
         return $this->distribution;
+    }
+
+    /**
+     * Set the distribution
+     * @param string $distribution
+     * @return $this
+     */
+    public function setDistribution($distribution)
+    {
+        Assert::oneOf($distribution, ["wide", "narrow"]);
+
+        $this->distribution = $distribution;
+        return $this;
     }
 
     /**
@@ -140,12 +166,38 @@ class CollectionDisplay
     }
 
     /**
+     * Set the gutter
+     * @param string|integer $gutter
+     * @return $this
+     */
+    public function setGutter($gutter)
+    {
+        Assert::isSupportedUnits($gutter);
+
+        $this->gutter = $gutter;
+        return $this;
+    }
+
+    /**
      * Get the maximumWidth
      * @return string|integer
      */
     public function getMaximumWidth()
     {
         return $this->maximumWidth;
+    }
+
+    /**
+     * Set the maximumWidth
+     * @param string|integer $maximumWidth
+     * @return $this
+     */
+    public function setMaximumWidth($maximumWidth)
+    {
+        Assert::isSupportedUnits($maximumWidth);
+
+        $this->maximumWidth = $maximumWidth;
+        return $this;
     }
 
     /**
@@ -158,12 +210,38 @@ class CollectionDisplay
     }
 
     /**
+     * Set the minimumWidth
+     * @param string|integer $minimumWidth
+     * @return $this
+     */
+    public function setMinimumWidth($minimumWidth)
+    {
+        Assert::isSupportedUnits($minimumWidth);
+
+        $this->minimumWidth = $minimumWidth;
+        return $this;
+    }
+
+    /**
      * Get the rowSpacing
      * @return string|integer
      */
     public function getRowSpacing()
     {
         return $this->rowSpacing;
+    }
+
+    /**
+     * Set the rowSpacing
+     * @param string|integer $rowSpacing
+     * @return $this
+     */
+    public function setRowSpacing($rowSpacing)
+    {
+        Assert::isSupportedUnits($rowSpacing);
+
+        $this->rowSpacing = $rowSpacing;
+        return $this;
     }
 
     /**
@@ -185,93 +263,6 @@ class CollectionDisplay
     }
 
     /**
-     * Get the widows
-     * @return string
-     */
-    public function getWidows()
-    {
-        return $this->widows;
-    }
-
-    /**
-     * Set the alignment
-     * @param string $alignment
-     * @return $this
-     */
-    public function setAlignment($alignment)
-    {
-        Assert::oneOf($alignment, ["left", "center", "right"]);
-
-        $this->alignment = $alignment;
-        return $this;
-    }
-
-    /**
-     * Set the distribution
-     * @param string $distribution
-     * @return $this
-     */
-    public function setDistribution($distribution)
-    {
-        Assert::oneOf($distribution, ["wide", "narrow"]);
-
-        $this->distribution = $distribution;
-        return $this;
-    }
-
-    /**
-     * Set the gutter
-     * @param string|integer $gutter
-     * @return $this
-     */
-    public function setGutter($gutter)
-    {
-        Assert::isSupportedUnits($gutter);
-
-        $this->gutter = $gutter;
-        return $this;
-    }
-
-    /**
-     * Set the maximumWidth
-     * @param string|integer $maximumWidth
-     * @return $this
-     */
-    public function setMaximumWidth($maximumWidth)
-    {
-        Assert::isSupportedUnits($maximumWidth);
-
-        $this->maximumWidth = $maximumWidth;
-        return $this;
-    }
-
-    /**
-     * Set the minimumWidth
-     * @param string|integer $minimumWidth
-     * @return $this
-     */
-    public function setMinimumWidth($minimumWidth)
-    {
-        Assert::isSupportedUnits($minimumWidth);
-
-        $this->minimumWidth = $minimumWidth;
-        return $this;
-    }
-
-    /**
-     * Set the rowSpacing
-     * @param string|integer $rowSpacing
-     * @return $this
-     */
-    public function setRowSpacing($rowSpacing)
-    {
-        Assert::isSupportedUnits($rowSpacing);
-
-        $this->rowSpacing = $rowSpacing;
-        return $this;
-    }
-
-    /**
      * Set the variableSizing
      * @param boolean $variableSizing
      * @return $this
@@ -282,6 +273,15 @@ class CollectionDisplay
 
         $this->variableSizing = $variableSizing;
         return $this;
+    }
+
+    /**
+     * Get the widows
+     * @return string
+     */
+    public function getWidows()
+    {
+        return $this->widows;
     }
 
     /**
@@ -301,7 +301,7 @@ class CollectionDisplay
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

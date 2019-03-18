@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/htmltable
  */
-class HTMLTable extends Component
+class HTMLTable extends Component implements \JsonSerializable
 {
     /**
      * The HTML for the table. This HTML must begin with <table> and end with
@@ -44,15 +44,6 @@ class HTMLTable extends Component
     }
 
     /**
-     * Get the role
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
      * Set the html
      * @param string $html
      * @return $this
@@ -66,10 +57,19 @@ class HTMLTable extends Component
     }
 
     /**
+     * Get the role
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

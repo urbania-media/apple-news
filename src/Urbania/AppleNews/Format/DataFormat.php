@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/dataformat
  */
-class DataFormat
+class DataFormat implements \JsonSerializable
 {
     protected static $typeProperty = 'type';
 
@@ -61,7 +61,7 @@ class DataFormat
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

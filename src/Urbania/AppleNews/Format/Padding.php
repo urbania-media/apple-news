@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/padding
  */
-class Padding
+class Padding implements \JsonSerializable
 {
     /**
      * The amount of padding between the bottom of the cell and the content,
@@ -73,33 +73,6 @@ class Padding
     }
 
     /**
-     * Get the left
-     * @return string|integer
-     */
-    public function getLeft()
-    {
-        return $this->left;
-    }
-
-    /**
-     * Get the right
-     * @return string|integer
-     */
-    public function getRight()
-    {
-        return $this->right;
-    }
-
-    /**
-     * Get the top
-     * @return string|integer
-     */
-    public function getTop()
-    {
-        return $this->top;
-    }
-
-    /**
      * Set the bottom
      * @param string|integer $bottom
      * @return $this
@@ -110,6 +83,15 @@ class Padding
 
         $this->bottom = $bottom;
         return $this;
+    }
+
+    /**
+     * Get the left
+     * @return string|integer
+     */
+    public function getLeft()
+    {
+        return $this->left;
     }
 
     /**
@@ -126,6 +108,15 @@ class Padding
     }
 
     /**
+     * Get the right
+     * @return string|integer
+     */
+    public function getRight()
+    {
+        return $this->right;
+    }
+
+    /**
      * Set the right
      * @param string|integer $right
      * @return $this
@@ -136,6 +127,15 @@ class Padding
 
         $this->right = $right;
         return $this;
+    }
+
+    /**
+     * Get the top
+     * @return string|integer
+     */
+    public function getTop()
+    {
+        return $this->top;
     }
 
     /**
@@ -155,7 +155,7 @@ class Padding
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

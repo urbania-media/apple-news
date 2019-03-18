@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/motion
  */
-class Motion extends Behavior
+class Motion extends Behavior implements \JsonSerializable
 {
     /**
      * his behavior’s type is always motion.
@@ -37,7 +37,7 @@ class Motion extends Behavior
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

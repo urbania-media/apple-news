@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/tablestrokestyle
  */
-class TableStrokeStyle
+class TableStrokeStyle implements \JsonSerializable
 {
     /**
      * The stroke color.
@@ -58,24 +58,6 @@ class TableStrokeStyle
     }
 
     /**
-     * Get the style
-     * @return string
-     */
-    public function getStyle()
-    {
-        return $this->style;
-    }
-
-    /**
-     * Get the width
-     * @return string|integer
-     */
-    public function getWidth()
-    {
-        return $this->width;
-    }
-
-    /**
      * Set the color
      * @param string $color
      * @return $this
@@ -89,6 +71,15 @@ class TableStrokeStyle
     }
 
     /**
+     * Get the style
+     * @return string
+     */
+    public function getStyle()
+    {
+        return $this->style;
+    }
+
+    /**
      * Set the style
      * @param string $style
      * @return $this
@@ -99,6 +90,15 @@ class TableStrokeStyle
 
         $this->style = $style;
         return $this;
+    }
+
+    /**
+     * Get the width
+     * @return string|integer
+     */
+    public function getWidth()
+    {
+        return $this->width;
     }
 
     /**
@@ -118,7 +118,7 @@ class TableStrokeStyle
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

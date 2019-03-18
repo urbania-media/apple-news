@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/datatable
  */
-class DataTable extends Component
+class DataTable extends Component implements \JsonSerializable
 {
     /**
      * Provides data for the table. Also provides information about the data,
@@ -90,12 +90,42 @@ class DataTable extends Component
     }
 
     /**
+     * Set the data
+     * @param \Urbania\AppleNews\Format\RecordStore|array $data
+     * @return $this
+     */
+    public function setData($data)
+    {
+        if (is_object($data)) {
+            Assert::isInstanceOf($data, RecordStore::class);
+        } else {
+            Assert::isArray($data);
+        }
+
+        $this->data = is_array($data) ? new RecordStore($data) : $data;
+        return $this;
+    }
+
+    /**
      * Get the dataOrientation
      * @return string
      */
     public function getDataOrientation()
     {
         return $this->dataOrientation;
+    }
+
+    /**
+     * Set the dataOrientation
+     * @param string $dataOrientation
+     * @return $this
+     */
+    public function setDataOrientation($dataOrientation)
+    {
+        Assert::oneOf($dataOrientation, ["horizontal", "vertical"]);
+
+        $this->dataOrientation = $dataOrientation;
+        return $this;
     }
 
     /**
@@ -117,54 +147,6 @@ class DataTable extends Component
     }
 
     /**
-     * Get the sortBy
-     * @return Format\DataTableSorting[]
-     */
-    public function getSortBy()
-    {
-        return $this->sortBy;
-    }
-
-    /**
-     * Get the style
-     * @return \Urbania\AppleNews\Format\ComponentStyle|string
-     */
-    public function getStyle()
-    {
-        return $this->style;
-    }
-
-    /**
-     * Set the data
-     * @param \Urbania\AppleNews\Format\RecordStore|array $data
-     * @return $this
-     */
-    public function setData($data)
-    {
-        if (is_object($data)) {
-            Assert::isInstanceOf($data, RecordStore::class);
-        } else {
-            Assert::isArray($data);
-        }
-
-        $this->data = is_array($data) ? new RecordStore($data) : $data;
-        return $this;
-    }
-
-    /**
-     * Set the dataOrientation
-     * @param string $dataOrientation
-     * @return $this
-     */
-    public function setDataOrientation($dataOrientation)
-    {
-        Assert::oneOf($dataOrientation, ["horizontal", "vertical"]);
-
-        $this->dataOrientation = $dataOrientation;
-        return $this;
-    }
-
-    /**
      * Set the showDescriptorLabels
      * @param boolean $showDescriptorLabels
      * @return $this
@@ -175,6 +157,15 @@ class DataTable extends Component
 
         $this->showDescriptorLabels = $showDescriptorLabels;
         return $this;
+    }
+
+    /**
+     * Get the sortBy
+     * @return Format\DataTableSorting[]
+     */
+    public function getSortBy()
+    {
+        return $this->sortBy;
     }
 
     /**
@@ -198,6 +189,15 @@ class DataTable extends Component
     }
 
     /**
+     * Get the style
+     * @return \Urbania\AppleNews\Format\ComponentStyle|string
+     */
+    public function getStyle()
+    {
+        return $this->style;
+    }
+
+    /**
      * Set the style
      * @param \Urbania\AppleNews\Format\ComponentStyle|array|string $style
      * @return $this
@@ -218,7 +218,7 @@ class DataTable extends Component
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

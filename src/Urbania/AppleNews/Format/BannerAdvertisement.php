@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/banneradvertisement
  */
-class BannerAdvertisement extends Component
+class BannerAdvertisement extends Component implements \JsonSerializable
 {
     /**
      * The type of banner to show.
@@ -43,15 +43,6 @@ class BannerAdvertisement extends Component
     }
 
     /**
-     * Get the role
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
      * Set the bannerType
      * @param string $bannerType
      * @return $this
@@ -70,10 +61,19 @@ class BannerAdvertisement extends Component
     }
 
     /**
+     * Get the role
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

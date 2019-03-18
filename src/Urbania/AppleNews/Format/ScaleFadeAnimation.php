@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/scalefadeanimation
  */
-class ScaleFadeAnimation extends ComponentAnimation
+class ScaleFadeAnimation extends ComponentAnimation implements \JsonSerializable
 {
     /**
      * The initial transparency of the component. Set initialAlpha to a value
@@ -67,12 +67,38 @@ class ScaleFadeAnimation extends ComponentAnimation
     }
 
     /**
+     * Set the initialAlpha
+     * @param integer|float $initialAlpha
+     * @return $this
+     */
+    public function setInitialAlpha($initialAlpha)
+    {
+        Assert::number($initialAlpha);
+
+        $this->initialAlpha = $initialAlpha;
+        return $this;
+    }
+
+    /**
      * Get the initialScale
      * @return integer|float
      */
     public function getInitialScale()
     {
         return $this->initialScale;
+    }
+
+    /**
+     * Set the initialScale
+     * @param integer|float $initialScale
+     * @return $this
+     */
+    public function setInitialScale($initialScale)
+    {
+        Assert::number($initialScale);
+
+        $this->initialScale = $initialScale;
+        return $this;
     }
 
     /**
@@ -94,32 +120,6 @@ class ScaleFadeAnimation extends ComponentAnimation
     }
 
     /**
-     * Set the initialAlpha
-     * @param integer|float $initialAlpha
-     * @return $this
-     */
-    public function setInitialAlpha($initialAlpha)
-    {
-        Assert::number($initialAlpha);
-
-        $this->initialAlpha = $initialAlpha;
-        return $this;
-    }
-
-    /**
-     * Set the initialScale
-     * @param integer|float $initialScale
-     * @return $this
-     */
-    public function setInitialScale($initialScale)
-    {
-        Assert::number($initialScale);
-
-        $this->initialScale = $initialScale;
-        return $this;
-    }
-
-    /**
      * Set the userControllable
      * @param boolean $userControllable
      * @return $this
@@ -136,7 +136,7 @@ class ScaleFadeAnimation extends ComponentAnimation
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

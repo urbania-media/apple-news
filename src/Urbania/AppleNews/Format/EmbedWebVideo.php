@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/embedwebvideo
  */
-class EmbedWebVideo extends Component
+class EmbedWebVideo extends Component implements \JsonSerializable
 {
     /**
      * The URL of the embeddable video to display (the YouTube or Vimeo embed
@@ -91,12 +91,38 @@ class EmbedWebVideo extends Component
     }
 
     /**
+     * Set the accessibilityCaption
+     * @param string $accessibilityCaption
+     * @return $this
+     */
+    public function setAccessibilityCaption($accessibilityCaption)
+    {
+        Assert::string($accessibilityCaption);
+
+        $this->accessibilityCaption = $accessibilityCaption;
+        return $this;
+    }
+
+    /**
      * Get the aspectRatio
      * @return integer|float
      */
     public function getAspectRatio()
     {
         return $this->aspectRatio;
+    }
+
+    /**
+     * Set the aspectRatio
+     * @param integer|float $aspectRatio
+     * @return $this
+     */
+    public function setAspectRatio($aspectRatio)
+    {
+        Assert::number($aspectRatio);
+
+        $this->aspectRatio = $aspectRatio;
+        return $this;
     }
 
     /**
@@ -109,12 +135,38 @@ class EmbedWebVideo extends Component
     }
 
     /**
+     * Set the caption
+     * @param string $caption
+     * @return $this
+     */
+    public function setCaption($caption)
+    {
+        Assert::string($caption);
+
+        $this->caption = $caption;
+        return $this;
+    }
+
+    /**
      * Get the explicitContent
      * @return boolean
      */
     public function getExplicitContent()
     {
         return $this->explicitContent;
+    }
+
+    /**
+     * Set the explicitContent
+     * @param boolean $explicitContent
+     * @return $this
+     */
+    public function setExplicitContent($explicitContent)
+    {
+        Assert::boolean($explicitContent);
+
+        $this->explicitContent = $explicitContent;
+        return $this;
     }
 
     /**
@@ -136,58 +188,6 @@ class EmbedWebVideo extends Component
     }
 
     /**
-     * Set the accessibilityCaption
-     * @param string $accessibilityCaption
-     * @return $this
-     */
-    public function setAccessibilityCaption($accessibilityCaption)
-    {
-        Assert::string($accessibilityCaption);
-
-        $this->accessibilityCaption = $accessibilityCaption;
-        return $this;
-    }
-
-    /**
-     * Set the aspectRatio
-     * @param integer|float $aspectRatio
-     * @return $this
-     */
-    public function setAspectRatio($aspectRatio)
-    {
-        Assert::number($aspectRatio);
-
-        $this->aspectRatio = $aspectRatio;
-        return $this;
-    }
-
-    /**
-     * Set the caption
-     * @param string $caption
-     * @return $this
-     */
-    public function setCaption($caption)
-    {
-        Assert::string($caption);
-
-        $this->caption = $caption;
-        return $this;
-    }
-
-    /**
-     * Set the explicitContent
-     * @param boolean $explicitContent
-     * @return $this
-     */
-    public function setExplicitContent($explicitContent)
-    {
-        Assert::boolean($explicitContent);
-
-        $this->explicitContent = $explicitContent;
-        return $this;
-    }
-
-    /**
      * Set the URL
      * @param uri $URL
      * @return $this
@@ -204,7 +204,7 @@ class EmbedWebVideo extends Component
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

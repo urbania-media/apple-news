@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/tweet
  */
-class Tweet extends Component
+class Tweet extends Component implements \JsonSerializable
 {
     /**
      * The URL of the tweet you want to embed.
@@ -68,7 +68,7 @@ class Tweet extends Component
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

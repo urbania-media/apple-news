@@ -11,7 +11,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/colorstop
  */
-class ColorStop
+class ColorStop implements \JsonSerializable
 {
     /**
      * The color of this color stop.
@@ -50,15 +50,6 @@ class ColorStop
     }
 
     /**
-     * Get the location
-     * @return integer|float
-     */
-    public function getLocation()
-    {
-        return $this->location;
-    }
-
-    /**
      * Set the color
      * @param string $color
      * @return $this
@@ -69,6 +60,15 @@ class ColorStop
 
         $this->color = $color;
         return $this;
+    }
+
+    /**
+     * Get the location
+     * @return integer|float
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 
     /**
@@ -88,7 +88,7 @@ class ColorStop
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

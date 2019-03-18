@@ -10,7 +10,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/shadow
  */
-class Shadow
+class Shadow implements \JsonSerializable
 {
     /**
      * The stroke color.
@@ -65,33 +65,6 @@ class Shadow
     }
 
     /**
-     * Get the offset
-     * @return \Urbania\AppleNews\Format\Offset
-     */
-    public function getOffset()
-    {
-        return $this->offset;
-    }
-
-    /**
-     * Get the opacity
-     * @return integer|float
-     */
-    public function getOpacity()
-    {
-        return $this->opacity;
-    }
-
-    /**
-     * Get the radius
-     * @return integer|float
-     */
-    public function getRadius()
-    {
-        return $this->radius;
-    }
-
-    /**
      * Set the color
      * @param string $color
      * @return $this
@@ -102,6 +75,15 @@ class Shadow
 
         $this->color = $color;
         return $this;
+    }
+
+    /**
+     * Get the offset
+     * @return \Urbania\AppleNews\Format\Offset
+     */
+    public function getOffset()
+    {
+        return $this->offset;
     }
 
     /**
@@ -122,6 +104,15 @@ class Shadow
     }
 
     /**
+     * Get the opacity
+     * @return integer|float
+     */
+    public function getOpacity()
+    {
+        return $this->opacity;
+    }
+
+    /**
      * Set the opacity
      * @param integer|float $opacity
      * @return $this
@@ -132,6 +123,15 @@ class Shadow
 
         $this->opacity = $opacity;
         return $this;
+    }
+
+    /**
+     * Get the radius
+     * @return integer|float
+     */
+    public function getRadius()
+    {
+        return $this->radius;
     }
 
     /**
@@ -151,7 +151,7 @@ class Shadow
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(int $options)
+    public function jsonSerialize()
     {
         return $this->toArray();
     }
