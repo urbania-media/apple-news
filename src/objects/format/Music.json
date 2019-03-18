@@ -1,0 +1,32 @@
+{
+    "name": "Format\\Audio",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "URL",
+            "type": "string"
+        },
+        {
+            "name": "accessibilityCaption",
+            "type": "string"
+        },
+        {
+            "name": "caption",
+            "type": "string"
+        },
+        {
+            "name": "explicitContent",
+            "type": "boolean"
+        },
+        {
+            "name": "imageURL",
+            "type": "string"
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "value": "music",
+            "read_only": true
+        }
+    ]
+}

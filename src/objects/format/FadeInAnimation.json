@@ -1,0 +1,24 @@
+{
+    "name": "Format\\FadeInAnimation",
+    "extends": "Format\\ComponentAnimation",
+    "fields": [
+        {
+            "name": "type",
+            "type": "string",
+            "value": "fade_in",
+            "read_only": true
+        },
+        {
+            "name": "initialAlpha",
+            "type": "number",
+            "min": 0.0,
+            "max": 1.0,
+            "value": 0.3
+        },
+        {
+            "name": "userControllable",
+            "type": "boolean",
+            "value": false
+        }
+    ]
+}

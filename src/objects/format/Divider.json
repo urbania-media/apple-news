@@ -1,0 +1,16 @@
+{
+    "name": "Format\\Divider",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "stroke",
+            "type": "Format\\StrokeStyle"
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "value": "divider",
+            "read_only": true
+        }
+    ]
+}

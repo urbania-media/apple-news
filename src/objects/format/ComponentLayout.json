@@ -1,0 +1,44 @@
+{
+    "name": "Format\\ComponentLayout",
+    "fields": [
+        {
+            "name": "columnSpan",
+            "type": "integer"
+        },
+        {
+            "name": "columnStart",
+            "type": "integer"
+        },
+        {
+            "name": "contentInset",
+            "type": ["Format\\ContentInset", "boolean"]
+        },
+        {
+            "name": "horizontalContentAlignment",
+            "type": "enum:string",
+            "enum_values": ["left", "center", "right"]
+        },
+        {
+            "name": "ignoreDocumentGutter",
+            "type": "enum:string|boolean",
+            "enum_values": [true, false, "none", "left", "right", "both"]
+        },
+        {
+            "name": "ignoreDocumentMargin",
+            "type": "enum:string|boolean",
+            "enum_values": [true, false, "none", "left", "right", "both"]
+        },
+        {
+            "name": "margin",
+            "type": ["Format\\Margin", "integer"]
+        },
+        {
+            "name": "maximumContentWidth",
+            "type": "SupportedUnits"
+        },
+        {
+            "name": "minimumHeight",
+            "type": "SupportedUnits"
+        }
+    ]
+}

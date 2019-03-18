@@ -1,0 +1,33 @@
+{
+    "name": "Format\\Header",
+    "description": "The component for defining the top area of an article, chapter, or section.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": "Format\\Component",
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/header",
+    "properties": [
+        {
+            "name": "components",
+            "type": "array:Format\\Component",
+            "required": false,
+            "description": "An array of components to display as child components. Child components are positioned and rendered relative to their parent component.",
+            "version": "1.0"
+        },
+        {
+            "name": "contentDisplay",
+            "type": "Format\\CollectionDisplay",
+            "required": false,
+            "description": "Defines how child components are positioned within this header component. For example, this property can allow for displaying child components side-by-side and can make sure they are sized equally.",
+            "version": "1.5"
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "required": true,
+            "description": "This component always has a role of header.",
+            "value": "header",
+            "read_only": true,
+            "version": "1.0"
+        }
+    ]
+}

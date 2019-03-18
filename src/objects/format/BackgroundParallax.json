@@ -1,0 +1,12 @@
+{
+    "name": "Format\\BackgroundParallax",
+    "extends": "Format\\Behaviour",
+    "fields": [
+        {
+            "name": "type",
+            "type": "string",
+            "value": "background_parallax",
+            "read_only": true
+        }
+    ]
+}

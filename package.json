@@ -1,0 +1,18 @@
+{
+  "name": "apple-news-api",
+  "version": "1.0.0",
+  "description": "Package ============ This is a description",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.10.2",
+    "prettier": "^1.16.4"
+  }
+}

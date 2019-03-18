@@ -1,0 +1,22 @@
+{
+    "name": "Format\\MoveInAnimation",
+    "extends": "Format\\ComponentAnimation",
+    "fields": [
+        {
+            "name": "type",
+            "type": "string",
+            "value": "move_in",
+            "read_only": true
+        },
+        {
+            "name": "preferredStartingPosition",
+            "type": "enum:string",
+            "enum_values": ["left", "right"]
+        },
+        {
+            "name": "userControllable",
+            "type": "boolean",
+            "value": false
+        }
+    ]
+}

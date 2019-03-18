@@ -1,0 +1,36 @@
+{
+    "name": "Api\\Response\\Section",
+    "base_extends": "Api\\Response\\Response",
+    "fields": [
+        {
+            "name": "id",
+            "type": "string"
+        },
+        {
+            "name": "type",
+            "type": "string",
+            "value": "Section",
+            "read_only": true
+        },
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "shareUrl",
+            "type": "string"
+        },
+        {
+            "name": "isDefault",
+            "type": "boolean"
+        },
+        {
+            "name": "modifiedAt",
+            "type": "date-time"
+        },
+        {
+            "name": "createdAt",
+            "type": "date-time"
+        }
+    ]
+}

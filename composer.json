@@ -1,0 +1,66 @@
+{
+    "name": "urbania/apple-news",
+    "description": "",
+    "keywords": [
+        "laravel"
+    ],
+    "homepage": "http://github.com/Folkloreatelier",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Folklore",
+            "email": "info@atelierfolklore.ca",
+            "homepage": "http://atelierfolklore.ca"
+        },
+        {
+            "name": "David Mongeau-Petitpas",
+            "email": "dmp@atelierfolklore.ca",
+            "homepage": "http://mongo.ca",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "acquia/http-hmac-php": "^4.0",
+        "webmozart/assert": "^1.4"
+    },
+    "require-dev": {
+        "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*",
+        "fzaninotto/faker": "~1.4",
+        "orchestra/database": "3.3.*|3.4.*|3.5.*|3.6.*|3.7.*",
+        "orchestra/testbench": "3.3.*|3.4.*|3.5.*|3.6.*|3.7.*",
+        "mockery/mockery": "0.9.*|1.0.*",
+        "phpunit/phpunit": "~7.0",
+        "php-coveralls/php-coveralls": "^2.1",
+        "doctrine/dbal": "^2.0",
+        "vlucas/phpdotenv": "^2.2",
+        "nette/php-generator": "^3.2",
+        "symfony/filesystem": "^4.2",
+        "symfony/finder": "^4.2",
+        "imangazaliev/didom": "^1.14",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "autoload": {
+        "psr-0": {
+            "Urbania\\AppleNews": "src/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/",
+            "scripts/stubs/"
+        ],
+        "psr-4": {
+            "Urbania\\AppleNews\\Scripts\\": "scripts/lib"
+        }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Urbania\\AppleNews\\Laravel\\AppleNewsServiceProvider"
+            ],
+            "aliases": {}
+        }
+    }
+}

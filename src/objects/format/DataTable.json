@@ -1,0 +1,36 @@
+{
+    "name": "Format\\DataTable",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "data",
+            "type": "Format\\RecordStore",
+            "required": true
+        },
+        {
+            "name": "dataOrientation",
+            "type": "enum:string",
+            "enum_values": ["horizontal", "vertical"],
+            "value": "horizontal"
+        },
+        {
+            "name": "showDescriptorLabels",
+            "type": "boolean",
+            "value": true
+        },
+        {
+            "name": "sortBy",
+            "type": "array:Format\\DataTableSorting"
+        },
+        {
+            "name": "style",
+            "type": ["Format\\ComponentStyle", "string"]
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "value": "datatable",
+            "read_only": true
+        }
+    ]
+}

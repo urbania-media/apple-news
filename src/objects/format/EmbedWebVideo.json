@@ -1,0 +1,32 @@
+{
+    "name": "Format\\EmbedWebVideo",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "URL",
+            "type": "string"
+        },
+        {
+            "name": "accessibilityCaption",
+            "type": "string"
+        },
+        {
+            "name": "aspectRatio",
+            "type": "number",
+            "value": 1.777
+        },
+        {
+            "name": "caption",
+            "type": "string"
+        },
+        {
+            "name": "explicitContent",
+            "type": "boolean"
+        },
+        {
+            "name": "role",
+            "type": "enum:string",
+            "enum_values": ["embedwebvideo", "embedvideo"]
+        }
+    ]
+}

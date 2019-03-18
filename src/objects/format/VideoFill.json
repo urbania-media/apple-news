@@ -1,0 +1,43 @@
+{
+    "name": "Format\\VideoFill",
+    "extends": "Format\\Fill",
+    "fields": [
+        {
+            "name": "URL",
+            "type": "string"
+        },
+        {
+            "name": "fillMode",
+            "type": "enum:string",
+            "enum_values": ["fit", "cover"],
+            "value": "cover"
+        },
+        {
+            "name": "horizontalAlignment",
+            "type": "enum:string",
+            "enum_values": ["center", "left", "right"],
+            "value": "center"
+        },
+        {
+            "name": "loop",
+            "type": "boolean",
+            "value": true
+        },
+        {
+            "name": "stillURL",
+            "type": "string"
+        },
+        {
+            "name": "type",
+            "type": "string",
+            "value": "video",
+            "read_only": true
+        },
+        {
+            "name": "verticalAlignment",
+            "type": "enum:string",
+            "enum_values": ["top", "center", "bottom"],
+            "value": "center"
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+{
+    "name": "Format\\Records",
+    "description": "Define and provide data records that fit within the structure defined by descriptors for a data table.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": null,
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/recordstore\/records",
+    "properties": []
+}

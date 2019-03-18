@@ -1,0 +1,19 @@
+{
+    "name": "Format\\Body",
+    "description": "The component for adding body text.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": "Format\\Text",
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/body",
+    "properties": [
+        {
+            "name": "role",
+            "type": "string",
+            "required": true,
+            "description": "This component always has a role of body.",
+            "value": "body",
+            "read_only": true,
+            "version": "1.0"
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Format\\Caption",
+    "extends": "Format\\Text",
+    "fields": [
+        {
+            "name": "role",
+            "type": "string",
+            "value": "caption",
+            "read_only": true
+        }
+    ]
+}

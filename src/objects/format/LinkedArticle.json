@@ -1,0 +1,14 @@
+{
+    "name": "Format\\LinkedArticle",
+    "fields": [
+        {
+            "name": "URL",
+            "type": "string"
+        },
+        {
+            "name": "relationship",
+            "type": "enum:string",
+            "enum_values": ["related", "promoted"]
+        }
+    ]
+}

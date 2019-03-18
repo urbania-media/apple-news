@@ -1,0 +1,68 @@
+{
+    "name": "Format\\ArticleDocument",
+    "fields": [
+        {
+            "name": "version",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "identifier",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "language",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "subtitle",
+            "type": "string"
+        },
+        {
+            "name": "layout",
+            "type": "Format\\Layout",
+            "required": true
+        },
+        {
+            "name": "components",
+            "type": "array:Format\\Component",
+            "required": true
+        },
+        {
+            "name": "componentTextStyles",
+            "type": "Format\\ComponentTextStyles",
+            "required": true
+        },
+        {
+            "name": "advertisingSettings",
+            "type": "Format\\AdvertisingSettings"
+        },
+        {
+            "name": "metadata",
+            "type": "Format\\Metadata"
+        },
+        {
+            "name": "documentStyle",
+            "type": "Format\\DocumentStyle"
+        },
+        {
+            "name": "textStyles",
+            "type": "Format\\TextStyles"
+        },
+        {
+            "name": "componentLayouts",
+            "type": "Format\\ComponentLayouts"
+        },
+        {
+            "name": "componentStyles",
+            "type": "Format\\ComponentStyles"
+        }
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "name": "Format\\ComponentLayouts",
+    "from_class": "Layouts",
+    "fields": [
+        {
+            "name": "layouts",
+            "type": "map:Format\\ComponentLayout"
+        }
+    ]
+}

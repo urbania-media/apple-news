@@ -1,0 +1,12 @@
+{
+    "name": "Format\\FadingStickyHeader",
+    "extends": "Format\\Scene",
+    "fields": [
+        {
+            "name": "type",
+            "type": "string",
+            "value": "parallax_scale",
+            "read_only": true
+        }
+    ]
+}

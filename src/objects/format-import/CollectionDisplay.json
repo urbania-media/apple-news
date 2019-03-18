@@ -1,0 +1,107 @@
+{
+    "name": "Format\\CollectionDisplay",
+    "description": "An object used in any container component type to define how the collection of child components is presented.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": null,
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/collectiondisplay",
+    "properties": [
+        {
+            "name": "alignment",
+            "type": "enum:string",
+            "required": false,
+            "description": "Defines how components are aligned within their rows. This is especially visible when distribution is set to narrow.",
+            "version": "1.5",
+            "default": "left",
+            "enum_values": [
+                "left",
+                "center",
+                "right"
+            ]
+        },
+        {
+            "name": "distribution",
+            "type": "enum:string",
+            "required": false,
+            "description": "Describes how components should be distributed horizontally in a row.",
+            "version": "1.5",
+            "default": "wide",
+            "enum_values": [
+                "wide",
+                "narrow"
+            ]
+        },
+        {
+            "name": "gutter",
+            "type": [
+                "SupportedUnits",
+                "integer"
+            ],
+            "required": false,
+            "description": "Either a number in points or a string referring to a supported unit of measure defining the vertical gutter between components.",
+            "version": "1.5",
+            "default": 0
+        },
+        {
+            "name": "maximumWidth",
+            "type": [
+                "SupportedUnits",
+                "integer"
+            ],
+            "required": false,
+            "description": "Either a number in points or a string referring to a supported unit of measure defining the maximum width of each child component inside the collection.",
+            "version": "1.5",
+            "default": "50cw"
+        },
+        {
+            "name": "minimumWidth",
+            "type": [
+                "SupportedUnits",
+                "integer"
+            ],
+            "required": false,
+            "description": "Either a number in points or a string referring to a supported unit of measure defining the minimum width of each child component inside the collection.",
+            "version": "1.5"
+        },
+        {
+            "name": "rowSpacing",
+            "type": [
+                "SupportedUnits",
+                "integer"
+            ],
+            "required": false,
+            "description": "Either a number in points or a string referring to a supported unit of measure defining the horizontal spacing between rows. See Specifying Measurements for Components.",
+            "version": "1.5",
+            "default": 0
+        },
+        {
+            "name": "type",
+            "type": "string",
+            "required": true,
+            "description": "Should be set to collection.",
+            "value": "collection",
+            "read_only": true,
+            "version": "1.5"
+        },
+        {
+            "name": "variableSizing",
+            "type": "boolean",
+            "required": false,
+            "description": "Defines whether the components\u2019 area is allowed to be sized differently per row.",
+            "version": "1.5",
+            "default": "false"
+        },
+        {
+            "name": "widows",
+            "type": "enum:string",
+            "required": false,
+            "description": "Defines the approach to prevent the collection from having component widows.",
+            "version": "1.5",
+            "default": "optimize",
+            "enum_values": [
+                "equalize",
+                "optimize"
+            ]
+        }
+    ]
+}

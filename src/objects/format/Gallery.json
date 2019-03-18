@@ -1,0 +1,17 @@
+{
+    "name": "Format\\Gallery",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "items",
+            "type": "array:Format\\GalleryItem",
+            "required": true
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "value": "gallery",
+            "read_only": true
+        }
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "name": "Api\\Response\\SectionResponse",
+    "extends": "Api\\Response\\Section",
+    "fields": [
+        {
+            "name": "links",
+            "type": "Api\\Response\\SectionLinks"
+        }
+    ]
+}

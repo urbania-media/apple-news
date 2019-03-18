@@ -1,0 +1,33 @@
+{
+    "name": "Format\\DropCapStyle",
+    "fields": [
+        {
+            "name": "backgroundColor",
+            "type": "Color"
+        },
+        {
+            "name": "fontName",
+            "type": "boolean"
+        },
+        {
+            "name": "numberOfCharacters",
+            "type": "integer"
+        },
+        {
+            "name": "numberOfLines",
+            "type": "integer"
+        },
+        {
+            "name": "numberOfRaisedLines",
+            "type": "integer"
+        },
+        {
+            "name": "padding",
+            "type": "integer"
+        },
+        {
+            "name": "textColor",
+            "type": "Color"
+        }
+    ]
+}

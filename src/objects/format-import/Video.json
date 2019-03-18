@@ -1,0 +1,60 @@
+{
+    "name": "Format\\Video",
+    "description": "The component for adding a video.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": "Format\\Component",
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/video",
+    "properties": [
+        {
+            "name": "URL",
+            "type": "uri",
+            "required": true,
+            "description": "The URL of a video file that can be played using AVPlayer. HTTP Live Streaming (HLS) is highly recommended (.M3U8). For more information on HLS, refer to the iOS developer documentation on HTTP Live Streaming, especially the following sections of the HTTP Live Streaming Overview:",
+            "version": "1.0"
+        },
+        {
+            "name": "accessibilityCaption",
+            "type": "string",
+            "required": false,
+            "description": "A caption that describes the content of the video. Note that this property differs from caption: although the caption can be displayed to users, the accessibilityCaption is used by VoiceOver for iOS only. If accessibilityCaption is omitted, the caption value is used for VoiceOver for iOS.",
+            "version": "1.0"
+        },
+        {
+            "name": "aspectRatio",
+            "type": "number",
+            "required": false,
+            "description": "The aspect ratio of the video: width divided by height. The aspect ratio determines the height of the video player.",
+            "version": "1.0",
+            "default": 1.777
+        },
+        {
+            "name": "caption",
+            "type": "string",
+            "required": false,
+            "description": "A caption that describes the content of the video file. This text can be used by VoiceOver for iOS if accessibilityCaption is not provided, or it can be shown when the video cannot be played.",
+            "version": "1.0"
+        },
+        {
+            "name": "explicitContent",
+            "type": "boolean",
+            "required": false,
+            "description": "Indicates that the video or its still image may contain explicit content.",
+            "version": "1.0"
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "required": true,
+            "description": "This component always a the role of video.",
+            "version": "1.0"
+        },
+        {
+            "name": "stillURL",
+            "type": "string",
+            "required": false,
+            "description": "The URL of an image file that should be shown when the video has not yet been played.",
+            "version": "1.0"
+        }
+    ]
+}

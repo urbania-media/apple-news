@@ -1,0 +1,24 @@
+{
+    "name": "Format\\RecordStore",
+    "description": "The object that contains JSON data for a data table.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": null,
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/recordstore",
+    "properties": [
+        {
+            "name": "descriptors",
+            "type": "array:Format\\DataDescriptor",
+            "required": true,
+            "description": "Provides information about the data that can be in each data record.",
+            "version": "1.5"
+        },
+        {
+            "name": "records",
+            "type": "array:Format\\Records",
+            "required": true,
+            "description": "Provides data records that fit within the structure defined by descriptors. Each descriptor can be used only once per record.",
+            "version": "1.5"
+        }
+    ]
+}

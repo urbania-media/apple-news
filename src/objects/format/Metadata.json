@@ -1,0 +1,70 @@
+{
+    "name": "Format\\Metadata",
+    "fields": [
+        {
+            "name": "authors",
+            "type": "array:string"
+        },
+        {
+            "name": "campaignData",
+            "type": "object"
+        },
+        {
+            "name": "canonicalURL",
+            "type": "string"
+        },
+        {
+            "name": "coverArt",
+            "type": "array:Format\\CoverArt"
+        },
+        {
+            "name": "dateCreated",
+            "type": "date-time"
+        },
+        {
+            "name": "dateModified",
+            "type": "date-time"
+        },
+        {
+            "name": "datePublished",
+            "type": "date-time"
+        },
+        {
+            "name": "excerpt",
+            "type": "string"
+        },
+        {
+            "name": "generatorIdentifier",
+            "type": "string"
+        },
+        {
+            "name": "generatorName",
+            "type": "string"
+        },
+        {
+            "name": "generatorVersion",
+            "type": "string"
+        },
+        {
+            "name": "keywords",
+            "type": "array:string"
+        },
+        {
+            "name": "links",
+            "type": "array:Format\\LinkedArticle"
+        },
+        {
+            "name": "thumbnailURL",
+            "type": "string"
+        },
+        {
+            "name": "transparentToolbar",
+            "type": "boolean",
+            "value": false
+        },
+        {
+            "name": "videoURL",
+            "type": "string"
+        }
+    ]
+}

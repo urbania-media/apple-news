@@ -1,0 +1,15 @@
+{
+    "name": "Format\\DataTableSorting",
+    "fields": [
+        {
+            "name": "descriptor",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "direction",
+            "type": "string",
+            "required": true
+        }
+    ]
+}

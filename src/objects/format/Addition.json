@@ -1,0 +1,17 @@
+{
+    "name": "Format\\Addition",
+    "fields": [
+        {
+            "name": "type",
+            "type": "string"
+        },
+        {
+            "name": "rangeLength",
+            "type": "integer"
+        },
+        {
+            "name": "rangeStart",
+            "type": "integer"
+        }
+    ]
+}

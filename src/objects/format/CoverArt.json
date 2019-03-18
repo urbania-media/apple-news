@@ -1,0 +1,20 @@
+{
+    "name": "Format\\CovertArt",
+    "fields": [
+        {
+            "name": "URL",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "accessibilityCaption",
+            "type": "string"
+        },
+        {
+            "name": "type",
+            "type": "enum:string",
+            "enum_values": ["image"],
+            "value": "image"
+        }
+    ]
+}

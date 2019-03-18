@@ -1,0 +1,28 @@
+{
+    "name": "Format\\Section",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "role",
+            "type": "string",
+            "value": "section",
+            "read_only": true
+        },
+        {
+            "name": "additions",
+            "type": "array:Format\\ComponentLink"
+        },
+        {
+            "name": "components",
+            "type": "array:Format\\Component"
+        },
+        {
+            "name": "contentDisplay",
+            "type": "Format\\CollectionDisplay"
+        },
+        {
+            "name": "scene",
+            "type": "Format\\Scene"
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Format\\Body",
+    "extends": "Format\\Text",
+    "fields": [
+        {
+            "name": "role",
+            "type": "string",
+            "value": "body",
+            "read_only": true
+        }
+    ]
+}

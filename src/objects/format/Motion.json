@@ -1,0 +1,12 @@
+{
+    "name": "Format\\Motion",
+    "extends": "Format\\Behaviour",
+    "fields": [
+        {
+            "name": "type",
+            "type": "string",
+            "value": "motion",
+            "read_only": true
+        }
+    ]
+}

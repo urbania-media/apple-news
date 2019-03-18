@@ -1,0 +1,42 @@
+{
+    "name": "Format\\Map",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "accessibilityCaption",
+            "type": "string"
+        },
+        {
+            "name": "caption",
+            "type": "string"
+        },
+        {
+            "name": "items",
+            "type": "array:Format\\MapItem"
+        },
+        {
+            "name": "latitude",
+            "type": "number"
+        },
+        {
+            "name": "longitude",
+            "type": "number"
+        },
+        {
+            "name": "mapType",
+            "type": "enum:string",
+            "enum_values": ["standard", "hybrid", "satellite"],
+            "value": "standard"
+        },
+        {
+            "name": "span",
+            "type": "Format\\MapSpan"
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "value": "map",
+            "read_only": true
+        }
+    ]
+}

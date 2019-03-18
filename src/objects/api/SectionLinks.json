@@ -1,0 +1,14 @@
+{
+    "name": "Api\\Response\\SectionLinks",
+    "base_extends": "Api\\Response\\Response",
+    "fields": [
+        {
+            "name": "channel",
+            "type": "string"
+        },
+        {
+            "name": "self",
+            "type": "string"
+        }
+    ]
+}

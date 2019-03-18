@@ -1,0 +1,12 @@
+{
+    "name": "Format\\AppearAnimation",
+    "extends": "Format\\ComponentAnimation",
+    "fields": [
+        {
+            "name": "type",
+            "type": "string",
+            "value": "appear",
+            "read_only": true
+        }
+    ]
+}

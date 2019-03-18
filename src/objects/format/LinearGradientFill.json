@@ -1,0 +1,17 @@
+{
+    "name": "Format\\LinearGradientFill",
+    "extends": "Format\\GradientFill",
+    "fields": [
+        {
+            "name": "angle",
+            "type": "number",
+            "value": 180
+        },
+        {
+            "name": "type",
+            "type": "string",
+            "value": "linear_gradient",
+            "read_only": true
+        }
+    ]
+}

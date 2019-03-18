@@ -1,0 +1,32 @@
+{
+    "name": "Format\\Image",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "URL",
+            "type": "string"
+        },
+        {
+            "name": "accessibilityCaption",
+            "type": "string"
+        },
+        {
+            "name": "additions",
+            "type": "array:Format\\ComponentLink"
+        },
+        {
+            "name": "caption",
+            "type": "string"
+        },
+        {
+            "name": "explicitContent",
+            "type": "boolean"
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "value": "image",
+            "read_only": true
+        }
+    ]
+}

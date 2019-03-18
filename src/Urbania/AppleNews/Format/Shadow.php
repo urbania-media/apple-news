@@ -1,0 +1,167 @@
+<?php
+
+namespace Urbania\AppleNews\Format;
+
+use Carbon\Carbon;
+use Urbania\AppleNews\Assert;
+
+/**
+ * The object for creating a text shadow.
+ *
+ * @see https://developer.apple.com/documentation/apple_news/shadow
+ */
+class Shadow
+{
+    /**
+     * The stroke color.
+     * @var string
+     */
+    protected $color;
+
+    /**
+     * The shadow’s offset.
+     * @var \Urbania\AppleNews\Format\Offset
+     */
+    protected $offset;
+
+    /**
+     * Opacity of the shadow as a value between 0 and 1.
+     * @var integer|float
+     */
+    protected $opacity;
+
+    /**
+     * The shadow’s radius as a value between 0 and 100 in points.
+     * @var integer|float
+     */
+    protected $radius;
+
+    public function __construct(array $data = [])
+    {
+        if (isset($data['color'])) {
+            $this->setColor($data['color']);
+        }
+
+        if (isset($data['offset'])) {
+            $this->setOffset($data['offset']);
+        }
+
+        if (isset($data['opacity'])) {
+            $this->setOpacity($data['opacity']);
+        }
+
+        if (isset($data['radius'])) {
+            $this->setRadius($data['radius']);
+        }
+    }
+
+    /**
+     * Get the color
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * Get the offset
+     * @return \Urbania\AppleNews\Format\Offset
+     */
+    public function getOffset()
+    {
+        return $this->offset;
+    }
+
+    /**
+     * Get the opacity
+     * @return integer|float
+     */
+    public function getOpacity()
+    {
+        return $this->opacity;
+    }
+
+    /**
+     * Get the radius
+     * @return integer|float
+     */
+    public function getRadius()
+    {
+        return $this->radius;
+    }
+
+    /**
+     * Set the color
+     * @param string $color
+     * @return $this
+     */
+    public function setColor($color)
+    {
+        Assert::isColor($color);
+
+        $this->color = $color;
+        return $this;
+    }
+
+    /**
+     * Set the offset
+     * @param \Urbania\AppleNews\Format\Offset|array $offset
+     * @return $this
+     */
+    public function setOffset($offset)
+    {
+        if (is_object($offset)) {
+            Assert::isInstanceOf($offset, Offset::class);
+        } else {
+            Assert::isArray($offset);
+        }
+
+        $this->offset = is_array($offset) ? new Offset($offset) : $offset;
+        return $this;
+    }
+
+    /**
+     * Set the opacity
+     * @param integer|float $opacity
+     * @return $this
+     */
+    public function setOpacity($opacity)
+    {
+        Assert::number($opacity);
+
+        $this->opacity = $opacity;
+        return $this;
+    }
+
+    /**
+     * Set the radius
+     * @param integer|float $radius
+     * @return $this
+     */
+    public function setRadius($radius)
+    {
+        Assert::number($radius);
+
+        $this->radius = $radius;
+        return $this;
+    }
+
+    /**
+     * Get the object as array
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'color' => is_object($this->color)
+                ? $this->color->toArray()
+                : $this->color,
+            'offset' => is_object($this->offset)
+                ? $this->offset->toArray()
+                : $this->offset,
+            'opacity' => $this->opacity,
+            'radius' => $this->radius
+        ];
+    }
+}

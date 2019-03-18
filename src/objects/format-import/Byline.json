@@ -1,0 +1,17 @@
+{
+    "name": "Format\\Byline",
+    "description": "The component for adding contributor credits, especially for articles with multiple contributors.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": "Format\\Text",
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/byline",
+    "properties": [
+        {
+            "name": "role",
+            "type": "string",
+            "required": true,
+            "description": "This component always has the role byline.",
+            "version": "1.0"
+        }
+    ]
+}

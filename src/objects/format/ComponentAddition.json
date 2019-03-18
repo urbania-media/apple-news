@@ -1,0 +1,9 @@
+{
+    "name": "Format\\ComponentAddition",
+    "fields": [
+        {
+            "name": "type",
+            "type": "string"
+        }
+    ]
+}

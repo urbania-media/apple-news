@@ -1,0 +1,17 @@
+{
+    "name": "Format\\HTMLTable",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "html",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "value": "htmltable",
+            "read_only": true
+        }
+    ]
+}

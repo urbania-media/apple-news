@@ -1,0 +1,34 @@
+{
+    "name": "Format\\TableStrokeStyle",
+    "description": "The object for defining the color, width, and style of a stroke in a table.",
+    "version": "1.8+",
+    "from_class": null,
+    "extends": null,
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/tablestrokestyle",
+    "properties": [
+        {
+            "name": "color",
+            "type": "Color",
+            "required": false,
+            "description": "The stroke color.",
+            "version": "1.0"
+        },
+        {
+            "name": "style",
+            "type": "string",
+            "required": false,
+            "description": "The style of the stroke.",
+            "default": "solid"
+        },
+        {
+            "name": "width",
+            "type": [
+                "SupportedUnits",
+                "integer"
+            ],
+            "required": false,
+            "description": "The width of the stroke line. Can be either an integer value in points, or a string according to Specifying Measurements for Components.",
+            "version": "1.0"
+        }
+    ]
+}

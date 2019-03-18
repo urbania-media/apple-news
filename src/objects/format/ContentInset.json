@@ -1,0 +1,21 @@
+{
+    "name": "Format\\ContentInset",
+    "fields": [
+        {
+            "name": "bottom",
+            "type": "boolean"
+        },
+        {
+            "name": "left",
+            "type": "boolean"
+        },
+        {
+            "name": "right",
+            "type": "boolean"
+        },
+        {
+            "name": "top",
+            "type": "boolean"
+        }
+    ]
+}

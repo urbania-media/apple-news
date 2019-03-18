@@ -1,0 +1,53 @@
+{
+    "name": "Format\\CaptionDescriptor",
+    "description": "The object used in image components for displaying captions when the image is full-screen.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": null,
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/captiondescriptor",
+    "properties": [
+        {
+            "name": "additions",
+            "type": "array:Format\\Addition",
+            "required": false,
+            "description": "An array of Link objects that provide additional information for ranges of the caption text in the text property.",
+            "version": "1.1"
+        },
+        {
+            "name": "format",
+            "type": "enum:string",
+            "required": false,
+            "description": "The formatting or markup method applied to the text.",
+            "version": "1.1",
+            "enum_values": [
+                "markdown",
+                "html",
+                "none"
+            ]
+        },
+        {
+            "name": "inlineTextStyles",
+            "type": "array:Format\\InlineTextStyle",
+            "required": false,
+            "description": "Array of InlineTextStyle objects to be applied to ranges of the caption\u2019s text.",
+            "version": "1.1"
+        },
+        {
+            "name": "text",
+            "type": "string",
+            "required": true,
+            "description": "The text to display in the caption, including any formatting tags or markup, depending on the format property.",
+            "version": "1.1"
+        },
+        {
+            "name": "textStyle",
+            "type": [
+                "Format\\ComponentTextStyle",
+                "string"
+            ],
+            "required": false,
+            "description": "Either an inline ComponentTextStyle object that contains styling information, or a string reference to a component text style object that is defined in Article Document.componentText Styles.",
+            "version": "1.1"
+        }
+    ]
+}

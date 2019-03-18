@@ -1,0 +1,17 @@
+{
+    "name": "Format\\Link",
+    "extends": "Format\\Addition",
+    "fields": [
+        {
+            "name": "URL",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "type",
+            "type": "string",
+            "value": "link",
+            "read_only": true
+        }
+    ]
+}

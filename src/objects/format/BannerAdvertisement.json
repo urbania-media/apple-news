@@ -1,0 +1,17 @@
+{
+    "name": "Format\\BannerAdvertisement",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "role",
+            "type": "string",
+            "value": "banner_advertisement",
+            "read_only": true
+        },
+        {
+            "name": "bannerType",
+            "type": "enum:string",
+            "enum_values": ["any", "standard", "double_height", "large"]
+        }
+    ]
+}

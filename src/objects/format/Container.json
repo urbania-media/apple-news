@@ -1,0 +1,24 @@
+{
+    "name": "Format\\Container",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "role",
+            "type": "string",
+            "value": "container",
+            "read_only": true
+        },
+        {
+            "name": "additions",
+            "type": "array:Format\\ComponentLink"
+        },
+        {
+            "name": "components",
+            "type": "array:Format\\Component"
+        },
+        {
+            "name": "contentDisplay",
+            "type": "Format\\CollectionDisplay"
+        }
+    ]
+}

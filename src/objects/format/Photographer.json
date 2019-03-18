@@ -1,0 +1,12 @@
+{
+    "name": "Format\\Photographer",
+    "extends": "Format\\Text",
+    "fields": [
+        {
+            "name": "role",
+            "type": "string",
+            "value": "photographer",
+            "read_only": true
+        }
+    ]
+}

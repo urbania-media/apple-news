@@ -1,0 +1,33 @@
+{
+    "name": "Format\\Component",
+    "fields": [
+        {
+            "name": "anchor",
+            "type": "Format\\Anchor"
+        },
+        {
+            "name": "animation",
+            "type": "Format\\ComponentAnimation"
+        },
+        {
+            "name": "behavior",
+            "type": "Format\\Behavior"
+        },
+        {
+            "name": "identifier",
+            "type": "string"
+        },
+        {
+            "name": "layout",
+            "type": ["Format\\ComponentLayout", "string"]
+        },
+        {
+            "name": "role",
+            "type": "string"
+        },
+        {
+            "name": "style",
+            "type": ["Format\\ComponentStyle", "string"]
+        }
+    ]
+}

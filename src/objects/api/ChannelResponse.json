@@ -1,0 +1,10 @@
+{
+    "name": "Api\\Response\\ChannelResponse",
+    "extends": "Api\\Response\\Channel",
+    "fields": [
+        {
+            "name": "links",
+            "type": "Api\\Response\\ChannelLinks"
+        }
+    ]
+}

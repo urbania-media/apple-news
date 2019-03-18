@@ -1,0 +1,26 @@
+{
+    "name": "Format\\ComponentStyle",
+    "fields": [
+        {
+            "name": "backgroundColor",
+            "type": "Color"
+        },
+        {
+            "name": "border",
+            "type": "Format\\Border"
+        },
+        {
+            "name": "fill",
+            "type": "Format\\Fill"
+        },
+        {
+            "name": "opacity",
+            "type": "number",
+            "value": 1.0
+        },
+        {
+            "name": "tableStyle",
+            "type": "TableStyle"
+        }
+    ]
+}

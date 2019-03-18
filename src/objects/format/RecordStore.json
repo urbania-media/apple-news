@@ -1,0 +1,15 @@
+{
+    "name": "Format\\RecordStore",
+    "fields": [
+        {
+            "name": "descriptors",
+            "type": "array:Format\\DataDescriptor",
+            "required": true
+        },
+        {
+            "name": "records",
+            "type": "array:object",
+            "required": true
+        }
+    ]
+}

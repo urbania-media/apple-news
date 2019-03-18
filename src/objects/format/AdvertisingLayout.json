@@ -1,0 +1,9 @@
+{
+    "name": "Format\\AdvertisingLayout",
+    "fields": [
+        {
+            "name": "margin",
+            "type": ["Format\\Margin", "integer"]
+        }
+    ]
+}

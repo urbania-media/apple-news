@@ -1,0 +1,16 @@
+{
+    "name": "Format\\GradientFill",
+    "extends": "Format\\Fill",
+    "fields": [
+        {
+            "name": "colorStops",
+            "type": "array:Format\\ColorStop"
+        },
+        {
+            "name": "type",
+            "type": "string",
+            "value": "gradient",
+            "read_only": true
+        }
+    ]
+}

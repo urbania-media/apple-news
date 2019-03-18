@@ -1,0 +1,35 @@
+{
+    "name": "Format\\ListItemStyle",
+    "description": "The object for defining the style for bulleted or numbered lists in an article.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": null,
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/listitemstyle",
+    "properties": [
+        {
+            "name": "character",
+            "type": "string",
+            "required": false,
+            "description": "If type is set to character, provide the character to use as the list item indicator. Only a single character is supported.",
+            "version": "1.4",
+            "maximum": 1
+        },
+        {
+            "name": "type",
+            "type": "enum:string",
+            "required": true,
+            "description": "The type of list item indicator to use. Allowed options are:",
+            "version": "1.4",
+            "enum_values": [
+                "bullet",
+                "decimal",
+                "lower_roman",
+                "upper_roman",
+                "lower_alphabetical",
+                "upper_alphabetical",
+                "character",
+                "none"
+            ]
+        }
+    ]
+}

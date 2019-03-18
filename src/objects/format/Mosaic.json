@@ -1,0 +1,17 @@
+{
+    "name": "Format\\Mosaic",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "items",
+            "type": "array:Format\\GalleryItem",
+            "required": true
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "value": "mosaic",
+            "read_only": true
+        }
+    ]
+}

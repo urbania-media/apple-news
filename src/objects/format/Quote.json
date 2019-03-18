@@ -1,0 +1,12 @@
+{
+    "name": "Format\\Quote",
+    "extends": "Format\\Text",
+    "fields": [
+        {
+            "name": "role",
+            "type": "string",
+            "value": "quote",
+            "read_only": true
+        }
+    ]
+}

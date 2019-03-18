@@ -1,0 +1,27 @@
+{
+    "name": "Format\\LinearGradientFill",
+    "description": "The object for displaying a linear gradient as a component background.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": "Format\\GradientFill",
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/lineargradientfill",
+    "properties": [
+        {
+            "name": "angle",
+            "type": "number",
+            "required": false,
+            "description": "The angle of the gradient fill, in degrees. Use the angle to set the direction of the gradient. For example, a value of 180 defines a gradient that changes color from top to bottom. An angle of 90 defines a gradient that changes color from left to right.",
+            "version": "1.0",
+            "default": 180
+        },
+        {
+            "name": "type",
+            "type": "string",
+            "required": true,
+            "description": "This fill always has the type linear_gradient.",
+            "value": "linear_gradient",
+            "read_only": true,
+            "version": "1.0"
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+{
+    "name": "Format\\DocumentStyle",
+    "fields": [
+        {
+            "name": "backgroundColor",
+            "type": "Color"
+        }
+    ]
+}

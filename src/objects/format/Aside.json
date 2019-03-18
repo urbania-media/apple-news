@@ -1,0 +1,12 @@
+{
+    "name": "Format\\Aside",
+    "extends": "Format\\Container",
+    "fields": [
+        {
+            "name": "role",
+            "type": "string",
+            "value": "aside",
+            "read_only": true
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Format\\Byline",
+    "extends": "Format\\Text",
+    "fields": [
+        {
+            "name": "role",
+            "type": "string",
+            "value": "byline",
+            "read_only": true
+        }
+    ]
+}

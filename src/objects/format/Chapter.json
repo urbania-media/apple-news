@@ -1,0 +1,16 @@
+{
+    "name": "Format\\Chapter",
+    "extends": "Format\\Container",
+    "fields": [
+        {
+            "name": "role",
+            "type": "string",
+            "value": "chapter",
+            "read_only": true
+        },
+        {
+            "name": "scene",
+            "type": "Format\\Scene"
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Format\\Header",
+    "extends": "Format\\Container",
+    "fields": [
+        {
+            "name": "role",
+            "type": "string",
+            "value": "header",
+            "read_only": true
+        }
+    ]
+}

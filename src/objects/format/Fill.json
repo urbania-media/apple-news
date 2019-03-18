@@ -1,0 +1,10 @@
+{
+    "name": "Format\\Fill",
+    "fields": [
+        {
+            "name": "attachement",
+            "type": "enum:string",
+            "enum_values": ["fixed", "scroll"]
+        }
+    ]
+}

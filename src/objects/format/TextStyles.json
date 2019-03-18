@@ -1,0 +1,10 @@
+{
+    "name": "Format\\TextStyles",
+    "from_class": "Styles",
+    "fields": [
+        {
+            "name": "styles",
+            "type": "map:Format\\TextStyle"
+        }
+    ]
+}

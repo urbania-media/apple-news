@@ -1,0 +1,35 @@
+{
+    "name": "Format\\ComponentTextStyle",
+    "extends": "Format\\TextStyle",
+    "fields": [
+        {
+            "name": "dropCapStyle",
+            "type": "Format\\DropCapStyle"
+        },
+        {
+            "name": "firstLineIndent",
+            "type": "integer"
+        },
+        {
+            "name": "hangingPunctuation",
+            "type": "boolean"
+        },
+        {
+            "name": "hyphenation",
+            "type": "boolean"
+        },
+        {
+            "name": "paragraphSpacingAfter",
+            "type": "integer"
+        },
+        {
+            "name": "paragraphSpacingBefore",
+            "type": "integer"
+        },
+        {
+            "name": "textAlignment",
+            "type": "enum:string",
+            "enum_values": ["left", "center", "right", "justified", "none"]
+        }
+    ]
+}

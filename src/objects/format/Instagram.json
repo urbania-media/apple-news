@@ -1,0 +1,16 @@
+{
+    "name": "Format\\Instagram",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "URL",
+            "type": "string"
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "value": "instagram",
+            "read_only": true
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Format\\FadingStickyHeader",
+    "extends": "Format\\Scene",
+    "fields": [
+        {
+            "name": "type",
+            "type": "string",
+            "value": "fading_sticky_header",
+            "read_only": true
+        },
+        {
+            "name": "fadeColor",
+            "type": "Color",
+            "value": "#000000"
+        }
+    ]
+}

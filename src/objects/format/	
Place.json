@@ -1,0 +1,28 @@
+{
+    "name": "Format\\Photo",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "URL",
+            "type": "string"
+        },
+        {
+            "name": "accessibilityCaption",
+            "type": "string"
+        },
+        {
+            "name": "caption",
+            "type": ["Format\\CaptionDescriptor", "string"]
+        },
+        {
+            "name": "explicitContent",
+            "type": "boolean"
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "value": "image",
+            "read_only": true
+        }
+    ]
+}

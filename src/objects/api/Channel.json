@@ -1,0 +1,36 @@
+{
+    "name": "Api\\Response\\Channel",
+    "base_extends": "Api\\Response\\Response",
+    "fields": [
+        {
+            "name": "id",
+            "type": "string"
+        },
+        {
+            "name": "type",
+            "type": "string",
+            "value": "Channel",
+            "read_only": true
+        },
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "shareUrl",
+            "type": "string"
+        },
+        {
+            "name": "website",
+            "type": "string"
+        },
+        {
+            "name": "modifiedAt",
+            "type": "date-time"
+        },
+        {
+            "name": "createdAt",
+            "type": "date-time"
+        }
+    ]
+}

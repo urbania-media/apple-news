@@ -1,0 +1,62 @@
+{
+    "name": "Format\\FormattedText",
+    "description": "The object for specifying formatted text content and styling for captions in table cells.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": null,
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/formattedtext",
+    "properties": [
+        {
+            "name": "additions",
+            "type": "array:Format\\Addition",
+            "required": false,
+            "description": "An array of Addition objects that supply additional information for ranges of text in the text property.",
+            "version": "1.5"
+        },
+        {
+            "name": "format",
+            "type": "enum:string",
+            "required": false,
+            "description": "The formatting or markup method applied to the text. If format is set to html, neither additions nor inlineTextStyles is supported.",
+            "version": "1.5",
+            "default": "none",
+            "enum_values": [
+                "html",
+                "none"
+            ]
+        },
+        {
+            "name": "inlineTextStyles",
+            "type": "array:Format\\InlineTextStyle",
+            "required": false,
+            "description": "An array specifying ranges of characters and a TextStyle object to apply to each range.",
+            "version": "1.5"
+        },
+        {
+            "name": "text",
+            "type": "string",
+            "required": true,
+            "description": "The text, including any HTML tags.",
+            "version": "1.0"
+        },
+        {
+            "name": "textStyle",
+            "type": [
+                "Format\\ComponentTextStyle",
+                "string"
+            ],
+            "required": false,
+            "description": "Either a component TextStyle object, or the name string of one of your styles in the ArticleDocument.componentTextStyles object.",
+            "version": "1.5"
+        },
+        {
+            "name": "type",
+            "type": "string",
+            "required": true,
+            "description": "The type must be formatted_text.",
+            "value": "formatted_text",
+            "read_only": true,
+            "version": "1.5"
+        }
+    ]
+}

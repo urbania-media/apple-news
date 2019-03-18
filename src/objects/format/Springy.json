@@ -1,0 +1,12 @@
+{
+    "name": "Format\\Springy",
+    "extends": "Format\\Behaviour",
+    "fields": [
+        {
+            "name": "type",
+            "type": "string",
+            "value": "springy",
+            "read_only": true
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Format\\ComponentLink",
+    "extends": "Format\\ComponentAddition",
+    "fields": [
+        {
+            "name": "URL",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "type",
+            "type": "string",
+            "value": "link",
+            "read_only": true
+        }
+    ]
+}

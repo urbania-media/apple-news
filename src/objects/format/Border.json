@@ -1,0 +1,25 @@
+{
+    "name": "Format\\Border",
+    "fields": [
+        {
+            "name": "all",
+            "type": "Format\\StrokeStyle"
+        },
+        {
+            "name": "bottom",
+            "type": "boolean"
+        },
+        {
+            "name": "left",
+            "type": "boolean"
+        },
+        {
+            "name": "right",
+            "type": "boolean"
+        },
+        {
+            "name": "top",
+            "type": "boolean"
+        }
+    ]
+}

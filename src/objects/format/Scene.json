@@ -1,0 +1,9 @@
+{
+    "name": "Format\\Scene",
+    "fields": [
+        {
+            "name": "type",
+            "type": "string"
+        }
+    ]
+}

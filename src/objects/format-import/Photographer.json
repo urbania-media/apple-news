@@ -1,0 +1,19 @@
+{
+    "name": "Format\\Photographer",
+    "description": "The component for adding a photographer credit.",
+    "version": "1.7+",
+    "from_class": null,
+    "extends": "Format\\Text",
+    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/photographer",
+    "properties": [
+        {
+            "name": "role",
+            "type": "string",
+            "required": true,
+            "description": "This component always has a role of photographer.",
+            "value": "photographer",
+            "read_only": true,
+            "version": "1.0"
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Format\\MediumRectangleAdvertisement",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "role",
+            "type": "string",
+            "value": "medium_rectangle_advertisement",
+            "read_only": true
+        }
+    ]
+}

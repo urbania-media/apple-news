@@ -1,0 +1,15 @@
+{
+    "name": "Format\\ColorStop",
+    "fields": [
+        {
+            "name": "color",
+            "type": "Color"
+        },
+        {
+            "name": "location",
+            "type": "number",
+            "min": 0,
+            "max": 100
+        }
+    ]
+}

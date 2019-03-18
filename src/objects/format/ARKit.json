@@ -1,0 +1,28 @@
+{
+    "name": "Format\\Audio",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "URL",
+            "type": "string"
+        },
+        {
+            "name": "accessibilityCaption",
+            "type": "string"
+        },
+        {
+            "name": "caption",
+            "type": "string"
+        },
+        {
+            "name": "explicitContent",
+            "type": "boolean"
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "value": "arkit",
+            "read_only": true
+        }
+    ]
+}

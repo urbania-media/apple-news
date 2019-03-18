@@ -1,0 +1,25 @@
+{
+    "name": "Format\\Layout",
+    "fields": [
+        {
+            "name": "columns",
+            "type": "integer",
+            "required": true
+        },
+        {
+            "name": "gutter",
+            "type": "integer",
+            "required": true
+        },
+        {
+            "name": "margin",
+            "type": "integer",
+            "required": true
+        },
+        {
+            "name": "width",
+            "type": "integer",
+            "required": true
+        }
+    ]
+}

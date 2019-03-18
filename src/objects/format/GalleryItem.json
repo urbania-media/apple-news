@@ -1,0 +1,21 @@
+{
+    "name": "Format\\GalleryItem",
+    "fields": [
+        {
+            "name": "URL",
+            "type": "string"
+        },
+        {
+            "name": "accessibilityCaption",
+            "type": "string"
+        },
+        {
+            "name": "caption",
+            "type": ["Format\\CaptionDescriptor", "string"]
+        },
+        {
+            "name": "explicitContent",
+            "type": "boolean"
+        }
+    ]
+}

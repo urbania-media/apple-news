@@ -1,0 +1,33 @@
+{
+    "name": "Format\\Text",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "additions",
+            "type": "array:Format\\ComponentLink"
+        },
+        {
+            "name": "format",
+            "type": "enum:string",
+            "enum_values": ["markdown", "html", "none"],
+            "value": "none"
+        },
+        {
+            "name": "inlineTextStyles",
+            "type": "array:Format\\InlineTextStyle"
+        },
+        {
+            "name": "role",
+            "type": "string"
+        },
+        {
+            "name": "text",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "textStyle",
+            "type": ["Format\\ComponentTextStyle", "string"]
+        }
+    ]
+}

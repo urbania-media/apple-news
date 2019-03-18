@@ -1,0 +1,81 @@
+{
+    "name": "Format\\TextStyle",
+    "fields": [
+        {
+            "name": "backgroundColor",
+            "type": "Color"
+        },
+        {
+            "name": "fontFamily",
+            "type": "string"
+        },
+        {
+            "name": "fontName",
+            "type": "string"
+        },
+        {
+            "name": "fontSize",
+            "type": "integer"
+        },
+        {
+            "name": "fontStyle",
+            "type": "enum:string",
+            "enum_values": ["normal", "italic", "oblique"]
+        },
+        {
+            "name": "fontWeight",
+            "type": "enum:string|integer",
+            "enum_values": [100, 200, 300, 400, 500, 600, 700, 800, 900, "thin", "extra-light", "extralight", "ultra-light", "light", "regular", "normal", "book", "roman", "medium", "semi-bold", "semibold", "demi-bold", "demibold", "bold", "extra-bold", "extrabold", "ultra-bold", "ultrabold", "black", "heavy", "lighter", "bolder"]
+        },
+        {
+            "name": "fontWidth",
+            "type": "enum:string",
+            "enum_values": ["ultra-condensed", "extra-condensed", "condensed", "semi-condensed", "normal", "semi-expanded", "expanded", "extra-expanded", "ultra-expanded"]
+        },
+        {
+            "name": "lineHeight",
+            "type": "integer"
+        },
+        {
+            "name": "linkStyle",
+            "type": "Format\\TextStyle"
+        },
+        {
+            "name": "orderedListItems",
+            "type": "Format\\ListItemStyle"
+        },
+        {
+            "name": "strikethrough",
+            "type": ["Format\\TextDecoration", "boolean"]
+        },
+        {
+            "name": "stroke",
+            "type": "Format\\TextStrokeStyle"
+        },
+        {
+            "name": "textColor",
+            "type": "Color"
+        },
+        {
+            "name": "textShadow",
+            "type": "Format\\Shadow"
+        },
+        {
+            "name": "tracking",
+            "type": "number"
+        },
+        {
+            "name": "underline",
+            "type": ["Format\\TextDecoration", "boolean"]
+        },
+        {
+            "name": "unorderedListItems",
+            "type": "Format\\ListItemStyle"
+        },
+        {
+            "name": "verticalAlignment",
+            "type": "enum:string",
+            "enum_values": ["superscript", "subscript", "baseline"]
+        }
+    ]
+}

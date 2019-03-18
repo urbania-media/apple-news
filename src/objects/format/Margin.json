@@ -1,0 +1,13 @@
+{
+    "name": "Format\\Margin",
+    "fields": [
+        {
+            "name": "bottom",
+            "type": "SupportedUnits"
+        },
+        {
+            "name": "top",
+            "type": "SupportedUnits"
+        }
+    ]
+}

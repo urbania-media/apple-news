@@ -1,0 +1,12 @@
+{
+    "name": "Format\\Author",
+    "extends": "Format\\Text",
+    "fields": [
+        {
+            "name": "role",
+            "type": "string",
+            "value": "author",
+            "read_only": true
+        }
+    ]
+}

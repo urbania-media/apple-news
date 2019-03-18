@@ -1,0 +1,31 @@
+{
+    "name": "Format\\Anchor",
+    "fields": [
+        {
+            "name": "originAnchorPosition",
+            "type": "enum:string",
+            "enum_values": ["top", "center", "bottom"]
+        },
+        {
+            "name": "rangeLength",
+            "type": "integer"
+        },
+        {
+            "name": "rangeStart",
+            "type": "integer"
+        },
+        {
+            "name": "target",
+            "type": "string"
+        },
+        {
+            "name": "targetAnchorPosition",
+            "type": "enum:string",
+            "enum_values": ["top", "center", "bottom"]
+        },
+        {
+            "name": "targetComponentIdentifier",
+            "type": "string"
+        }
+    ]
+}

@@ -1,0 +1,37 @@
+{
+    "name": "Format\\Video",
+    "extends": "Format\\Component",
+    "fields": [
+        {
+            "name": "URL",
+            "type": "string"
+        },
+        {
+            "name": "accessibilityCaption",
+            "type": "string"
+        },
+        {
+            "name": "aspectRatio",
+            "type": "number",
+            "value": 1.777
+        },
+        {
+            "name": "caption",
+            "type": "string"
+        },
+        {
+            "name": "explicitContent",
+            "type": "boolean"
+        },
+        {
+            "name": "stillURL",
+            "type": "string"
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "value": "video",
+            "read_only": true
+        }
+    ]
+}
