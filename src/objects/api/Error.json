@@ -1,5 +1,5 @@
 {
-    "name": "Api\\Response\\Error",
+    "name": "Api\\Objects\\Error",
     "description": "See the properties of an error returned by the Apple News API.",
     "version": "1.0.0+",
     "from_class": null,
@@ -9,7 +9,7 @@
     "properties": [
         {
             "name": "code",
-            "type": "Api\\Response\\Code",
+            "type": "Api\\Objects\\Code",
             "required": false,
             "description": "An error code that, in combination with the keyPath, uniquely identifies the error for the specified endpoint.",
             "typed": false
@@ -30,7 +30,7 @@
         },
         {
             "name": "status",
-            "type": "Api\\Response\\Status",
+            "type": "Api\\Objects\\Status",
             "required": false,
             "description": "A code issued by the server in response to a request.",
             "typed": false

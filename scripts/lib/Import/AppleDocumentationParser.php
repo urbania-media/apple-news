@@ -45,9 +45,13 @@ class AppleDocumentationParser
 
     protected function isObject(DomDocument $document)
     {
-        return $this->eyebrowIsObject($document) &&
-            $this->titleIsObject($document) &&
+        return $this->isObjectFromTitle($document) &&
             $this->isFromSdk($document);
+    }
+
+    protected function isObjectFromTitle(DomDocument $document)
+    {
+        return $this->eyebrowIsObject($document);
     }
 
     protected function eyebrowIsObject(DomDocument $document)
@@ -56,16 +60,6 @@ class AppleDocumentationParser
         return $document->has($eyebrowSelector) &&
             strtolower(trim($document->find($eyebrowSelector)[0]->text())) ===
                 'object';
-    }
-
-    protected function titleIsObject(DomDocument $document)
-    {
-        $titleSelector = '#main .topic-title .topic-heading';
-        return $document->has($titleSelector) &&
-            preg_match(
-                '/\s/',
-                trim($document->find($titleSelector)[0]->text())
-            ) === 0;
     }
 
     protected function isFromSdk(DomDocument $document)

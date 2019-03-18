@@ -40,12 +40,12 @@ class HMACMiddleware
         $method = $request->getMethod();
         $parts = [
             $method,
-            $request->getUri(),
+            (string)$request->getUri(),
             $date,
         ];
         if ($method === 'POST') {
-            $parts[] = $request->getHeader('Content-type');
-            $parts[] = (string) $response->getBody();
+            $parts[] = implode('', $request->getHeader('Content-type'));
+            $parts[] = (string) $request->getBody();
         }
         return base64_encode(hash_hmac('sha256', implode('', $parts), base64_decode($this->secret), true));
     }

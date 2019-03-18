@@ -1,6 +1,6 @@
 <?php
 
-namespace Urbania\AppleNews\Api\Response;
+namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
 use Urbania\AppleNews\Assert;

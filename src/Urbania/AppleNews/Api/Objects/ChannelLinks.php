@@ -1,62 +1,60 @@
 <?php
 
-namespace Urbania\AppleNews\Api\Response;
+namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
 use Urbania\AppleNews\Assert;
 
 /**
- * See the links returned by the search article endpoints.
+ * See the links returned by the read channel endpoint.
  *
- * @see https://developer.apple.com/documentation/apple_news/searchresponse/links
+ * @see https://developer.apple.com/documentation/apple_news/channellinks
  */
-class SearchResponseLinks implements \JsonSerializable
+class ChannelLinks implements \JsonSerializable
 {
     /**
-     * The URL for the current page of search results.
+     * The URL for this channel’s default section. Every channel has a
+     * default section, even if no others are defined.
+     * @var string
+     */
+    protected $defaultSection;
+
+    /**
+     * The URL at which this resource can be read.
      * @var string
      */
     protected $self;
 
-    /**
-     * The URL for the next page of search results. If next is null, there
-     * are no more pages. The next link may occasionally return an empty page
-     * of results (if, for example, an article in the original set of search
-     * results has been deleted since the results were obtained).
-     * @var string
-     */
-    protected $next;
-
     public function __construct(array $data = [])
     {
+        if (isset($data['defaultSection'])) {
+            $this->setDefaultSection($data['defaultSection']);
+        }
+
         if (isset($data['self'])) {
             $this->setSelf($data['self']);
         }
-
-        if (isset($data['next'])) {
-            $this->setNext($data['next']);
-        }
     }
 
     /**
-     * Get the next
+     * Get the defaultSection
      * @return string
      */
-    public function getNext()
+    public function getDefaultSection()
     {
-        return $this->next;
+        return $this->defaultSection;
     }
 
     /**
-     * Set the next
-     * @param string $next
+     * Set the defaultSection
+     * @param string $defaultSection
      * @return $this
      */
-    public function setNext($next)
+    public function setDefaultSection($defaultSection)
     {
-        Assert::string($next);
+        Assert::string($defaultSection);
 
-        $this->next = $next;
+        $this->defaultSection = $defaultSection;
         return $this;
     }
 
@@ -108,11 +106,11 @@ class SearchResponseLinks implements \JsonSerializable
     public function toArray()
     {
         $data = [];
+        if (isset($this->defaultSection)) {
+            $data['defaultSection'] = $this->defaultSection;
+        }
         if (isset($this->self)) {
             $data['self'] = $this->self;
-        }
-        if (isset($this->next)) {
-            $data['next'] = $this->next;
         }
         return $data;
     }

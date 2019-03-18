@@ -1,6 +1,6 @@
 <?php
 
-namespace Urbania\AppleNews\Api\Response;
+namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
 use Urbania\AppleNews\Assert;
@@ -15,7 +15,7 @@ class Error implements \JsonSerializable
     /**
      * An error code that, in combination with the keyPath, uniquely
      * identifies the error for the specified endpoint.
-     * @var \Urbania\AppleNews\Api\Response\Code
+     * @var \Urbania\AppleNews\Api\Objects\Code
      */
     protected $code;
 
@@ -34,7 +34,7 @@ class Error implements \JsonSerializable
 
     /**
      * A code issued by the server in response to a request.
-     * @var \Urbania\AppleNews\Api\Response\Status
+     * @var \Urbania\AppleNews\Api\Objects\Status
      */
     protected $status;
 
@@ -70,7 +70,7 @@ class Error implements \JsonSerializable
 
     /**
      * Get the code
-     * @return \Urbania\AppleNews\Api\Response\Code
+     * @return \Urbania\AppleNews\Api\Objects\Code
      */
     public function getCode()
     {
@@ -79,7 +79,7 @@ class Error implements \JsonSerializable
 
     /**
      * Set the code
-     * @param \Urbania\AppleNews\Api\Response\Code|array $code
+     * @param \Urbania\AppleNews\Api\Objects\Code|array $code
      * @return $this
      */
     public function setCode($code)
@@ -141,7 +141,7 @@ class Error implements \JsonSerializable
 
     /**
      * Get the status
-     * @return \Urbania\AppleNews\Api\Response\Status
+     * @return \Urbania\AppleNews\Api\Objects\Status
      */
     public function getStatus()
     {
@@ -150,7 +150,7 @@ class Error implements \JsonSerializable
 
     /**
      * Set the status
-     * @param \Urbania\AppleNews\Api\Response\Status|array $status
+     * @param \Urbania\AppleNews\Api\Objects\Status|array $status
      * @return $this
      */
     public function setStatus($status)

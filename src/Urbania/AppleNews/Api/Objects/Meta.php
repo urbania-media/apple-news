@@ -1,6 +1,6 @@
 <?php
 
-namespace Urbania\AppleNews\Api\Response;
+namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
 use Urbania\AppleNews\Assert;
@@ -16,7 +16,7 @@ class Meta implements \JsonSerializable
     /**
      * Indicates the process responsible for regulating the rate at which
      * requests are processed.
-     * @var \Urbania\AppleNews\Api\Response\Throttling
+     * @var \Urbania\AppleNews\Api\Objects\Throttling
      */
     protected $throttling;
 
@@ -29,7 +29,7 @@ class Meta implements \JsonSerializable
 
     /**
      * Get the throttling
-     * @return \Urbania\AppleNews\Api\Response\Throttling
+     * @return \Urbania\AppleNews\Api\Objects\Throttling
      */
     public function getThrottling()
     {
@@ -38,7 +38,7 @@ class Meta implements \JsonSerializable
 
     /**
      * Set the throttling
-     * @param \Urbania\AppleNews\Api\Response\Throttling|array $throttling
+     * @param \Urbania\AppleNews\Api\Objects\Throttling|array $throttling
      * @return $this
      */
     public function setThrottling($throttling)

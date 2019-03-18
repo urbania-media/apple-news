@@ -1,5 +1,5 @@
 {
-    "name": "Api\\Response\\PromoteArticleRequest",
+    "name": "Api\\Objects\\PromoteArticleRequest",
     "description": "See the required field for the promote article request.",
     "version": "1.0.0+",
     "from_class": null,

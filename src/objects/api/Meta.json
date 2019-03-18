@@ -1,5 +1,5 @@
 {
-    "name": "Api\\Response\\Meta",
+    "name": "Api\\Objects\\Meta",
     "description": "See the object that wraps the throttling information that's returned for the publish article and read article endpoints.",
     "version": "1.0.0+",
     "from_class": null,
@@ -9,7 +9,7 @@
     "properties": [
         {
             "name": "throttling",
-            "type": "Api\\Response\\Throttling",
+            "type": "Api\\Objects\\Throttling",
             "required": false,
             "description": "Indicates the process responsible for regulating the rate at which requests are processed.",
             "typed": false

@@ -1,5 +1,5 @@
 {
-    "name": "Api\\Response\\ArticleLinks",
+    "name": "Api\\Objects\\ArticleLinks",
     "description": "See the links returned by the article endpoints.",
     "version": "1.0.0+",
     "from_class": null,

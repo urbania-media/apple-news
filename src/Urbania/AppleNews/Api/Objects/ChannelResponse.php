@@ -1,18 +1,18 @@
 <?php
 
-namespace Urbania\AppleNews\Api\Response;
+namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
 use Urbania\AppleNews\Assert;
 
 /**
- * See which objects make up the section response.
+ * See which objects make up the channel response.
  *
- * @see https://developer.apple.com/documentation/apple_news/sectionresponse
+ * @see https://developer.apple.com/documentation/apple_news/channelresponse
  */
-class SectionResponse extends Section implements \JsonSerializable
+class ChannelResponse extends Channel implements \JsonSerializable
 {
-    /** @var \Urbania\AppleNews\Api\Response\SectionLinks */
+    /** @var \Urbania\AppleNews\Api\Objects\ChannelLinks */
     protected $links;
 
     public function __construct(array $data = [])
@@ -26,7 +26,7 @@ class SectionResponse extends Section implements \JsonSerializable
 
     /**
      * Get the links
-     * @return \Urbania\AppleNews\Api\Response\SectionLinks
+     * @return \Urbania\AppleNews\Api\Objects\ChannelLinks
      */
     public function getLinks()
     {
@@ -35,18 +35,18 @@ class SectionResponse extends Section implements \JsonSerializable
 
     /**
      * Set the links
-     * @param \Urbania\AppleNews\Api\Response\SectionLinks|array $links
+     * @param \Urbania\AppleNews\Api\Objects\ChannelLinks|array $links
      * @return $this
      */
     public function setLinks($links)
     {
         if (is_object($links)) {
-            Assert::isInstanceOf($links, SectionLinks::class);
+            Assert::isInstanceOf($links, ChannelLinks::class);
         } else {
             Assert::isArray($links);
         }
 
-        $this->links = is_array($links) ? new SectionLinks($links) : $links;
+        $this->links = is_array($links) ? new ChannelLinks($links) : $links;
         return $this;
     }
 

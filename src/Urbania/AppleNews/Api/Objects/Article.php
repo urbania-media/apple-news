@@ -1,6 +1,6 @@
 <?php
 
-namespace Urbania\AppleNews\Api\Response;
+namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
 use Urbania\AppleNews\Assert;
@@ -27,7 +27,7 @@ class Article implements \JsonSerializable
 
     /**
      * The content of the article, as an Apple News Format document.
-     * @var string
+     * @var \Urbania\AppleNews\Format\ArticleDocument|string
      */
     protected $document;
 
@@ -111,7 +111,7 @@ class Article implements \JsonSerializable
     /**
      * A list of warning messages indicating problems with the article that
      * are not fatal.
-     * @var Api\Response\Warning[]
+     * @var Api\Objects\Warning[]
      */
     protected $warnings;
 
@@ -226,7 +226,7 @@ class Article implements \JsonSerializable
 
     /**
      * Get the document
-     * @return string
+     * @return \Urbania\AppleNews\Format\ArticleDocument|string
      */
     public function getDocument()
     {
@@ -235,14 +235,23 @@ class Article implements \JsonSerializable
 
     /**
      * Set the document
-     * @param string $document
+     * @param \Urbania\AppleNews\Format\ArticleDocument|array|string $document
      * @return $this
      */
     public function setDocument($document)
     {
-        Assert::string($document);
+        if (is_object($document)) {
+            Assert::isInstanceOf(
+                $document,
+                \Urbania\AppleNews\Format\ArticleDocument::class
+            );
+        } elseif (!is_array($document)) {
+            Assert::string($document);
+        }
 
-        $this->document = $document;
+        $this->document = is_array($document)
+            ? new \Urbania\AppleNews\Format\ArticleDocument($document)
+            : $document;
         return $this;
     }
 
@@ -499,7 +508,7 @@ class Article implements \JsonSerializable
 
     /**
      * Get the warnings
-     * @return Api\Response\Warning[]
+     * @return Api\Objects\Warning[]
      */
     public function getWarnings()
     {
@@ -508,7 +517,7 @@ class Article implements \JsonSerializable
 
     /**
      * Set the warnings
-     * @param Api\Response\Warning[] $warnings
+     * @param Api\Objects\Warning[] $warnings
      * @return $this
      */
     public function setWarnings($warnings)
@@ -559,7 +568,9 @@ class Article implements \JsonSerializable
                 : null;
         }
         if (isset($this->document)) {
-            $data['document'] = $this->document;
+            $data['document'] = is_object($this->document)
+                ? $this->document->toArray()
+                : $this->document;
         }
         if (isset($this->id)) {
             $data['id'] = $this->id;

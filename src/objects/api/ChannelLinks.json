@@ -1,5 +1,5 @@
 {
-    "name": "Api\\Response\\ChannelLinks",
+    "name": "Api\\Objects\\ChannelLinks",
     "description": "See the links returned by the read channel endpoint.",
     "version": "1.0.0+",
     "from_class": null,

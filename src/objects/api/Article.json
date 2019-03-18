@@ -1,5 +1,5 @@
 {
-    "name": "Api\\Response\\Article",
+    "name": "Api\\Objects\\Article",
     "description": "See the fields returned by the article endpoints.",
     "version": "1.0.0+",
     "from_class": null,
@@ -23,7 +23,10 @@
         },
         {
             "name": "document",
-            "type": "string",
+            "type": [
+                "Format\\ArticleDocument",
+                "string"
+            ],
             "required": false,
             "description": "The content of the article, as an Apple News Format document.",
             "typed": false
@@ -120,7 +123,7 @@
         },
         {
             "name": "warnings",
-            "type": "array:Api\\Response\\Warning",
+            "type": "array:Api\\Objects\\Warning",
             "required": false,
             "description": "A list of warning messages indicating problems with the article that are not fatal.",
             "typed": false

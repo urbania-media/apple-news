@@ -5,7 +5,7 @@ namespace Urbania\AppleNews\Scripts\Import;
 class ApiObjectDocument extends ObjectDocument
 {
     protected $versionPattern = '/Apple News API ([0-9]+\.[0-9]+\.[0-9]+\+?)/';
-    protected $namespace = 'Api\\Response';
+    protected $namespace = 'Api\\Objects';
 
     public function getProperties()
     {
@@ -20,6 +20,14 @@ class ApiObjectDocument extends ObjectDocument
                     ];
                 }
             }
+        }
+        if ($this->getName() === 'Article') {
+            $properties = array_map(function ($property) {
+                if ($property['name'] === 'document') {
+                    $property['type'] = ['Format\\ArticleDocument', $property['type']];
+                }
+                return $property;
+            }, $properties);
         }
         return $properties;
     }

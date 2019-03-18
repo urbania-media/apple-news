@@ -1,6 +1,6 @@
 <?php
 
-namespace Urbania\AppleNews\Api\Response;
+namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
 use Urbania\AppleNews\Assert;
@@ -14,14 +14,14 @@ class SearchResponse implements \JsonSerializable
 {
     /**
      * A list of article objects.
-     * @var Api\Response\Article[]
+     * @var Api\Objects\Article[]
      */
     protected $articles;
 
     /**
      * A list of fields returned by the Search Articles in a Section and
      * Search Articles in a Channel endpoints.
-     * @var \Urbania\AppleNews\Api\Response\SearchResponseLinks
+     * @var \Urbania\AppleNews\Api\Objects\SearchResponseLinks
      */
     protected $links;
 
@@ -51,7 +51,7 @@ class SearchResponse implements \JsonSerializable
 
     /**
      * Get the articles
-     * @return Api\Response\Article[]
+     * @return Api\Objects\Article[]
      */
     public function getArticles()
     {
@@ -60,7 +60,7 @@ class SearchResponse implements \JsonSerializable
 
     /**
      * Set the articles
-     * @param Api\Response\Article[] $articles
+     * @param Api\Objects\Article[] $articles
      * @return $this
      */
     public function setArticles($articles)
@@ -78,7 +78,7 @@ class SearchResponse implements \JsonSerializable
 
     /**
      * Get the links
-     * @return \Urbania\AppleNews\Api\Response\SearchResponseLinks
+     * @return \Urbania\AppleNews\Api\Objects\SearchResponseLinks
      */
     public function getLinks()
     {
@@ -87,7 +87,7 @@ class SearchResponse implements \JsonSerializable
 
     /**
      * Set the links
-     * @param \Urbania\AppleNews\Api\Response\SearchResponseLinks|array $links
+     * @param \Urbania\AppleNews\Api\Objects\SearchResponseLinks|array $links
      * @return $this
      */
     public function setLinks($links)

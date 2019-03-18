@@ -1,5 +1,5 @@
 {
-    "name": "Api\\Response\\Warning",
+    "name": "Api\\Objects\\Warning",
     "description": "See the properties of a warning returned by the Apple News API.",
     "version": "1.0.0+",
     "from_class": null,

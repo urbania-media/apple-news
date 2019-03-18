@@ -28,14 +28,27 @@ class FeatureTest extends TestCase
     }
 
     /**
-     * Test the constructor
+     * Test building an article from a json file
      *
      * @test
      */
-    public function testArticle()
+    public function testArticleFromJson()
     {
-        $articleJson = json_decode(file_get_contents(__DIR__.'/../fixture/article.json'), true);
-        $article = new Article($articleJson);
-        die(json_encode($article->toArray()));
+        $articleData = json_decode(file_get_contents(__DIR__.'/../fixture/article.json'), true);
+        $article = Article::fromFile(__DIR__.'/../fixture/article.json');
+        $this->assertEquals($articleData, $article->toArray());
+    }
+
+    /**
+     * Test building an article from a json file
+     *
+     * @test
+     */
+    public function testCreateArticleFromJson()
+    {
+        $articleData = json_decode(file_get_contents(__DIR__.'/../fixture/article.json'), true);
+        $article = Article::fromFile(__DIR__.'/../fixture/article.json');
+        $articleResponse = $this->channelsClient->createArticle($article);
+        dd($articleResponse);
     }
 }

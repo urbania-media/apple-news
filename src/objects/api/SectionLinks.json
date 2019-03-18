@@ -1,5 +1,5 @@
 {
-    "name": "Api\\Response\\SectionLinks",
+    "name": "Api\\Objects\\SectionLinks",
     "description": "See the links returned by the section endpoints.",
     "version": "1.0.0+",
     "from_class": null,

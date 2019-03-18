@@ -25,7 +25,7 @@ class ObjectDocument extends Document
         $name = $this->document
             ->find('#main .topic-title .topic-heading')[0]
             ->text();
-        return $name;
+        return preg_replace('/\s/', '', $this->trim($name));
     }
 
     public function getClassName()

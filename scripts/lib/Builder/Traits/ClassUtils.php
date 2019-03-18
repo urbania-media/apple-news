@@ -33,12 +33,16 @@ trait ClassUtils
 
     protected function removeNamespaceFromClassPath($namespace, $name)
     {
-        return ltrim(preg_replace('/^'.preg_quote(rtrim($namespace, '\\')).'/', '', $name), '\\');
+        $pattern = '/^'.preg_quote(trim($namespace, '\\')).'/';
+        if (preg_match($pattern, trim($name, '\\'))) {
+            return ltrim(preg_replace($pattern, '', trim($name, '\\')), '\\');
+        }
+        return $name;
     }
 
     protected function getFullClassPath($name)
     {
-        return $this->getBaseNamespace().'\\'.$name;
+        return '\\'.$this->getBaseNamespace().'\\'.$name;
     }
 
     protected function getTypeHint($type, $method = 'get')

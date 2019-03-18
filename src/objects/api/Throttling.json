@@ -1,5 +1,5 @@
 {
-    "name": "Api\\Response\\Throttling",
+    "name": "Api\\Objects\\Throttling",
     "description": "See the object that wraps the throttling information that's returned for the create article and update article endpoints.",
     "version": "1.0.0+",
     "from_class": null,

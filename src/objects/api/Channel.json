@@ -1,5 +1,5 @@
 {
-    "name": "Api\\Response\\Channel",
+    "name": "Api\\Objects\\Channel",
     "description": "See the fields returned by the read channel endpoint.",
     "version": "1.0.0+",
     "from_class": null,

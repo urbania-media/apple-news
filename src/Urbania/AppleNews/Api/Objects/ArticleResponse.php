@@ -1,6 +1,6 @@
 <?php
 
-namespace Urbania\AppleNews\Api\Response;
+namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
 use Urbania\AppleNews\Assert;
@@ -13,10 +13,10 @@ use Urbania\AppleNews\Assert;
  */
 class ArticleResponse extends Article implements \JsonSerializable
 {
-    /** @var \Urbania\AppleNews\Api\Response\ArticleLinks */
+    /** @var \Urbania\AppleNews\Api\Objects\ArticleLinks */
     protected $links;
 
-    /** @var \Urbania\AppleNews\Api\Response\Meta */
+    /** @var \Urbania\AppleNews\Api\Objects\Meta */
     protected $meta;
 
     public function __construct(array $data = [])
@@ -34,7 +34,7 @@ class ArticleResponse extends Article implements \JsonSerializable
 
     /**
      * Get the links
-     * @return \Urbania\AppleNews\Api\Response\ArticleLinks
+     * @return \Urbania\AppleNews\Api\Objects\ArticleLinks
      */
     public function getLinks()
     {
@@ -43,7 +43,7 @@ class ArticleResponse extends Article implements \JsonSerializable
 
     /**
      * Set the links
-     * @param \Urbania\AppleNews\Api\Response\ArticleLinks|array $links
+     * @param \Urbania\AppleNews\Api\Objects\ArticleLinks|array $links
      * @return $this
      */
     public function setLinks($links)
@@ -60,7 +60,7 @@ class ArticleResponse extends Article implements \JsonSerializable
 
     /**
      * Get the meta
-     * @return \Urbania\AppleNews\Api\Response\Meta
+     * @return \Urbania\AppleNews\Api\Objects\Meta
      */
     public function getMeta()
     {
@@ -69,7 +69,7 @@ class ArticleResponse extends Article implements \JsonSerializable
 
     /**
      * Set the meta
-     * @param \Urbania\AppleNews\Api\Response\Meta|array $meta
+     * @param \Urbania\AppleNews\Api\Objects\Meta|array $meta
      * @return $this
      */
     public function setMeta($meta)

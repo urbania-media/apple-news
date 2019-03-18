@@ -1,15 +1,15 @@
 {
-    "name": "Api\\Response\\ChannelResponse",
+    "name": "Api\\Objects\\ChannelResponse",
     "description": "See which objects make up the channel response.",
     "version": "1.0.0+",
     "from_class": null,
-    "extends": "Api\\Response\\Channel",
+    "extends": "Api\\Objects\\Channel",
     "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/channelresponse",
     "properties": [
         {
             "name": "links",
-            "type": "Api\\Response\\ChannelLinks"
+            "type": "Api\\Objects\\ChannelLinks"
         }
     ]
 }

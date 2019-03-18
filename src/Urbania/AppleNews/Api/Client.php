@@ -54,12 +54,18 @@ class Client
     public function makeRequest($path, $method = 'GET', $params = [])
     {
         try {
-            $response = $this->client->request($method, $path);
+            $response = $this->client->request($method, $path, $method === 'GET' ? [
+                'query' => $params,
+            ] : [
+                'multipart' => $params,
+            ]);
             $data = json_decode((string)$response->getBody(), true);
             return $data['data'];
         } catch (ClientException $e) {
+            dd($e);
             return null;
         } catch (Exception $e) {
+            dd($e);
             return null;
         }
     }

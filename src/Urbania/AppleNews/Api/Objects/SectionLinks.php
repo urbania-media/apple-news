@@ -1,23 +1,22 @@
 <?php
 
-namespace Urbania\AppleNews\Api\Response;
+namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
 use Urbania\AppleNews\Assert;
 
 /**
- * See the links returned by the read channel endpoint.
+ * See the links returned by the section endpoints.
  *
- * @see https://developer.apple.com/documentation/apple_news/channellinks
+ * @see https://developer.apple.com/documentation/apple_news/sectionlinks
  */
-class ChannelLinks implements \JsonSerializable
+class SectionLinks implements \JsonSerializable
 {
     /**
-     * The URL for this channel’s default section. Every channel has a
-     * default section, even if no others are defined.
+     * The URL of the channel in which this section appears.
      * @var string
      */
-    protected $defaultSection;
+    protected $channel;
 
     /**
      * The URL at which this resource can be read.
@@ -27,8 +26,8 @@ class ChannelLinks implements \JsonSerializable
 
     public function __construct(array $data = [])
     {
-        if (isset($data['defaultSection'])) {
-            $this->setDefaultSection($data['defaultSection']);
+        if (isset($data['channel'])) {
+            $this->setChannel($data['channel']);
         }
 
         if (isset($data['self'])) {
@@ -37,24 +36,24 @@ class ChannelLinks implements \JsonSerializable
     }
 
     /**
-     * Get the defaultSection
+     * Get the channel
      * @return string
      */
-    public function getDefaultSection()
+    public function getChannel()
     {
-        return $this->defaultSection;
+        return $this->channel;
     }
 
     /**
-     * Set the defaultSection
-     * @param string $defaultSection
+     * Set the channel
+     * @param string $channel
      * @return $this
      */
-    public function setDefaultSection($defaultSection)
+    public function setChannel($channel)
     {
-        Assert::string($defaultSection);
+        Assert::string($channel);
 
-        $this->defaultSection = $defaultSection;
+        $this->channel = $channel;
         return $this;
     }
 
@@ -106,8 +105,8 @@ class ChannelLinks implements \JsonSerializable
     public function toArray()
     {
         $data = [];
-        if (isset($this->defaultSection)) {
-            $data['defaultSection'] = $this->defaultSection;
+        if (isset($this->channel)) {
+            $data['channel'] = $this->channel;
         }
         if (isset($this->self)) {
             $data['self'] = $this->self;

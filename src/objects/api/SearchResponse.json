@@ -1,5 +1,5 @@
 {
-    "name": "Api\\Response\\SearchResponse",
+    "name": "Api\\Objects\\SearchResponse",
     "description": "See the fields returned by the search article endpoints.",
     "version": "1.0.0+",
     "from_class": null,
@@ -9,14 +9,14 @@
     "properties": [
         {
             "name": "articles",
-            "type": "array:Api\\Response\\Article",
+            "type": "array:Api\\Objects\\Article",
             "required": false,
             "description": "A list of article objects.",
             "typed": false
         },
         {
             "name": "links",
-            "type": "Api\\Response\\SearchResponseLinks",
+            "type": "Api\\Objects\\SearchResponseLinks",
             "required": false,
             "description": "A list of fields returned by the Search Articles in a Section and Search Articles in a Channel endpoints.",
             "typed": false
