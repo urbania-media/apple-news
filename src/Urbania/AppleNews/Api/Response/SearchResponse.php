@@ -127,13 +127,33 @@ class SearchResponse
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'articles' => !is_null($this->articles)
+        $data = [];
+        if (isset($this->articles)) {
+            $data['articles'] = !is_null($this->articles)
                 ? array_reduce(
                     array_keys($this->articles),
                     function ($items, $key) {
@@ -144,11 +164,16 @@ class SearchResponse
                     },
                     []
                 )
-                : $this->articles,
-            'links' => is_object($this->links)
+                : $this->articles;
+        }
+        if (isset($this->links)) {
+            $data['links'] = is_object($this->links)
                 ? $this->links->toArray()
-                : $this->links,
-            'meta' => $this->meta
-        ];
+                : $this->links;
+        }
+        if (isset($this->meta)) {
+            $data['meta'] = $this->meta;
+        }
+        return $data;
     }
 }

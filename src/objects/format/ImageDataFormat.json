@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": "Format\\DataFormat",
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/imagedataformat",
     "properties": [
         {
@@ -14,7 +15,8 @@
             ],
             "required": false,
             "description": "The maximum height of an image in a cell as an integer in points or as one of the available units for components.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "maximumWidth",
@@ -24,7 +26,8 @@
             ],
             "required": false,
             "description": "The maximum width of an image in a cell as an integer in points or as one of the available units for components.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "minimumHeight",
@@ -35,7 +38,8 @@
             "required": false,
             "description": "The minimum height of an image in a cell as an integer in points or as one of the available units for components.",
             "version": "1.5",
-            "default": "null"
+            "default": "null",
+            "typed": false
         },
         {
             "name": "minimumWidth",
@@ -46,7 +50,8 @@
             "required": false,
             "description": "The minimum width of an image in a cell as an integer in points or as one of the available units for components.",
             "version": "1.5",
-            "default": "20cw"
+            "default": "20cw",
+            "typed": false
         },
         {
             "name": "type",
@@ -55,7 +60,8 @@
             "description": "The type of data format for this object. This must be image for an ImageDataFormat object.",
             "value": "image",
             "read_only": true,
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         }
     ]
 }

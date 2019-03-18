@@ -370,29 +370,61 @@ class ConditionalTableCellStyle extends TableCellStyle
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return array_merge(parent::toArray(), [
-            'backgroundColor' => is_object($this->backgroundColor)
+        $data = parent::toArray();
+        if (isset($this->backgroundColor)) {
+            $data['backgroundColor'] = is_object($this->backgroundColor)
                 ? $this->backgroundColor->toArray()
-                : $this->backgroundColor,
-            'border' => is_object($this->border)
+                : $this->backgroundColor;
+        }
+        if (isset($this->border)) {
+            $data['border'] = is_object($this->border)
                 ? $this->border->toArray()
-                : $this->border,
-            'height' => is_object($this->height)
+                : $this->border;
+        }
+        if (isset($this->height)) {
+            $data['height'] = is_object($this->height)
                 ? $this->height->toArray()
-                : $this->height,
-            'horizontalAlignment' => $this->horizontalAlignment,
-            'minimumWidth' => is_object($this->minimumWidth)
+                : $this->height;
+        }
+        if (isset($this->horizontalAlignment)) {
+            $data['horizontalAlignment'] = $this->horizontalAlignment;
+        }
+        if (isset($this->minimumWidth)) {
+            $data['minimumWidth'] = is_object($this->minimumWidth)
                 ? $this->minimumWidth->toArray()
-                : $this->minimumWidth,
-            'padding' => is_object($this->padding)
+                : $this->minimumWidth;
+        }
+        if (isset($this->padding)) {
+            $data['padding'] = is_object($this->padding)
                 ? $this->padding->toArray()
-                : $this->padding,
-            'selectors' => !is_null($this->selectors)
+                : $this->padding;
+        }
+        if (isset($this->selectors)) {
+            $data['selectors'] = !is_null($this->selectors)
                 ? array_reduce(
                     array_keys($this->selectors),
                     function ($items, $key) {
@@ -403,12 +435,19 @@ class ConditionalTableCellStyle extends TableCellStyle
                     },
                     []
                 )
-                : $this->selectors,
-            'textStyle' => is_object($this->textStyle)
+                : $this->selectors;
+        }
+        if (isset($this->textStyle)) {
+            $data['textStyle'] = is_object($this->textStyle)
                 ? $this->textStyle->toArray()
-                : $this->textStyle,
-            'verticalAlignment' => $this->verticalAlignment,
-            'width' => $this->width
-        ]);
+                : $this->textStyle;
+        }
+        if (isset($this->verticalAlignment)) {
+            $data['verticalAlignment'] = $this->verticalAlignment;
+        }
+        if (isset($this->width)) {
+            $data['width'] = $this->width;
+        }
+        return $data;
     }
 }

@@ -56,15 +56,36 @@ class Meta
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'throttling' => is_object($this->throttling)
+        $data = [];
+        if (isset($this->throttling)) {
+            $data['throttling'] = is_object($this->throttling)
                 ? $this->throttling->toArray()
-                : $this->throttling
-        ];
+                : $this->throttling;
+        }
+        return $data;
     }
 }

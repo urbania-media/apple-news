@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": "Format\\ComponentAddition",
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/componentlink",
     "properties": [
         {
@@ -11,7 +12,8 @@
             "type": "string",
             "required": true,
             "description": "The URL that should be opened when a user interacts with the component. Use a valid Apple News URL beginning with https:\/\/apple.news\/, or a URL that is associated with an Apple News article by its canonicalURL in Metadata, or a URL to the iTunes Store, the App Store, the iBooks Store, Apple Podcasts, or Apple Music.",
-            "version": "1.7"
+            "version": "1.7",
+            "typed": false
         },
         {
             "name": "type",
@@ -20,7 +22,8 @@
             "description": "The type of addition should be link for a ComponentLink object.",
             "value": "link",
             "read_only": true,
-            "version": "1.7"
+            "version": "1.7",
+            "typed": false
         }
     ]
 }

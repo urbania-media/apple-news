@@ -15,7 +15,7 @@ class GradientFill extends Fill
     /**
      * An array of color stops. Each stop sets a color and location along the
      * gradient.
-     * @var ColorStop[]
+     * @var Format\ColorStop[]
      */
     protected $colorStops;
 
@@ -40,7 +40,7 @@ class GradientFill extends Fill
 
     /**
      * Get the colorStops
-     * @return ColorStop[]
+     * @return Format\ColorStop[]
      */
     public function getColorStops()
     {
@@ -58,22 +58,17 @@ class GradientFill extends Fill
 
     /**
      * Set the colorStops
-     * @param ColorStop[] $colorStops
+     * @param Format\ColorStop[] $colorStops
      * @return $this
      */
     public function setColorStops($colorStops)
     {
         Assert::isArray($colorStops);
-        Assert::allIsInstanceOfOrArray(
-            $colorStops,
-            Urbania\AppleNews\ColorStop::class
-        );
+        Assert::allIsInstanceOfOrArray($colorStops, ColorStop::class);
 
         $items = [];
         foreach ($colorStops as $key => $item) {
-            $items[$key] = is_array($item)
-                ? new Urbania\AppleNews\ColorStop($item)
-                : $item;
+            $items[$key] = is_array($item) ? new ColorStop($item) : $item;
         }
         $this->colorStops = $items;
         return $this;
@@ -93,13 +88,33 @@ class GradientFill extends Fill
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return array_merge(parent::toArray(), [
-            'colorStops' => !is_null($this->colorStops)
+        $data = parent::toArray();
+        if (isset($this->colorStops)) {
+            $data['colorStops'] = !is_null($this->colorStops)
                 ? array_reduce(
                     array_keys($this->colorStops),
                     function ($items, $key) {
@@ -110,8 +125,11 @@ class GradientFill extends Fill
                     },
                     []
                 )
-                : $this->colorStops,
-            'type' => $this->type
-        ]);
+                : $this->colorStops;
+        }
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
+        return $data;
     }
 }

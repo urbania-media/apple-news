@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/tablecolumnselector",
     "properties": [
         {
@@ -11,28 +12,32 @@
             "type": "integer",
             "required": false,
             "description": "Specifies a column index. The leftmost column of data has an index of 0. The specified column will be selected.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "descriptor",
             "type": "string",
             "required": false,
             "description": "Specifies the identifier of a specific data descriptor. All columns for this data descriptor will be selected. See DataDescriptor.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "odd",
             "type": "boolean",
             "required": false,
             "description": "When true, selects the odd columns.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "even",
             "type": "boolean",
             "required": false,
             "description": "When true, selects the even columns.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         }
     ]
 }

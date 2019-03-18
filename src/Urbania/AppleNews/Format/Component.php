@@ -12,6 +12,43 @@ use Urbania\AppleNews\Assert;
  */
 class Component
 {
+    protected static $typeProperty = 'role';
+
+    protected static $types = [
+        'audio' => 'Audio',
+        'music' => 'Music',
+        'author' => 'Author',
+        'illustrator' => 'Illustrator',
+        'photographer' => 'Photographer',
+        'embedwebvideo' => 'EmbedWebVideo',
+        'aside' => 'Aside',
+        'header' => 'Header',
+        'section' => 'Section',
+        'chapter' => 'Chapter',
+        'container' => 'Container',
+        'body' => 'Body',
+        'title' => 'Title',
+        'intro' => 'Intro',
+        'caption' => 'Caption',
+        'photo' => 'Photo',
+        'figure' => 'Figure',
+        'portrait' => 'Portrait',
+        'logo' => 'Logo',
+        'gallery' => 'Gallery',
+        'mosaic' => 'Mosaic',
+        'quote' => 'Quote',
+        'pullquote' => 'PullQuote',
+        'datatable' => 'DataTable',
+        'map' => 'Map',
+        'place' => 'Place',
+        'instagram' => 'Instagram',
+        'facebook_post' => 'FacebookPost',
+        'tweet' => 'Tweet',
+        'htmltable' => 'HTMLTable',
+        'banner_advertisement' => 'BannerAdvertisement',
+        'medium_rectangle_advertisement' => 'MediumRectangleAdvertisement'
+    ];
+
     /**
      * An Anchor object that aligns this component vertically with another
      * component.
@@ -94,6 +131,24 @@ class Component
         if (isset($data['style'])) {
             $this->setStyle($data['style']);
         }
+    }
+
+    public static function createTyped(array $data)
+    {
+        if (isset($data[static::$typeProperty])) {
+            $typeName = $data[static::$typeProperty];
+            $type = static::$types[$typeName] ?? null;
+            if (!is_null($type)) {
+                $namespace = implode(
+                    '\\',
+                    array_slice(explode('\\', static::class), 0, -1)
+                );
+                $typeClass = $namespace . '\\' . $type;
+                return new $typeClass($data);
+            }
+        }
+
+        return new static($data);
     }
 
     /**
@@ -190,7 +245,7 @@ class Component
         }
 
         $this->animation = is_array($animation)
-            ? new ComponentAnimation($animation)
+            ? ComponentAnimation::createTyped($animation)
             : $animation;
         return $this;
     }
@@ -209,7 +264,7 @@ class Component
         }
 
         $this->behavior = is_array($behavior)
-            ? new Behavior($behavior)
+            ? Behavior::createTyped($behavior)
             : $behavior;
         return $this;
     }
@@ -277,29 +332,62 @@ class Component
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'anchor' => is_object($this->anchor)
+        $data = [];
+        if (isset($this->anchor)) {
+            $data['anchor'] = is_object($this->anchor)
                 ? $this->anchor->toArray()
-                : $this->anchor,
-            'animation' => is_object($this->animation)
+                : $this->anchor;
+        }
+        if (isset($this->animation)) {
+            $data['animation'] = is_object($this->animation)
                 ? $this->animation->toArray()
-                : $this->animation,
-            'behavior' => is_object($this->behavior)
+                : $this->animation;
+        }
+        if (isset($this->behavior)) {
+            $data['behavior'] = is_object($this->behavior)
                 ? $this->behavior->toArray()
-                : $this->behavior,
-            'identifier' => $this->identifier,
-            'layout' => is_object($this->layout)
+                : $this->behavior;
+        }
+        if (isset($this->identifier)) {
+            $data['identifier'] = $this->identifier;
+        }
+        if (isset($this->layout)) {
+            $data['layout'] = is_object($this->layout)
                 ? $this->layout->toArray()
-                : $this->layout,
-            'role' => $this->role,
-            'style' => is_object($this->style)
+                : $this->layout;
+        }
+        if (isset($this->role)) {
+            $data['role'] = $this->role;
+        }
+        if (isset($this->style)) {
+            $data['style'] = is_object($this->style)
                 ? $this->style->toArray()
-                : $this->style
-        ];
+                : $this->style;
+        }
+        return $data;
     }
 }

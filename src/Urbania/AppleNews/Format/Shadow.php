@@ -148,20 +148,47 @@ class Shadow
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'color' => is_object($this->color)
+        $data = [];
+        if (isset($this->color)) {
+            $data['color'] = is_object($this->color)
                 ? $this->color->toArray()
-                : $this->color,
-            'offset' => is_object($this->offset)
+                : $this->color;
+        }
+        if (isset($this->offset)) {
+            $data['offset'] = is_object($this->offset)
                 ? $this->offset->toArray()
-                : $this->offset,
-            'opacity' => $this->opacity,
-            'radius' => $this->radius
-        ];
+                : $this->offset;
+        }
+        if (isset($this->opacity)) {
+            $data['opacity'] = $this->opacity;
+        }
+        if (isset($this->radius)) {
+            $data['radius'] = $this->radius;
+        }
+        return $data;
     }
 }

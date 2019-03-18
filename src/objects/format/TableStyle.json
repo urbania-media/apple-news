@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/tablestyle",
     "properties": [
         {
@@ -11,42 +12,48 @@
             "type": "Format\\TableCellStyle",
             "required": false,
             "description": "Defines the styling for individual cells in a table.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "columns",
             "type": "Format\\TableColumnStyle",
             "required": false,
             "description": "Defines the styling for table columns.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "headerCells",
             "type": "Format\\TableCellStyle",
             "required": false,
             "description": "Defines the styling for individual cells in table headers.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "headerColumns",
             "type": "Format\\TableColumnStyle",
             "required": false,
             "description": "Defines the styling for the table header columns, which are present if dataOrientation is set to vertical, which is the default.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "headerRows",
             "type": "Format\\TableRowStyle",
             "required": false,
             "description": "Defines the styling for table header rows, which are present if dataOrientation is set to horizontal, which is not the default",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "rows",
             "type": "Format\\TableRowStyle",
             "required": false,
             "description": "Defines the styling for table rows.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         }
     ]
 }

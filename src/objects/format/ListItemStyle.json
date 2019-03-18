@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/listitemstyle",
     "properties": [
         {
@@ -12,7 +13,8 @@
             "required": false,
             "description": "If type is set to character, provide the character to use as the list item indicator. Only a single character is supported.",
             "version": "1.4",
-            "maximum": 1
+            "maximum": 1,
+            "typed": false
         },
         {
             "name": "type",
@@ -29,7 +31,8 @@
                 "upper_alphabetical",
                 "character",
                 "none"
-            ]
+            ],
+            "typed": false
         }
     ]
 }

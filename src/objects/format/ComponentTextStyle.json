@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": "Format\\TextStyle",
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/componenttextstyle",
     "properties": [
         {
@@ -11,42 +12,48 @@
             "type": "Color",
             "required": false,
             "description": "The background color for text lines.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "dropCapStyle",
             "type": "Format\\DropCapStyle",
             "required": false,
             "description": "Defines the style of drop cap to apply to the first paragraph of the component.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "firstLineIndent",
             "type": "integer",
             "required": false,
             "description": "Defines the indent of the first line of each paragraph in points.",
-            "version": "1.1"
+            "version": "1.1",
+            "typed": false
         },
         {
             "name": "fontFamily",
             "type": "string",
             "required": false,
             "description": "The font family to use for text rendering, for example Gill Sans. Using a combination of fontFamily, fontWidth, fontWeight, and fontStyle you can define the appearance of the text. News automatically selects the appropriate font variant from the available variants in that family.",
-            "version": "1.7"
+            "version": "1.7",
+            "typed": false
         },
         {
             "name": "fontName",
             "type": "string",
             "required": false,
             "description": "Use fontName to refer to an explicit font variant\u2019s Postscript name, such as GillSans-Bold. Alternatively, you can use a combination of fontFamily, fontWeight, fontWidth and\/or fontStyle to have News automatically select the appropriate variant depending on the text formatting used.",
-            "version": "1.7"
+            "version": "1.7",
+            "typed": false
         },
         {
             "name": "fontSize",
             "type": "integer",
             "required": false,
             "description": "The size of the font, in points. By default, the font size will be inherited from a parent component or a default style. As a best practice, try not to go below 16 points for body text. The fontSize may be automatically resized for different device sizes or for iOS devices with Larger Accessibility Sizes enabled.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "fontStyle",
@@ -58,7 +65,8 @@
                 "normal",
                 "italic",
                 "oblique"
-            ]
+            ],
+            "typed": false
         },
         {
             "name": "fontWeight",
@@ -99,7 +107,8 @@
                 "heavy",
                 "lighter",
                 "bolder"
-            ]
+            ],
+            "typed": false
         },
         {
             "name": "fontWidth",
@@ -117,7 +126,8 @@
                 "expanded",
                 "extra-expanded",
                 "ultra-expanded"
-            ]
+            ],
+            "typed": false
         },
         {
             "name": "hangingPunctuation",
@@ -125,49 +135,56 @@
             "required": false,
             "description": "Defines whether punctuation should be positioned outside the margins of the text.",
             "version": "1.0",
-            "default": "false"
+            "default": "false",
+            "typed": false
         },
         {
             "name": "hyphenation",
             "type": "boolean",
             "required": false,
             "description": "Indicates whether text should be hyphenated when necessary. By default, only components with a role of body or intro have hyphenation enabled. All other components default to false.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "lineHeight",
             "type": "integer",
             "required": false,
             "description": "The default line height, in points. The lineHeight will be recalculated as necessary, relative to the fontSize. For example, when the font is automatically resized to fit a smaller screen, the line height will also be adjusted accordingly.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "linkStyle",
             "type": "Format\\TextStyle",
             "required": false,
             "description": "Text styling for all links within a text component.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "orderedListItems",
             "type": "Format\\ListItemStyle",
             "required": false,
             "description": "For use with text components with HTML markup. You can create text styles containing an orderedListItems definition to configure how list items inside <ol> tags should be displayed.",
-            "version": "1.4"
+            "version": "1.4",
+            "typed": false
         },
         {
             "name": "paragraphSpacingAfter",
             "type": "integer",
             "required": false,
             "description": "Defines the spacing after each paragraph in points relative to the lineHeight.",
-            "version": "1.1"
+            "version": "1.1",
+            "typed": false
         },
         {
             "name": "paragraphSpacingBefore",
             "type": "integer",
             "required": false,
             "description": "Defines the spacing before each paragraph in points relative to the lineHeight.",
-            "version": "1.1"
+            "version": "1.1",
+            "typed": false
         },
         {
             "name": "strikethrough",
@@ -177,14 +194,16 @@
             ],
             "required": false,
             "description": "The text strikethrough. Set strikethrough to true to use the text color inherited from the textColor property as the strikethrough color, or provide a text decoration definition with a different color.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "stroke",
             "type": "Format\\TextStrokeStyle",
             "required": false,
             "description": "The stroke style for the text outline. By default, stroke will be omitted.",
-            "version": "1.1"
+            "version": "1.1",
+            "typed": false
         },
         {
             "name": "textAlignment",
@@ -199,28 +218,32 @@
                 "right",
                 "justified",
                 "none"
-            ]
+            ],
+            "typed": false
         },
         {
             "name": "textColor",
             "type": "Color",
             "required": false,
             "description": "The text color.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "textShadow",
             "type": "Format\\Shadow",
             "required": false,
             "description": "The text shadow for this style.",
-            "version": "1.1"
+            "version": "1.1",
+            "typed": false
         },
         {
             "name": "tracking",
             "type": "number",
             "required": false,
             "description": "The amount of tracking (spacing between characters) in text, as a percentage of the fontSize. The actual spacing between letters is determined by combining information from the font and font size.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "underline",
@@ -230,21 +253,24 @@
             ],
             "required": false,
             "description": "The text underlining. This style can be used for links. Set underline to true to use the text color as the underline color, or provide a text decoration with a different color.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "unorderedListItems",
             "type": "Format\\ListItemStyle",
             "required": false,
             "description": "For use with text components with HTML marku. You can create text styles containing an unorderedListItems definition to configure how list items inside <ul> tags should be displayed.",
-            "version": "1.4"
+            "version": "1.4",
+            "typed": false
         },
         {
             "name": "verticalAlignment",
             "type": "string",
             "required": false,
             "description": "The vertical alignment of the text. You can use this property for superscripts and subscripts.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         }
     ]
 }

@@ -188,21 +188,50 @@ class Error
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'code' => is_object($this->code)
+        $data = [];
+        if (isset($this->code)) {
+            $data['code'] = is_object($this->code)
                 ? $this->code->toArray()
-                : $this->code,
-            'keyPath' => $this->keyPath ?? [],
-            'message' => $this->message,
-            'status' => is_object($this->status)
+                : $this->code;
+        }
+        if (isset($this->keyPath)) {
+            $data['keyPath'] = $this->keyPath;
+        }
+        if (isset($this->message)) {
+            $data['message'] = $this->message;
+        }
+        if (isset($this->status)) {
+            $data['status'] = is_object($this->status)
                 ? $this->status->toArray()
-                : $this->status,
-            'value' => $this->value
-        ];
+                : $this->status;
+        }
+        if (isset($this->value)) {
+            $data['value'] = $this->value;
+        }
+        return $data;
     }
 }

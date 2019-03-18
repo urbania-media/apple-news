@@ -241,13 +241,33 @@ class Text extends Component
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return array_merge(parent::toArray(), [
-            'additions' => !is_null($this->additions)
+        $data = parent::toArray();
+        if (isset($this->additions)) {
+            $data['additions'] = !is_null($this->additions)
                 ? array_reduce(
                     array_keys($this->additions),
                     function ($items, $key) {
@@ -258,9 +278,13 @@ class Text extends Component
                     },
                     []
                 )
-                : $this->additions,
-            'format' => $this->format,
-            'inlineTextStyles' => !is_null($this->inlineTextStyles)
+                : $this->additions;
+        }
+        if (isset($this->format)) {
+            $data['format'] = $this->format;
+        }
+        if (isset($this->inlineTextStyles)) {
+            $data['inlineTextStyles'] = !is_null($this->inlineTextStyles)
                 ? array_reduce(
                     array_keys($this->inlineTextStyles),
                     function ($items, $key) {
@@ -271,12 +295,19 @@ class Text extends Component
                     },
                     []
                 )
-                : $this->inlineTextStyles,
-            'role' => $this->role,
-            'text' => $this->text,
-            'textStyle' => is_object($this->textStyle)
+                : $this->inlineTextStyles;
+        }
+        if (isset($this->role)) {
+            $data['role'] = $this->role;
+        }
+        if (isset($this->text)) {
+            $data['text'] = $this->text;
+        }
+        if (isset($this->textStyle)) {
+            $data['textStyle'] = is_object($this->textStyle)
                 ? $this->textStyle->toArray()
-                : $this->textStyle
-        ]);
+                : $this->textStyle;
+        }
+        return $data;
     }
 }

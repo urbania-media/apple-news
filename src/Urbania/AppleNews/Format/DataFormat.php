@@ -12,6 +12,13 @@ use Urbania\AppleNews\Assert;
  */
 class DataFormat
 {
+    protected static $typeProperty = 'type';
+
+    protected static $types = [
+        'float' => 'FloatDataFormat',
+        'image' => 'ImageDataFormat'
+    ];
+
     /**
      * The type of format. This must be float for a FloatDataFormat object or
      * image for an ImageDataFormat object.
@@ -21,6 +28,24 @@ class DataFormat
 
     public function __construct(array $data = [])
     {
+    }
+
+    public static function createTyped(array $data)
+    {
+        if (isset($data[static::$typeProperty])) {
+            $typeName = $data[static::$typeProperty];
+            $type = static::$types[$typeName] ?? null;
+            if (!is_null($type)) {
+                $namespace = implode(
+                    '\\',
+                    array_slice(explode('\\', static::class), 0, -1)
+                );
+                $typeClass = $namespace . '\\' . $type;
+                return new $typeClass($data);
+            }
+        }
+
+        return new static($data);
     }
 
     /**
@@ -33,13 +58,34 @@ class DataFormat
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'type' => $this->type
-        ];
+        $data = [];
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
+        return $data;
     }
 }

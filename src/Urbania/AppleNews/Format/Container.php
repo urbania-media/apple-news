@@ -126,7 +126,9 @@ class Container extends Component
 
         $items = [];
         foreach ($components as $key => $item) {
-            $items[$key] = is_array($item) ? new Component($item) : $item;
+            $items[$key] = is_array($item)
+                ? Component::createTyped($item)
+                : $item;
         }
         $this->components = $items;
         return $this;
@@ -152,13 +154,33 @@ class Container extends Component
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return array_merge(parent::toArray(), [
-            'additions' => !is_null($this->additions)
+        $data = parent::toArray();
+        if (isset($this->additions)) {
+            $data['additions'] = !is_null($this->additions)
                 ? array_reduce(
                     array_keys($this->additions),
                     function ($items, $key) {
@@ -169,8 +191,10 @@ class Container extends Component
                     },
                     []
                 )
-                : $this->additions,
-            'components' => !is_null($this->components)
+                : $this->additions;
+        }
+        if (isset($this->components)) {
+            $data['components'] = !is_null($this->components)
                 ? array_reduce(
                     array_keys($this->components),
                     function ($items, $key) {
@@ -181,11 +205,16 @@ class Container extends Component
                     },
                     []
                 )
-                : $this->components,
-            'contentDisplay' => is_object($this->contentDisplay)
+                : $this->components;
+        }
+        if (isset($this->contentDisplay)) {
+            $data['contentDisplay'] = is_object($this->contentDisplay)
                 ? $this->contentDisplay->toArray()
-                : $this->contentDisplay,
-            'role' => $this->role
-        ]);
+                : $this->contentDisplay;
+        }
+        if (isset($this->role)) {
+            $data['role'] = $this->role;
+        }
+        return $data;
     }
 }

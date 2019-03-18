@@ -165,20 +165,47 @@ class AdvertisingSettings
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'bannerType' => $this->bannerType,
-            'distanceFromMedia' => is_object($this->distanceFromMedia)
+        $data = [];
+        if (isset($this->bannerType)) {
+            $data['bannerType'] = $this->bannerType;
+        }
+        if (isset($this->distanceFromMedia)) {
+            $data['distanceFromMedia'] = is_object($this->distanceFromMedia)
                 ? $this->distanceFromMedia->toArray()
-                : $this->distanceFromMedia,
-            'frequency' => $this->frequency,
-            'layout' => is_object($this->layout)
+                : $this->distanceFromMedia;
+        }
+        if (isset($this->frequency)) {
+            $data['frequency'] = $this->frequency;
+        }
+        if (isset($this->layout)) {
+            $data['layout'] = is_object($this->layout)
                 ? $this->layout->toArray()
-                : $this->layout
-        ];
+                : $this->layout;
+        }
+        return $data;
     }
 }

@@ -197,22 +197,48 @@ class ConditionalTableColumnStyle extends TableColumnStyle
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return array_merge(parent::toArray(), [
-            'backgroundColor' => is_object($this->backgroundColor)
+        $data = parent::toArray();
+        if (isset($this->backgroundColor)) {
+            $data['backgroundColor'] = is_object($this->backgroundColor)
                 ? $this->backgroundColor->toArray()
-                : $this->backgroundColor,
-            'divider' => is_object($this->divider)
+                : $this->backgroundColor;
+        }
+        if (isset($this->divider)) {
+            $data['divider'] = is_object($this->divider)
                 ? $this->divider->toArray()
-                : $this->divider,
-            'minimumWidth' => is_object($this->minimumWidth)
+                : $this->divider;
+        }
+        if (isset($this->minimumWidth)) {
+            $data['minimumWidth'] = is_object($this->minimumWidth)
                 ? $this->minimumWidth->toArray()
-                : $this->minimumWidth,
-            'selectors' => !is_null($this->selectors)
+                : $this->minimumWidth;
+        }
+        if (isset($this->selectors)) {
+            $data['selectors'] = !is_null($this->selectors)
                 ? array_reduce(
                     array_keys($this->selectors),
                     function ($items, $key) {
@@ -223,8 +249,11 @@ class ConditionalTableColumnStyle extends TableColumnStyle
                     },
                     []
                 )
-                : $this->selectors,
-            'width' => $this->width
-        ]);
+                : $this->selectors;
+        }
+        if (isset($this->width)) {
+            $data['width'] = $this->width;
+        }
+        return $data;
     }
 }

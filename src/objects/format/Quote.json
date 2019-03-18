@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": "Format\\Text",
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/quote",
     "properties": [
         {
@@ -13,7 +14,8 @@
             "description": "This component always has a role of quote.",
             "value": "quote",
             "read_only": true,
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         }
     ]
 }

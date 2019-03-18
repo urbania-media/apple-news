@@ -5,12 +5,28 @@ namespace Urbania\AppleNews\Format;
 use Carbon\Carbon;
 use Urbania\AppleNews\Assert;
 
+/**
+ * The object for specifying the color and location for a color stop in a
+ * gradient.
+ *
+ * @see https://developer.apple.com/documentation/apple_news/colorstop
+ */
 class ColorStop
 {
-    /** @var string */
+    /**
+     * The color of this color stop.
+     * @var string
+     */
     protected $color;
 
-    /** @var integer|float */
+    /**
+     * An optional location of the color stop within the gradient, as a
+     * percentage of the gradient size. If location is omitted, the length of
+     * the stop is calculated by first subtracting color stops with specified
+     * locations from the full length, then equally distributing the
+     * remaining length.
+     * @var integer|float
+     */
     protected $location;
 
     public function __construct(array $data = [])
@@ -49,10 +65,7 @@ class ColorStop
      */
     public function setColor($color)
     {
-        Assert::regex(
-            $color,
-            '/^#([0-9A-F]{3}|[0-9A-F]{4}|[0-9A-F]{6}|[0-9A-F]{8}|aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkgrey|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkslategrey|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dimgrey|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|grey|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgray|lightgreen|lightgrey|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightslategrey|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|rebeccapurple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|slategrey|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen)$/i'
-        );
+        Assert::isColor($color);
 
         $this->color = $color;
         return $this;
@@ -72,16 +85,39 @@ class ColorStop
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'color' => is_object($this->color)
+        $data = [];
+        if (isset($this->color)) {
+            $data['color'] = is_object($this->color)
                 ? $this->color->toArray()
-                : $this->color,
-            'location' => $this->location
-        ];
+                : $this->color;
+        }
+        if (isset($this->location)) {
+            $data['location'] = $this->location;
+        }
+        return $data;
     }
 }

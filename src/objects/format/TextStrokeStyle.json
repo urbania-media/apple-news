@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/textstrokestyle",
     "properties": [
         {
@@ -11,7 +12,8 @@
             "type": "Color",
             "required": false,
             "description": "The stroke color.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "width",
@@ -20,7 +22,8 @@
             "description": "Width of the stroke as a percentage relative to the font size.",
             "version": "1.1",
             "default": 3,
-            "minimum": 0
+            "minimum": 0,
+            "typed": false
         }
     ]
 }

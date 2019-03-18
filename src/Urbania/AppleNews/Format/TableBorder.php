@@ -182,17 +182,48 @@ class TableBorder
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'all' => is_object($this->all) ? $this->all->toArray() : $this->all,
-            'bottom' => $this->bottom,
-            'left' => $this->left,
-            'right' => $this->right,
-            'top' => $this->top
-        ];
+        $data = [];
+        if (isset($this->all)) {
+            $data['all'] = is_object($this->all)
+                ? $this->all->toArray()
+                : $this->all;
+        }
+        if (isset($this->bottom)) {
+            $data['bottom'] = $this->bottom;
+        }
+        if (isset($this->left)) {
+            $data['left'] = $this->left;
+        }
+        if (isset($this->right)) {
+            $data['right'] = $this->right;
+        }
+        if (isset($this->top)) {
+            $data['top'] = $this->top;
+        }
+        return $data;
     }
 }

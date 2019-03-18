@@ -152,22 +152,51 @@ class Padding
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'bottom' => is_object($this->bottom)
+        $data = [];
+        if (isset($this->bottom)) {
+            $data['bottom'] = is_object($this->bottom)
                 ? $this->bottom->toArray()
-                : $this->bottom,
-            'left' => is_object($this->left)
+                : $this->bottom;
+        }
+        if (isset($this->left)) {
+            $data['left'] = is_object($this->left)
                 ? $this->left->toArray()
-                : $this->left,
-            'right' => is_object($this->right)
+                : $this->left;
+        }
+        if (isset($this->right)) {
+            $data['right'] = is_object($this->right)
                 ? $this->right->toArray()
-                : $this->right,
-            'top' => is_object($this->top) ? $this->top->toArray() : $this->top
-        ];
+                : $this->right;
+        }
+        if (isset($this->top)) {
+            $data['top'] = is_object($this->top)
+                ? $this->top->toArray()
+                : $this->top;
+        }
+        return $data;
     }
 }

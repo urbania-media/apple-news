@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/strokestyle",
     "properties": [
         {
@@ -11,7 +12,8 @@
             "type": "Color",
             "required": false,
             "description": "The stroke color.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "style",
@@ -24,7 +26,8 @@
                 "solid",
                 "dashed",
                 "dotted"
-            ]
+            ],
+            "typed": false
         },
         {
             "name": "width",
@@ -35,7 +38,8 @@
             "required": false,
             "description": "The width of the stroke line. Can be either an integer value in points, or a string according to Specifying Measurements for Components.",
             "version": "1.0",
-            "default": 1
+            "default": 1,
+            "typed": false
         }
     ]
 }

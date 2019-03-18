@@ -215,19 +215,47 @@ class DataTable extends Component
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return array_merge(parent::toArray(), [
-            'data' => is_object($this->data)
+        $data = parent::toArray();
+        if (isset($this->data)) {
+            $data['data'] = is_object($this->data)
                 ? $this->data->toArray()
-                : $this->data,
-            'dataOrientation' => $this->dataOrientation,
-            'role' => $this->role,
-            'showDescriptorLabels' => $this->showDescriptorLabels,
-            'sortBy' => !is_null($this->sortBy)
+                : $this->data;
+        }
+        if (isset($this->dataOrientation)) {
+            $data['dataOrientation'] = $this->dataOrientation;
+        }
+        if (isset($this->role)) {
+            $data['role'] = $this->role;
+        }
+        if (isset($this->showDescriptorLabels)) {
+            $data['showDescriptorLabels'] = $this->showDescriptorLabels;
+        }
+        if (isset($this->sortBy)) {
+            $data['sortBy'] = !is_null($this->sortBy)
                 ? array_reduce(
                     array_keys($this->sortBy),
                     function ($items, $key) {
@@ -238,10 +266,13 @@ class DataTable extends Component
                     },
                     []
                 )
-                : $this->sortBy,
-            'style' => is_object($this->style)
+                : $this->sortBy;
+        }
+        if (isset($this->style)) {
+            $data['style'] = is_object($this->style)
                 ? $this->style->toArray()
-                : $this->style
-        ]);
+                : $this->style;
+        }
+        return $data;
     }
 }

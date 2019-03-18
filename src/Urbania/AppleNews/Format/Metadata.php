@@ -581,18 +581,44 @@ class Metadata
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'authors' => $this->authors ?? [],
-            'campaignData' => is_object($this->campaignData)
+        $data = [];
+        if (isset($this->authors)) {
+            $data['authors'] = $this->authors;
+        }
+        if (isset($this->campaignData)) {
+            $data['campaignData'] = is_object($this->campaignData)
                 ? $this->campaignData->toArray()
-                : $this->campaignData,
-            'canonicalURL' => $this->canonicalURL,
-            'coverArt' => !is_null($this->coverArt)
+                : $this->campaignData;
+        }
+        if (isset($this->canonicalURL)) {
+            $data['canonicalURL'] = $this->canonicalURL;
+        }
+        if (isset($this->coverArt)) {
+            $data['coverArt'] = !is_null($this->coverArt)
                 ? array_reduce(
                     array_keys($this->coverArt),
                     function ($items, $key) {
@@ -603,22 +629,40 @@ class Metadata
                     },
                     []
                 )
-                : $this->coverArt,
-            'dateCreated' => !is_null($this->dateCreated)
+                : $this->coverArt;
+        }
+        if (isset($this->dateCreated)) {
+            $data['dateCreated'] = !is_null($this->dateCreated)
                 ? $this->dateCreated->toIso8601String()
-                : null,
-            'dateModified' => !is_null($this->dateModified)
+                : null;
+        }
+        if (isset($this->dateModified)) {
+            $data['dateModified'] = !is_null($this->dateModified)
                 ? $this->dateModified->toIso8601String()
-                : null,
-            'datePublished' => !is_null($this->datePublished)
+                : null;
+        }
+        if (isset($this->datePublished)) {
+            $data['datePublished'] = !is_null($this->datePublished)
                 ? $this->datePublished->toIso8601String()
-                : null,
-            'excerpt' => $this->excerpt,
-            'generatorIdentifier' => $this->generatorIdentifier,
-            'generatorName' => $this->generatorName,
-            'generatorVersion' => $this->generatorVersion,
-            'keywords' => $this->keywords ?? [],
-            'links' => !is_null($this->links)
+                : null;
+        }
+        if (isset($this->excerpt)) {
+            $data['excerpt'] = $this->excerpt;
+        }
+        if (isset($this->generatorIdentifier)) {
+            $data['generatorIdentifier'] = $this->generatorIdentifier;
+        }
+        if (isset($this->generatorName)) {
+            $data['generatorName'] = $this->generatorName;
+        }
+        if (isset($this->generatorVersion)) {
+            $data['generatorVersion'] = $this->generatorVersion;
+        }
+        if (isset($this->keywords)) {
+            $data['keywords'] = $this->keywords;
+        }
+        if (isset($this->links)) {
+            $data['links'] = !is_null($this->links)
                 ? array_reduce(
                     array_keys($this->links),
                     function ($items, $key) {
@@ -629,10 +673,17 @@ class Metadata
                     },
                     []
                 )
-                : $this->links,
-            'thumbnailURL' => $this->thumbnailURL,
-            'transparentToolbar' => $this->transparentToolbar,
-            'videoURL' => $this->videoURL
-        ];
+                : $this->links;
+        }
+        if (isset($this->thumbnailURL)) {
+            $data['thumbnailURL'] = $this->thumbnailURL;
+        }
+        if (isset($this->transparentToolbar)) {
+            $data['transparentToolbar'] = $this->transparentToolbar;
+        }
+        if (isset($this->videoURL)) {
+            $data['videoURL'] = $this->videoURL;
+        }
+        return $data;
     }
 }

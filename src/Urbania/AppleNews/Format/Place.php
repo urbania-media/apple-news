@@ -240,21 +240,54 @@ class Place extends Component
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return array_merge(parent::toArray(), [
-            'accessibilityCaption' => $this->accessibilityCaption,
-            'caption' => $this->caption,
-            'latitude' => $this->latitude,
-            'longitude' => $this->longitude,
-            'mapType' => $this->mapType,
-            'role' => $this->role,
-            'span' => is_object($this->span)
+        $data = parent::toArray();
+        if (isset($this->accessibilityCaption)) {
+            $data['accessibilityCaption'] = $this->accessibilityCaption;
+        }
+        if (isset($this->caption)) {
+            $data['caption'] = $this->caption;
+        }
+        if (isset($this->latitude)) {
+            $data['latitude'] = $this->latitude;
+        }
+        if (isset($this->longitude)) {
+            $data['longitude'] = $this->longitude;
+        }
+        if (isset($this->mapType)) {
+            $data['mapType'] = $this->mapType;
+        }
+        if (isset($this->role)) {
+            $data['role'] = $this->role;
+        }
+        if (isset($this->span)) {
+            $data['span'] = is_object($this->span)
                 ? $this->span->toArray()
-                : $this->span
-        ]);
+                : $this->span;
+        }
+        return $data;
     }
 }

@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/offset",
     "properties": [
         {
@@ -13,7 +14,8 @@
             "description": "The x offset, as a value between -50.0 and 50.0. Implementation is device dependent.",
             "version": "1.0",
             "minimum": -50,
-            "maximum": 50
+            "maximum": 50,
+            "typed": false
         },
         {
             "name": "y",
@@ -22,7 +24,8 @@
             "description": "The y offset, as a value between -50.0 and 50.0. Implementation is device dependent.",
             "version": "1.0",
             "minimum": -50,
-            "maximum": 50
+            "maximum": 50,
+            "typed": false
         }
     ]
 }

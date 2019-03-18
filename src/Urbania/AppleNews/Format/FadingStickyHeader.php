@@ -67,16 +67,39 @@ class FadingStickyHeader extends Scene
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return array_merge(parent::toArray(), [
-            'fadeColor' => is_object($this->fadeColor)
+        $data = parent::toArray();
+        if (isset($this->fadeColor)) {
+            $data['fadeColor'] = is_object($this->fadeColor)
                 ? $this->fadeColor->toArray()
-                : $this->fadeColor,
-            'type' => $this->type
-        ]);
+                : $this->fadeColor;
+        }
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
+        return $data;
     }
 }

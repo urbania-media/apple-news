@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": "Format\\Fill",
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/videofill",
     "properties": [
         {
@@ -11,7 +12,8 @@
             "type": "uri",
             "required": true,
             "description": "The URL of a video file that can be played using AV Player. HTTP Live Streaming (HLS) is highly recommended (.M3U8). For more information on HLS, refer to the iOS developer documentation on HTTP Live Streaming, especially the following sections of the HTTP Live Streaming Overview:",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "fillMode",
@@ -23,7 +25,8 @@
             "enum_values": [
                 "fit",
                 "cover"
-            ]
+            ],
+            "typed": false
         },
         {
             "name": "horizontalAlignment",
@@ -36,7 +39,8 @@
                 "left",
                 "center",
                 "right"
-            ]
+            ],
+            "typed": false
         },
         {
             "name": "loop",
@@ -44,21 +48,24 @@
             "required": false,
             "description": "When true, it specifies that the video will start over again when it reaches the end.",
             "version": "1.1",
-            "default": "true"
+            "default": "true",
+            "typed": false
         },
         {
             "name": "stillURL",
             "type": "string",
             "required": true,
             "description": "The URL of the image file to use as a still image when the video is not playing.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "type",
             "type": "string",
             "required": true,
             "description": "Describes the type of fill. Must be video for a video fill.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "verticalAlignment",
@@ -71,7 +78,8 @@
                 "top",
                 "center",
                 "bottom"
-            ]
+            ],
+            "typed": false
         }
     ]
 }

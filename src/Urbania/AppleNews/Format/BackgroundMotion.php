@@ -34,13 +34,34 @@ class BackgroundMotion extends Behavior
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return array_merge(parent::toArray(), [
-            'type' => $this->type
-        ]);
+        $data = parent::toArray();
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
+        return $data;
     }
 }

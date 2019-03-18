@@ -9,12 +9,28 @@ class ObjectDocument extends Document
     protected $versionPattern = '/Apple News Format ([0-9]+\.[0-9]+\+?)/';
     protected $namespace = 'Format';
 
+    protected $typedClasses = [
+        'Format\\Component' => 'role',
+        'Format\\Fill' => 'type',
+        'Format\\Scene' => 'type',
+        'Format\\DataFormat' => 'type',
+        'Format\\Behavior' => 'type',
+        'Format\\ComponentAnimation' => 'type'
+    ];
+
+    protected $typedChildClasses;
+
     public function getName()
     {
         $name = $this->document
             ->find('#main .topic-title .topic-heading')[0]
             ->text();
         return $name;
+    }
+
+    public function getClassName()
+    {
+        return $this->getType($this->getName());
     }
 
     public function getObjectsUrls()
@@ -54,6 +70,7 @@ class ObjectDocument extends Document
                     return preg_match('/^[A-Z]/', $a) === 0 ? 1 : -1;
                 });
             }
+            $property['typed'] = $this->isPropertyCreatesTyped($property);
             $properties[] = $property;
         }
         return $properties;
@@ -152,6 +169,9 @@ class ObjectDocument extends Document
         } elseif (preg_match('/The type must be ([a-zA-Z0-9_-]+)./', $text, $matches)
         ) {
             return $matches[1];
+        } elseif (preg_match('/should always be set to ([a-zA-Z0-9_-]+)./', $text, $matches)
+        ) {
+            return $matches[1];
         }
         return preg_match(
             '/always has (a role of|the type) ([a-zA-Z0-9_-]+)./',
@@ -238,13 +258,28 @@ class ObjectDocument extends Document
         return $values;
     }
 
+    protected function isPropertyCreatesTyped($property)
+    {
+        $type = $property['type'] ?? null;
+        $typedClasses = array_map(function ($class) {
+            return preg_quote($class, '/');
+        }, array_keys($this->typedClasses));
+        $typedPattern ='/^(.*?\b)?('.implode('|', $typedClasses).')(\b.*)?$/';
+        if (is_array($type)) {
+            return array_reduce($type, function ($isTyped, $type) use ($typedPattern) {
+                return $isTyped || preg_match($typedPattern, $type) !== 0;
+            }, false);
+        }
+        return preg_match($typedPattern, $type) !== 0;
+    }
+
     protected function getType($type)
     {
         if (preg_match('/^\[([^\]]+)\]$/', $type, $matches)) {
             return 'array:' . $this->getType($matches[1]);
         } elseif (preg_match('/\.([a-z].*)$/', $type, $matches)) {
             return $this->getType(ucfirst($matches[1]));
-        } elseif (preg_match('/^Color|SupportedUnits/', $type)) {
+        } elseif (preg_match('/^(Color|SupportedUnits)$/', $type)) {
             return $type;
         } elseif (preg_match('/^([A-Z][^\.]+)\.([A-Z][^\.]+)$/', $type, $matches)) {
             return $this->getType($matches[1].$matches[2]);
@@ -254,7 +289,7 @@ class ObjectDocument extends Document
         return $type;
     }
 
-    protected function getFromClass()
+    public function getFromClass()
     {
         $name = $this->getName();
         if (preg_match(
@@ -268,7 +303,7 @@ class ObjectDocument extends Document
         return null;
     }
 
-    protected function getInherits()
+    public function getInherits()
     {
         if ($this->document->has('#inherits-from .symbol-name')) {
             $nodes = $this->document->find('#inherits-from .symbol-name');
@@ -279,19 +314,19 @@ class ObjectDocument extends Document
         return null;
     }
 
-    protected function hasMultipleInherits()
+    public function hasMultipleInherits()
     {
         $inherits = $this->getInherits();
         return !is_null($inherits) && sizeof($inherits) > 1;
     }
 
-    protected function getExtends()
+    public function getExtends()
     {
         $ihnerits = $this->getInherits();
         return !is_null($ihnerits) && sizeof($ihnerits) ? $this->getType($ihnerits[0]) : null;
     }
 
-    protected function getDescription()
+    public function getDescription()
     {
         if ($this->document->has('#main .topic-description')) {
             $node = $this->document->find('#main .topic-description');
@@ -300,7 +335,7 @@ class ObjectDocument extends Document
         return null;
     }
 
-    protected function getVersion()
+    public function getVersion()
     {
         if ($this->document->has('#main .topic-summary .sdk')) {
             $node = $this->document->find('#main .topic-summary .sdk');
@@ -313,6 +348,46 @@ class ObjectDocument extends Document
         return '1.0+';
     }
 
+    public function isTyped()
+    {
+        return isset($this->typedClasses[$this->getClassName()]);
+    }
+
+    public function getTypedChildClasses()
+    {
+        return $this->typedChildClasses;
+    }
+
+    public function getTypedProperty()
+    {
+        return $this->typedClasses[$this->getClassName()] ?? null;
+    }
+
+    public function setTypedChildClasses($classes)
+    {
+        $this->typedChildClasses = $classes;
+        return $this;
+    }
+
+    public function getTypedClassesMap()
+    {
+        $typedProperty = $this->isTyped() ? $this->getTypedProperty() : null;
+        $types = [];
+        foreach ($this->getTypedChildClasses() as $childObject) {
+            $properties = $childObject->getProperties();
+            $typeKey = null;
+            foreach ($properties as $property) {
+                if ($property['name'] === $typedProperty) {
+                    $typeKey = $property['value'] ?? null;
+                }
+            }
+            if (!is_null($typeKey)) {
+                $types[$typeKey] = $childObject->getName();
+            }
+        }
+        return $types;
+    }
+
     public function toArray()
     {
         return [
@@ -321,6 +396,10 @@ class ObjectDocument extends Document
             'version' => $this->getVersion(),
             'from_class' => $this->getFromClass(),
             'extends' => $this->getExtends(),
+            'typed' => $this->isTyped() ? [
+                'property' => $this->getTypedProperty(),
+                'types' => $this->getTypedClassesMap(),
+            ] : null,
             'url' => $this->url,
             'properties' => $this->getProperties()
         ];

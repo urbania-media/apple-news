@@ -91,14 +91,37 @@ class ListItemStyle
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'character' => $this->character,
-            'type' => $this->type
-        ];
+        $data = [];
+        if (isset($this->character)) {
+            $data['character'] = $this->character;
+        }
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
+        return $data;
     }
 }

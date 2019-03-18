@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/datatablesorting",
     "properties": [
         {
@@ -11,7 +12,8 @@
             "type": "string",
             "required": true,
             "description": "The identifier property of one of the table\u2019s data descriptors. See DataDescriptor.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "direction",
@@ -22,7 +24,8 @@
             "enum_values": [
                 "ascending",
                 "descending"
-            ]
+            ],
+            "typed": false
         }
     ]
 }

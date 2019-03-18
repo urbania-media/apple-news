@@ -12,6 +12,7 @@ class ObjectClassBuilder
     use ClassUtils;
 
     protected $constantsBuilder;
+    protected $typedBuilder;
     protected $propertiesBuilder;
     protected $constructMethodBuilder;
     protected $getMethodBuilder;
@@ -21,23 +22,30 @@ class ObjectClassBuilder
     public function __construct()
     {
         $this->constantsBuilder = new ObjectConstantsBuilder();
+        $this->typedBuilder = new ObjectTypedBuilder();
         $this->propertiesBuilder = new ObjectPropertiesBuilder();
         $this->constructMethodBuilder = new ObjectConstructMethodBuilder();
         $this->getMethodBuilder = new ObjectGetMethodBuilder();
         $this->setMethodBuilder = new ObjectSetMethodBuilder();
         $this->toArrayMethodBuilder = new ObjectToArrayMethodBuilder();
+        $this->jsonMethodsBuilder = new ObjectJsonMethodsBuilder();
     }
 
     public function build(array $object)
     {
         $name = $object['name'];
         $fromClass = $object['from_class'] ?? null;
+        $typed = $object['typed'] ?? null;
         $description = $object['description'] ?? null;
         $url = $object['url'] ?? null;
         $extends = $object['extends'] ?? null;
         $baseExtends = $object['base_extends'] ?? null;
         $properties = $object['properties'] ?? [];
         $constants = $object['constants'] ?? [];
+
+        if (is_null($fromClass) && !is_null($typed)) {
+            $fromClass = 'Typed';
+        }
 
         $baseNamespace = $this->getClassNamespace($name);
         $baseClassName = $this->getClassBaseName($name);
@@ -50,6 +58,13 @@ class ObjectClassBuilder
             $class->setMethods($methods);
         } else {
             $class = new ClassType($baseClassName);
+        }
+
+        if (!is_null($typed)) {
+            $typedMembers = $this->buildTyped($typed);
+            foreach ($typedMembers as $typedMember) {
+                $class->addMember($typedMember);
+            }
         }
 
         if (!empty($description)) {
@@ -101,6 +116,13 @@ class ObjectClassBuilder
             $class->addMember($toArrayMethod);
         }
 
+        $jsonMethods = $this->buildJsonMethods();
+        foreach ($jsonMethods as $jsonMethod) {
+            if (!isset($methods[$jsonMethod->getName()])) {
+                $class->addMember($jsonMethod);
+            }
+        }
+
         // $properties = $class->getProperties();
         // $sortedProperties = $this->sortMembers($properties);
         // $class->setProperties($sortedProperties);
@@ -129,6 +151,11 @@ class ObjectClassBuilder
             }
         }
         return $methods;
+    }
+
+    protected function buildTyped($typed)
+    {
+        return $this->typedBuilder->build($typed);
     }
 
     protected function buildConstants(array $constants)
@@ -174,10 +201,25 @@ class ObjectClassBuilder
         return $this->toArrayMethodBuilder->build($properties, $extends);
     }
 
+    protected function buildJsonMethods()
+    {
+        return $this->jsonMethodsBuilder->build();
+    }
+
     protected function sortMembers($members)
     {
+        $lastMethods = ['jsonSerialize', 'toJson', 'toArray'];
         $names = array_keys($members);
-        usort($names, function ($a, $b) {
+        usort($names, function ($a, $b) use ($lastMethods) {
+            $aLastMethodIndex = array_search($a, $lastMethods);
+            $bLastMethodIndex = array_search($b, $lastMethods);
+            if ($aLastMethodIndex !== false && $bLastMethodIndex !== false) {
+                return $aLastMethodIndex > $bLastMethodIndex;
+            } elseif ($aLastMethodIndex !== false) {
+                return 1;
+            } elseif ($bLastMethodIndex !== false) {
+                return -1;
+            }
             return strcmp($a, $b);
         });
         return array_reduce($names, function ($newMembers, $name) use ($members) {

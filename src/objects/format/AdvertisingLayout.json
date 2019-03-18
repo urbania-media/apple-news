@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/advertisinglayout",
     "properties": [
         {
@@ -14,7 +15,8 @@
             ],
             "required": true,
             "description": "Describes margins on top and bottom as a single integer or as an object containing separate properties for top and bottom margins.",
-            "version": "1.1"
+            "version": "1.1",
+            "typed": false
         }
     ]
 }

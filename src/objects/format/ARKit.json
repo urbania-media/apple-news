@@ -4,6 +4,7 @@
     "version": "1.8+",
     "from_class": null,
     "extends": "Format\\Component",
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/arkit",
     "properties": [
         {
@@ -11,35 +12,40 @@
             "type": "string",
             "required": true,
             "description": "Valid URL to a Universal Scene Description file (USD) file with extension .usdz, beginning with http:\/\/, https:\/\/ or bundle:\/\/.",
-            "version": "1.8"
+            "version": "1.8",
+            "typed": false
         },
         {
             "name": "accessibilityCaption",
             "type": "string",
             "required": false,
             "description": "Optional caption text describing the contents of the component. Note that this property differs from caption: although the caption may be displayed to users, the accessiblityCaption is used for voice-over only. The value in this property should describe the contents of the image for non-sighted users. If this property is omitted, the value from caption is used for voice-over.",
-            "version": "1.8"
+            "version": "1.8",
+            "typed": false
         },
         {
             "name": "caption",
             "type": "string",
             "required": true,
             "description": "A string that describes the contents of the ARKit stage.",
-            "version": "1.8"
+            "version": "1.8",
+            "typed": false
         },
         {
             "name": "explicitContent",
             "type": "boolean",
             "required": false,
             "description": "This property indicates that the component may contain explicit or graphic content.",
-            "version": "1.8"
+            "version": "1.8",
+            "typed": false
         },
         {
             "name": "role",
             "type": "string",
             "required": true,
             "description": "This component always has a role of  arkit.",
-            "version": "1.8"
+            "version": "1.8",
+            "typed": false
         }
     ]
 }

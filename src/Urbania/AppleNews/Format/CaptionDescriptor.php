@@ -201,13 +201,33 @@ class CaptionDescriptor
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'additions' => !is_null($this->additions)
+        $data = [];
+        if (isset($this->additions)) {
+            $data['additions'] = !is_null($this->additions)
                 ? array_reduce(
                     array_keys($this->additions),
                     function ($items, $key) {
@@ -218,9 +238,13 @@ class CaptionDescriptor
                     },
                     []
                 )
-                : $this->additions,
-            'format' => $this->format,
-            'inlineTextStyles' => !is_null($this->inlineTextStyles)
+                : $this->additions;
+        }
+        if (isset($this->format)) {
+            $data['format'] = $this->format;
+        }
+        if (isset($this->inlineTextStyles)) {
+            $data['inlineTextStyles'] = !is_null($this->inlineTextStyles)
                 ? array_reduce(
                     array_keys($this->inlineTextStyles),
                     function ($items, $key) {
@@ -231,11 +255,16 @@ class CaptionDescriptor
                     },
                     []
                 )
-                : $this->inlineTextStyles,
-            'text' => $this->text,
-            'textStyle' => is_object($this->textStyle)
+                : $this->inlineTextStyles;
+        }
+        if (isset($this->text)) {
+            $data['text'] = $this->text;
+        }
+        if (isset($this->textStyle)) {
+            $data['textStyle'] = is_object($this->textStyle)
                 ? $this->textStyle->toArray()
-                : $this->textStyle
-        ];
+                : $this->textStyle;
+        }
+        return $data;
     }
 }

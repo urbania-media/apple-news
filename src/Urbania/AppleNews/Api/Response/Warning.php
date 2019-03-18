@@ -115,15 +115,40 @@ class Warning
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'keypath' => $this->keypath ?? [],
-            'message' => $this->message,
-            'value' => $this->value
-        ];
+        $data = [];
+        if (isset($this->keypath)) {
+            $data['keypath'] = $this->keypath;
+        }
+        if (isset($this->message)) {
+            $data['message'] = $this->message;
+        }
+        if (isset($this->value)) {
+            $data['value'] = $this->value;
+        }
+        return $data;
     }
 }

@@ -356,29 +356,67 @@ class ComponentLayout
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'columnSpan' => $this->columnSpan,
-            'columnStart' => $this->columnStart,
-            'contentInset' => is_object($this->contentInset)
+        $data = [];
+        if (isset($this->columnSpan)) {
+            $data['columnSpan'] = $this->columnSpan;
+        }
+        if (isset($this->columnStart)) {
+            $data['columnStart'] = $this->columnStart;
+        }
+        if (isset($this->contentInset)) {
+            $data['contentInset'] = is_object($this->contentInset)
                 ? $this->contentInset->toArray()
-                : $this->contentInset,
-            'horizontalContentAlignment' => $this->horizontalContentAlignment,
-            'ignoreDocumentGutter' => $this->ignoreDocumentGutter,
-            'ignoreDocumentMargin' => $this->ignoreDocumentMargin,
-            'margin' => is_object($this->margin)
+                : $this->contentInset;
+        }
+        if (isset($this->horizontalContentAlignment)) {
+            $data['horizontalContentAlignment'] =
+                $this->horizontalContentAlignment;
+        }
+        if (isset($this->ignoreDocumentGutter)) {
+            $data['ignoreDocumentGutter'] = $this->ignoreDocumentGutter;
+        }
+        if (isset($this->ignoreDocumentMargin)) {
+            $data['ignoreDocumentMargin'] = $this->ignoreDocumentMargin;
+        }
+        if (isset($this->margin)) {
+            $data['margin'] = is_object($this->margin)
                 ? $this->margin->toArray()
-                : $this->margin,
-            'maximumContentWidth' => is_object($this->maximumContentWidth)
+                : $this->margin;
+        }
+        if (isset($this->maximumContentWidth)) {
+            $data['maximumContentWidth'] = is_object($this->maximumContentWidth)
                 ? $this->maximumContentWidth->toArray()
-                : $this->maximumContentWidth,
-            'minimumHeight' => is_object($this->minimumHeight)
+                : $this->maximumContentWidth;
+        }
+        if (isset($this->minimumHeight)) {
+            $data['minimumHeight'] = is_object($this->minimumHeight)
                 ? $this->minimumHeight->toArray()
-                : $this->minimumHeight
-        ];
+                : $this->minimumHeight;
+        }
+        return $data;
     }
 }

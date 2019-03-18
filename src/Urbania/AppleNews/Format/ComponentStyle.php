@@ -161,7 +161,7 @@ class ComponentStyle
             Assert::isArray($fill);
         }
 
-        $this->fill = is_array($fill) ? new Fill($fill) : $fill;
+        $this->fill = is_array($fill) ? Fill::createTyped($fill) : $fill;
         return $this;
     }
 
@@ -198,25 +198,54 @@ class ComponentStyle
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'backgroundColor' => is_object($this->backgroundColor)
+        $data = [];
+        if (isset($this->backgroundColor)) {
+            $data['backgroundColor'] = is_object($this->backgroundColor)
                 ? $this->backgroundColor->toArray()
-                : $this->backgroundColor,
-            'border' => is_object($this->border)
+                : $this->backgroundColor;
+        }
+        if (isset($this->border)) {
+            $data['border'] = is_object($this->border)
                 ? $this->border->toArray()
-                : $this->border,
-            'fill' => is_object($this->fill)
+                : $this->border;
+        }
+        if (isset($this->fill)) {
+            $data['fill'] = is_object($this->fill)
                 ? $this->fill->toArray()
-                : $this->fill,
-            'opacity' => $this->opacity,
-            'tableStyle' => is_object($this->tableStyle)
+                : $this->fill;
+        }
+        if (isset($this->opacity)) {
+            $data['opacity'] = $this->opacity;
+        }
+        if (isset($this->tableStyle)) {
+            $data['tableStyle'] = is_object($this->tableStyle)
                 ? $this->tableStyle->toArray()
-                : $this->tableStyle
-        ];
+                : $this->tableStyle;
+        }
+        return $data;
     }
 }

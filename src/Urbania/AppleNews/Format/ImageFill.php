@@ -36,7 +36,7 @@ class ImageFill extends Fill
      * image.
      * @var string
      */
-    protected $type;
+    protected $type = 'image';
 
     /**
      * Sets the vertical alignment of the image fill within its component.
@@ -59,10 +59,6 @@ class ImageFill extends Fill
 
         if (isset($data['horizontalAlignment'])) {
             $this->setHorizontalAlignment($data['horizontalAlignment']);
-        }
-
-        if (isset($data['type'])) {
-            $this->setType($data['type']);
         }
 
         if (isset($data['verticalAlignment'])) {
@@ -142,19 +138,6 @@ class ImageFill extends Fill
     }
 
     /**
-     * Set the type
-     * @param string $type
-     * @return $this
-     */
-    public function setType($type)
-    {
-        Assert::string($type);
-
-        $this->type = $type;
-        return $this;
-    }
-
-    /**
      * Set the URL
      * @param string $URL
      * @return $this
@@ -181,17 +164,46 @@ class ImageFill extends Fill
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return array_merge(parent::toArray(), [
-            'URL' => $this->URL,
-            'fillMode' => $this->fillMode,
-            'horizontalAlignment' => $this->horizontalAlignment,
-            'type' => $this->type,
-            'verticalAlignment' => $this->verticalAlignment
-        ]);
+        $data = parent::toArray();
+        if (isset($this->URL)) {
+            $data['URL'] = $this->URL;
+        }
+        if (isset($this->fillMode)) {
+            $data['fillMode'] = $this->fillMode;
+        }
+        if (isset($this->horizontalAlignment)) {
+            $data['horizontalAlignment'] = $this->horizontalAlignment;
+        }
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
+        if (isset($this->verticalAlignment)) {
+            $data['verticalAlignment'] = $this->verticalAlignment;
+        }
+        return $data;
     }
 }

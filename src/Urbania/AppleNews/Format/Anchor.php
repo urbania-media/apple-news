@@ -223,18 +223,50 @@ class Anchor
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'originAnchorPosition' => $this->originAnchorPosition,
-            'rangeLength' => $this->rangeLength,
-            'rangeStart' => $this->rangeStart,
-            'target' => $this->target,
-            'targetAnchorPosition' => $this->targetAnchorPosition,
-            'targetComponentIdentifier' => $this->targetComponentIdentifier
-        ];
+        $data = [];
+        if (isset($this->originAnchorPosition)) {
+            $data['originAnchorPosition'] = $this->originAnchorPosition;
+        }
+        if (isset($this->rangeLength)) {
+            $data['rangeLength'] = $this->rangeLength;
+        }
+        if (isset($this->rangeStart)) {
+            $data['rangeStart'] = $this->rangeStart;
+        }
+        if (isset($this->target)) {
+            $data['target'] = $this->target;
+        }
+        if (isset($this->targetAnchorPosition)) {
+            $data['targetAnchorPosition'] = $this->targetAnchorPosition;
+        }
+        if (isset($this->targetComponentIdentifier)) {
+            $data['targetComponentIdentifier'] =
+                $this->targetComponentIdentifier;
+        }
+        return $data;
     }
 }

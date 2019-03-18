@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/tablerowstyle",
     "properties": [
         {
@@ -11,21 +12,24 @@
             "type": "Color",
             "required": false,
             "description": "The background color for the table row.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "conditional",
             "type": "array:Format\\ConditionalTableRowStyle",
             "required": false,
             "description": "An array of styles to be applied only to rows that meet specified conditions. This can be used to create a table with alternating row background colors.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "divider",
             "type": "Format\\TableStrokeStyle",
             "required": false,
             "description": "The stroke style for the divider lines between rows.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "height",
@@ -35,7 +39,8 @@
             ],
             "required": false,
             "description": "The height of the table row, as an integer in points, or using the available units for components.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         }
     ]
 }

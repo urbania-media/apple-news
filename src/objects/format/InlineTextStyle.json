@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/inlinetextstyle",
     "properties": [
         {
@@ -11,14 +12,16 @@
             "type": "integer",
             "required": true,
             "description": "The length (in characters) of the portion of text to which the alternative styling should be applied.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "rangeStart",
             "type": "integer",
             "required": true,
             "description": "The starting point of the text to which the alternative styling should be applied. Note: the first available character is at 0, not 1.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "textStyle",
@@ -28,7 +31,8 @@
             ],
             "required": true,
             "description": "Either a TextStyle or the name of a TextStyle object defined in the ArticleDocument.textStyles object.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         }
     ]
 }

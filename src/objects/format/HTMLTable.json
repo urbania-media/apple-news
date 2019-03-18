@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": "Format\\Component",
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/htmltable",
     "properties": [
         {
@@ -11,7 +12,8 @@
             "type": "string",
             "required": true,
             "description": "The HTML for the table. This HTML must begin with <table> and end with <\/table>.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "role",
@@ -20,7 +22,8 @@
             "description": "This component always has a role of htmltable.",
             "value": "htmltable",
             "read_only": true,
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         }
     ]
 }

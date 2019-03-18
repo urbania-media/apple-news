@@ -4,6 +4,15 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": {
+        "property": "type",
+        "types": {
+            "appear": "AppearAnimation",
+            "fade_in": "FadeInAnimation",
+            "move_in": "MoveInAnimation",
+            "scale_fade": "ScaleFadeAnimation"
+        }
+    },
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/componentanimation",
     "properties": [
         {
@@ -11,7 +20,8 @@
             "type": "string",
             "required": true,
             "description": "The type of animation, for example, move_in.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         }
     ]
 }

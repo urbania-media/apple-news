@@ -4,6 +4,43 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": {
+        "property": "role",
+        "types": {
+            "audio": "Audio",
+            "music": "Music",
+            "author": "Author",
+            "illustrator": "Illustrator",
+            "photographer": "Photographer",
+            "embedwebvideo": "EmbedWebVideo",
+            "aside": "Aside",
+            "header": "Header",
+            "section": "Section",
+            "chapter": "Chapter",
+            "container": "Container",
+            "body": "Body",
+            "title": "Title",
+            "intro": "Intro",
+            "caption": "Caption",
+            "photo": "Photo",
+            "figure": "Figure",
+            "portrait": "Portrait",
+            "logo": "Logo",
+            "gallery": "Gallery",
+            "mosaic": "Mosaic",
+            "quote": "Quote",
+            "pullquote": "PullQuote",
+            "datatable": "DataTable",
+            "map": "Map",
+            "place": "Place",
+            "instagram": "Instagram",
+            "facebook_post": "FacebookPost",
+            "tweet": "Tweet",
+            "htmltable": "HTMLTable",
+            "banner_advertisement": "BannerAdvertisement",
+            "medium_rectangle_advertisement": "MediumRectangleAdvertisement"
+        }
+    },
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/component",
     "properties": [
         {
@@ -11,27 +48,31 @@
             "type": "Format\\Anchor",
             "required": false,
             "description": "An Anchor object that aligns this component vertically with another component.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "animation",
             "type": "Format\\ComponentAnimation",
             "required": false,
             "description": "An object that applies an animation effect, such as a FadeInAnimation, to this component.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": true
         },
         {
             "name": "behavior",
             "type": "Format\\Behavior",
             "required": false,
             "description": "A behavior object that applies a motion effect or other physics effect, such as Parallax or Springy.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": true
         },
         {
             "name": "identifier",
             "type": "string",
             "required": false,
-            "description": "A unique identifier for this component. If used, identifier must be unique across the entire document. An identifier is required if you want to anchor other components to this component. See Anchor."
+            "description": "A unique identifier for this component. If used, identifier must be unique across the entire document. An identifier is required if you want to anchor other components to this component. See Anchor.",
+            "typed": false
         },
         {
             "name": "layout",
@@ -41,14 +82,16 @@
             ],
             "required": false,
             "description": "Either an inline ComponentLayout object that contains layout information, or a string reference to a component layout that is defined in Article Document.Component Layouts.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "role",
             "type": "string",
             "required": true,
             "description": "The role of a component (for example, title, body, or pullquote) conveys the semantic value of the content or its function within the article.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "style",
@@ -58,7 +101,8 @@
             ],
             "required": false,
             "description": "Either an inline ComponentStyle object that defines the appearance of this component, or a string reference to a component style that is defined in in Article Document.Component Styles.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         }
     ]
 }

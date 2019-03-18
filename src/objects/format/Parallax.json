@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": "Format\\Behavior",
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/parallax",
     "properties": [
         {
@@ -14,7 +15,8 @@
             "version": "1.0",
             "default": 0.9,
             "minimum": 0.5,
-            "maximum": 2
+            "maximum": 2,
+            "typed": false
         },
         {
             "name": "type",
@@ -23,7 +25,8 @@
             "description": "This behavior\u2019s type is always parallax.",
             "value": "parallax",
             "read_only": true,
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         }
     ]
 }

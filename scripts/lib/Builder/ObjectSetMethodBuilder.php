@@ -43,23 +43,26 @@ class ObjectSetMethodBuilder
 
     protected function buildPropertySetMethodBody($property, $baseNamespace)
     {
+        $isTyped = $property['typed'] ?? false;
         $variableName = '$' . $property['name'];
         $lines = [];
         $lines[] =
-            $this->buildPropertySetMethodAssertionBody($property, $baseNamespace) .
-            PHP_EOL;
+            $this->buildPropertySetMethodAssertionBody(
+                $property,
+                $baseNamespace
+            ) . PHP_EOL;
         $typeParts = explode(
             ':',
-            is_array($property['type']) ? $property['type'][0] : $property['type']
+            is_array($property['type'])
+                ? $property['type'][0]
+                : $property['type']
         );
         $mainType = $typeParts[0];
         switch ($mainType) {
             case 'date-time':
                 $lines[] = sprintf(
-                    '$this->%s = is_string(%s) ? Carbon::parse(%s) : %s;',
+                    '$this->%s = is_string(%s) ? Carbon::parse(%2$s) : %2$s;',
                     $property['name'],
-                    $variableName,
-                    $variableName,
                     $variableName
                 );
                 break;
@@ -72,14 +75,18 @@ class ObjectSetMethodBuilder
                         $baseNamespace,
                         $fullClassPath
                     );
-                    $lines[] = '$items = [];';
-                    $lines[] = sprintf('foreach (%s as $key => $item) {', $variableName);
-                    $lines[] = $this->indent(sprintf(
-                        '$items[$key] = is_array($item) ? new %s($item) : $item;',
+                    $lines[] = sprintf(
+                        '$items = [];' .
+                            'foreach (%s as $key => $item) {' .
+                            ($isTyped
+                                ? '$items[$key] = is_array($item) ? %s::createTyped($item) : $item;'
+                                : '$items[$key] = is_array($item) ? new %s($item) : $item;') .
+                            '}' .
+                            '$this->%s = $items;',
+                        $variableName,
                         $relativeClassPath,
-                    ));
-                    $lines[] = '}';
-                    $lines[] = sprintf('$this->%s = $items;', $property['name']);
+                        $property['name']
+                    );
                 } else {
                     $lines[] = sprintf(
                         '$this->%s = %s;',
@@ -104,12 +111,12 @@ class ObjectSetMethodBuilder
                         $fullClassPath
                     );
                     $lines[] = sprintf(
-                        '$this->%s = is_array(%s) ? new %s(%s) : %s;',
+                        ($isTyped
+                            ? '$this->%s = is_array(%s) ? %s::createTyped(%2$s) : %2$s;'
+                            : '$this->%s = is_array(%s) ? new %s(%2$s) : %2$s;'),
                         $property['name'],
                         $variableName,
-                        $relativeClassPath,
-                        $variableName,
-                        $variableName
+                        $relativeClassPath
                     );
                 } else {
                     $lines[] = sprintf(
@@ -123,8 +130,10 @@ class ObjectSetMethodBuilder
         return implode(PHP_EOL, $lines);
     }
 
-    protected function buildPropertySetMethodAssertionBody($property, $baseNamespace)
-    {
+    protected function buildPropertySetMethodAssertionBody(
+        $property,
+        $baseNamespace
+    ) {
         $type = $property['type'];
         if (is_array($type)) {
             $type = $type[0] !== 'SupportedUnits' ? 'multiple' : $type[0];
@@ -141,22 +150,16 @@ class ObjectSetMethodBuilder
                     $baseNamespace,
                     $fullClassPath
                 );
-                $lines[] = sprintf('if (is_object(%s)) {', $variableName);
-                $lines[] = $this->indent(
-                    sprintf(
-                        'Assert::isInstanceOf(%s, %s::class);',
-                        $variableName,
-                        $relativeClassPath
-                    )
+                $lines[] = sprintf(
+                    'if (is_object(%s)) {' .
+                        'Assert::isInstanceOf(%1$s, %s::class);' .
+                        '} elseif (!is_array(%1$s)) {' .
+                        'Assert::%s(%1$s);' .
+                        '}',
+                    $variableName,
+                    $relativeClassPath,
+                    $property['type'][1]
                 );
-                $lines[] = sprintf('} elseif (!is_array(%s)) {', $variableName);
-                $lines[] = $this->indent(
-                    sprintf(
-                        'Assert::' . $property['type'][1] . '(%s);',
-                        $variableName
-                    )
-                );
-                $lines[] = '}';
                 break;
 
             case 'date-time':
@@ -164,7 +167,10 @@ class ObjectSetMethodBuilder
                 break;
 
             case 'SupportedUnits':
-                $lines[] = sprintf('Assert::isSupportedUnits(%s);', $variableName);
+                $lines[] = sprintf(
+                    'Assert::isSupportedUnits(%s);',
+                    $variableName
+                );
                 break;
 
             case 'Color':
@@ -180,21 +186,17 @@ class ObjectSetMethodBuilder
                     $values = array_map(function ($constant) {
                         return 'static::' . $constant;
                     }, $property['enum_constants']);
-                    $line = [
-                        'Assert::oneOf(',
-                        $this->indent($variableName . ','),
-                        $this->indent('[' . implode(', ', $values) . ']'),
-                        ');'
-                    ];
-                    $lines[] = implode(PHP_EOL, $line);
+                    $lines[] = sprintf(
+                        'Assert::oneOf(%s, [%s]);',
+                        $variableName,
+                        implode(', ', $values)
+                    );
                 } elseif (isset($property['enum_values'])) {
-                    $line = [
-                        'Assert::oneOf(',
-                        $this->indent($variableName . ','),
-                        $this->indent(json_encode($property['enum_values'])),
-                        ');'
-                    ];
-                    $lines[] = implode(PHP_EOL, $line);
+                    $lines[] = sprintf(
+                        'Assert::oneOf(%s, %s);',
+                        $variableName,
+                        json_encode($property['enum_values'])
+                    );
                 } else {
                     $lines[] = sprintf('Assert::isArray(%s);', $variableName);
                 }
@@ -235,19 +237,15 @@ class ObjectSetMethodBuilder
                         $baseNamespace,
                         $fullClassPath
                     );
-                    $lines[] = sprintf('if (is_object(%s)) {', $variableName);
-                    $lines[] = $this->indent(
-                        sprintf(
-                            'Assert::isInstanceOf(%s, %s::class);',
-                            $variableName,
-                            $relativeClassPath
-                        )
+                    $lines[] = sprintf(
+                        'if (is_object(%s)) {' .
+                            'Assert::isInstanceOf(%1$s, %s::class);' .
+                            '} else {' .
+                            'Assert::isArray(%1$s);' .
+                            '}',
+                        $variableName,
+                        $relativeClassPath
                     );
-                    $lines[] = '} else {';
-                    $lines[] = $this->indent(
-                        sprintf('Assert::isArray(%s);', $variableName)
-                    );
-                    $lines[] = '}';
                 } else {
                     $lines[] = sprintf(
                         'Assert::%s(%s);',

@@ -198,16 +198,38 @@ class TableColumnStyle
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'backgroundColor' => is_object($this->backgroundColor)
+        $data = [];
+        if (isset($this->backgroundColor)) {
+            $data['backgroundColor'] = is_object($this->backgroundColor)
                 ? $this->backgroundColor->toArray()
-                : $this->backgroundColor,
-            'conditional' => !is_null($this->conditional)
+                : $this->backgroundColor;
+        }
+        if (isset($this->conditional)) {
+            $data['conditional'] = !is_null($this->conditional)
                 ? array_reduce(
                     array_keys($this->conditional),
                     function ($items, $key) {
@@ -218,14 +240,21 @@ class TableColumnStyle
                     },
                     []
                 )
-                : $this->conditional,
-            'divider' => is_object($this->divider)
+                : $this->conditional;
+        }
+        if (isset($this->divider)) {
+            $data['divider'] = is_object($this->divider)
                 ? $this->divider->toArray()
-                : $this->divider,
-            'minimumWidth' => is_object($this->minimumWidth)
+                : $this->divider;
+        }
+        if (isset($this->minimumWidth)) {
+            $data['minimumWidth'] = is_object($this->minimumWidth)
                 ? $this->minimumWidth->toArray()
-                : $this->minimumWidth,
-            'width' => $this->width
-        ];
+                : $this->minimumWidth;
+        }
+        if (isset($this->width)) {
+            $data['width'] = $this->width;
+        }
+        return $data;
     }
 }

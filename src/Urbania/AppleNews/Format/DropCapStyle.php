@@ -252,23 +252,56 @@ class DropCapStyle
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'backgroundColor' => is_object($this->backgroundColor)
+        $data = [];
+        if (isset($this->backgroundColor)) {
+            $data['backgroundColor'] = is_object($this->backgroundColor)
                 ? $this->backgroundColor->toArray()
-                : $this->backgroundColor,
-            'fontName' => $this->fontName,
-            'numberOfCharacters' => $this->numberOfCharacters,
-            'numberOfLines' => $this->numberOfLines,
-            'numberOfRaisedLines' => $this->numberOfRaisedLines,
-            'padding' => $this->padding,
-            'textColor' => is_object($this->textColor)
+                : $this->backgroundColor;
+        }
+        if (isset($this->fontName)) {
+            $data['fontName'] = $this->fontName;
+        }
+        if (isset($this->numberOfCharacters)) {
+            $data['numberOfCharacters'] = $this->numberOfCharacters;
+        }
+        if (isset($this->numberOfLines)) {
+            $data['numberOfLines'] = $this->numberOfLines;
+        }
+        if (isset($this->numberOfRaisedLines)) {
+            $data['numberOfRaisedLines'] = $this->numberOfRaisedLines;
+        }
+        if (isset($this->padding)) {
+            $data['padding'] = $this->padding;
+        }
+        if (isset($this->textColor)) {
+            $data['textColor'] = is_object($this->textColor)
                 ? $this->textColor->toArray()
-                : $this->textColor
-        ];
+                : $this->textColor;
+        }
+        return $data;
     }
 }

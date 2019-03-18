@@ -4,6 +4,13 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": {
+        "property": "type",
+        "types": {
+            "fading_sticky_header": "FadingStickyHeader",
+            "parallax_scale": "ParallaxScaleHeader"
+        }
+    },
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/scene",
     "properties": [
         {
@@ -11,7 +18,8 @@
             "type": "string",
             "required": true,
             "description": "The type of scene. For example, parallax_scale for a Parallax Scale Header scene or fading_sticky_header for a Fading Sticky Header.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         }
     ]
 }

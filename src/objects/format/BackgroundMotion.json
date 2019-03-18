@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": "Format\\Behavior",
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/backgroundmotion",
     "properties": [
         {
@@ -13,7 +14,8 @@
             "description": "This behavior\u2019s type is always background_motion.",
             "value": "background_motion",
             "read_only": true,
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         }
     ]
 }

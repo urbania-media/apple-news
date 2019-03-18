@@ -149,16 +149,43 @@ class Throttling
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'estimatedDelayInSeconds' => $this->estimatedDelayInSeconds,
-            'isThrottled' => $this->isThrottled,
-            'queueSize' => $this->queueSize,
-            'quotaAvailable' => $this->quotaAvailable
-        ];
+        $data = [];
+        if (isset($this->estimatedDelayInSeconds)) {
+            $data['estimatedDelayInSeconds'] = $this->estimatedDelayInSeconds;
+        }
+        if (isset($this->isThrottled)) {
+            $data['isThrottled'] = $this->isThrottled;
+        }
+        if (isset($this->queueSize)) {
+            $data['queueSize'] = $this->queueSize;
+        }
+        if (isset($this->quotaAvailable)) {
+            $data['quotaAvailable'] = $this->quotaAvailable;
+        }
+        return $data;
     }
 }

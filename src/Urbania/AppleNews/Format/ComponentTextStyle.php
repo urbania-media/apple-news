@@ -956,57 +956,126 @@ class ComponentTextStyle extends TextStyle
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return array_merge(parent::toArray(), [
-            'backgroundColor' => is_object($this->backgroundColor)
+        $data = parent::toArray();
+        if (isset($this->backgroundColor)) {
+            $data['backgroundColor'] = is_object($this->backgroundColor)
                 ? $this->backgroundColor->toArray()
-                : $this->backgroundColor,
-            'dropCapStyle' => is_object($this->dropCapStyle)
+                : $this->backgroundColor;
+        }
+        if (isset($this->dropCapStyle)) {
+            $data['dropCapStyle'] = is_object($this->dropCapStyle)
                 ? $this->dropCapStyle->toArray()
-                : $this->dropCapStyle,
-            'firstLineIndent' => $this->firstLineIndent,
-            'fontFamily' => $this->fontFamily,
-            'fontName' => $this->fontName,
-            'fontSize' => $this->fontSize,
-            'fontStyle' => $this->fontStyle,
-            'fontWeight' => $this->fontWeight,
-            'fontWidth' => $this->fontWidth,
-            'hangingPunctuation' => $this->hangingPunctuation,
-            'hyphenation' => $this->hyphenation,
-            'lineHeight' => $this->lineHeight,
-            'linkStyle' => is_object($this->linkStyle)
+                : $this->dropCapStyle;
+        }
+        if (isset($this->firstLineIndent)) {
+            $data['firstLineIndent'] = $this->firstLineIndent;
+        }
+        if (isset($this->fontFamily)) {
+            $data['fontFamily'] = $this->fontFamily;
+        }
+        if (isset($this->fontName)) {
+            $data['fontName'] = $this->fontName;
+        }
+        if (isset($this->fontSize)) {
+            $data['fontSize'] = $this->fontSize;
+        }
+        if (isset($this->fontStyle)) {
+            $data['fontStyle'] = $this->fontStyle;
+        }
+        if (isset($this->fontWeight)) {
+            $data['fontWeight'] = $this->fontWeight;
+        }
+        if (isset($this->fontWidth)) {
+            $data['fontWidth'] = $this->fontWidth;
+        }
+        if (isset($this->hangingPunctuation)) {
+            $data['hangingPunctuation'] = $this->hangingPunctuation;
+        }
+        if (isset($this->hyphenation)) {
+            $data['hyphenation'] = $this->hyphenation;
+        }
+        if (isset($this->lineHeight)) {
+            $data['lineHeight'] = $this->lineHeight;
+        }
+        if (isset($this->linkStyle)) {
+            $data['linkStyle'] = is_object($this->linkStyle)
                 ? $this->linkStyle->toArray()
-                : $this->linkStyle,
-            'orderedListItems' => is_object($this->orderedListItems)
+                : $this->linkStyle;
+        }
+        if (isset($this->orderedListItems)) {
+            $data['orderedListItems'] = is_object($this->orderedListItems)
                 ? $this->orderedListItems->toArray()
-                : $this->orderedListItems,
-            'paragraphSpacingAfter' => $this->paragraphSpacingAfter,
-            'paragraphSpacingBefore' => $this->paragraphSpacingBefore,
-            'strikethrough' => is_object($this->strikethrough)
+                : $this->orderedListItems;
+        }
+        if (isset($this->paragraphSpacingAfter)) {
+            $data['paragraphSpacingAfter'] = $this->paragraphSpacingAfter;
+        }
+        if (isset($this->paragraphSpacingBefore)) {
+            $data['paragraphSpacingBefore'] = $this->paragraphSpacingBefore;
+        }
+        if (isset($this->strikethrough)) {
+            $data['strikethrough'] = is_object($this->strikethrough)
                 ? $this->strikethrough->toArray()
-                : $this->strikethrough,
-            'stroke' => is_object($this->stroke)
+                : $this->strikethrough;
+        }
+        if (isset($this->stroke)) {
+            $data['stroke'] = is_object($this->stroke)
                 ? $this->stroke->toArray()
-                : $this->stroke,
-            'textAlignment' => $this->textAlignment,
-            'textColor' => is_object($this->textColor)
+                : $this->stroke;
+        }
+        if (isset($this->textAlignment)) {
+            $data['textAlignment'] = $this->textAlignment;
+        }
+        if (isset($this->textColor)) {
+            $data['textColor'] = is_object($this->textColor)
                 ? $this->textColor->toArray()
-                : $this->textColor,
-            'textShadow' => is_object($this->textShadow)
+                : $this->textColor;
+        }
+        if (isset($this->textShadow)) {
+            $data['textShadow'] = is_object($this->textShadow)
                 ? $this->textShadow->toArray()
-                : $this->textShadow,
-            'tracking' => $this->tracking,
-            'underline' => is_object($this->underline)
+                : $this->textShadow;
+        }
+        if (isset($this->tracking)) {
+            $data['tracking'] = $this->tracking;
+        }
+        if (isset($this->underline)) {
+            $data['underline'] = is_object($this->underline)
                 ? $this->underline->toArray()
-                : $this->underline,
-            'unorderedListItems' => is_object($this->unorderedListItems)
+                : $this->underline;
+        }
+        if (isset($this->unorderedListItems)) {
+            $data['unorderedListItems'] = is_object($this->unorderedListItems)
                 ? $this->unorderedListItems->toArray()
-                : $this->unorderedListItems,
-            'verticalAlignment' => $this->verticalAlignment
-        ]);
+                : $this->unorderedListItems;
+        }
+        if (isset($this->verticalAlignment)) {
+            $data['verticalAlignment'] = $this->verticalAlignment;
+        }
+        return $data;
     }
 }

@@ -243,19 +243,52 @@ class TableCellSelector
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'columnIndex' => $this->columnIndex,
-            'descriptor' => $this->descriptor,
-            'evenColumns' => $this->evenColumns,
-            'evenRows' => $this->evenRows,
-            'oddColumns' => $this->oddColumns,
-            'oddRows' => $this->oddRows,
-            'rowIndex' => $this->rowIndex
-        ];
+        $data = [];
+        if (isset($this->columnIndex)) {
+            $data['columnIndex'] = $this->columnIndex;
+        }
+        if (isset($this->descriptor)) {
+            $data['descriptor'] = $this->descriptor;
+        }
+        if (isset($this->evenColumns)) {
+            $data['evenColumns'] = $this->evenColumns;
+        }
+        if (isset($this->evenRows)) {
+            $data['evenRows'] = $this->evenRows;
+        }
+        if (isset($this->oddColumns)) {
+            $data['oddColumns'] = $this->oddColumns;
+        }
+        if (isset($this->oddRows)) {
+            $data['oddRows'] = $this->oddRows;
+        }
+        if (isset($this->rowIndex)) {
+            $data['rowIndex'] = $this->rowIndex;
+        }
+        return $data;
     }
 }

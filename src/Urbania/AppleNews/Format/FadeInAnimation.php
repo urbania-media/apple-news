@@ -99,15 +99,40 @@ class FadeInAnimation extends ComponentAnimation
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return array_merge(parent::toArray(), [
-            'initialAlpha' => $this->initialAlpha,
-            'type' => $this->type,
-            'userControllable' => $this->userControllable
-        ]);
+        $data = parent::toArray();
+        if (isset($this->initialAlpha)) {
+            $data['initialAlpha'] = $this->initialAlpha;
+        }
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
+        if (isset($this->userControllable)) {
+            $data['userControllable'] = $this->userControllable;
+        }
+        return $data;
     }
 }

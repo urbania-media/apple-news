@@ -91,13 +91,33 @@ class RecordStore
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'descriptors' => !is_null($this->descriptors)
+        $data = [];
+        if (isset($this->descriptors)) {
+            $data['descriptors'] = !is_null($this->descriptors)
                 ? array_reduce(
                     array_keys($this->descriptors),
                     function ($items, $key) {
@@ -108,8 +128,10 @@ class RecordStore
                     },
                     []
                 )
-                : $this->descriptors,
-            'records' => !is_null($this->records)
+                : $this->descriptors;
+        }
+        if (isset($this->records)) {
+            $data['records'] = !is_null($this->records)
                 ? array_reduce(
                     array_keys($this->records),
                     function ($items, $key) {
@@ -120,7 +142,8 @@ class RecordStore
                     },
                     []
                 )
-                : $this->records
-        ];
+                : $this->records;
+        }
+        return $data;
     }
 }

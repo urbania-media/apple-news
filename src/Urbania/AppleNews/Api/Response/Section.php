@@ -245,23 +245,56 @@ class Section
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'createdAt' => !is_null($this->createdAt)
+        $data = [];
+        if (isset($this->createdAt)) {
+            $data['createdAt'] = !is_null($this->createdAt)
                 ? $this->createdAt->toIso8601String()
-                : null,
-            'id' => $this->id,
-            'isDefault' => $this->isDefault,
-            'modifiedAt' => !is_null($this->modifiedAt)
+                : null;
+        }
+        if (isset($this->id)) {
+            $data['id'] = $this->id;
+        }
+        if (isset($this->isDefault)) {
+            $data['isDefault'] = $this->isDefault;
+        }
+        if (isset($this->modifiedAt)) {
+            $data['modifiedAt'] = !is_null($this->modifiedAt)
                 ? $this->modifiedAt->toIso8601String()
-                : null,
-            'name' => $this->name,
-            'shareUrl' => $this->shareUrl,
-            'type' => $this->type
-        ];
+                : null;
+        }
+        if (isset($this->name)) {
+            $data['name'] = $this->name;
+        }
+        if (isset($this->shareUrl)) {
+            $data['shareUrl'] = $this->shareUrl;
+        }
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
+        return $data;
     }
 }

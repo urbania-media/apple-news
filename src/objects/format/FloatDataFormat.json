@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": "Format\\DataFormat",
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/floatdataformat",
     "properties": [
         {
@@ -13,7 +14,8 @@
             "description": "The number of digits that can appear after the decimal point. The number will be rounded to this number of digits after the decimal.",
             "version": "1.5",
             "default": 2,
-            "minimum": 0
+            "minimum": 0,
+            "typed": false
         },
         {
             "name": "type",
@@ -22,7 +24,8 @@
             "description": "The type of data format for this object. This must be float for a FloatDataFormat object.",
             "value": "float",
             "read_only": true,
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         }
     ]
 }

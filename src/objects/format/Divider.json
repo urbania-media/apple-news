@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": "Format\\Component",
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/divider",
     "properties": [
         {
@@ -11,14 +12,16 @@
             "type": "string",
             "required": true,
             "description": "This component always has the role of divider.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "stroke",
             "type": "Format\\StrokeStyle",
             "required": false,
             "description": "Stroke properties to apply to the horizontal line.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         }
     ]
 }

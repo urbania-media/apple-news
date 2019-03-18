@@ -154,16 +154,43 @@ class Layout
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'columns' => $this->columns,
-            'gutter' => $this->gutter,
-            'margin' => $this->margin,
-            'width' => $this->width
-        ];
+        $data = [];
+        if (isset($this->columns)) {
+            $data['columns'] = $this->columns;
+        }
+        if (isset($this->gutter)) {
+            $data['gutter'] = $this->gutter;
+        }
+        if (isset($this->margin)) {
+            $data['margin'] = $this->margin;
+        }
+        if (isset($this->width)) {
+            $data['width'] = $this->width;
+        }
+        return $data;
     }
 }

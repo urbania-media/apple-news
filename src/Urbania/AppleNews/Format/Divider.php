@@ -87,16 +87,39 @@ class Divider extends Component
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return array_merge(parent::toArray(), [
-            'role' => $this->role,
-            'stroke' => is_object($this->stroke)
+        $data = parent::toArray();
+        if (isset($this->role)) {
+            $data['role'] = $this->role;
+        }
+        if (isset($this->stroke)) {
+            $data['stroke'] = is_object($this->stroke)
                 ? $this->stroke->toArray()
-                : $this->stroke
-        ]);
+                : $this->stroke;
+        }
+        return $data;
     }
 }

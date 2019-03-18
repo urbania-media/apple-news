@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/collectiondisplay",
     "properties": [
         {
@@ -17,7 +18,8 @@
                 "left",
                 "center",
                 "right"
-            ]
+            ],
+            "typed": false
         },
         {
             "name": "distribution",
@@ -29,7 +31,8 @@
             "enum_values": [
                 "wide",
                 "narrow"
-            ]
+            ],
+            "typed": false
         },
         {
             "name": "gutter",
@@ -40,7 +43,8 @@
             "required": false,
             "description": "Either a number in points or a string referring to a supported unit of measure defining the vertical gutter between components.",
             "version": "1.5",
-            "default": 0
+            "default": 0,
+            "typed": false
         },
         {
             "name": "maximumWidth",
@@ -51,7 +55,8 @@
             "required": false,
             "description": "Either a number in points or a string referring to a supported unit of measure defining the maximum width of each child component inside the collection.",
             "version": "1.5",
-            "default": "50cw"
+            "default": "50cw",
+            "typed": false
         },
         {
             "name": "minimumWidth",
@@ -61,7 +66,8 @@
             ],
             "required": false,
             "description": "Either a number in points or a string referring to a supported unit of measure defining the minimum width of each child component inside the collection.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "rowSpacing",
@@ -72,7 +78,8 @@
             "required": false,
             "description": "Either a number in points or a string referring to a supported unit of measure defining the horizontal spacing between rows. See Specifying Measurements for Components.",
             "version": "1.5",
-            "default": 0
+            "default": 0,
+            "typed": false
         },
         {
             "name": "type",
@@ -81,7 +88,8 @@
             "description": "Should be set to collection.",
             "value": "collection",
             "read_only": true,
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "variableSizing",
@@ -89,7 +97,8 @@
             "required": false,
             "description": "Defines whether the components\u2019 area is allowed to be sized differently per row.",
             "version": "1.5",
-            "default": "false"
+            "default": "false",
+            "typed": false
         },
         {
             "name": "widows",
@@ -101,7 +110,8 @@
             "enum_values": [
                 "equalize",
                 "optimize"
-            ]
+            ],
+            "typed": false
         }
     ]
 }

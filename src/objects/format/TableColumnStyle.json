@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/tablecolumnstyle",
     "properties": [
         {
@@ -11,21 +12,24 @@
             "type": "Color",
             "required": false,
             "description": "The background color for the table column.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "conditional",
             "type": "array:Format\\ConditionalTableColumnStyle",
             "required": false,
             "description": "An array of styles to be applied only to columns that meet specified conditions. This can be used to create a table with alternating column background colors.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "divider",
             "type": "Format\\TableStrokeStyle",
             "required": false,
             "description": "The stroke style for the divider lines between columns.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "minimumWidth",
@@ -35,14 +39,16 @@
             ],
             "required": false,
             "description": "The minimum width of the columns, as an integer in points or using the available units of measure for components. See Specifying Measurements for Components.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         },
         {
             "name": "width",
             "type": "integer",
             "required": false,
             "description": "The relative column width. This value influences the distribution of column width but does not dictate any exact values. To set an exact minimum width, use minimumWidth instead.",
-            "version": "1.5"
+            "version": "1.5",
+            "typed": false
         }
     ]
 }

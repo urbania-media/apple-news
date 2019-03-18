@@ -399,7 +399,9 @@ class ArticleDocument
 
         $items = [];
         foreach ($components as $key => $item) {
-            $items[$key] = is_array($item) ? new Component($item) : $item;
+            $items[$key] = is_array($item)
+                ? Component::createTyped($item)
+                : $item;
         }
         $this->components = $items;
         return $this;
@@ -545,20 +547,50 @@ class ArticleDocument
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'version' => $this->version,
-            'identifier' => $this->identifier,
-            'title' => $this->title,
-            'language' => $this->language,
-            'layout' => is_object($this->layout)
+        $data = [];
+        if (isset($this->version)) {
+            $data['version'] = $this->version;
+        }
+        if (isset($this->identifier)) {
+            $data['identifier'] = $this->identifier;
+        }
+        if (isset($this->title)) {
+            $data['title'] = $this->title;
+        }
+        if (isset($this->language)) {
+            $data['language'] = $this->language;
+        }
+        if (isset($this->layout)) {
+            $data['layout'] = is_object($this->layout)
                 ? $this->layout->toArray()
-                : $this->layout,
-            'components' => !is_null($this->components)
+                : $this->layout;
+        }
+        if (isset($this->components)) {
+            $data['components'] = !is_null($this->components)
                 ? array_reduce(
                     array_keys($this->components),
                     function ($items, $key) {
@@ -569,29 +601,46 @@ class ArticleDocument
                     },
                     []
                 )
-                : $this->components,
-            'componentTextStyles' => is_object($this->componentTextStyles)
+                : $this->components;
+        }
+        if (isset($this->componentTextStyles)) {
+            $data['componentTextStyles'] = is_object($this->componentTextStyles)
                 ? $this->componentTextStyles->toArray()
-                : $this->componentTextStyles,
-            'advertisingSettings' => is_object($this->advertisingSettings)
+                : $this->componentTextStyles;
+        }
+        if (isset($this->advertisingSettings)) {
+            $data['advertisingSettings'] = is_object($this->advertisingSettings)
                 ? $this->advertisingSettings->toArray()
-                : $this->advertisingSettings,
-            'subtitle' => $this->subtitle,
-            'metadata' => is_object($this->metadata)
+                : $this->advertisingSettings;
+        }
+        if (isset($this->subtitle)) {
+            $data['subtitle'] = $this->subtitle;
+        }
+        if (isset($this->metadata)) {
+            $data['metadata'] = is_object($this->metadata)
                 ? $this->metadata->toArray()
-                : $this->metadata,
-            'documentStyle' => is_object($this->documentStyle)
+                : $this->metadata;
+        }
+        if (isset($this->documentStyle)) {
+            $data['documentStyle'] = is_object($this->documentStyle)
                 ? $this->documentStyle->toArray()
-                : $this->documentStyle,
-            'textStyles' => is_object($this->textStyles)
+                : $this->documentStyle;
+        }
+        if (isset($this->textStyles)) {
+            $data['textStyles'] = is_object($this->textStyles)
                 ? $this->textStyles->toArray()
-                : $this->textStyles,
-            'componentLayouts' => is_object($this->componentLayouts)
+                : $this->textStyles;
+        }
+        if (isset($this->componentLayouts)) {
+            $data['componentLayouts'] = is_object($this->componentLayouts)
                 ? $this->componentLayouts->toArray()
-                : $this->componentLayouts,
-            'componentStyles' => is_object($this->componentStyles)
+                : $this->componentLayouts;
+        }
+        if (isset($this->componentStyles)) {
+            $data['componentStyles'] = is_object($this->componentStyles)
                 ? $this->componentStyles->toArray()
-                : $this->componentStyles
-        ];
+                : $this->componentStyles;
+        }
+        return $data;
     }
 }

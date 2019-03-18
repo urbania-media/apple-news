@@ -147,16 +147,43 @@ class TableRowSelector
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'descriptor' => $this->descriptor,
-            'rowIndex' => $this->rowIndex,
-            'odd' => $this->odd,
-            'even' => $this->even
-        ];
+        $data = [];
+        if (isset($this->descriptor)) {
+            $data['descriptor'] = $this->descriptor;
+        }
+        if (isset($this->rowIndex)) {
+            $data['rowIndex'] = $this->rowIndex;
+        }
+        if (isset($this->odd)) {
+            $data['odd'] = $this->odd;
+        }
+        if (isset($this->even)) {
+            $data['even'] = $this->even;
+        }
+        return $data;
     }
 }

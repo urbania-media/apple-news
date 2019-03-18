@@ -54,15 +54,36 @@ class AdvertisingLayout
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'margin' => is_object($this->margin)
+        $data = [];
+        if (isset($this->margin)) {
+            $data['margin'] = is_object($this->margin)
                 ? $this->margin->toArray()
-                : $this->margin
-        ];
+                : $this->margin;
+        }
+        return $data;
     }
 }

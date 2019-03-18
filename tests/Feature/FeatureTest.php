@@ -36,6 +36,6 @@ class FeatureTest extends TestCase
     {
         $articleJson = json_decode(file_get_contents(__DIR__.'/../fixture/article.json'), true);
         $article = new Article($articleJson);
-        dd($article->toArray());
+        die(json_encode($article->toArray()));
     }
 }

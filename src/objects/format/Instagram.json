@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": "Format\\Component",
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/instagram",
     "properties": [
         {
@@ -11,7 +12,8 @@
             "type": "uri",
             "required": true,
             "description": "The URL of the Instagram post you want to embed.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "role",
@@ -20,7 +22,8 @@
             "description": "This component always has a role of instagram.",
             "value": "instagram",
             "read_only": true,
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         }
     ]
 }

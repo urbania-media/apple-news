@@ -157,18 +157,45 @@ class GalleryItem
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'URL' => $this->URL,
-            'accessibilityCaption' => $this->accessibilityCaption,
-            'caption' => is_object($this->caption)
+        $data = [];
+        if (isset($this->URL)) {
+            $data['URL'] = $this->URL;
+        }
+        if (isset($this->accessibilityCaption)) {
+            $data['accessibilityCaption'] = $this->accessibilityCaption;
+        }
+        if (isset($this->caption)) {
+            $data['caption'] = is_object($this->caption)
                 ? $this->caption->toArray()
-                : $this->caption,
-            'explicitContent' => $this->explicitContent
-        ];
+                : $this->caption;
+        }
+        if (isset($this->explicitContent)) {
+            $data['explicitContent'] = $this->explicitContent;
+        }
+        return $data;
     }
 }

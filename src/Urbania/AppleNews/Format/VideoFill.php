@@ -248,19 +248,52 @@ class VideoFill extends Fill
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return array_merge(parent::toArray(), [
-            'URL' => $this->URL,
-            'fillMode' => $this->fillMode,
-            'horizontalAlignment' => $this->horizontalAlignment,
-            'loop' => $this->loop,
-            'stillURL' => $this->stillURL,
-            'type' => $this->type,
-            'verticalAlignment' => $this->verticalAlignment
-        ]);
+        $data = parent::toArray();
+        if (isset($this->URL)) {
+            $data['URL'] = $this->URL;
+        }
+        if (isset($this->fillMode)) {
+            $data['fillMode'] = $this->fillMode;
+        }
+        if (isset($this->horizontalAlignment)) {
+            $data['horizontalAlignment'] = $this->horizontalAlignment;
+        }
+        if (isset($this->loop)) {
+            $data['loop'] = $this->loop;
+        }
+        if (isset($this->stillURL)) {
+            $data['stillURL'] = $this->stillURL;
+        }
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
+        if (isset($this->verticalAlignment)) {
+            $data['verticalAlignment'] = $this->verticalAlignment;
+        }
+        return $data;
     }
 }

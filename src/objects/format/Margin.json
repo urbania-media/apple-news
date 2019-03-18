@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/margin",
     "properties": [
         {
@@ -14,7 +15,8 @@
             ],
             "required": false,
             "description": "The bottom margin in points, or with any of the units of measure for components. See Specifying Measurements for Components.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "top",
@@ -24,7 +26,8 @@
             ],
             "required": false,
             "description": "The top margin in points, or with any of the units of measure for components. See Specifying Measurements for Components.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         }
     ]
 }

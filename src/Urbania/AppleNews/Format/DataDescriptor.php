@@ -154,7 +154,9 @@ class DataDescriptor
             Assert::isArray($format);
         }
 
-        $this->format = is_array($format) ? new DataFormat($format) : $format;
+        $this->format = is_array($format)
+            ? DataFormat::createTyped($format)
+            : $format;
         return $this;
     }
 
@@ -202,21 +204,50 @@ class DataDescriptor
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'dataType' => $this->dataType,
-            'format' => is_object($this->format)
+        $data = [];
+        if (isset($this->dataType)) {
+            $data['dataType'] = $this->dataType;
+        }
+        if (isset($this->format)) {
+            $data['format'] = is_object($this->format)
                 ? $this->format->toArray()
-                : $this->format,
-            'identifier' => $this->identifier,
-            'key' => $this->key,
-            'label' => is_object($this->label)
+                : $this->format;
+        }
+        if (isset($this->identifier)) {
+            $data['identifier'] = $this->identifier;
+        }
+        if (isset($this->key)) {
+            $data['key'] = $this->key;
+        }
+        if (isset($this->label)) {
+            $data['label'] = is_object($this->label)
                 ? $this->label->toArray()
-                : $this->label
-        ];
+                : $this->label;
+        }
+        return $data;
     }
 }

@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": "Format\\Component",
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/embedwebvideo",
     "properties": [
         {
@@ -11,14 +12,16 @@
             "type": "uri",
             "required": true,
             "description": "The URL of the embeddable video to display (the YouTube or Vimeo embed link). The embed URL is usually different from the standard video URL.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "accessibilityCaption",
             "type": "string",
             "required": false,
             "description": "A caption that describes the content of the video. Note that this property differs from caption: although the caption can be displayed to users, the accessibilityCaption is used by VoiceOver for iOS only. If accessibilityCaption is omitted, the caption value is used for VoiceOver for iOS.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "aspectRatio",
@@ -26,21 +29,24 @@
             "required": false,
             "description": "The aspect ratio of the video: width divided by height. The aspect ratio determines the height of the video player.",
             "version": "1.0",
-            "default": 1.777
+            "default": 1.777,
+            "typed": false
         },
         {
             "name": "caption",
             "type": "string",
             "required": false,
             "description": "A caption that describes the content of the video. This text can be used by VoiceOver for iOS if accessibilityCaption is not provided, or it can be shown when the video cannot be played.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "explicitContent",
             "type": "boolean",
             "required": false,
             "description": "Indicates that the embedded web video may contain explicit content.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "role",
@@ -53,7 +59,8 @@
             "enum_values": [
                 "embedwebvideo",
                 "embedvideo"
-            ]
+            ],
+            "typed": false
         }
     ]
 }

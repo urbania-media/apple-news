@@ -27,21 +27,12 @@ class ObjectToArrayMethodBuilder
     protected function buildBody(array $properties, $extends)
     {
         $lines = [
-            !is_null($extends)
-                ? 'return array_merge(parent::toArray(), ['
-                : 'return ['
+            !is_null($extends) ? '$data = parent::toArray();' : '$data = [];'
         ];
-
         foreach ($properties as $property) {
-            $bodyLines = (array) $this->buildPropertyBody($property);
-            $lastIndex = sizeof($bodyLines) - 1;
-            foreach ($bodyLines as $index => $bodyLine) {
-                $lines[] =
-                    $this->indent($bodyLine . ($index === $lastIndex ? ',' : ''));
-            }
+            $lines[] = sprintf('if(isset($this->%s)) { %s }', $property['name'], $this->buildPropertyBody($property));
         }
-
-        $lines[] = !is_null($extends) ? ']);' : '];';
+        $lines[] = 'return $data;';
 
         return implode(PHP_EOL, $lines);
     }
@@ -54,29 +45,9 @@ class ObjectToArrayMethodBuilder
         );
         $mainType = $typeParts[0];
         switch ($mainType) {
-            case 'multiple':
-                $mainType = $property['type'][0];
-                if (preg_match('/^[A-Z]/', $mainType)) {
-                    return sprintf(
-                        '\'%s\' => is_object($this->%s) ? $this->%s->toArray() : $this->%s',
-                        $property['name'],
-                        $property['name'],
-                        $property['name'],
-                        $property['name']
-                    );
-                } else {
-                    return sprintf(
-                        '\'%s\' => $this->%s',
-                        $property['name'],
-                        $property['name']
-                    );
-                }
-                break;
             case 'date-time':
                 return sprintf(
-                    '\'%s\' => !is_null($this->%s) ? $this->%s->toIso8601String() : null',
-                    $property['name'],
-                    $property['name'],
+                    '$data[\'%s\'] = !is_null($this->%1$s) ? $this->%1$s->toIso8601String() : null;',
                     $property['name']
                 );
                 break;
@@ -84,47 +55,30 @@ class ObjectToArrayMethodBuilder
             case 'array':
                 $itemType = $typeParts[1] ?? null;
                 if (!is_null($itemType) && preg_match('/^[A-Z]/', $itemType)) {
-                    $lines = [];
-                    $lines[] = sprintf(
-                        '\'%s\' => !is_null($this->%s) ? array_reduce(array_keys($this->%s), function ($items, $key) {',
-                        $property['name'],
-                        $property['name'],
+                    return sprintf(
+                        '$data[\'%s\'] = !is_null($this->%1$s) ? ' .
+                            'array_reduce(array_keys($this->%1$s), function ($items, $key) {' .
+                            '$items[$key] = is_object($this->%1$s[$key]) ? $this->%1$s[$key]->toArray() : $this->%1$s[$key];' .
+                            'return $items;' .
+                            '}, []) : $this->%1$s;',
                         $property['name']
                     );
-                    $lines[] = $this->indent(
-                        sprintf(
-                            '$items[$key] = is_object($this->%s[$key]) ? $this->%s[$key]->toArray() : $this->%s[$key];',
-                            $property['name'],
-                            $property['name'],
-                            $property['name']
-                        )
-                    );
-                    $lines[] = $this->indent('return $items;');
-                    $lines[] = sprintf('}, []) : $this->%s', $property['name']);
-                    return $lines;
                 } else {
                     return sprintf(
-                        '\'%s\' => $this->%s ?? []',
-                        $property['name'],
+                        '$data[\'%s\'] = $this->%1$s;',
                         $property['name']
                     );
                 }
                 break;
             default:
+                $mainType = $mainType === 'multiple' ? $property['type'][0] : $mainType;
                 if (preg_match('/^[A-Z]/', $mainType)) {
                     return sprintf(
-                        '\'%s\' => is_object($this->%s) ? $this->%s->toArray() : $this->%s',
-                        $property['name'],
-                        $property['name'],
-                        $property['name'],
+                        '$data[\'%s\'] = is_object($this->%1$s) ? $this->%1$s->toArray() : $this->%1$s;',
                         $property['name']
                     );
                 } else {
-                    return sprintf(
-                        '\'%s\' => $this->%s',
-                        $property['name'],
-                        $property['name']
-                    );
+                    return sprintf('$data[\'%s\'] = $this->%1$s;', $property['name']);
                 }
                 break;
         }

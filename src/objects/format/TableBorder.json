@@ -4,6 +4,7 @@
     "version": "1.8+",
     "from_class": null,
     "extends": null,
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/tableborder",
     "properties": [
         {
@@ -11,7 +12,8 @@
             "type": "Format\\TableStrokeStyle",
             "required": false,
             "description": "Defines the stroke properties of the border. Stroke properties cannot be set for each side; the border can only be disabled or enabled for each side.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "bottom",
@@ -19,7 +21,8 @@
             "required": false,
             "description": "Indicates whether the border should be applied to the bottom.",
             "version": "1.0",
-            "default": "true"
+            "default": "true",
+            "typed": false
         },
         {
             "name": "left",
@@ -27,7 +30,8 @@
             "required": false,
             "description": "Indicates whether the border should be applied to the left side.",
             "version": "1.0",
-            "default": "true"
+            "default": "true",
+            "typed": false
         },
         {
             "name": "right",
@@ -35,7 +39,8 @@
             "required": false,
             "description": "Indicates whether the border should be applied to the right side.",
             "version": "1.0",
-            "default": "true"
+            "default": "true",
+            "typed": false
         },
         {
             "name": "top",
@@ -43,7 +48,8 @@
             "required": false,
             "description": "Indicates whether the border should be applied to the top.",
             "version": "1.0",
-            "default": "true"
+            "default": "true",
+            "typed": false
         }
     ]
 }

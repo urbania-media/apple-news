@@ -13,6 +13,16 @@ use Urbania\AppleNews\Assert;
  */
 class Behavior
 {
+    protected static $typeProperty = 'type';
+
+    protected static $types = [
+        'background_motion' => 'BackgroundMotion',
+        'background_parallax' => 'BackgroundParallax',
+        'motion' => 'Motion',
+        'parallax' => 'Parallax',
+        'springy' => 'Springy'
+    ];
+
     /**
      * The type of behavior, for example, parallax.
      * @var string
@@ -24,6 +34,24 @@ class Behavior
         if (isset($data['type'])) {
             $this->setType($data['type']);
         }
+    }
+
+    public static function createTyped(array $data)
+    {
+        if (isset($data[static::$typeProperty])) {
+            $typeName = $data[static::$typeProperty];
+            $type = static::$types[$typeName] ?? null;
+            if (!is_null($type)) {
+                $namespace = implode(
+                    '\\',
+                    array_slice(explode('\\', static::class), 0, -1)
+                );
+                $typeClass = $namespace . '\\' . $type;
+                return new $typeClass($data);
+            }
+        }
+
+        return new static($data);
     }
 
     /**
@@ -49,13 +77,34 @@ class Behavior
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'type' => $this->type
-        ];
+        $data = [];
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
+        return $data;
     }
 }

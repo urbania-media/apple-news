@@ -81,14 +81,37 @@ class ChannelLinks
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'defaultSection' => $this->defaultSection,
-            'self' => $this->self
-        ];
+        $data = [];
+        if (isset($this->defaultSection)) {
+            $data['defaultSection'] = $this->defaultSection;
+        }
+        if (isset($this->self)) {
+            $data['self'] = $this->self;
+        }
+        return $data;
     }
 }

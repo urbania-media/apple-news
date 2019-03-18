@@ -73,13 +73,33 @@ class Gallery extends Component
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return array_merge(parent::toArray(), [
-            'items' => !is_null($this->items)
+        $data = parent::toArray();
+        if (isset($this->items)) {
+            $data['items'] = !is_null($this->items)
                 ? array_reduce(
                     array_keys($this->items),
                     function ($items, $key) {
@@ -90,8 +110,11 @@ class Gallery extends Component
                     },
                     []
                 )
-                : $this->items,
-            'role' => $this->role
-        ]);
+                : $this->items;
+        }
+        if (isset($this->role)) {
+            $data['role'] = $this->role;
+        }
+        return $data;
     }
 }

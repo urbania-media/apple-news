@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/captiondescriptor",
     "properties": [
         {
@@ -11,7 +12,8 @@
             "type": "array:Format\\Addition",
             "required": false,
             "description": "An array of Link objects that provide additional information for ranges of the caption text in the text property.",
-            "version": "1.1"
+            "version": "1.1",
+            "typed": false
         },
         {
             "name": "format",
@@ -23,21 +25,24 @@
                 "markdown",
                 "html",
                 "none"
-            ]
+            ],
+            "typed": false
         },
         {
             "name": "inlineTextStyles",
             "type": "array:Format\\InlineTextStyle",
             "required": false,
             "description": "Array of InlineTextStyle objects to be applied to ranges of the caption\u2019s text.",
-            "version": "1.1"
+            "version": "1.1",
+            "typed": false
         },
         {
             "name": "text",
             "type": "string",
             "required": true,
             "description": "The text to display in the caption, including any formatting tags or markup, depending on the format property.",
-            "version": "1.1"
+            "version": "1.1",
+            "typed": false
         },
         {
             "name": "textStyle",
@@ -47,7 +52,8 @@
             ],
             "required": false,
             "description": "Either an inline ComponentTextStyle object that contains styling information, or a string reference to a component text style object that is defined in Article Document.componentText Styles.",
-            "version": "1.1"
+            "version": "1.1",
+            "typed": false
         }
     ]
 }

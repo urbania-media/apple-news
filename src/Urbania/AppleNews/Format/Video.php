@@ -254,19 +254,52 @@ class Video extends Component
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return array_merge(parent::toArray(), [
-            'URL' => $this->URL,
-            'accessibilityCaption' => $this->accessibilityCaption,
-            'aspectRatio' => $this->aspectRatio,
-            'caption' => $this->caption,
-            'explicitContent' => $this->explicitContent,
-            'role' => $this->role,
-            'stillURL' => $this->stillURL
-        ]);
+        $data = parent::toArray();
+        if (isset($this->URL)) {
+            $data['URL'] = $this->URL;
+        }
+        if (isset($this->accessibilityCaption)) {
+            $data['accessibilityCaption'] = $this->accessibilityCaption;
+        }
+        if (isset($this->aspectRatio)) {
+            $data['aspectRatio'] = $this->aspectRatio;
+        }
+        if (isset($this->caption)) {
+            $data['caption'] = $this->caption;
+        }
+        if (isset($this->explicitContent)) {
+            $data['explicitContent'] = $this->explicitContent;
+        }
+        if (isset($this->role)) {
+            $data['role'] = $this->role;
+        }
+        if (isset($this->stillURL)) {
+            $data['stillURL'] = $this->stillURL;
+        }
+        return $data;
     }
 }

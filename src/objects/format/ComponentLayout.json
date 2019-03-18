@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": null,
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/componentlayout",
     "properties": [
         {
@@ -12,7 +13,8 @@
             "required": false,
             "description": "Indicates how many columns the component spans, based on the number of columns in the document.",
             "version": "1.0",
-            "minimum": 1
+            "minimum": 1,
+            "typed": false
         },
         {
             "name": "columnStart",
@@ -20,7 +22,8 @@
             "required": false,
             "description": "Indicates which column the component\u2018s start position is in, based on the number of columns in the document or parent container.",
             "version": "1.0",
-            "minimum": 0
+            "minimum": 0,
+            "typed": false
         },
         {
             "name": "contentInset",
@@ -30,7 +33,8 @@
             ],
             "required": false,
             "description": "Defines a content inset for the component. If applied, the inset will be equivalent to half the document gutter. For example, if the article\u2019s layout sets the document gutter to 40pt, the content inset will be 20 points. See Layout.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "horizontalContentAlignment",
@@ -43,7 +47,8 @@
                 "left",
                 "center",
                 "right"
-            ]
+            ],
+            "typed": false
         },
         {
             "name": "ignoreDocumentGutter",
@@ -59,7 +64,8 @@
                 "left",
                 "right",
                 "both"
-            ]
+            ],
+            "typed": false
         },
         {
             "name": "ignoreDocumentMargin",
@@ -74,7 +80,8 @@
                 "left",
                 "right",
                 "both"
-            ]
+            ],
+            "typed": false
         },
         {
             "name": "margin",
@@ -84,7 +91,8 @@
             ],
             "required": false,
             "description": "Sets the margins for the top and bottom of the component, as a single integer that gets applied to the top and bottom margins, or as an object containing separate properties for top and bottom.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "maximumContentWidth",
@@ -94,7 +102,8 @@
             ],
             "required": false,
             "description": "Sets the maximum width of the content within the component. Specify this value as an integer in points or using one of the available units of measure for components. See Specifying Measurements for Components.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "minimumHeight",
@@ -104,7 +113,8 @@
             ],
             "required": false,
             "description": "Sets the minimum height of the component. A component will be taller than its defined minimumHeight when the contents require the component to be taller. The minimum height can be defined as an integer in points or using one of the available units of measure for components. See Specifying Measurements for Components.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         }
     ]
 }

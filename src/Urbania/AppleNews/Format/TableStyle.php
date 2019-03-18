@@ -243,30 +243,61 @@ class TableStyle
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'cells' => is_object($this->cells)
+        $data = [];
+        if (isset($this->cells)) {
+            $data['cells'] = is_object($this->cells)
                 ? $this->cells->toArray()
-                : $this->cells,
-            'columns' => is_object($this->columns)
+                : $this->cells;
+        }
+        if (isset($this->columns)) {
+            $data['columns'] = is_object($this->columns)
                 ? $this->columns->toArray()
-                : $this->columns,
-            'headerCells' => is_object($this->headerCells)
+                : $this->columns;
+        }
+        if (isset($this->headerCells)) {
+            $data['headerCells'] = is_object($this->headerCells)
                 ? $this->headerCells->toArray()
-                : $this->headerCells,
-            'headerColumns' => is_object($this->headerColumns)
+                : $this->headerCells;
+        }
+        if (isset($this->headerColumns)) {
+            $data['headerColumns'] = is_object($this->headerColumns)
                 ? $this->headerColumns->toArray()
-                : $this->headerColumns,
-            'headerRows' => is_object($this->headerRows)
+                : $this->headerColumns;
+        }
+        if (isset($this->headerRows)) {
+            $data['headerRows'] = is_object($this->headerRows)
                 ? $this->headerRows->toArray()
-                : $this->headerRows,
-            'rows' => is_object($this->rows)
+                : $this->headerRows;
+        }
+        if (isset($this->rows)) {
+            $data['rows'] = is_object($this->rows)
                 ? $this->rows->toArray()
-                : $this->rows
-        ];
+                : $this->rows;
+        }
+        return $data;
     }
 }

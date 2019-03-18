@@ -84,16 +84,39 @@ class ColorStop
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'color' => is_object($this->color)
+        $data = [];
+        if (isset($this->color)) {
+            $data['color'] = is_object($this->color)
                 ? $this->color->toArray()
-                : $this->color,
-            'location' => $this->location
-        ];
+                : $this->color;
+        }
+        if (isset($this->location)) {
+            $data['location'] = $this->location;
+        }
+        return $data;
     }
 }

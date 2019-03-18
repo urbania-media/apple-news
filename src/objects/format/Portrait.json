@@ -4,6 +4,7 @@
     "version": "1.7+",
     "from_class": null,
     "extends": "Format\\Component",
+    "typed": null,
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/portrait",
     "properties": [
         {
@@ -11,14 +12,16 @@
             "type": "string",
             "required": true,
             "description": "The URL of an image file.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "accessibilityCaption",
             "type": "string",
             "required": false,
             "description": "A caption that describes the portrait. Note that this property differs from caption: although the caption can be displayed to users, the accessibilityCaption is used by VoiceOver for iOS only. If accessibilityCaption is omitted, the caption value is used for VoiceOver for iOS.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "caption",
@@ -28,14 +31,16 @@
             ],
             "required": false,
             "description": "A caption that describes the image. This text can be used by VoiceOver for iOS if accessibilityCaption is not provided..",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "explicitContent",
             "type": "boolean",
             "required": false,
             "description": "Indicates that the image may contain explicit content.",
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         },
         {
             "name": "role",
@@ -44,7 +49,8 @@
             "description": "This component always has a role of portrait.",
             "value": "portrait",
             "read_only": true,
-            "version": "1.0"
+            "version": "1.0",
+            "typed": false
         }
     ]
 }

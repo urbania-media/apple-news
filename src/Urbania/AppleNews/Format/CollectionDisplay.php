@@ -298,29 +298,66 @@ class CollectionDisplay
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'alignment' => $this->alignment,
-            'distribution' => $this->distribution,
-            'gutter' => is_object($this->gutter)
+        $data = [];
+        if (isset($this->alignment)) {
+            $data['alignment'] = $this->alignment;
+        }
+        if (isset($this->distribution)) {
+            $data['distribution'] = $this->distribution;
+        }
+        if (isset($this->gutter)) {
+            $data['gutter'] = is_object($this->gutter)
                 ? $this->gutter->toArray()
-                : $this->gutter,
-            'maximumWidth' => is_object($this->maximumWidth)
+                : $this->gutter;
+        }
+        if (isset($this->maximumWidth)) {
+            $data['maximumWidth'] = is_object($this->maximumWidth)
                 ? $this->maximumWidth->toArray()
-                : $this->maximumWidth,
-            'minimumWidth' => is_object($this->minimumWidth)
+                : $this->maximumWidth;
+        }
+        if (isset($this->minimumWidth)) {
+            $data['minimumWidth'] = is_object($this->minimumWidth)
                 ? $this->minimumWidth->toArray()
-                : $this->minimumWidth,
-            'rowSpacing' => is_object($this->rowSpacing)
+                : $this->minimumWidth;
+        }
+        if (isset($this->rowSpacing)) {
+            $data['rowSpacing'] = is_object($this->rowSpacing)
                 ? $this->rowSpacing->toArray()
-                : $this->rowSpacing,
-            'type' => $this->type,
-            'variableSizing' => $this->variableSizing,
-            'widows' => $this->widows
-        ];
+                : $this->rowSpacing;
+        }
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
+        if (isset($this->variableSizing)) {
+            $data['variableSizing'] = $this->variableSizing;
+        }
+        if (isset($this->widows)) {
+            $data['widows'] = $this->widows;
+        }
+        return $data;
     }
 }

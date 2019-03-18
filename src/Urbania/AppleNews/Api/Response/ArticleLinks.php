@@ -113,15 +113,40 @@ class ArticleLinks
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'channel' => $this->channel,
-            'sections' => $this->sections ?? [],
-            'self' => $this->self
-        ];
+        $data = [];
+        if (isset($this->channel)) {
+            $data['channel'] = $this->channel;
+        }
+        if (isset($this->sections)) {
+            $data['sections'] = $this->sections;
+        }
+        if (isset($this->self)) {
+            $data['self'] = $this->self;
+        }
+        return $data;
     }
 }

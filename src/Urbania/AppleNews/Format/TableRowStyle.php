@@ -163,16 +163,38 @@ class TableRowStyle
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'backgroundColor' => is_object($this->backgroundColor)
+        $data = [];
+        if (isset($this->backgroundColor)) {
+            $data['backgroundColor'] = is_object($this->backgroundColor)
                 ? $this->backgroundColor->toArray()
-                : $this->backgroundColor,
-            'conditional' => !is_null($this->conditional)
+                : $this->backgroundColor;
+        }
+        if (isset($this->conditional)) {
+            $data['conditional'] = !is_null($this->conditional)
                 ? array_reduce(
                     array_keys($this->conditional),
                     function ($items, $key) {
@@ -183,13 +205,18 @@ class TableRowStyle
                     },
                     []
                 )
-                : $this->conditional,
-            'divider' => is_object($this->divider)
+                : $this->conditional;
+        }
+        if (isset($this->divider)) {
+            $data['divider'] = is_object($this->divider)
                 ? $this->divider->toArray()
-                : $this->divider,
-            'height' => is_object($this->height)
+                : $this->divider;
+        }
+        if (isset($this->height)) {
+            $data['height'] = is_object($this->height)
                 ? $this->height->toArray()
-                : $this->height
-        ];
+                : $this->height;
+        }
+        return $data;
     }
 }

@@ -525,31 +525,79 @@ class Article
     }
 
     /**
+     * Convert the object into something JSON serializable.
+     * @return array
+     */
+    public function jsonSerialize(int $options)
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the instance to JSON.
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson(int $options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
-        return [
-            'accessoryText' => $this->accessoryText,
-            'createdAt' => !is_null($this->createdAt)
+        $data = [];
+        if (isset($this->accessoryText)) {
+            $data['accessoryText'] = $this->accessoryText;
+        }
+        if (isset($this->createdAt)) {
+            $data['createdAt'] = !is_null($this->createdAt)
                 ? $this->createdAt->toIso8601String()
-                : null,
-            'document' => $this->document,
-            'id' => $this->id,
-            'isCandidateToBeFeatured' => $this->isCandidateToBeFeatured,
-            'isPreview' => $this->isPreview,
-            'isSponsored' => $this->isSponsored,
-            'maturityRating' => $this->maturityRating,
-            'modifiedAt' => !is_null($this->modifiedAt)
+                : null;
+        }
+        if (isset($this->document)) {
+            $data['document'] = $this->document;
+        }
+        if (isset($this->id)) {
+            $data['id'] = $this->id;
+        }
+        if (isset($this->isCandidateToBeFeatured)) {
+            $data['isCandidateToBeFeatured'] = $this->isCandidateToBeFeatured;
+        }
+        if (isset($this->isPreview)) {
+            $data['isPreview'] = $this->isPreview;
+        }
+        if (isset($this->isSponsored)) {
+            $data['isSponsored'] = $this->isSponsored;
+        }
+        if (isset($this->maturityRating)) {
+            $data['maturityRating'] = $this->maturityRating;
+        }
+        if (isset($this->modifiedAt)) {
+            $data['modifiedAt'] = !is_null($this->modifiedAt)
                 ? $this->modifiedAt->toIso8601String()
-                : null,
-            'revision' => $this->revision,
-            'shareUrl' => $this->shareUrl,
-            'state' => $this->state,
-            'title' => $this->title,
-            'type' => $this->type,
-            'warnings' => !is_null($this->warnings)
+                : null;
+        }
+        if (isset($this->revision)) {
+            $data['revision'] = $this->revision;
+        }
+        if (isset($this->shareUrl)) {
+            $data['shareUrl'] = $this->shareUrl;
+        }
+        if (isset($this->state)) {
+            $data['state'] = $this->state;
+        }
+        if (isset($this->title)) {
+            $data['title'] = $this->title;
+        }
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
+        if (isset($this->warnings)) {
+            $data['warnings'] = !is_null($this->warnings)
                 ? array_reduce(
                     array_keys($this->warnings),
                     function ($items, $key) {
@@ -560,7 +608,8 @@ class Article
                     },
                     []
                 )
-                : $this->warnings
-        ];
+                : $this->warnings;
+        }
+        return $data;
     }
 }
