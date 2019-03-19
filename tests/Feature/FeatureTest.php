@@ -1,6 +1,6 @@
 <?php
 
-use Urbania\AppleNews\ApiClient;
+use Urbania\AppleNews\Api;
 use Urbania\AppleNews\Article;
 
 class FeatureTest extends TestCase
@@ -12,7 +12,7 @@ class FeatureTest extends TestCase
         $apiKey = getenv('APPLE_NEWS_API_KEY');
         $apiSecret = getenv('APPLE_NEWS_API_SECRET');
         $channelId = getenv('APPLE_NEWS_CHANNEL_ID');
-        $this->client = new ApiClient($apiKey, $apiSecret);
+        $this->client = new Api($apiKey, $apiSecret);
         $this->channelsClient = $this->client->channels($channelId);
     }
 
@@ -23,8 +23,9 @@ class FeatureTest extends TestCase
      */
     public function testApi()
     {
-        $channel = $this->channelsClient->getChannel();
-        dd($channel);
+        // $channel = $this->channelsClient->find();
+        $articles = $this->channelsClient->searchArticles();
+        dd($articles);
     }
 
     /**
@@ -46,7 +47,6 @@ class FeatureTest extends TestCase
      */
     public function testCreateArticleFromJson()
     {
-        $articleData = json_decode(file_get_contents(__DIR__.'/../fixture/article.json'), true);
         $article = Article::fromFile(__DIR__.'/../fixture/article.json');
         $articleResponse = $this->channelsClient->createArticle($article);
         dd($articleResponse);

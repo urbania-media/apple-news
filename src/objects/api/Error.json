@@ -9,7 +9,7 @@
     "properties": [
         {
             "name": "code",
-            "type": "Api\\Objects\\Code",
+            "type": "Code",
             "required": false,
             "description": "An error code that, in combination with the keyPath, uniquely identifies the error for the specified endpoint.",
             "typed": false
