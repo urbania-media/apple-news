@@ -5,6 +5,7 @@ namespace Urbania\AppleNews\Api;
 use Urbania\AppleNews\Api\Objects\ChannelResponse;
 use Urbania\AppleNews\Api\Objects\ArticleResponse;
 use Urbania\AppleNews\Article;
+use Urbania\AppleNews\Support\Assert;
 
 class ChannelsClient
 {
@@ -17,56 +18,75 @@ class ChannelsClient
         $this->channelId = $channelId;
     }
 
-    public function getChannel($channelId = null)
+    /**
+     * Find a channel by the ID
+     * @param  string $channelId The channel ID
+     * @return ChannelResponse The channel
+     */
+    public function find($channelId = null)
     {
         if (is_null($channelId)) {
             $channelId = $this->channelId;
         }
 
+        Assert::uuid($channelId);
+
         $response = $this->client->makeRequest(
             sprintf('/channels/%s', $channelId)
         );
 
-        return new ChannelResponse($response);
+        $response->setObjectType(ChannelResponse::class);
+
+        return $response;
     }
 
-    public function createArticle(
-        Article $article,
-        $channelId = null
-    ) {
+    /**
+     * Get an articles client
+     * @param  string $channelId The channel ID
+     * @return ArticlesClient The client
+     */
+    public function articles($channelId = null)
+    {
         if (is_null($channelId)) {
             $channelId = $this->channelId;
         }
 
-        $metadata = $article->getMetadata();
+        Assert::uuid($channelId);
 
-        $data = [
-            [
-                'name' => 'article.json',
-                'contents' => json_encode($article),
-                'filename' => 'article.json',
-                'headers' => [
-                    'Content-type' => 'application/json'
-                ]
-            ]
-        ];
+        return new ArticlesClient($this->client, $channelId);
+    }
 
-        if (!is_null($metadata)) {
-            $data[] = [
-                'name' => 'metadata',
-                'contents' => json_encode($metadata),
-                'headers' => [
-                    'Content-type' => 'application/json'
-                ]
-            ];
+    /**
+     * Create an article
+     * @param  Article $article The article
+     * @param  string $channelId The channel ID
+     * @return ArticleResponse The article
+     */
+    public function createArticle(Article $article, $channelId = null)
+    {
+        if (is_null($channelId)) {
+            $channelId = $this->channelId;
         }
 
-        $response = $this->client->makeRequest(
-            sprintf('/channels/%s/articles', $channelId),
-            'POST',
-            $data
-        );
+        Assert::uuid($channelId);
 
-        return new ArticleResponse($response);
+        return $this->articles($channelId)->create($article);
+    }
+
+    /**
+     * Search for articles
+     * @param  array $query The search query
+     * @param  string $channelId The channel ID
+     * @return ArticleResponse The articles
+     */
+    public function searchArticles(array $query = [], $channelId = null)
+    {
+        if (is_null($channelId)) {
+            $channelId = $this->channelId;
+        }
+
+        Assert::uuid($channelId);
+
+        return $this->articles($channelId)->search($query, $channelId);
     }
 }

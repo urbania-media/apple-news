@@ -59,13 +59,10 @@ class Client
             ] : [
                 'multipart' => $params,
             ]);
-            $data = json_decode((string)$response->getBody(), true);
-            return $data['data'];
+            return new Response($response);
         } catch (ClientException $e) {
-            dd($e);
-            return null;
+            return new Response($e->getResponse());
         } catch (Exception $e) {
-            dd($e);
             return null;
         }
     }
