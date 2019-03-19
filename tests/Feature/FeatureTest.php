@@ -2,6 +2,7 @@
 
 use Urbania\AppleNews\Api;
 use Urbania\AppleNews\Article;
+use Urbania\AppleNews\Parsers\WordpressParser;
 
 class FeatureTest extends TestCase
 {
@@ -26,6 +27,18 @@ class FeatureTest extends TestCase
         // $channel = $this->channelsClient->find();
         $articles = $this->channelsClient->searchArticles();
         dd($articles);
+    }
+
+    /**
+     * Test the constructor
+     *
+     * @test
+     */
+    public function testWordpress()
+    {
+        $parser = new WordpressParser('https://urbania.ca');
+        $article = $parser->parse('https://urbania.ca/?p=305581');
+        dd($article->toJson());
     }
 
     /**

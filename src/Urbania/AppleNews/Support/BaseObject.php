@@ -68,7 +68,7 @@ abstract class BaseObject implements
      * @param  string  $offset
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($key)
     {
         return $this->propertyExists($key);
     }
@@ -79,9 +79,9 @@ abstract class BaseObject implements
      * @param  string  $offset
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($key)
     {
-        return $this->propertyGet($offset);
+        return $this->propertyGet($key);
     }
 
     /**
@@ -91,9 +91,9 @@ abstract class BaseObject implements
      * @param  mixed   $value
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($key, $value)
     {
-        $this->propertySet($offset, $value);
+        $this->propertySet($key, $value);
     }
 
     /**
@@ -102,9 +102,9 @@ abstract class BaseObject implements
      * @param  string  $offset
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($key)
     {
-        $this->propertyUnset($offset);
+        $this->propertyUnset($key);
     }
 
     /**
@@ -127,7 +127,7 @@ abstract class BaseObject implements
      */
     public function __set($key, $value)
     {
-        $this->propertySet($offset, $value);
+        $this->propertySet($key, $value);
     }
 
     /**
@@ -149,7 +149,7 @@ abstract class BaseObject implements
      */
     public function __unset($key)
     {
-        $this->propertyUnset($offset);
+        $this->propertyUnset($key);
     }
 
     /**
