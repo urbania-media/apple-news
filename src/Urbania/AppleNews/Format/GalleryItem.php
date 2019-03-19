@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * An object used in a gallery or mosaic component for displaying an
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/galleryitem
  */
-class GalleryItem implements \JsonSerializable
+class GalleryItem extends BaseSdkObject
 {
     /**
      * The URL of an image to display in a gallery or mosaic.
@@ -78,6 +79,11 @@ class GalleryItem implements \JsonSerializable
      */
     public function setAccessibilityCaption($accessibilityCaption)
     {
+        if (is_null($accessibilityCaption)) {
+            $this->accessibilityCaption = null;
+            return $this;
+        }
+
         Assert::string($accessibilityCaption);
 
         $this->accessibilityCaption = $accessibilityCaption;
@@ -100,6 +106,11 @@ class GalleryItem implements \JsonSerializable
      */
     public function setCaption($caption)
     {
+        if (is_null($caption)) {
+            $this->caption = null;
+            return $this;
+        }
+
         if (is_object($caption)) {
             Assert::isInstanceOf($caption, CaptionDescriptor::class);
         } elseif (!is_array($caption)) {
@@ -128,6 +139,11 @@ class GalleryItem implements \JsonSerializable
      */
     public function setExplicitContent($explicitContent)
     {
+        if (is_null($explicitContent)) {
+            $this->explicitContent = null;
+            return $this;
+        }
+
         Assert::boolean($explicitContent);
 
         $this->explicitContent = $explicitContent;
@@ -154,25 +170,6 @@ class GalleryItem implements \JsonSerializable
 
         $this->URL = $URL;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

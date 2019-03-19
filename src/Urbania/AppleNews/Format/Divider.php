@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The component for defining a horizontal line to visually divide parts
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/divider
  */
-class Divider extends Component implements \JsonSerializable
+class Divider extends Component
 {
     /**
      * This component always has the role of divider.
@@ -76,6 +77,11 @@ class Divider extends Component implements \JsonSerializable
      */
     public function setStroke($stroke)
     {
+        if (is_null($stroke)) {
+            $this->stroke = null;
+            return $this;
+        }
+
         if (is_object($stroke)) {
             Assert::isInstanceOf($stroke, StrokeStyle::class);
         } else {
@@ -84,25 +90,6 @@ class Divider extends Component implements \JsonSerializable
 
         $this->stroke = is_array($stroke) ? new StrokeStyle($stroke) : $stroke;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

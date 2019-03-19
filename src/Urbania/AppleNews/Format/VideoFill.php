@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for adding a video background fill to a component.
  *
  * @see https://developer.apple.com/documentation/apple_news/videofill
  */
-class VideoFill extends Fill implements \JsonSerializable
+class VideoFill extends Fill
 {
     /**
      * The URL of a video file that can be played using AV Player. HTTP Live
@@ -109,6 +110,11 @@ class VideoFill extends Fill implements \JsonSerializable
      */
     public function setFillMode($fillMode)
     {
+        if (is_null($fillMode)) {
+            $this->fillMode = null;
+            return $this;
+        }
+
         Assert::oneOf($fillMode, ["fit", "cover"]);
 
         $this->fillMode = $fillMode;
@@ -131,6 +137,11 @@ class VideoFill extends Fill implements \JsonSerializable
      */
     public function setHorizontalAlignment($horizontalAlignment)
     {
+        if (is_null($horizontalAlignment)) {
+            $this->horizontalAlignment = null;
+            return $this;
+        }
+
         Assert::oneOf($horizontalAlignment, ["left", "center", "right"]);
 
         $this->horizontalAlignment = $horizontalAlignment;
@@ -153,6 +164,11 @@ class VideoFill extends Fill implements \JsonSerializable
      */
     public function setLoop($loop)
     {
+        if (is_null($loop)) {
+            $this->loop = null;
+            return $this;
+        }
+
         Assert::boolean($loop);
 
         $this->loop = $loop;
@@ -241,29 +257,15 @@ class VideoFill extends Fill implements \JsonSerializable
      */
     public function setVerticalAlignment($verticalAlignment)
     {
+        if (is_null($verticalAlignment)) {
+            $this->verticalAlignment = null;
+            return $this;
+        }
+
         Assert::oneOf($verticalAlignment, ["top", "center", "bottom"]);
 
         $this->verticalAlignment = $verticalAlignment;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

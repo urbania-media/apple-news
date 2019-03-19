@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * An object used in a map or place component for defining the visible
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/mapspan
  */
-class MapSpan implements \JsonSerializable
+class MapSpan extends BaseSdkObject
 {
     /**
      * A float value between 0.0 and 90.0.
@@ -78,25 +79,6 @@ class MapSpan implements \JsonSerializable
 
         $this->longitudeDelta = $longitudeDelta;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

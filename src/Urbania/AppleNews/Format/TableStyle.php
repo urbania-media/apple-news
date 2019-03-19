@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for defining a style for rows, columns, cells, and headers
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/tablestyle
  */
-class TableStyle implements \JsonSerializable
+class TableStyle extends BaseSdkObject
 {
     /**
      * Defines the styling for individual cells in a table.
@@ -94,6 +95,11 @@ class TableStyle implements \JsonSerializable
      */
     public function setCells($cells)
     {
+        if (is_null($cells)) {
+            $this->cells = null;
+            return $this;
+        }
+
         if (is_object($cells)) {
             Assert::isInstanceOf($cells, TableCellStyle::class);
         } else {
@@ -120,6 +126,11 @@ class TableStyle implements \JsonSerializable
      */
     public function setColumns($columns)
     {
+        if (is_null($columns)) {
+            $this->columns = null;
+            return $this;
+        }
+
         if (is_object($columns)) {
             Assert::isInstanceOf($columns, TableColumnStyle::class);
         } else {
@@ -148,6 +159,11 @@ class TableStyle implements \JsonSerializable
      */
     public function setHeaderCells($headerCells)
     {
+        if (is_null($headerCells)) {
+            $this->headerCells = null;
+            return $this;
+        }
+
         if (is_object($headerCells)) {
             Assert::isInstanceOf($headerCells, TableCellStyle::class);
         } else {
@@ -176,6 +192,11 @@ class TableStyle implements \JsonSerializable
      */
     public function setHeaderColumns($headerColumns)
     {
+        if (is_null($headerColumns)) {
+            $this->headerColumns = null;
+            return $this;
+        }
+
         if (is_object($headerColumns)) {
             Assert::isInstanceOf($headerColumns, TableColumnStyle::class);
         } else {
@@ -204,6 +225,11 @@ class TableStyle implements \JsonSerializable
      */
     public function setHeaderRows($headerRows)
     {
+        if (is_null($headerRows)) {
+            $this->headerRows = null;
+            return $this;
+        }
+
         if (is_object($headerRows)) {
             Assert::isInstanceOf($headerRows, TableRowStyle::class);
         } else {
@@ -232,6 +258,11 @@ class TableStyle implements \JsonSerializable
      */
     public function setRows($rows)
     {
+        if (is_null($rows)) {
+            $this->rows = null;
+            return $this;
+        }
+
         if (is_object($rows)) {
             Assert::isInstanceOf($rows, TableRowStyle::class);
         } else {
@@ -240,25 +271,6 @@ class TableStyle implements \JsonSerializable
 
         $this->rows = is_array($rows) ? new TableRowStyle($rows) : $rows;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for creating a text shadow.
  *
  * @see https://developer.apple.com/documentation/apple_news/shadow
  */
-class Shadow implements \JsonSerializable
+class Shadow extends BaseSdkObject
 {
     /**
      * The stroke color.
@@ -93,6 +94,11 @@ class Shadow implements \JsonSerializable
      */
     public function setOffset($offset)
     {
+        if (is_null($offset)) {
+            $this->offset = null;
+            return $this;
+        }
+
         if (is_object($offset)) {
             Assert::isInstanceOf($offset, Offset::class);
         } else {
@@ -119,6 +125,11 @@ class Shadow implements \JsonSerializable
      */
     public function setOpacity($opacity)
     {
+        if (is_null($opacity)) {
+            $this->opacity = null;
+            return $this;
+        }
+
         Assert::number($opacity);
 
         $this->opacity = $opacity;
@@ -145,25 +156,6 @@ class Shadow implements \JsonSerializable
 
         $this->radius = $radius;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

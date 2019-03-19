@@ -3,19 +3,20 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * See the properties of an error returned by the Apple News API.
  *
  * @see https://developer.apple.com/documentation/apple_news/error
  */
-class Error implements \JsonSerializable
+class Error extends BaseSdkObject
 {
     /**
      * An error code that, in combination with the keyPath, uniquely
      * identifies the error for the specified endpoint.
-     * @var \Urbania\AppleNews\Api\Objects\Code
+     * @var string
      */
     protected $code;
 
@@ -70,7 +71,7 @@ class Error implements \JsonSerializable
 
     /**
      * Get the code
-     * @return \Urbania\AppleNews\Api\Objects\Code
+     * @return string
      */
     public function getCode()
     {
@@ -79,18 +80,19 @@ class Error implements \JsonSerializable
 
     /**
      * Set the code
-     * @param \Urbania\AppleNews\Api\Objects\Code|array $code
+     * @param string $code
      * @return $this
      */
     public function setCode($code)
     {
-        if (is_object($code)) {
-            Assert::isInstanceOf($code, Code::class);
-        } else {
-            Assert::isArray($code);
+        if (is_null($code)) {
+            $this->code = null;
+            return $this;
         }
 
-        $this->code = is_array($code) ? new Code($code) : $code;
+        Assert::string($code);
+
+        $this->code = $code;
         return $this;
     }
 
@@ -110,6 +112,11 @@ class Error implements \JsonSerializable
      */
     public function setKeyPath($keyPath)
     {
+        if (is_null($keyPath)) {
+            $this->keyPath = null;
+            return $this;
+        }
+
         Assert::isArray($keyPath);
         Assert::allString($keyPath);
 
@@ -133,6 +140,11 @@ class Error implements \JsonSerializable
      */
     public function setMessage($message)
     {
+        if (is_null($message)) {
+            $this->message = null;
+            return $this;
+        }
+
         Assert::string($message);
 
         $this->message = $message;
@@ -155,6 +167,11 @@ class Error implements \JsonSerializable
      */
     public function setStatus($status)
     {
+        if (is_null($status)) {
+            $this->status = null;
+            return $this;
+        }
+
         if (is_object($status)) {
             Assert::isInstanceOf($status, Status::class);
         } else {
@@ -181,29 +198,15 @@ class Error implements \JsonSerializable
      */
     public function setValue($value)
     {
+        if (is_null($value)) {
+            $this->value = null;
+            return $this;
+        }
+
         Assert::string($value);
 
         $this->value = $value;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

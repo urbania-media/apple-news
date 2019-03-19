@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for setting borders for tables.
  *
  * @see https://developer.apple.com/documentation/apple_news/tableborder
  */
-class TableBorder implements \JsonSerializable
+class TableBorder extends BaseSdkObject
 {
     /**
      * Defines the stroke properties of the border. Stroke properties cannot
@@ -83,6 +84,11 @@ class TableBorder implements \JsonSerializable
      */
     public function setAll($all)
     {
+        if (is_null($all)) {
+            $this->all = null;
+            return $this;
+        }
+
         if (is_object($all)) {
             Assert::isInstanceOf($all, TableStrokeStyle::class);
         } else {
@@ -109,6 +115,11 @@ class TableBorder implements \JsonSerializable
      */
     public function setBottom($bottom)
     {
+        if (is_null($bottom)) {
+            $this->bottom = null;
+            return $this;
+        }
+
         Assert::boolean($bottom);
 
         $this->bottom = $bottom;
@@ -131,6 +142,11 @@ class TableBorder implements \JsonSerializable
      */
     public function setLeft($left)
     {
+        if (is_null($left)) {
+            $this->left = null;
+            return $this;
+        }
+
         Assert::boolean($left);
 
         $this->left = $left;
@@ -153,6 +169,11 @@ class TableBorder implements \JsonSerializable
      */
     public function setRight($right)
     {
+        if (is_null($right)) {
+            $this->right = null;
+            return $this;
+        }
+
         Assert::boolean($right);
 
         $this->right = $right;
@@ -175,29 +196,15 @@ class TableBorder implements \JsonSerializable
      */
     public function setTop($top)
     {
+        if (is_null($top)) {
+            $this->top = null;
+            return $this;
+        }
+
         Assert::boolean($top);
 
         $this->top = $top;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The component for adding a JSON data table.
  *
  * @see https://developer.apple.com/documentation/apple_news/datatable
  */
-class DataTable extends Component implements \JsonSerializable
+class DataTable extends Component
 {
     /**
      * Provides data for the table. Also provides information about the data,
@@ -122,6 +123,11 @@ class DataTable extends Component implements \JsonSerializable
      */
     public function setDataOrientation($dataOrientation)
     {
+        if (is_null($dataOrientation)) {
+            $this->dataOrientation = null;
+            return $this;
+        }
+
         Assert::oneOf($dataOrientation, ["horizontal", "vertical"]);
 
         $this->dataOrientation = $dataOrientation;
@@ -153,6 +159,11 @@ class DataTable extends Component implements \JsonSerializable
      */
     public function setShowDescriptorLabels($showDescriptorLabels)
     {
+        if (is_null($showDescriptorLabels)) {
+            $this->showDescriptorLabels = null;
+            return $this;
+        }
+
         Assert::boolean($showDescriptorLabels);
 
         $this->showDescriptorLabels = $showDescriptorLabels;
@@ -175,6 +186,11 @@ class DataTable extends Component implements \JsonSerializable
      */
     public function setSortBy($sortBy)
     {
+        if (is_null($sortBy)) {
+            $this->sortBy = null;
+            return $this;
+        }
+
         Assert::isArray($sortBy);
         Assert::allIsInstanceOfOrArray($sortBy, DataTableSorting::class);
 
@@ -204,6 +220,11 @@ class DataTable extends Component implements \JsonSerializable
      */
     public function setStyle($style)
     {
+        if (is_null($style)) {
+            $this->style = null;
+            return $this;
+        }
+
         if (is_object($style)) {
             Assert::isInstanceOf($style, ComponentStyle::class);
         } elseif (!is_array($style)) {
@@ -212,25 +233,6 @@ class DataTable extends Component implements \JsonSerializable
 
         $this->style = is_array($style) ? new ComponentStyle($style) : $style;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

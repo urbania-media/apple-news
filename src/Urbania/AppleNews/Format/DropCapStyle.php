@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for defining the drop cap text style for use in the first
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/dropcapstyle
  */
-class DropCapStyle implements \JsonSerializable
+class DropCapStyle extends BaseSdkObject
 {
     /**
      * The background color of the drop cap. By default, no background color
@@ -113,6 +114,11 @@ class DropCapStyle implements \JsonSerializable
      */
     public function setBackgroundColor($backgroundColor)
     {
+        if (is_null($backgroundColor)) {
+            $this->backgroundColor = null;
+            return $this;
+        }
+
         Assert::isColor($backgroundColor);
 
         $this->backgroundColor = $backgroundColor;
@@ -135,6 +141,11 @@ class DropCapStyle implements \JsonSerializable
      */
     public function setFontName($fontName)
     {
+        if (is_null($fontName)) {
+            $this->fontName = null;
+            return $this;
+        }
+
         Assert::string($fontName);
 
         $this->fontName = $fontName;
@@ -157,6 +168,11 @@ class DropCapStyle implements \JsonSerializable
      */
     public function setNumberOfCharacters($numberOfCharacters)
     {
+        if (is_null($numberOfCharacters)) {
+            $this->numberOfCharacters = null;
+            return $this;
+        }
+
         Assert::integer($numberOfCharacters);
 
         $this->numberOfCharacters = $numberOfCharacters;
@@ -201,6 +217,11 @@ class DropCapStyle implements \JsonSerializable
      */
     public function setNumberOfRaisedLines($numberOfRaisedLines)
     {
+        if (is_null($numberOfRaisedLines)) {
+            $this->numberOfRaisedLines = null;
+            return $this;
+        }
+
         Assert::integer($numberOfRaisedLines);
 
         $this->numberOfRaisedLines = $numberOfRaisedLines;
@@ -223,6 +244,11 @@ class DropCapStyle implements \JsonSerializable
      */
     public function setPadding($padding)
     {
+        if (is_null($padding)) {
+            $this->padding = null;
+            return $this;
+        }
+
         Assert::integer($padding);
 
         $this->padding = $padding;
@@ -245,29 +271,15 @@ class DropCapStyle implements \JsonSerializable
      */
     public function setTextColor($textColor)
     {
+        if (is_null($textColor)) {
+            $this->textColor = null;
+            return $this;
+        }
+
         Assert::isColor($textColor);
 
         $this->textColor = $textColor;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

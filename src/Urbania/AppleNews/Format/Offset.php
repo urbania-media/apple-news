@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for setting an offset value to use with a text shadow.
  *
  * @see https://developer.apple.com/documentation/apple_news/offset
  */
-class Offset implements \JsonSerializable
+class Offset extends BaseSdkObject
 {
     /**
      * The x offset, as a value between -50.0 and 50.0. Implementation is
@@ -79,25 +80,6 @@ class Offset implements \JsonSerializable
 
         $this->y = $y;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

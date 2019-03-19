@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * Properties shared by all component types.
  *
  * @see https://developer.apple.com/documentation/apple_news/component
  */
-class Component implements \JsonSerializable
+class Component extends BaseSdkObject
 {
     protected static $typeProperty = 'role';
 
@@ -167,6 +168,11 @@ class Component implements \JsonSerializable
      */
     public function setAnchor($anchor)
     {
+        if (is_null($anchor)) {
+            $this->anchor = null;
+            return $this;
+        }
+
         if (is_object($anchor)) {
             Assert::isInstanceOf($anchor, Anchor::class);
         } else {
@@ -193,6 +199,11 @@ class Component implements \JsonSerializable
      */
     public function setAnimation($animation)
     {
+        if (is_null($animation)) {
+            $this->animation = null;
+            return $this;
+        }
+
         if (is_object($animation)) {
             Assert::isInstanceOf($animation, ComponentAnimation::class);
         } else {
@@ -221,6 +232,11 @@ class Component implements \JsonSerializable
      */
     public function setBehavior($behavior)
     {
+        if (is_null($behavior)) {
+            $this->behavior = null;
+            return $this;
+        }
+
         if (is_object($behavior)) {
             Assert::isInstanceOf($behavior, Behavior::class);
         } else {
@@ -249,6 +265,11 @@ class Component implements \JsonSerializable
      */
     public function setIdentifier($identifier)
     {
+        if (is_null($identifier)) {
+            $this->identifier = null;
+            return $this;
+        }
+
         Assert::string($identifier);
 
         $this->identifier = $identifier;
@@ -271,6 +292,11 @@ class Component implements \JsonSerializable
      */
     public function setLayout($layout)
     {
+        if (is_null($layout)) {
+            $this->layout = null;
+            return $this;
+        }
+
         if (is_object($layout)) {
             Assert::isInstanceOf($layout, ComponentLayout::class);
         } elseif (!is_array($layout)) {
@@ -321,6 +347,11 @@ class Component implements \JsonSerializable
      */
     public function setStyle($style)
     {
+        if (is_null($style)) {
+            $this->style = null;
+            return $this;
+        }
+
         if (is_object($style)) {
             Assert::isInstanceOf($style, ComponentStyle::class);
         } elseif (!is_array($style)) {
@@ -329,25 +360,6 @@ class Component implements \JsonSerializable
 
         $this->style = is_array($style) ? new ComponentStyle($style) : $style;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

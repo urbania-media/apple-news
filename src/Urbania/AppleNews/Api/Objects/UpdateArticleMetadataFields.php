@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * See the metadata fields for the update article request.
  *
  * @see https://developer.apple.com/documentation/apple_news/update_article_metadata_fields
  */
-class UpdateArticleMetadataFields implements \JsonSerializable
+class UpdateArticleMetadataFields extends BaseSdkObject
 {
     /**
      * Text to include below the article excerpt in the channel view, such as
@@ -120,6 +121,11 @@ class UpdateArticleMetadataFields implements \JsonSerializable
      */
     public function setAccessoryText($accessoryText)
     {
+        if (is_null($accessoryText)) {
+            $this->accessoryText = null;
+            return $this;
+        }
+
         Assert::string($accessoryText);
 
         $this->accessoryText = $accessoryText;
@@ -142,6 +148,11 @@ class UpdateArticleMetadataFields implements \JsonSerializable
      */
     public function setIsCandidateToBeFeatured($isCandidateToBeFeatured)
     {
+        if (is_null($isCandidateToBeFeatured)) {
+            $this->isCandidateToBeFeatured = null;
+            return $this;
+        }
+
         Assert::boolean($isCandidateToBeFeatured);
 
         $this->isCandidateToBeFeatured = $isCandidateToBeFeatured;
@@ -164,6 +175,11 @@ class UpdateArticleMetadataFields implements \JsonSerializable
      */
     public function setIsHidden($isHidden)
     {
+        if (is_null($isHidden)) {
+            $this->isHidden = null;
+            return $this;
+        }
+
         Assert::boolean($isHidden);
 
         $this->isHidden = $isHidden;
@@ -186,6 +202,11 @@ class UpdateArticleMetadataFields implements \JsonSerializable
      */
     public function setIsPreview($isPreview)
     {
+        if (is_null($isPreview)) {
+            $this->isPreview = null;
+            return $this;
+        }
+
         Assert::boolean($isPreview);
 
         $this->isPreview = $isPreview;
@@ -208,6 +229,11 @@ class UpdateArticleMetadataFields implements \JsonSerializable
      */
     public function setIsSponsored($isSponsored)
     {
+        if (is_null($isSponsored)) {
+            $this->isSponsored = null;
+            return $this;
+        }
+
         Assert::boolean($isSponsored);
 
         $this->isSponsored = $isSponsored;
@@ -230,6 +256,11 @@ class UpdateArticleMetadataFields implements \JsonSerializable
      */
     public function setMaturityRating($maturityRating)
     {
+        if (is_null($maturityRating)) {
+            $this->maturityRating = null;
+            return $this;
+        }
+
         Assert::oneOf($maturityRating, ["KIDS", "MATURE", "GENERAL"]);
 
         $this->maturityRating = $maturityRating;
@@ -256,25 +287,6 @@ class UpdateArticleMetadataFields implements \JsonSerializable
 
         $this->revision = $revision;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for specifying the color and location for a color stop in a
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/colorstop
  */
-class ColorStop implements \JsonSerializable
+class ColorStop extends BaseSdkObject
 {
     /**
      * The color of this color stop.
@@ -78,29 +79,15 @@ class ColorStop implements \JsonSerializable
      */
     public function setLocation($location)
     {
+        if (is_null($location)) {
+            $this->location = null;
+            return $this;
+        }
+
         Assert::number($location);
 
         $this->location = $location;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

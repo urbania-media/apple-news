@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * See the fields returned by the search article endpoints.
  *
  * @see https://developer.apple.com/documentation/apple_news/searchresponse
  */
-class SearchResponse implements \JsonSerializable
+class SearchResponse extends BaseSdkObject
 {
     /**
      * A list of article objects.
@@ -65,6 +66,11 @@ class SearchResponse implements \JsonSerializable
      */
     public function setArticles($articles)
     {
+        if (is_null($articles)) {
+            $this->articles = null;
+            return $this;
+        }
+
         Assert::isArray($articles);
         Assert::allIsInstanceOfOrArray($articles, Article::class);
 
@@ -92,6 +98,11 @@ class SearchResponse implements \JsonSerializable
      */
     public function setLinks($links)
     {
+        if (is_null($links)) {
+            $this->links = null;
+            return $this;
+        }
+
         if (is_object($links)) {
             Assert::isInstanceOf($links, SearchResponseLinks::class);
         } else {
@@ -120,29 +131,15 @@ class SearchResponse implements \JsonSerializable
      */
     public function setMeta($meta)
     {
+        if (is_null($meta)) {
+            $this->meta = null;
+            return $this;
+        }
+
         Assert::string($meta);
 
         $this->meta = $meta;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

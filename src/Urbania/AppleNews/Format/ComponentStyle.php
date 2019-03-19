@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for setting style properties for components, including
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/componentstyle
  */
-class ComponentStyle implements \JsonSerializable
+class ComponentStyle extends BaseSdkObject
 {
     /**
      * The component's background color. Defaults to transparent.
@@ -89,6 +90,11 @@ class ComponentStyle implements \JsonSerializable
      */
     public function setBackgroundColor($backgroundColor)
     {
+        if (is_null($backgroundColor)) {
+            $this->backgroundColor = null;
+            return $this;
+        }
+
         Assert::isColor($backgroundColor);
 
         $this->backgroundColor = $backgroundColor;
@@ -111,6 +117,11 @@ class ComponentStyle implements \JsonSerializable
      */
     public function setBorder($border)
     {
+        if (is_null($border)) {
+            $this->border = null;
+            return $this;
+        }
+
         if (is_object($border)) {
             Assert::isInstanceOf($border, Border::class);
         } else {
@@ -137,6 +148,11 @@ class ComponentStyle implements \JsonSerializable
      */
     public function setFill($fill)
     {
+        if (is_null($fill)) {
+            $this->fill = null;
+            return $this;
+        }
+
         if (is_object($fill)) {
             Assert::isInstanceOf($fill, Fill::class);
         } else {
@@ -163,6 +179,11 @@ class ComponentStyle implements \JsonSerializable
      */
     public function setOpacity($opacity)
     {
+        if (is_null($opacity)) {
+            $this->opacity = null;
+            return $this;
+        }
+
         Assert::number($opacity);
 
         $this->opacity = $opacity;
@@ -185,6 +206,11 @@ class ComponentStyle implements \JsonSerializable
      */
     public function setTableStyle($tableStyle)
     {
+        if (is_null($tableStyle)) {
+            $this->tableStyle = null;
+            return $this;
+        }
+
         if (is_object($tableStyle)) {
             Assert::isInstanceOf($tableStyle, TableStyle::class);
         } else {
@@ -195,25 +221,6 @@ class ComponentStyle implements \JsonSerializable
             ? new TableStyle($tableStyle)
             : $tableStyle;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

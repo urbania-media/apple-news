@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * See the object that wraps the throttling information that's returned
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/meta
  */
-class Meta implements \JsonSerializable
+class Meta extends BaseSdkObject
 {
     /**
      * Indicates the process responsible for regulating the rate at which
@@ -43,6 +44,11 @@ class Meta implements \JsonSerializable
      */
     public function setThrottling($throttling)
     {
+        if (is_null($throttling)) {
+            $this->throttling = null;
+            return $this;
+        }
+
         if (is_object($throttling)) {
             Assert::isInstanceOf($throttling, Throttling::class);
         } else {
@@ -53,25 +59,6 @@ class Meta implements \JsonSerializable
             ? new Throttling($throttling)
             : $throttling;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

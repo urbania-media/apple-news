@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The component for adding a video.
  *
  * @see https://developer.apple.com/documentation/apple_news/video
  */
-class Video extends Component implements \JsonSerializable
+class Video extends Component
 {
     /**
      * The URL of a video file that can be played using AVPlayer. HTTP Live
@@ -115,6 +116,11 @@ class Video extends Component implements \JsonSerializable
      */
     public function setAccessibilityCaption($accessibilityCaption)
     {
+        if (is_null($accessibilityCaption)) {
+            $this->accessibilityCaption = null;
+            return $this;
+        }
+
         Assert::string($accessibilityCaption);
 
         $this->accessibilityCaption = $accessibilityCaption;
@@ -137,6 +143,11 @@ class Video extends Component implements \JsonSerializable
      */
     public function setAspectRatio($aspectRatio)
     {
+        if (is_null($aspectRatio)) {
+            $this->aspectRatio = null;
+            return $this;
+        }
+
         Assert::number($aspectRatio);
 
         $this->aspectRatio = $aspectRatio;
@@ -159,6 +170,11 @@ class Video extends Component implements \JsonSerializable
      */
     public function setCaption($caption)
     {
+        if (is_null($caption)) {
+            $this->caption = null;
+            return $this;
+        }
+
         Assert::string($caption);
 
         $this->caption = $caption;
@@ -181,6 +197,11 @@ class Video extends Component implements \JsonSerializable
      */
     public function setExplicitContent($explicitContent)
     {
+        if (is_null($explicitContent)) {
+            $this->explicitContent = null;
+            return $this;
+        }
+
         Assert::boolean($explicitContent);
 
         $this->explicitContent = $explicitContent;
@@ -225,6 +246,11 @@ class Video extends Component implements \JsonSerializable
      */
     public function setStillURL($stillURL)
     {
+        if (is_null($stillURL)) {
+            $this->stillURL = null;
+            return $this;
+        }
+
         Assert::string($stillURL);
 
         $this->stillURL = $stillURL;
@@ -251,25 +277,6 @@ class Video extends Component implements \JsonSerializable
 
         $this->URL = $URL;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

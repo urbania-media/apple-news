@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for defining the space above and below a component.
  *
  * @see https://developer.apple.com/documentation/apple_news/margin
  */
-class Margin implements \JsonSerializable
+class Margin extends BaseSdkObject
 {
     /**
      * The bottom margin in points, or with any of the units of measure for
@@ -53,6 +54,11 @@ class Margin implements \JsonSerializable
      */
     public function setBottom($bottom)
     {
+        if (is_null($bottom)) {
+            $this->bottom = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($bottom);
 
         $this->bottom = $bottom;
@@ -75,29 +81,15 @@ class Margin implements \JsonSerializable
      */
     public function setTop($top)
     {
+        if (is_null($top)) {
+            $this->top = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($top);
 
         $this->top = $top;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

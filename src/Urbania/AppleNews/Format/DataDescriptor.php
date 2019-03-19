@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for providing the data type, data formatting, and label for
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/datadescriptor
  */
-class DataDescriptor implements \JsonSerializable
+class DataDescriptor extends BaseSdkObject
 {
     /**
      * The data type. Valid values:
@@ -121,6 +122,11 @@ class DataDescriptor implements \JsonSerializable
      */
     public function setFormat($format)
     {
+        if (is_null($format)) {
+            $this->format = null;
+            return $this;
+        }
+
         if (is_object($format)) {
             Assert::isInstanceOf($format, DataFormat::class);
         } else {
@@ -149,6 +155,11 @@ class DataDescriptor implements \JsonSerializable
      */
     public function setIdentifier($identifier)
     {
+        if (is_null($identifier)) {
+            $this->identifier = null;
+            return $this;
+        }
+
         Assert::string($identifier);
 
         $this->identifier = $identifier;
@@ -201,25 +212,6 @@ class DataDescriptor implements \JsonSerializable
 
         $this->label = is_array($label) ? new FormattedText($label) : $label;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

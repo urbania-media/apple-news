@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for defining the color, width, and style of a stroke in a
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/tablestrokestyle
  */
-class TableStrokeStyle implements \JsonSerializable
+class TableStrokeStyle extends BaseSdkObject
 {
     /**
      * The stroke color.
@@ -64,6 +65,11 @@ class TableStrokeStyle implements \JsonSerializable
      */
     public function setColor($color)
     {
+        if (is_null($color)) {
+            $this->color = null;
+            return $this;
+        }
+
         Assert::isColor($color);
 
         $this->color = $color;
@@ -86,6 +92,11 @@ class TableStrokeStyle implements \JsonSerializable
      */
     public function setStyle($style)
     {
+        if (is_null($style)) {
+            $this->style = null;
+            return $this;
+        }
+
         Assert::string($style);
 
         $this->style = $style;
@@ -108,29 +119,15 @@ class TableStrokeStyle implements \JsonSerializable
      */
     public function setWidth($width)
     {
+        if (is_null($width)) {
+            $this->width = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($width);
 
         $this->width = $width;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

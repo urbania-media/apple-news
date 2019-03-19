@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * An object used in a map component for specifying the location of a map
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/mapitem
  */
-class MapItem implements \JsonSerializable
+class MapItem extends BaseSdkObject
 {
     /**
      * The caption for the map item. This caption will be displayed when a
@@ -63,6 +64,11 @@ class MapItem implements \JsonSerializable
      */
     public function setCaption($caption)
     {
+        if (is_null($caption)) {
+            $this->caption = null;
+            return $this;
+        }
+
         Assert::string($caption);
 
         $this->caption = $caption;
@@ -111,25 +117,6 @@ class MapItem implements \JsonSerializable
 
         $this->longitude = $longitude;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

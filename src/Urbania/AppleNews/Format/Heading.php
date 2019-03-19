@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The text component for adding a heading.
  *
  * @see https://developer.apple.com/documentation/apple_news/heading
  */
-class Heading extends Text implements \JsonSerializable
+class Heading extends Text
 {
     /**
      * A heading component has one of these values for role: heading,
@@ -56,25 +57,6 @@ class Heading extends Text implements \JsonSerializable
 
         $this->role = $role;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

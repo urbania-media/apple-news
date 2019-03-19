@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The component for adding a Tweet that was posted to Twitter.
  *
  * @see https://developer.apple.com/documentation/apple_news/tweet
  */
-class Tweet extends Component implements \JsonSerializable
+class Tweet extends Component
 {
     /**
      * The URL of the tweet you want to embed.
@@ -62,25 +63,6 @@ class Tweet extends Component implements \JsonSerializable
 
         $this->URL = $URL;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

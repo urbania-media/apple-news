@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for specifying cover art that is required for an article to
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/coverart
  */
-class CoverArt implements \JsonSerializable
+class CoverArt extends BaseSdkObject
 {
     /**
      * The URL of the image file.
@@ -63,6 +64,11 @@ class CoverArt implements \JsonSerializable
      */
     public function setAccessibilityCaption($accessibilityCaption)
     {
+        if (is_null($accessibilityCaption)) {
+            $this->accessibilityCaption = null;
+            return $this;
+        }
+
         Assert::string($accessibilityCaption);
 
         $this->accessibilityCaption = $accessibilityCaption;
@@ -111,25 +117,6 @@ class CoverArt implements \JsonSerializable
 
         $this->URL = $URL;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

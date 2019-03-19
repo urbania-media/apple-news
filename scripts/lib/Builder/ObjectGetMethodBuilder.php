@@ -4,7 +4,7 @@ namespace Urbania\AppleNews\Scripts\Builder;
 
 use Nette\PhpGenerator\Method;
 use Urbania\AppleNews\Scripts\Builder\Traits\ClassUtils;
-use Urbania\AppleNews\Utils;
+use Urbania\AppleNews\Support\Utils;
 
 class ObjectGetMethodBuilder
 {

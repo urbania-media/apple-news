@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for setting the background color for your article.
  *
  * @see https://developer.apple.com/documentation/apple_news/documentstyle
  */
-class DocumentStyle implements \JsonSerializable
+class DocumentStyle extends BaseSdkObject
 {
     /**
      * The article’s background color.
@@ -41,29 +42,15 @@ class DocumentStyle implements \JsonSerializable
      */
     public function setBackgroundColor($backgroundColor)
     {
+        if (is_null($backgroundColor)) {
+            $this->backgroundColor = null;
+            return $this;
+        }
+
         Assert::isColor($backgroundColor);
 
         $this->backgroundColor = $backgroundColor;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

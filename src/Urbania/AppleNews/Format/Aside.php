@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The component for setting apart content that is not directly related
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/aside
  */
-class Aside extends Component implements \JsonSerializable
+class Aside extends Component
 {
     /**
      * An array of ComponentLink objects. This can be used to create a
@@ -77,6 +78,11 @@ class Aside extends Component implements \JsonSerializable
      */
     public function setAdditions($additions)
     {
+        if (is_null($additions)) {
+            $this->additions = null;
+            return $this;
+        }
+
         Assert::isArray($additions);
         Assert::allIsInstanceOfOrArray($additions, ComponentLink::class);
 
@@ -104,6 +110,11 @@ class Aside extends Component implements \JsonSerializable
      */
     public function setComponents($components)
     {
+        if (is_null($components)) {
+            $this->components = null;
+            return $this;
+        }
+
         Assert::isArray($components);
         Assert::allIsInstanceOfOrArray($components, Component::class);
 
@@ -133,6 +144,11 @@ class Aside extends Component implements \JsonSerializable
      */
     public function setContentDisplay($contentDisplay)
     {
+        if (is_null($contentDisplay)) {
+            $this->contentDisplay = null;
+            return $this;
+        }
+
         if (is_object($contentDisplay)) {
             Assert::isInstanceOf($contentDisplay, CollectionDisplay::class);
         } else {
@@ -152,25 +168,6 @@ class Aside extends Component implements \JsonSerializable
     public function getRole()
     {
         return $this->role;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

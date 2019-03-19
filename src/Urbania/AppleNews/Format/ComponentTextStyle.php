@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for defining the style for a text component, including
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/componenttextstyle
  */
-class ComponentTextStyle extends TextStyle implements \JsonSerializable
+class ComponentTextStyle extends TextStyle
 {
     /**
      * The background color for text lines.
@@ -324,6 +325,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setBackgroundColor($backgroundColor)
     {
+        if (is_null($backgroundColor)) {
+            $this->backgroundColor = null;
+            return $this;
+        }
+
         Assert::isColor($backgroundColor);
 
         $this->backgroundColor = $backgroundColor;
@@ -346,6 +352,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setDropCapStyle($dropCapStyle)
     {
+        if (is_null($dropCapStyle)) {
+            $this->dropCapStyle = null;
+            return $this;
+        }
+
         if (is_object($dropCapStyle)) {
             Assert::isInstanceOf($dropCapStyle, DropCapStyle::class);
         } else {
@@ -374,6 +385,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setFirstLineIndent($firstLineIndent)
     {
+        if (is_null($firstLineIndent)) {
+            $this->firstLineIndent = null;
+            return $this;
+        }
+
         Assert::integer($firstLineIndent);
 
         $this->firstLineIndent = $firstLineIndent;
@@ -396,6 +412,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setFontFamily($fontFamily)
     {
+        if (is_null($fontFamily)) {
+            $this->fontFamily = null;
+            return $this;
+        }
+
         Assert::string($fontFamily);
 
         $this->fontFamily = $fontFamily;
@@ -418,6 +439,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setFontName($fontName)
     {
+        if (is_null($fontName)) {
+            $this->fontName = null;
+            return $this;
+        }
+
         Assert::string($fontName);
 
         $this->fontName = $fontName;
@@ -440,6 +466,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setFontSize($fontSize)
     {
+        if (is_null($fontSize)) {
+            $this->fontSize = null;
+            return $this;
+        }
+
         Assert::integer($fontSize);
 
         $this->fontSize = $fontSize;
@@ -462,6 +493,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setFontStyle($fontStyle)
     {
+        if (is_null($fontStyle)) {
+            $this->fontStyle = null;
+            return $this;
+        }
+
         Assert::oneOf($fontStyle, ["normal", "italic", "oblique"]);
 
         $this->fontStyle = $fontStyle;
@@ -484,6 +520,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setFontWeight($fontWeight)
     {
+        if (is_null($fontWeight)) {
+            $this->fontWeight = null;
+            return $this;
+        }
+
         Assert::oneOf($fontWeight, [
             100,
             200,
@@ -539,6 +580,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setFontWidth($fontWidth)
     {
+        if (is_null($fontWidth)) {
+            $this->fontWidth = null;
+            return $this;
+        }
+
         Assert::oneOf($fontWidth, [
             "ultra-condensed",
             "extra-condensed",
@@ -571,6 +617,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setHangingPunctuation($hangingPunctuation)
     {
+        if (is_null($hangingPunctuation)) {
+            $this->hangingPunctuation = null;
+            return $this;
+        }
+
         Assert::boolean($hangingPunctuation);
 
         $this->hangingPunctuation = $hangingPunctuation;
@@ -593,6 +644,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setHyphenation($hyphenation)
     {
+        if (is_null($hyphenation)) {
+            $this->hyphenation = null;
+            return $this;
+        }
+
         Assert::boolean($hyphenation);
 
         $this->hyphenation = $hyphenation;
@@ -615,6 +671,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setLineHeight($lineHeight)
     {
+        if (is_null($lineHeight)) {
+            $this->lineHeight = null;
+            return $this;
+        }
+
         Assert::integer($lineHeight);
 
         $this->lineHeight = $lineHeight;
@@ -637,6 +698,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setLinkStyle($linkStyle)
     {
+        if (is_null($linkStyle)) {
+            $this->linkStyle = null;
+            return $this;
+        }
+
         if (is_object($linkStyle)) {
             Assert::isInstanceOf($linkStyle, TextStyle::class);
         } else {
@@ -665,6 +731,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setOrderedListItems($orderedListItems)
     {
+        if (is_null($orderedListItems)) {
+            $this->orderedListItems = null;
+            return $this;
+        }
+
         if (is_object($orderedListItems)) {
             Assert::isInstanceOf($orderedListItems, ListItemStyle::class);
         } else {
@@ -693,6 +764,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setParagraphSpacingAfter($paragraphSpacingAfter)
     {
+        if (is_null($paragraphSpacingAfter)) {
+            $this->paragraphSpacingAfter = null;
+            return $this;
+        }
+
         Assert::integer($paragraphSpacingAfter);
 
         $this->paragraphSpacingAfter = $paragraphSpacingAfter;
@@ -715,6 +791,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setParagraphSpacingBefore($paragraphSpacingBefore)
     {
+        if (is_null($paragraphSpacingBefore)) {
+            $this->paragraphSpacingBefore = null;
+            return $this;
+        }
+
         Assert::integer($paragraphSpacingBefore);
 
         $this->paragraphSpacingBefore = $paragraphSpacingBefore;
@@ -737,6 +818,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setStrikethrough($strikethrough)
     {
+        if (is_null($strikethrough)) {
+            $this->strikethrough = null;
+            return $this;
+        }
+
         if (is_object($strikethrough)) {
             Assert::isInstanceOf($strikethrough, TextDecoration::class);
         } elseif (!is_array($strikethrough)) {
@@ -765,6 +851,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setStroke($stroke)
     {
+        if (is_null($stroke)) {
+            $this->stroke = null;
+            return $this;
+        }
+
         if (is_object($stroke)) {
             Assert::isInstanceOf($stroke, TextStrokeStyle::class);
         } else {
@@ -793,6 +884,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setTextAlignment($textAlignment)
     {
+        if (is_null($textAlignment)) {
+            $this->textAlignment = null;
+            return $this;
+        }
+
         Assert::oneOf($textAlignment, [
             "left",
             "center",
@@ -821,6 +917,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setTextColor($textColor)
     {
+        if (is_null($textColor)) {
+            $this->textColor = null;
+            return $this;
+        }
+
         Assert::isColor($textColor);
 
         $this->textColor = $textColor;
@@ -843,6 +944,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setTextShadow($textShadow)
     {
+        if (is_null($textShadow)) {
+            $this->textShadow = null;
+            return $this;
+        }
+
         if (is_object($textShadow)) {
             Assert::isInstanceOf($textShadow, Shadow::class);
         } else {
@@ -871,6 +977,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setTracking($tracking)
     {
+        if (is_null($tracking)) {
+            $this->tracking = null;
+            return $this;
+        }
+
         Assert::number($tracking);
 
         $this->tracking = $tracking;
@@ -893,6 +1004,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setUnderline($underline)
     {
+        if (is_null($underline)) {
+            $this->underline = null;
+            return $this;
+        }
+
         if (is_object($underline)) {
             Assert::isInstanceOf($underline, TextDecoration::class);
         } elseif (!is_array($underline)) {
@@ -921,6 +1037,11 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setUnorderedListItems($unorderedListItems)
     {
+        if (is_null($unorderedListItems)) {
+            $this->unorderedListItems = null;
+            return $this;
+        }
+
         if (is_object($unorderedListItems)) {
             Assert::isInstanceOf($unorderedListItems, ListItemStyle::class);
         } else {
@@ -949,29 +1070,15 @@ class ComponentTextStyle extends TextStyle implements \JsonSerializable
      */
     public function setVerticalAlignment($verticalAlignment)
     {
+        if (is_null($verticalAlignment)) {
+            $this->verticalAlignment = null;
+            return $this;
+        }
+
         Assert::string($verticalAlignment);
 
         $this->verticalAlignment = $verticalAlignment;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

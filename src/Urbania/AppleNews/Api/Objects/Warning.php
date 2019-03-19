@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * See the properties of a warning returned by the Apple News API.
  *
  * @see https://developer.apple.com/documentation/apple_news/warning
  */
-class Warning implements \JsonSerializable
+class Warning extends BaseSdkObject
 {
     /**
      * An array of field names that uniquely identifies a field in the JSON
@@ -63,6 +64,11 @@ class Warning implements \JsonSerializable
      */
     public function setKeypath($keypath)
     {
+        if (is_null($keypath)) {
+            $this->keypath = null;
+            return $this;
+        }
+
         Assert::isArray($keypath);
         Assert::allString($keypath);
 
@@ -86,6 +92,11 @@ class Warning implements \JsonSerializable
      */
     public function setMessage($message)
     {
+        if (is_null($message)) {
+            $this->message = null;
+            return $this;
+        }
+
         Assert::string($message);
 
         $this->message = $message;
@@ -108,29 +119,15 @@ class Warning implements \JsonSerializable
      */
     public function setValue($value)
     {
+        if (is_null($value)) {
+            $this->value = null;
+            return $this;
+        }
+
         Assert::string($value);
 
         $this->value = $value;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

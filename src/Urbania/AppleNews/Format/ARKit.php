@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The component for adding an augmented reality (AR) experience to your
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/arkit
  */
-class ARKit extends Component implements \JsonSerializable
+class ARKit extends Component
 {
     /**
      * Valid URL to a Universal Scene Description file (USD) file with
@@ -91,6 +92,11 @@ class ARKit extends Component implements \JsonSerializable
      */
     public function setAccessibilityCaption($accessibilityCaption)
     {
+        if (is_null($accessibilityCaption)) {
+            $this->accessibilityCaption = null;
+            return $this;
+        }
+
         Assert::string($accessibilityCaption);
 
         $this->accessibilityCaption = $accessibilityCaption;
@@ -135,6 +141,11 @@ class ARKit extends Component implements \JsonSerializable
      */
     public function setExplicitContent($explicitContent)
     {
+        if (is_null($explicitContent)) {
+            $this->explicitContent = null;
+            return $this;
+        }
+
         Assert::boolean($explicitContent);
 
         $this->explicitContent = $explicitContent;
@@ -183,25 +194,6 @@ class ARKit extends Component implements \JsonSerializable
 
         $this->URL = $URL;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

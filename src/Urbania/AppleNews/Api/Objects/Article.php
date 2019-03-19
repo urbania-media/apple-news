@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * See the fields returned by the article endpoints.
  *
  * @see https://developer.apple.com/documentation/apple_news/article
  */
-class Article implements \JsonSerializable
+class Article extends BaseSdkObject
 {
     /**
      * Text that appears alongside article headlines — author name, channel
@@ -194,6 +195,11 @@ class Article implements \JsonSerializable
      */
     public function setAccessoryText($accessoryText)
     {
+        if (is_null($accessoryText)) {
+            $this->accessoryText = null;
+            return $this;
+        }
+
         Assert::string($accessoryText);
 
         $this->accessoryText = $accessoryText;
@@ -216,6 +222,11 @@ class Article implements \JsonSerializable
      */
     public function setCreatedAt($createdAt)
     {
+        if (is_null($createdAt)) {
+            $this->createdAt = null;
+            return $this;
+        }
+
         Assert::isDate($createdAt);
 
         $this->createdAt = is_string($createdAt)
@@ -240,6 +251,11 @@ class Article implements \JsonSerializable
      */
     public function setDocument($document)
     {
+        if (is_null($document)) {
+            $this->document = null;
+            return $this;
+        }
+
         if (is_object($document)) {
             Assert::isInstanceOf(
                 $document,
@@ -271,6 +287,11 @@ class Article implements \JsonSerializable
      */
     public function setId($id)
     {
+        if (is_null($id)) {
+            $this->id = null;
+            return $this;
+        }
+
         Assert::uuid($id);
 
         $this->id = $id;
@@ -293,6 +314,11 @@ class Article implements \JsonSerializable
      */
     public function setIsCandidateToBeFeatured($isCandidateToBeFeatured)
     {
+        if (is_null($isCandidateToBeFeatured)) {
+            $this->isCandidateToBeFeatured = null;
+            return $this;
+        }
+
         Assert::boolean($isCandidateToBeFeatured);
 
         $this->isCandidateToBeFeatured = $isCandidateToBeFeatured;
@@ -315,6 +341,11 @@ class Article implements \JsonSerializable
      */
     public function setIsPreview($isPreview)
     {
+        if (is_null($isPreview)) {
+            $this->isPreview = null;
+            return $this;
+        }
+
         Assert::boolean($isPreview);
 
         $this->isPreview = $isPreview;
@@ -337,6 +368,11 @@ class Article implements \JsonSerializable
      */
     public function setIsSponsored($isSponsored)
     {
+        if (is_null($isSponsored)) {
+            $this->isSponsored = null;
+            return $this;
+        }
+
         Assert::boolean($isSponsored);
 
         $this->isSponsored = $isSponsored;
@@ -359,6 +395,11 @@ class Article implements \JsonSerializable
      */
     public function setMaturityRating($maturityRating)
     {
+        if (is_null($maturityRating)) {
+            $this->maturityRating = null;
+            return $this;
+        }
+
         Assert::oneOf($maturityRating, ["KIDS", "MATURE", "GENERAL"]);
 
         $this->maturityRating = $maturityRating;
@@ -381,6 +422,11 @@ class Article implements \JsonSerializable
      */
     public function setModifiedAt($modifiedAt)
     {
+        if (is_null($modifiedAt)) {
+            $this->modifiedAt = null;
+            return $this;
+        }
+
         Assert::isDate($modifiedAt);
 
         $this->modifiedAt = is_string($modifiedAt)
@@ -405,6 +451,11 @@ class Article implements \JsonSerializable
      */
     public function setRevision($revision)
     {
+        if (is_null($revision)) {
+            $this->revision = null;
+            return $this;
+        }
+
         Assert::string($revision);
 
         $this->revision = $revision;
@@ -427,6 +478,11 @@ class Article implements \JsonSerializable
      */
     public function setShareUrl($shareUrl)
     {
+        if (is_null($shareUrl)) {
+            $this->shareUrl = null;
+            return $this;
+        }
+
         Assert::string($shareUrl);
 
         $this->shareUrl = $shareUrl;
@@ -449,6 +505,11 @@ class Article implements \JsonSerializable
      */
     public function setState($state)
     {
+        if (is_null($state)) {
+            $this->state = null;
+            return $this;
+        }
+
         Assert::oneOf($state, [
             "PROCESSING",
             "LIVE",
@@ -478,6 +539,11 @@ class Article implements \JsonSerializable
      */
     public function setTitle($title)
     {
+        if (is_null($title)) {
+            $this->title = null;
+            return $this;
+        }
+
         Assert::string($title);
 
         $this->title = $title;
@@ -500,6 +566,11 @@ class Article implements \JsonSerializable
      */
     public function setType($type)
     {
+        if (is_null($type)) {
+            $this->type = null;
+            return $this;
+        }
+
         Assert::string($type);
 
         $this->type = $type;
@@ -522,6 +593,11 @@ class Article implements \JsonSerializable
      */
     public function setWarnings($warnings)
     {
+        if (is_null($warnings)) {
+            $this->warnings = null;
+            return $this;
+        }
+
         Assert::isArray($warnings);
         Assert::allIsInstanceOfOrArray($warnings, Warning::class);
 
@@ -531,25 +607,6 @@ class Article implements \JsonSerializable
         }
         $this->warnings = $items;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

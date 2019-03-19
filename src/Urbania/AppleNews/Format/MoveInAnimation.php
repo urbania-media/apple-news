@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The animation whereby a component moves in from the side of the
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/moveinanimation
  */
-class MoveInAnimation extends ComponentAnimation implements \JsonSerializable
+class MoveInAnimation extends ComponentAnimation
 {
     /**
      * Indicates which side of the screen should be the starting point of the
@@ -64,6 +65,11 @@ class MoveInAnimation extends ComponentAnimation implements \JsonSerializable
      */
     public function setPreferredStartingPosition($preferredStartingPosition)
     {
+        if (is_null($preferredStartingPosition)) {
+            $this->preferredStartingPosition = null;
+            return $this;
+        }
+
         Assert::oneOf($preferredStartingPosition, ["left", "right"]);
 
         $this->preferredStartingPosition = $preferredStartingPosition;
@@ -95,29 +101,15 @@ class MoveInAnimation extends ComponentAnimation implements \JsonSerializable
      */
     public function setUserControllable($userControllable)
     {
+        if (is_null($userControllable)) {
+            $this->userControllable = null;
+            return $this;
+        }
+
         Assert::boolean($userControllable);
 
         $this->userControllable = $userControllable;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

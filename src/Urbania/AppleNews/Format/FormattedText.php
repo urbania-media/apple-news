@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for specifying formatted text content and styling for
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/formattedtext
  */
-class FormattedText implements \JsonSerializable
+class FormattedText extends BaseSdkObject
 {
     /**
      * An array of Addition objects that supply additional information for
@@ -92,6 +93,11 @@ class FormattedText implements \JsonSerializable
      */
     public function setAdditions($additions)
     {
+        if (is_null($additions)) {
+            $this->additions = null;
+            return $this;
+        }
+
         Assert::isArray($additions);
         Assert::allIsInstanceOfOrArray($additions, Addition::class);
 
@@ -119,6 +125,11 @@ class FormattedText implements \JsonSerializable
      */
     public function setFormat($format)
     {
+        if (is_null($format)) {
+            $this->format = null;
+            return $this;
+        }
+
         Assert::oneOf($format, ["html", "none"]);
 
         $this->format = $format;
@@ -141,6 +152,11 @@ class FormattedText implements \JsonSerializable
      */
     public function setInlineTextStyles($inlineTextStyles)
     {
+        if (is_null($inlineTextStyles)) {
+            $this->inlineTextStyles = null;
+            return $this;
+        }
+
         Assert::isArray($inlineTextStyles);
         Assert::allIsInstanceOfOrArray(
             $inlineTextStyles,
@@ -193,6 +209,11 @@ class FormattedText implements \JsonSerializable
      */
     public function setTextStyle($textStyle)
     {
+        if (is_null($textStyle)) {
+            $this->textStyle = null;
+            return $this;
+        }
+
         if (is_object($textStyle)) {
             Assert::isInstanceOf($textStyle, ComponentTextStyle::class);
         } elseif (!is_array($textStyle)) {
@@ -212,25 +233,6 @@ class FormattedText implements \JsonSerializable
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

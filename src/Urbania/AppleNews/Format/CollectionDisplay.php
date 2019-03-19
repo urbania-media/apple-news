@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * An object used in any container component type to define how the
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/collectiondisplay
  */
-class CollectionDisplay implements \JsonSerializable
+class CollectionDisplay extends BaseSdkObject
 {
     /**
      * Defines how components are aligned within their rows. This is
@@ -128,6 +129,11 @@ class CollectionDisplay implements \JsonSerializable
      */
     public function setAlignment($alignment)
     {
+        if (is_null($alignment)) {
+            $this->alignment = null;
+            return $this;
+        }
+
         Assert::oneOf($alignment, ["left", "center", "right"]);
 
         $this->alignment = $alignment;
@@ -150,6 +156,11 @@ class CollectionDisplay implements \JsonSerializable
      */
     public function setDistribution($distribution)
     {
+        if (is_null($distribution)) {
+            $this->distribution = null;
+            return $this;
+        }
+
         Assert::oneOf($distribution, ["wide", "narrow"]);
 
         $this->distribution = $distribution;
@@ -172,6 +183,11 @@ class CollectionDisplay implements \JsonSerializable
      */
     public function setGutter($gutter)
     {
+        if (is_null($gutter)) {
+            $this->gutter = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($gutter);
 
         $this->gutter = $gutter;
@@ -194,6 +210,11 @@ class CollectionDisplay implements \JsonSerializable
      */
     public function setMaximumWidth($maximumWidth)
     {
+        if (is_null($maximumWidth)) {
+            $this->maximumWidth = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($maximumWidth);
 
         $this->maximumWidth = $maximumWidth;
@@ -216,6 +237,11 @@ class CollectionDisplay implements \JsonSerializable
      */
     public function setMinimumWidth($minimumWidth)
     {
+        if (is_null($minimumWidth)) {
+            $this->minimumWidth = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($minimumWidth);
 
         $this->minimumWidth = $minimumWidth;
@@ -238,6 +264,11 @@ class CollectionDisplay implements \JsonSerializable
      */
     public function setRowSpacing($rowSpacing)
     {
+        if (is_null($rowSpacing)) {
+            $this->rowSpacing = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($rowSpacing);
 
         $this->rowSpacing = $rowSpacing;
@@ -269,6 +300,11 @@ class CollectionDisplay implements \JsonSerializable
      */
     public function setVariableSizing($variableSizing)
     {
+        if (is_null($variableSizing)) {
+            $this->variableSizing = null;
+            return $this;
+        }
+
         Assert::boolean($variableSizing);
 
         $this->variableSizing = $variableSizing;
@@ -291,29 +327,15 @@ class CollectionDisplay implements \JsonSerializable
      */
     public function setWidows($widows)
     {
+        if (is_null($widows)) {
+            $this->widows = null;
+            return $this;
+        }
+
         Assert::oneOf($widows, ["equalize", "optimize"]);
 
         $this->widows = $widows;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

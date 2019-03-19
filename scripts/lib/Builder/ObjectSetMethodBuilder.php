@@ -4,7 +4,7 @@ namespace Urbania\AppleNews\Scripts\Builder;
 
 use Nette\PhpGenerator\Method;
 use Urbania\AppleNews\Scripts\Builder\Traits\ClassUtils;
-use Urbania\AppleNews\Utils;
+use Urbania\AppleNews\Support\Utils;
 
 class ObjectSetMethodBuilder
 {
@@ -20,11 +20,16 @@ class ObjectSetMethodBuilder
         $method = new Method('set' . $studlyName);
         $method->setVisibility('public');
 
-        $lines = [
-            $this->buildPropertySetMethodBody($property, $baseNamespace),
+        $isRequired = $property['required'] ?? false;
+        $lines = array_filter([
+            !$isRequired ? $this->buildUnsetBody($property) . PHP_EOL : null,
+            $this->buildAssertionBody($property, $baseNamespace) . PHP_EOL,
+            $this->buildMethodBody($property, $baseNamespace),
             'return $this;'
-        ];
-        $method->setBody(implode(PHP_EOL, $lines));
+        ], function ($line) {
+            return !is_null($line);
+        });
+        $method->setBody(implode(PHP_EOL, array_values($lines)));
 
         $method->addParameter($property['name']);
 
@@ -41,99 +46,18 @@ class ObjectSetMethodBuilder
         return $method;
     }
 
-    protected function buildPropertySetMethodBody($property, $baseNamespace)
+    protected function buildUnsetBody($property)
     {
-        $isTyped = $property['typed'] ?? false;
         $variableName = '$' . $property['name'];
-        $lines = [];
-        $lines[] =
-            $this->buildPropertySetMethodAssertionBody(
-                $property,
-                $baseNamespace
-            ) . PHP_EOL;
-        $typeParts = explode(
-            ':',
-            is_array($property['type'])
-                ? $property['type'][0]
-                : $property['type']
+        return sprintf(
+            'if(is_null(%s)) {' . '$this->%s = null;' . 'return $this;' . '}',
+            $variableName,
+            $property['name']
         );
-        $mainType = $typeParts[0];
-        switch ($mainType) {
-            case 'date-time':
-                $lines[] = sprintf(
-                    '$this->%s = is_string(%s) ? Carbon::parse(%2$s) : %2$s;',
-                    $property['name'],
-                    $variableName
-                );
-                break;
-            case 'map':
-            case 'array':
-                $itemType = $typeParts[1] ?? null;
-                if (!is_null($itemType) && preg_match('/^[A-Z]/', $itemType)) {
-                    $fullClassPath = $this->getFullClassPath($itemType);
-                    $relativeClassPath = $this->removeNamespaceFromClassPath(
-                        $baseNamespace,
-                        $fullClassPath
-                    );
-                    $lines[] = sprintf(
-                        '$items = [];' .
-                            'foreach (%s as $key => $item) {' .
-                            ($isTyped
-                                ? '$items[$key] = is_array($item) ? %s::createTyped($item) : $item;'
-                                : '$items[$key] = is_array($item) ? new %s($item) : $item;') .
-                            '}' .
-                            '$this->%s = $items;',
-                        $variableName,
-                        $relativeClassPath,
-                        $property['name']
-                    );
-                } else {
-                    $lines[] = sprintf(
-                        '$this->%s = %s;',
-                        $property['name'],
-                        $variableName
-                    );
-                }
-                break;
-            case 'SupportedUnits':
-            case 'Color':
-                $lines[] = sprintf(
-                    '$this->%s = %s;',
-                    $property['name'],
-                    $variableName
-                );
-                break;
-            default:
-                if (preg_match('/^[A-Z]/', $mainType)) {
-                    $fullClassPath = $this->getFullClassPath($mainType);
-                    $relativeClassPath = $this->removeNamespaceFromClassPath(
-                        $baseNamespace,
-                        $fullClassPath
-                    );
-                    $lines[] = sprintf(
-                        ($isTyped
-                            ? '$this->%s = is_array(%s) ? %s::createTyped(%2$s) : %2$s;'
-                            : '$this->%s = is_array(%s) ? new %s(%2$s) : %2$s;'),
-                        $property['name'],
-                        $variableName,
-                        $relativeClassPath
-                    );
-                } else {
-                    $lines[] = sprintf(
-                        '$this->%s = %s;',
-                        $property['name'],
-                        $variableName
-                    );
-                }
-                break;
-        }
-        return implode(PHP_EOL, $lines);
     }
 
-    protected function buildPropertySetMethodAssertionBody(
-        $property,
-        $baseNamespace
-    ) {
+    protected function buildAssertionBody($property, $baseNamespace)
+    {
         $type = $property['type'];
         if (is_array($type)) {
             $type = $type[0] !== 'SupportedUnits' ? 'multiple' : $type[0];
@@ -175,6 +99,10 @@ class ObjectSetMethodBuilder
 
             case 'Color':
                 $lines[] = sprintf('Assert::isColor(%s);', $variableName);
+                break;
+
+            case 'Code':
+                $lines[] = sprintf('Assert::string(%s);', $variableName);
                 break;
 
             case 'uuid':
@@ -256,5 +184,92 @@ class ObjectSetMethodBuilder
                 break;
         }
         return implode(PHP_EOL, $lines);
+    }
+
+    protected function buildMethodBody($property, $baseNamespace)
+    {
+        $isTyped = $property['typed'] ?? false;
+        $isRequired = $property['required'] ?? false;
+        $variableName = '$' . $property['name'];
+        $lines = [];
+        $typeParts = explode(
+            ':',
+            is_array($property['type'])
+                ? $property['type'][0]
+                : $property['type']
+        );
+        $mainType = $typeParts[0];
+        switch ($mainType) {
+            case 'date-time':
+                $lines[] = sprintf(
+                    '$this->%s = is_string(%s) ? Carbon::parse(%2$s) : %2$s;',
+                    $property['name'],
+                    $variableName
+                );
+                break;
+            case 'map':
+            case 'array':
+                $itemType = $typeParts[1] ?? null;
+                if (!is_null($itemType) && preg_match('/^[A-Z]/', $itemType)) {
+                    $fullClassPath = $this->getFullClassPath($itemType);
+                    $relativeClassPath = $this->removeNamespaceFromClassPath(
+                        $baseNamespace,
+                        $fullClassPath
+                    );
+                    $lines[] = sprintf(
+                        '$items = [];' .
+                            'foreach (%s as $key => $item) {' .
+                            ($isTyped
+                                ? '$items[$key] = is_array($item) ? %s::createTyped($item) : $item;'
+                                : '$items[$key] = is_array($item) ? new %s($item) : $item;') .
+                            '}' .
+                            '$this->%s = $items;',
+                        $variableName,
+                        $relativeClassPath,
+                        $property['name']
+                    );
+                } else {
+                    $lines[] = $this->buildSetPropertyBody($property);
+                }
+                break;
+            case 'SupportedUnits':
+            case 'Color':
+            case 'Code':
+                $lines[] = sprintf(
+                    '$this->%s = %s;',
+                    $property['name'],
+                    $variableName
+                );
+                break;
+            default:
+                if (preg_match('/^[A-Z]/', $mainType)) {
+                    $fullClassPath = $this->getFullClassPath($mainType);
+                    $relativeClassPath = $this->removeNamespaceFromClassPath(
+                        $baseNamespace,
+                        $fullClassPath
+                    );
+                    $lines[] = sprintf(
+                        $isTyped
+                            ? '$this->%s = is_array(%s) ? %s::createTyped(%2$s) : %2$s;'
+                            : '$this->%s = is_array(%s) ? new %s(%2$s) : %2$s;',
+                        $property['name'],
+                        $variableName,
+                        $relativeClassPath
+                    );
+                } else {
+                    $lines[] = $this->buildSetPropertyBody($property);
+                }
+                break;
+        }
+        return implode(PHP_EOL, $lines);
+    }
+
+    protected function buildSetPropertyBody($property)
+    {
+        return sprintf(
+            '$this->%s = %s;',
+            $property['name'],
+            '$'.$property['name']
+        );
     }
 }

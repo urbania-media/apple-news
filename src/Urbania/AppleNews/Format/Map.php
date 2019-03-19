@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The component for adding a map.
  *
  * @see https://developer.apple.com/documentation/apple_news/map
  */
-class Map extends Component implements \JsonSerializable
+class Map extends Component
 {
     /**
      * Optional caption text describing what is visible on the map. Note that
@@ -123,6 +124,11 @@ class Map extends Component implements \JsonSerializable
      */
     public function setAccessibilityCaption($accessibilityCaption)
     {
+        if (is_null($accessibilityCaption)) {
+            $this->accessibilityCaption = null;
+            return $this;
+        }
+
         Assert::string($accessibilityCaption);
 
         $this->accessibilityCaption = $accessibilityCaption;
@@ -145,6 +151,11 @@ class Map extends Component implements \JsonSerializable
      */
     public function setCaption($caption)
     {
+        if (is_null($caption)) {
+            $this->caption = null;
+            return $this;
+        }
+
         Assert::string($caption);
 
         $this->caption = $caption;
@@ -167,6 +178,11 @@ class Map extends Component implements \JsonSerializable
      */
     public function setItems($items)
     {
+        if (is_null($items)) {
+            $this->items = null;
+            return $this;
+        }
+
         Assert::isArray($items);
         Assert::allIsInstanceOfOrArray($items, MapItem::class);
 
@@ -238,6 +254,11 @@ class Map extends Component implements \JsonSerializable
      */
     public function setMapType($mapType)
     {
+        if (is_null($mapType)) {
+            $this->mapType = null;
+            return $this;
+        }
+
         Assert::oneOf($mapType, ["standard", "hybrid", "satellite"]);
 
         $this->mapType = $mapType;
@@ -269,6 +290,11 @@ class Map extends Component implements \JsonSerializable
      */
     public function setSpan($span)
     {
+        if (is_null($span)) {
+            $this->span = null;
+            return $this;
+        }
+
         if (is_object($span)) {
             Assert::isInstanceOf($span, MapSpan::class);
         } else {
@@ -277,25 +303,6 @@ class Map extends Component implements \JsonSerializable
 
         $this->span = is_array($span) ? new MapSpan($span) : $span;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

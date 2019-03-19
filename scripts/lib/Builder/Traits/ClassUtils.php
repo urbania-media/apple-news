@@ -76,6 +76,7 @@ trait ClassUtils
                     break;
                 case 'SupportedUnits':
                 case 'Color':
+                case 'Code':
                 case 'uuid':
                     $typeHints[] = 'string';
                     break;

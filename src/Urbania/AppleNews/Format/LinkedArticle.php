@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * A relationship between your article and another Apple News article.
  *
  * @see https://developer.apple.com/documentation/apple_news/linkedarticle
  */
-class LinkedArticle implements \JsonSerializable
+class LinkedArticle extends BaseSdkObject
 {
     /**
      * The URL for the link. Can be either an Apple News link, like
@@ -82,25 +83,6 @@ class LinkedArticle implements \JsonSerializable
 
         $this->URL = $URL;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

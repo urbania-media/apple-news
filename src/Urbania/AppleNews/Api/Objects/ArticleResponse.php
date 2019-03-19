@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * See which objects make up the publish article, read article, and
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/articleresponse
  */
-class ArticleResponse extends Article implements \JsonSerializable
+class ArticleResponse extends Article
 {
     /** @var \Urbania\AppleNews\Api\Objects\ArticleLinks */
     protected $links;
@@ -48,6 +49,11 @@ class ArticleResponse extends Article implements \JsonSerializable
      */
     public function setLinks($links)
     {
+        if (is_null($links)) {
+            $this->links = null;
+            return $this;
+        }
+
         if (is_object($links)) {
             Assert::isInstanceOf($links, ArticleLinks::class);
         } else {
@@ -74,6 +80,11 @@ class ArticleResponse extends Article implements \JsonSerializable
      */
     public function setMeta($meta)
     {
+        if (is_null($meta)) {
+            $this->meta = null;
+            return $this;
+        }
+
         if (is_object($meta)) {
             Assert::isInstanceOf($meta, Meta::class);
         } else {
@@ -82,25 +93,6 @@ class ArticleResponse extends Article implements \JsonSerializable
 
         $this->meta = is_array($meta) ? new Meta($meta) : $meta;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

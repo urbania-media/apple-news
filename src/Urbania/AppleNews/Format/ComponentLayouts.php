@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * An object containing component layout objects that components in the
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/articledocument/componentlayouts
  */
-class ComponentLayouts implements \JsonSerializable
+class ComponentLayouts extends BaseSdkObject
 {
     /**
      * A component layout, with a name you define that can be referred to by
@@ -41,6 +42,11 @@ class ComponentLayouts implements \JsonSerializable
      */
     public function setLayouts($layouts)
     {
+        if (is_null($layouts)) {
+            $this->layouts = null;
+            return $this;
+        }
+
         Assert::isMap($layouts);
         Assert::allIsInstanceOfOrArray($layouts, ComponentLayout::class);
 
@@ -50,25 +56,6 @@ class ComponentLayouts implements \JsonSerializable
         }
         $this->layouts = $items;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

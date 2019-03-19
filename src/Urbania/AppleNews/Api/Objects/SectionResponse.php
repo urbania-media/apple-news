@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * See which objects make up the section response.
  *
  * @see https://developer.apple.com/documentation/apple_news/sectionresponse
  */
-class SectionResponse extends Section implements \JsonSerializable
+class SectionResponse extends Section
 {
     /** @var \Urbania\AppleNews\Api\Objects\SectionLinks */
     protected $links;
@@ -40,6 +41,11 @@ class SectionResponse extends Section implements \JsonSerializable
      */
     public function setLinks($links)
     {
+        if (is_null($links)) {
+            $this->links = null;
+            return $this;
+        }
+
         if (is_object($links)) {
             Assert::isInstanceOf($links, SectionLinks::class);
         } else {
@@ -48,25 +54,6 @@ class SectionResponse extends Section implements \JsonSerializable
 
         $this->links = is_array($links) ? new SectionLinks($links) : $links;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

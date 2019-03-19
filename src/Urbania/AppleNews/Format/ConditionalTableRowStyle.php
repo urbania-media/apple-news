@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for applying styles to table rows that meet certain
@@ -11,8 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/conditionaltablerowstyle
  */
-class ConditionalTableRowStyle extends TableRowStyle implements
-    \JsonSerializable
+class ConditionalTableRowStyle extends TableRowStyle
 {
     /**
      * The background color for the row.
@@ -78,6 +78,11 @@ class ConditionalTableRowStyle extends TableRowStyle implements
      */
     public function setBackgroundColor($backgroundColor)
     {
+        if (is_null($backgroundColor)) {
+            $this->backgroundColor = null;
+            return $this;
+        }
+
         Assert::isColor($backgroundColor);
 
         $this->backgroundColor = $backgroundColor;
@@ -100,6 +105,11 @@ class ConditionalTableRowStyle extends TableRowStyle implements
      */
     public function setDivider($divider)
     {
+        if (is_null($divider)) {
+            $this->divider = null;
+            return $this;
+        }
+
         if (is_object($divider)) {
             Assert::isInstanceOf($divider, TableStrokeStyle::class);
         } else {
@@ -128,6 +138,11 @@ class ConditionalTableRowStyle extends TableRowStyle implements
      */
     public function setHeight($height)
     {
+        if (is_null($height)) {
+            $this->height = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($height);
 
         $this->height = $height;
@@ -161,25 +176,6 @@ class ConditionalTableRowStyle extends TableRowStyle implements
         }
         $this->selectors = $items;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

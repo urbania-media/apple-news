@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The component for including a quote.
  *
  * @see https://developer.apple.com/documentation/apple_news/quote
  */
-class Quote extends Text implements \JsonSerializable
+class Quote extends Text
 {
     /**
      * This component always has a role of quote.
@@ -30,25 +31,6 @@ class Quote extends Text implements \JsonSerializable
     public function getRole()
     {
         return $this->role;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

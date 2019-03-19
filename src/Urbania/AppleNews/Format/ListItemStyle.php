@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for defining the style for bulleted or numbered lists in an
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/listitemstyle
  */
-class ListItemStyle implements \JsonSerializable
+class ListItemStyle extends BaseSdkObject
 {
     /**
      * If type is set to character, provide the character to use as the list
@@ -53,6 +54,11 @@ class ListItemStyle implements \JsonSerializable
      */
     public function setCharacter($character)
     {
+        if (is_null($character)) {
+            $this->character = null;
+            return $this;
+        }
+
         Assert::string($character);
 
         $this->character = $character;
@@ -88,25 +94,6 @@ class ListItemStyle implements \JsonSerializable
 
         $this->type = $type;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

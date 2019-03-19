@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * Information about your article, including author name, creation date,
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/metadata
  */
-class Metadata implements \JsonSerializable
+class Metadata extends BaseSdkObject
 {
     /**
      * The authors of this article, who may or may not be shown in the byline
@@ -220,6 +221,11 @@ class Metadata implements \JsonSerializable
      */
     public function setAuthors($authors)
     {
+        if (is_null($authors)) {
+            $this->authors = null;
+            return $this;
+        }
+
         Assert::isArray($authors);
         Assert::allString($authors);
 
@@ -243,6 +249,11 @@ class Metadata implements \JsonSerializable
      */
     public function setCampaignData($campaignData)
     {
+        if (is_null($campaignData)) {
+            $this->campaignData = null;
+            return $this;
+        }
+
         if (is_object($campaignData)) {
             Assert::isInstanceOf($campaignData, CampaignData::class);
         } else {
@@ -271,6 +282,11 @@ class Metadata implements \JsonSerializable
      */
     public function setCanonicalURL($canonicalURL)
     {
+        if (is_null($canonicalURL)) {
+            $this->canonicalURL = null;
+            return $this;
+        }
+
         Assert::uri($canonicalURL);
 
         $this->canonicalURL = $canonicalURL;
@@ -293,6 +309,11 @@ class Metadata implements \JsonSerializable
      */
     public function setCoverArt($coverArt)
     {
+        if (is_null($coverArt)) {
+            $this->coverArt = null;
+            return $this;
+        }
+
         Assert::isArray($coverArt);
         Assert::allIsInstanceOfOrArray($coverArt, CoverArt::class);
 
@@ -320,6 +341,11 @@ class Metadata implements \JsonSerializable
      */
     public function setDateCreated($dateCreated)
     {
+        if (is_null($dateCreated)) {
+            $this->dateCreated = null;
+            return $this;
+        }
+
         Assert::isDate($dateCreated);
 
         $this->dateCreated = is_string($dateCreated)
@@ -344,6 +370,11 @@ class Metadata implements \JsonSerializable
      */
     public function setDateModified($dateModified)
     {
+        if (is_null($dateModified)) {
+            $this->dateModified = null;
+            return $this;
+        }
+
         Assert::isDate($dateModified);
 
         $this->dateModified = is_string($dateModified)
@@ -368,6 +399,11 @@ class Metadata implements \JsonSerializable
      */
     public function setDatePublished($datePublished)
     {
+        if (is_null($datePublished)) {
+            $this->datePublished = null;
+            return $this;
+        }
+
         Assert::isDate($datePublished);
 
         $this->datePublished = is_string($datePublished)
@@ -392,6 +428,11 @@ class Metadata implements \JsonSerializable
      */
     public function setExcerpt($excerpt)
     {
+        if (is_null($excerpt)) {
+            $this->excerpt = null;
+            return $this;
+        }
+
         Assert::string($excerpt);
 
         $this->excerpt = $excerpt;
@@ -414,6 +455,11 @@ class Metadata implements \JsonSerializable
      */
     public function setGeneratorIdentifier($generatorIdentifier)
     {
+        if (is_null($generatorIdentifier)) {
+            $this->generatorIdentifier = null;
+            return $this;
+        }
+
         Assert::string($generatorIdentifier);
 
         $this->generatorIdentifier = $generatorIdentifier;
@@ -436,6 +482,11 @@ class Metadata implements \JsonSerializable
      */
     public function setGeneratorName($generatorName)
     {
+        if (is_null($generatorName)) {
+            $this->generatorName = null;
+            return $this;
+        }
+
         Assert::string($generatorName);
 
         $this->generatorName = $generatorName;
@@ -458,6 +509,11 @@ class Metadata implements \JsonSerializable
      */
     public function setGeneratorVersion($generatorVersion)
     {
+        if (is_null($generatorVersion)) {
+            $this->generatorVersion = null;
+            return $this;
+        }
+
         Assert::string($generatorVersion);
 
         $this->generatorVersion = $generatorVersion;
@@ -480,6 +536,11 @@ class Metadata implements \JsonSerializable
      */
     public function setKeywords($keywords)
     {
+        if (is_null($keywords)) {
+            $this->keywords = null;
+            return $this;
+        }
+
         Assert::isArray($keywords);
         Assert::allString($keywords);
 
@@ -503,6 +564,11 @@ class Metadata implements \JsonSerializable
      */
     public function setLinks($links)
     {
+        if (is_null($links)) {
+            $this->links = null;
+            return $this;
+        }
+
         Assert::isArray($links);
         Assert::allIsInstanceOfOrArray($links, LinkedArticle::class);
 
@@ -530,6 +596,11 @@ class Metadata implements \JsonSerializable
      */
     public function setThumbnailURL($thumbnailURL)
     {
+        if (is_null($thumbnailURL)) {
+            $this->thumbnailURL = null;
+            return $this;
+        }
+
         Assert::string($thumbnailURL);
 
         $this->thumbnailURL = $thumbnailURL;
@@ -552,6 +623,11 @@ class Metadata implements \JsonSerializable
      */
     public function setTransparentToolbar($transparentToolbar)
     {
+        if (is_null($transparentToolbar)) {
+            $this->transparentToolbar = null;
+            return $this;
+        }
+
         Assert::boolean($transparentToolbar);
 
         $this->transparentToolbar = $transparentToolbar;
@@ -574,29 +650,15 @@ class Metadata implements \JsonSerializable
      */
     public function setVideoURL($videoURL)
     {
+        if (is_null($videoURL)) {
+            $this->videoURL = null;
+            return $this;
+        }
+
         Assert::uri($videoURL);
 
         $this->videoURL = $videoURL;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

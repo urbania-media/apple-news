@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for applying a style to table cells that meet certain
@@ -11,8 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/conditionaltablecellstyle
  */
-class ConditionalTableCellStyle extends TableCellStyle implements
-    \JsonSerializable
+class ConditionalTableCellStyle extends TableCellStyle
 {
     /**
      * The background color for the cell.
@@ -145,6 +145,11 @@ class ConditionalTableCellStyle extends TableCellStyle implements
      */
     public function setBackgroundColor($backgroundColor)
     {
+        if (is_null($backgroundColor)) {
+            $this->backgroundColor = null;
+            return $this;
+        }
+
         Assert::isColor($backgroundColor);
 
         $this->backgroundColor = $backgroundColor;
@@ -167,6 +172,11 @@ class ConditionalTableCellStyle extends TableCellStyle implements
      */
     public function setBorder($border)
     {
+        if (is_null($border)) {
+            $this->border = null;
+            return $this;
+        }
+
         if (is_object($border)) {
             Assert::isInstanceOf($border, TableBorder::class);
         } else {
@@ -193,6 +203,11 @@ class ConditionalTableCellStyle extends TableCellStyle implements
      */
     public function setHeight($height)
     {
+        if (is_null($height)) {
+            $this->height = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($height);
 
         $this->height = $height;
@@ -215,6 +230,11 @@ class ConditionalTableCellStyle extends TableCellStyle implements
      */
     public function setHorizontalAlignment($horizontalAlignment)
     {
+        if (is_null($horizontalAlignment)) {
+            $this->horizontalAlignment = null;
+            return $this;
+        }
+
         Assert::oneOf($horizontalAlignment, ["left", "center", "right"]);
 
         $this->horizontalAlignment = $horizontalAlignment;
@@ -237,6 +257,11 @@ class ConditionalTableCellStyle extends TableCellStyle implements
      */
     public function setMinimumWidth($minimumWidth)
     {
+        if (is_null($minimumWidth)) {
+            $this->minimumWidth = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($minimumWidth);
 
         $this->minimumWidth = $minimumWidth;
@@ -259,6 +284,11 @@ class ConditionalTableCellStyle extends TableCellStyle implements
      */
     public function setPadding($padding)
     {
+        if (is_null($padding)) {
+            $this->padding = null;
+            return $this;
+        }
+
         if (is_object($padding)) {
             Assert::isInstanceOf($padding, Padding::class);
         } elseif (!is_array($padding)) {
@@ -314,6 +344,11 @@ class ConditionalTableCellStyle extends TableCellStyle implements
      */
     public function setTextStyle($textStyle)
     {
+        if (is_null($textStyle)) {
+            $this->textStyle = null;
+            return $this;
+        }
+
         if (is_object($textStyle)) {
             Assert::isInstanceOf($textStyle, ComponentTextStyle::class);
         } elseif (!is_array($textStyle)) {
@@ -342,6 +377,11 @@ class ConditionalTableCellStyle extends TableCellStyle implements
      */
     public function setVerticalAlignment($verticalAlignment)
     {
+        if (is_null($verticalAlignment)) {
+            $this->verticalAlignment = null;
+            return $this;
+        }
+
         Assert::oneOf($verticalAlignment, ["top", "center", "bottom"]);
 
         $this->verticalAlignment = $verticalAlignment;
@@ -364,29 +404,15 @@ class ConditionalTableCellStyle extends TableCellStyle implements
      */
     public function setWidth($width)
     {
+        if (is_null($width)) {
+            $this->width = null;
+            return $this;
+        }
+
         Assert::integer($width);
 
         $this->width = $width;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

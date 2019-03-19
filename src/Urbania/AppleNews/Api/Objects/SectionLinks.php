@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * See the links returned by the section endpoints.
  *
  * @see https://developer.apple.com/documentation/apple_news/sectionlinks
  */
-class SectionLinks implements \JsonSerializable
+class SectionLinks extends BaseSdkObject
 {
     /**
      * The URL of the channel in which this section appears.
@@ -51,6 +52,11 @@ class SectionLinks implements \JsonSerializable
      */
     public function setChannel($channel)
     {
+        if (is_null($channel)) {
+            $this->channel = null;
+            return $this;
+        }
+
         Assert::string($channel);
 
         $this->channel = $channel;
@@ -73,29 +79,15 @@ class SectionLinks implements \JsonSerializable
      */
     public function setSelf($self)
     {
+        if (is_null($self)) {
+            $this->self = null;
+            return $this;
+        }
+
         Assert::string($self);
 
         $this->self = $self;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

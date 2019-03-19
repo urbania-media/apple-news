@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object that contains JSON data for a data table.
  *
  * @see https://developer.apple.com/documentation/apple_news/recordstore
  */
-class RecordStore implements \JsonSerializable
+class RecordStore extends BaseSdkObject
 {
     /**
      * Provides information about the data that can be in each data record.
@@ -88,25 +89,6 @@ class RecordStore implements \JsonSerializable
         }
         $this->records = $items;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The scene that gives the impression of a parallax effect by zooming
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/parallaxscaleheader
  */
-class ParallaxScaleHeader extends Scene implements \JsonSerializable
+class ParallaxScaleHeader extends Scene
 {
     /**
      * This scene always has the type parallax_scale.
@@ -31,25 +32,6 @@ class ParallaxScaleHeader extends Scene implements \JsonSerializable
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

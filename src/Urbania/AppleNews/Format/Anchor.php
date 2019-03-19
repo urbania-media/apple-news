@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for anchoring one component to another component in your
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/anchor
  */
-class Anchor implements \JsonSerializable
+class Anchor extends BaseSdkObject
 {
     /**
      * Sets which point in the origin component will get anchored to the
@@ -106,6 +107,11 @@ class Anchor implements \JsonSerializable
      */
     public function setOriginAnchorPosition($originAnchorPosition)
     {
+        if (is_null($originAnchorPosition)) {
+            $this->originAnchorPosition = null;
+            return $this;
+        }
+
         Assert::oneOf($originAnchorPosition, ["top", "center", "bottom"]);
 
         $this->originAnchorPosition = $originAnchorPosition;
@@ -128,6 +134,11 @@ class Anchor implements \JsonSerializable
      */
     public function setRangeLength($rangeLength)
     {
+        if (is_null($rangeLength)) {
+            $this->rangeLength = null;
+            return $this;
+        }
+
         Assert::integer($rangeLength);
 
         $this->rangeLength = $rangeLength;
@@ -150,6 +161,11 @@ class Anchor implements \JsonSerializable
      */
     public function setRangeStart($rangeStart)
     {
+        if (is_null($rangeStart)) {
+            $this->rangeStart = null;
+            return $this;
+        }
+
         Assert::integer($rangeStart);
 
         $this->rangeStart = $rangeStart;
@@ -172,6 +188,11 @@ class Anchor implements \JsonSerializable
      */
     public function setTarget($target)
     {
+        if (is_null($target)) {
+            $this->target = null;
+            return $this;
+        }
+
         Assert::string($target);
 
         $this->target = $target;
@@ -216,29 +237,15 @@ class Anchor implements \JsonSerializable
      */
     public function setTargetComponentIdentifier($targetComponentIdentifier)
     {
+        if (is_null($targetComponentIdentifier)) {
+            $this->targetComponentIdentifier = null;
+            return $this;
+        }
+
         Assert::string($targetComponentIdentifier);
 
         $this->targetComponentIdentifier = $targetComponentIdentifier;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

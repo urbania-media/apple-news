@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * See the field returned by the promote article response.
  *
  * @see https://developer.apple.com/documentation/apple_news/promotearticleresponse
  */
-class PromoteArticleResponse implements \JsonSerializable
+class PromoteArticleResponse extends BaseSdkObject
 {
     /**
      * List of URLs for the promoted articles.
@@ -41,30 +42,16 @@ class PromoteArticleResponse implements \JsonSerializable
      */
     public function setPromotedArticles($promotedArticles)
     {
+        if (is_null($promotedArticles)) {
+            $this->promotedArticles = null;
+            return $this;
+        }
+
         Assert::isArray($promotedArticles);
         Assert::allString($promotedArticles);
 
         $this->promotedArticles = $promotedArticles;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

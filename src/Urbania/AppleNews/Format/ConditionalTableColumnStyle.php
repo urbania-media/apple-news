@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for applying styles to table columns that meet certain
@@ -11,8 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/conditionaltablecolumnstyle
  */
-class ConditionalTableColumnStyle extends TableColumnStyle implements
-    \JsonSerializable
+class ConditionalTableColumnStyle extends TableColumnStyle
 {
     /**
      * The background color for the column.
@@ -90,6 +90,11 @@ class ConditionalTableColumnStyle extends TableColumnStyle implements
      */
     public function setBackgroundColor($backgroundColor)
     {
+        if (is_null($backgroundColor)) {
+            $this->backgroundColor = null;
+            return $this;
+        }
+
         Assert::isColor($backgroundColor);
 
         $this->backgroundColor = $backgroundColor;
@@ -112,6 +117,11 @@ class ConditionalTableColumnStyle extends TableColumnStyle implements
      */
     public function setDivider($divider)
     {
+        if (is_null($divider)) {
+            $this->divider = null;
+            return $this;
+        }
+
         if (is_object($divider)) {
             Assert::isInstanceOf($divider, TableStrokeStyle::class);
         } else {
@@ -140,6 +150,11 @@ class ConditionalTableColumnStyle extends TableColumnStyle implements
      */
     public function setMinimumWidth($minimumWidth)
     {
+        if (is_null($minimumWidth)) {
+            $this->minimumWidth = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($minimumWidth);
 
         $this->minimumWidth = $minimumWidth;
@@ -191,29 +206,15 @@ class ConditionalTableColumnStyle extends TableColumnStyle implements
      */
     public function setWidth($width)
     {
+        if (is_null($width)) {
+            $this->width = null;
+            return $this;
+        }
+
         Assert::integer($width);
 
         $this->width = $width;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

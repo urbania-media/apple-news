@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The scene that briefly keeps a header at the top of the screen as the
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/fadingstickyheader
  */
-class FadingStickyHeader extends Scene implements \JsonSerializable
+class FadingStickyHeader extends Scene
 {
     /**
      * The color the header background will fade to, defined as a 3- to
@@ -51,6 +52,11 @@ class FadingStickyHeader extends Scene implements \JsonSerializable
      */
     public function setFadeColor($fadeColor)
     {
+        if (is_null($fadeColor)) {
+            $this->fadeColor = null;
+            return $this;
+        }
+
         Assert::isColor($fadeColor);
 
         $this->fadeColor = $fadeColor;
@@ -64,25 +70,6 @@ class FadingStickyHeader extends Scene implements \JsonSerializable
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

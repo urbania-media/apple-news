@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * See the object that wraps the throttling information that's returned
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/throttling
  */
-class Throttling implements \JsonSerializable
+class Throttling extends BaseSdkObject
 {
     /**
      * Estimate of the number of seconds until this request begins
@@ -76,6 +77,11 @@ class Throttling implements \JsonSerializable
      */
     public function setEstimatedDelayInSeconds($estimatedDelayInSeconds)
     {
+        if (is_null($estimatedDelayInSeconds)) {
+            $this->estimatedDelayInSeconds = null;
+            return $this;
+        }
+
         Assert::integer($estimatedDelayInSeconds);
 
         $this->estimatedDelayInSeconds = $estimatedDelayInSeconds;
@@ -98,6 +104,11 @@ class Throttling implements \JsonSerializable
      */
     public function setIsThrottled($isThrottled)
     {
+        if (is_null($isThrottled)) {
+            $this->isThrottled = null;
+            return $this;
+        }
+
         Assert::boolean($isThrottled);
 
         $this->isThrottled = $isThrottled;
@@ -120,6 +131,11 @@ class Throttling implements \JsonSerializable
      */
     public function setQueueSize($queueSize)
     {
+        if (is_null($queueSize)) {
+            $this->queueSize = null;
+            return $this;
+        }
+
         Assert::integer($queueSize);
 
         $this->queueSize = $queueSize;
@@ -142,29 +158,15 @@ class Throttling implements \JsonSerializable
      */
     public function setQuotaAvailable($quotaAvailable)
     {
+        if (is_null($quotaAvailable)) {
+            $this->quotaAvailable = null;
+            return $this;
+        }
+
         Assert::integer($quotaAvailable);
 
         $this->quotaAvailable = $quotaAvailable;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

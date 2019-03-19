@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The behavior whereby a component moves at a speed different from the
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/parallax
  */
-class Parallax extends Behavior implements \JsonSerializable
+class Parallax extends Behavior
 {
     /**
      * The speed of the component, as a factor of the scroll speed.The value
@@ -52,6 +53,11 @@ class Parallax extends Behavior implements \JsonSerializable
      */
     public function setFactor($factor)
     {
+        if (is_null($factor)) {
+            $this->factor = null;
+            return $this;
+        }
+
         Assert::number($factor);
 
         $this->factor = $factor;
@@ -65,25 +71,6 @@ class Parallax extends Behavior implements \JsonSerializable
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

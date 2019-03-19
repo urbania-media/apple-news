@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The root object of an Apple News article, containing required
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/articledocument
  */
-class ArticleDocument implements \JsonSerializable
+class ArticleDocument extends BaseSdkObject
 {
     /**
      * The version of Apple News Format used in the JSON document. The
@@ -195,6 +196,11 @@ class ArticleDocument implements \JsonSerializable
      */
     public function setAdvertisingSettings($advertisingSettings)
     {
+        if (is_null($advertisingSettings)) {
+            $this->advertisingSettings = null;
+            return $this;
+        }
+
         if (is_object($advertisingSettings)) {
             Assert::isInstanceOf(
                 $advertisingSettings,
@@ -226,6 +232,11 @@ class ArticleDocument implements \JsonSerializable
      */
     public function setComponentLayouts($componentLayouts)
     {
+        if (is_null($componentLayouts)) {
+            $this->componentLayouts = null;
+            return $this;
+        }
+
         if (is_object($componentLayouts)) {
             Assert::isInstanceOf($componentLayouts, ComponentLayouts::class);
         } else {
@@ -254,6 +265,11 @@ class ArticleDocument implements \JsonSerializable
      */
     public function setComponentStyles($componentStyles)
     {
+        if (is_null($componentStyles)) {
+            $this->componentStyles = null;
+            return $this;
+        }
+
         if (is_object($componentStyles)) {
             Assert::isInstanceOf($componentStyles, ComponentStyles::class);
         } else {
@@ -342,6 +358,11 @@ class ArticleDocument implements \JsonSerializable
      */
     public function setDocumentStyle($documentStyle)
     {
+        if (is_null($documentStyle)) {
+            $this->documentStyle = null;
+            return $this;
+        }
+
         if (is_object($documentStyle)) {
             Assert::isInstanceOf($documentStyle, DocumentStyle::class);
         } else {
@@ -440,6 +461,11 @@ class ArticleDocument implements \JsonSerializable
      */
     public function setMetadata($metadata)
     {
+        if (is_null($metadata)) {
+            $this->metadata = null;
+            return $this;
+        }
+
         if (is_object($metadata)) {
             Assert::isInstanceOf($metadata, Metadata::class);
         } else {
@@ -468,6 +494,11 @@ class ArticleDocument implements \JsonSerializable
      */
     public function setSubtitle($subtitle)
     {
+        if (is_null($subtitle)) {
+            $this->subtitle = null;
+            return $this;
+        }
+
         Assert::string($subtitle);
 
         $this->subtitle = $subtitle;
@@ -490,6 +521,11 @@ class ArticleDocument implements \JsonSerializable
      */
     public function setTextStyles($textStyles)
     {
+        if (is_null($textStyles)) {
+            $this->textStyles = null;
+            return $this;
+        }
+
         if (is_object($textStyles)) {
             Assert::isInstanceOf($textStyles, TextStyles::class);
         } else {
@@ -544,25 +580,6 @@ class ArticleDocument implements \JsonSerializable
 
         $this->version = $version;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

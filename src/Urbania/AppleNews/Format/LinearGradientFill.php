@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for displaying a linear gradient as a component background.
  *
  * @see https://developer.apple.com/documentation/apple_news/lineargradientfill
  */
-class LinearGradientFill extends GradientFill implements \JsonSerializable
+class LinearGradientFill extends GradientFill
 {
     /**
      * The angle of the gradient fill, in degrees. Use the angle to set the
@@ -52,6 +53,11 @@ class LinearGradientFill extends GradientFill implements \JsonSerializable
      */
     public function setAngle($angle)
     {
+        if (is_null($angle)) {
+            $this->angle = null;
+            return $this;
+        }
+
         Assert::number($angle);
 
         $this->angle = $angle;
@@ -65,25 +71,6 @@ class LinearGradientFill extends GradientFill implements \JsonSerializable
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

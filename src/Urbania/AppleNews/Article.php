@@ -6,8 +6,10 @@ use Urbania\AppleNews\Format\ArticleDocument;
 use Urbania\AppleNews\Api\Objects\Article as ApiArticle;
 use Urbania\AppleNews\Api\Objects\CreateArticleMetadataFields;
 use Urbania\AppleNews\Api\Objects\UpdateArticleMetadataFields;
+use Urbania\AppleNews\Support\Utils;
+use Urbania\AppleNews\Support\BaseObject;
 
-class Article implements \JsonSerializable
+class Article extends BaseObject
 {
     protected $article;
 
@@ -86,35 +88,94 @@ class Article implements \JsonSerializable
         return $this;
     }
 
-    public function __get(string $name)
+    /**
+     * Get the article as a multipart body
+     * @return array The multipart body
+     */
+    public function getMultipartBody()
+    {
+        $body = [
+            [
+                'name' => 'article.json',
+                'contents' => json_encode($this),
+                'filename' => 'article.json',
+                'headers' => [
+                    'Content-type' => 'application/json'
+                ]
+            ]
+        ];
+
+        $metadata = $this->getMetadata();
+        if (!is_null($metadata)) {
+            $body[] = [
+                'name' => 'metadata',
+                'contents' => json_encode($metadata),
+                'headers' => [
+                    'Content-type' => 'application/json'
+                ]
+            ];
+        }
+
+        return $body;
+    }
+
+    /**
+     * Get a property value
+     * @param  string $name The name of the property
+     * @return mixed|null
+     */
+    protected function propertyGet($name)
     {
         return $this->document->{$name};
     }
 
+    /**
+     * Set a property value
+     * @param  string $name The name of the property
+     * @param  mixed $value The new value of the property
+     * @return $this
+     */
+    protected function propertySet($name, $value)
+    {
+        $this->document->{$name} = $value;
+        return $this;
+    }
+
+    /**
+     * Unset a property value
+     * @param  string $name The name of the property
+     * @return mixed|null
+     */
+    protected function propertyUnset($name)
+    {
+        unset($this->document->{$name});
+    }
+
+    /**
+     * Check if a property exists
+     * @param  string $name The name of the property
+     * @return mixed|null
+     */
+    protected function propertyExists($name)
+    {
+        return isset($this->document->{$name});
+    }
+
+    /**
+     * Call method on the document
+     * @param  string $name      The name of the method
+     * @param  array  $arguments The arguments
+     * @return mixed
+     */
     public function __call(string $name, array $arguments)
     {
         return call_user_func_array([$this->document, $name], $arguments);
     }
 
     /**
-     * Convert the object into something JSON serializable.
+     * Get the document as array
      * @return array
      */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
-    }
-
     public function toArray()
     {
         return $this->document->toArray();

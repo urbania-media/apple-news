@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for defining columns, gutters, and margins for your
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/layout
  */
-class Layout implements \JsonSerializable
+class Layout extends BaseSdkObject
 {
     /**
      * The number of columns this article was designed for. You must have at
@@ -103,6 +104,11 @@ class Layout implements \JsonSerializable
      */
     public function setGutter($gutter)
     {
+        if (is_null($gutter)) {
+            $this->gutter = null;
+            return $this;
+        }
+
         Assert::integer($gutter);
 
         $this->gutter = $gutter;
@@ -125,6 +131,11 @@ class Layout implements \JsonSerializable
      */
     public function setMargin($margin)
     {
+        if (is_null($margin)) {
+            $this->margin = null;
+            return $this;
+        }
+
         Assert::integer($margin);
 
         $this->margin = $margin;
@@ -151,25 +162,6 @@ class Layout implements \JsonSerializable
 
         $this->width = $width;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for defining conditions that will cause a conditional style
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/tablecellselector
  */
-class TableCellSelector implements \JsonSerializable
+class TableCellSelector extends BaseSdkObject
 {
     /**
      * Specifies a column index. The leftmost column of data has an index of
@@ -104,6 +105,11 @@ class TableCellSelector implements \JsonSerializable
      */
     public function setColumnIndex($columnIndex)
     {
+        if (is_null($columnIndex)) {
+            $this->columnIndex = null;
+            return $this;
+        }
+
         Assert::integer($columnIndex);
 
         $this->columnIndex = $columnIndex;
@@ -126,6 +132,11 @@ class TableCellSelector implements \JsonSerializable
      */
     public function setDescriptor($descriptor)
     {
+        if (is_null($descriptor)) {
+            $this->descriptor = null;
+            return $this;
+        }
+
         Assert::string($descriptor);
 
         $this->descriptor = $descriptor;
@@ -148,6 +159,11 @@ class TableCellSelector implements \JsonSerializable
      */
     public function setEvenColumns($evenColumns)
     {
+        if (is_null($evenColumns)) {
+            $this->evenColumns = null;
+            return $this;
+        }
+
         Assert::boolean($evenColumns);
 
         $this->evenColumns = $evenColumns;
@@ -170,6 +186,11 @@ class TableCellSelector implements \JsonSerializable
      */
     public function setEvenRows($evenRows)
     {
+        if (is_null($evenRows)) {
+            $this->evenRows = null;
+            return $this;
+        }
+
         Assert::boolean($evenRows);
 
         $this->evenRows = $evenRows;
@@ -192,6 +213,11 @@ class TableCellSelector implements \JsonSerializable
      */
     public function setOddColumns($oddColumns)
     {
+        if (is_null($oddColumns)) {
+            $this->oddColumns = null;
+            return $this;
+        }
+
         Assert::boolean($oddColumns);
 
         $this->oddColumns = $oddColumns;
@@ -214,6 +240,11 @@ class TableCellSelector implements \JsonSerializable
      */
     public function setOddRows($oddRows)
     {
+        if (is_null($oddRows)) {
+            $this->oddRows = null;
+            return $this;
+        }
+
         Assert::boolean($oddRows);
 
         $this->oddRows = $oddRows;
@@ -236,29 +267,15 @@ class TableCellSelector implements \JsonSerializable
      */
     public function setRowIndex($rowIndex)
     {
+        if (is_null($rowIndex)) {
+            $this->rowIndex = null;
+            return $this;
+        }
+
         Assert::integer($rowIndex);
 
         $this->rowIndex = $rowIndex;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

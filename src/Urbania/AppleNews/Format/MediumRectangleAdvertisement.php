@@ -3,15 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The component for adding a medium, fixed-size rectangle ad.
  *
  * @see https://developer.apple.com/documentation/apple_news/mediumrectangleadvertisement
  */
-class MediumRectangleAdvertisement extends Component implements
-    \JsonSerializable
+class MediumRectangleAdvertisement extends Component
 {
     /**
      * This component always has a role of medium_rectangle_advertisement.
@@ -31,25 +31,6 @@ class MediumRectangleAdvertisement extends Component implements
     public function getRole()
     {
         return $this->role;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

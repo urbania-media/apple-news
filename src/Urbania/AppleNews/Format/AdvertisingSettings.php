@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for defining properties that affect the frequency and
@@ -12,7 +13,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/advertisingsettings
  */
-class AdvertisingSettings implements \JsonSerializable
+class AdvertisingSettings extends BaseSdkObject
 {
     /**
      * The banner type that should be shown.
@@ -81,6 +82,11 @@ class AdvertisingSettings implements \JsonSerializable
      */
     public function setBannerType($bannerType)
     {
+        if (is_null($bannerType)) {
+            $this->bannerType = null;
+            return $this;
+        }
+
         Assert::oneOf($bannerType, [
             "any",
             "standard",
@@ -108,6 +114,11 @@ class AdvertisingSettings implements \JsonSerializable
      */
     public function setDistanceFromMedia($distanceFromMedia)
     {
+        if (is_null($distanceFromMedia)) {
+            $this->distanceFromMedia = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($distanceFromMedia);
 
         $this->distanceFromMedia = $distanceFromMedia;
@@ -130,6 +141,11 @@ class AdvertisingSettings implements \JsonSerializable
      */
     public function setFrequency($frequency)
     {
+        if (is_null($frequency)) {
+            $this->frequency = null;
+            return $this;
+        }
+
         Assert::integer($frequency);
 
         $this->frequency = $frequency;
@@ -152,6 +168,11 @@ class AdvertisingSettings implements \JsonSerializable
      */
     public function setLayout($layout)
     {
+        if (is_null($layout)) {
+            $this->layout = null;
+            return $this;
+        }
+
         if (is_object($layout)) {
             Assert::isInstanceOf($layout, AdvertisingLayout::class);
         } else {
@@ -162,25 +183,6 @@ class AdvertisingSettings implements \JsonSerializable
             ? new AdvertisingLayout($layout)
             : $layout;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

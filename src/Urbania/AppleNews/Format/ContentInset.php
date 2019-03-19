@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for defining the space around the component content on one
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/contentinset
  */
-class ContentInset implements \JsonSerializable
+class ContentInset extends BaseSdkObject
 {
     /**
      * Applies an inset to the bottom of the component.
@@ -72,6 +73,11 @@ class ContentInset implements \JsonSerializable
      */
     public function setBottom($bottom)
     {
+        if (is_null($bottom)) {
+            $this->bottom = null;
+            return $this;
+        }
+
         Assert::boolean($bottom);
 
         $this->bottom = $bottom;
@@ -94,6 +100,11 @@ class ContentInset implements \JsonSerializable
      */
     public function setLeft($left)
     {
+        if (is_null($left)) {
+            $this->left = null;
+            return $this;
+        }
+
         Assert::boolean($left);
 
         $this->left = $left;
@@ -116,6 +127,11 @@ class ContentInset implements \JsonSerializable
      */
     public function setRight($right)
     {
+        if (is_null($right)) {
+            $this->right = null;
+            return $this;
+        }
+
         Assert::boolean($right);
 
         $this->right = $right;
@@ -138,29 +154,15 @@ class ContentInset implements \JsonSerializable
      */
     public function setTop($top)
     {
+        if (is_null($top)) {
+            $this->top = null;
+            return $this;
+        }
+
         Assert::boolean($top);
 
         $this->top = $top;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

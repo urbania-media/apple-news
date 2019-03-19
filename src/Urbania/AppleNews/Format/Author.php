@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The component for adding the name of the author.
  *
  * @see https://developer.apple.com/documentation/apple_news/author
  */
-class Author extends Text implements \JsonSerializable
+class Author extends Text
 {
     /**
      * This component always has a role of author.
@@ -30,25 +31,6 @@ class Author extends Text implements \JsonSerializable
     public function getRole()
     {
         return $this->role;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

@@ -37,7 +37,8 @@ class ObjectFileBuilder
         $namespaceName = $this->getClassNamespace($object['name']);
         $namespace = $file->addNamespace($namespaceName);
         $namespace->addUse('Carbon\Carbon');
-        $namespace->addUse('Urbania\AppleNews\Assert');
+        $namespace->addUse('Urbania\AppleNews\Support\Assert');
+        $namespace->addUse('Urbania\AppleNews\Support\BaseSdkObject');
         return $namespace;
     }
 

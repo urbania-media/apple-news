@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * Properties shared by all text component types.
  *
  * @see https://developer.apple.com/documentation/apple_news/text
  */
-class Text extends Component implements \JsonSerializable
+class Text extends Component
 {
     /**
      * An array of Link objects that provide additional information for
@@ -105,6 +106,11 @@ class Text extends Component implements \JsonSerializable
      */
     public function setAdditions($additions)
     {
+        if (is_null($additions)) {
+            $this->additions = null;
+            return $this;
+        }
+
         Assert::isArray($additions);
         Assert::allIsInstanceOfOrArray($additions, Addition::class);
 
@@ -132,6 +138,11 @@ class Text extends Component implements \JsonSerializable
      */
     public function setFormat($format)
     {
+        if (is_null($format)) {
+            $this->format = null;
+            return $this;
+        }
+
         Assert::oneOf($format, ["markdown", "html", "none"]);
 
         $this->format = $format;
@@ -154,6 +165,11 @@ class Text extends Component implements \JsonSerializable
      */
     public function setInlineTextStyles($inlineTextStyles)
     {
+        if (is_null($inlineTextStyles)) {
+            $this->inlineTextStyles = null;
+            return $this;
+        }
+
         Assert::isArray($inlineTextStyles);
         Assert::allIsInstanceOfOrArray(
             $inlineTextStyles,
@@ -228,6 +244,11 @@ class Text extends Component implements \JsonSerializable
      */
     public function setTextStyle($textStyle)
     {
+        if (is_null($textStyle)) {
+            $this->textStyle = null;
+            return $this;
+        }
+
         if (is_object($textStyle)) {
             Assert::isInstanceOf($textStyle, ComponentTextStyle::class);
         } elseif (!is_array($textStyle)) {
@@ -238,25 +259,6 @@ class Text extends Component implements \JsonSerializable
             ? new ComponentTextStyle($textStyle)
             : $textStyle;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

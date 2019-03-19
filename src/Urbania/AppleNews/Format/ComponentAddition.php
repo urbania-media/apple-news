@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * Properties shared by all types of component additions.
  *
  * @see https://developer.apple.com/documentation/apple_news/componentaddition
  */
-class ComponentAddition implements \JsonSerializable
+class ComponentAddition extends BaseSdkObject
 {
     /**
      * The type of componentAddition. For example ComponentLink.
@@ -45,25 +46,6 @@ class ComponentAddition implements \JsonSerializable
 
         $this->type = $type;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

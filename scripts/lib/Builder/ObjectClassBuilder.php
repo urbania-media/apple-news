@@ -4,7 +4,7 @@ namespace Urbania\AppleNews\Scripts\Builder;
 
 use Nette\PhpGenerator\ClassType;
 use Urbania\AppleNews\Scripts\Builder\Traits\ClassUtils;
-use Urbania\AppleNews\Utils;
+use Urbania\AppleNews\Support\Utils;
 use ReflectionClass;
 
 class ObjectClassBuilder
@@ -19,6 +19,8 @@ class ObjectClassBuilder
     protected $setMethodbuilder;
     protected $toArrayMethodBuilder;
 
+    protected $baseExtends = 'Support\\BaseSdkObject';
+
     public function __construct()
     {
         $this->constantsBuilder = new ObjectConstantsBuilder();
@@ -28,7 +30,6 @@ class ObjectClassBuilder
         $this->getMethodBuilder = new ObjectGetMethodBuilder();
         $this->setMethodBuilder = new ObjectSetMethodBuilder();
         $this->toArrayMethodBuilder = new ObjectToArrayMethodBuilder();
-        $this->jsonMethodsBuilder = new ObjectJsonMethodsBuilder();
     }
 
     public function build(array $object)
@@ -60,8 +61,6 @@ class ObjectClassBuilder
             $class = new ClassType($baseClassName);
         }
 
-        $class->addImplement('JsonSerializable');
-
         if (!is_null($typed)) {
             $typedMembers = $this->buildTyped($typed);
             foreach ($typedMembers as $typedMember) {
@@ -87,6 +86,8 @@ class ObjectClassBuilder
             $class->setExtends($this->getNamespace($extends));
         } elseif (!is_null($baseExtends)) {
             $class->setExtends($this->getNamespace($baseExtends));
+        } else if (!is_null($this->baseExtends)) {
+            $class->setExtends($this->getNamespace($this->baseExtends));
         }
 
         $propertiesMember = $this->buildProperties($properties);
@@ -119,13 +120,6 @@ class ObjectClassBuilder
             : null;
         if (!is_null($toArrayMethod)) {
             $class->addMember($toArrayMethod);
-        }
-
-        $jsonMethods = $this->buildJsonMethods();
-        foreach ($jsonMethods as $jsonMethod) {
-            if (!isset($methods[$jsonMethod->getName()])) {
-                $class->addMember($jsonMethod);
-            }
         }
 
         // $properties = $class->getProperties();
@@ -215,15 +209,10 @@ class ObjectClassBuilder
         return $this->toArrayMethodBuilder->build($properties, $extends);
     }
 
-    protected function buildJsonMethods()
-    {
-        return $this->jsonMethodsBuilder->build();
-    }
-
     protected function sortMembers($members)
     {
         $firstMethods = ['__construct', 'createTyped'];
-        $lastMethods = ['jsonSerialize', 'toJson', 'toArray'];
+        $lastMethods = ['toArray'];
         $names = array_keys($members);
         usort($names, function ($a, $b) use ($firstMethods, $lastMethods) {
 

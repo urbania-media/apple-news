@@ -279,7 +279,7 @@ class ObjectDocument extends Document
             return 'array:' . $this->getType($matches[1]);
         } elseif (preg_match('/\.([a-z].*)$/', $type, $matches)) {
             return $this->getType(ucfirst($matches[1]));
-        } elseif (preg_match('/^(Color|SupportedUnits)$/', $type)) {
+        } elseif (preg_match('/^(Color|SupportedUnits|Code)$/', $type)) {
             return $type;
         } elseif (preg_match('/^([A-Z][^\.]+)\.([A-Z][^\.]+)$/', $type, $matches)) {
             return $this->getType($matches[1].$matches[2]);

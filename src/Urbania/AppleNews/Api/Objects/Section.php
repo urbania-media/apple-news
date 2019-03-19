@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * See the fields returned by the section endpoints.
  *
  * @see https://developer.apple.com/documentation/apple_news/section
  */
-class Section implements \JsonSerializable
+class Section extends BaseSdkObject
 {
     /**
      * The date and time this section was created.
@@ -102,6 +103,11 @@ class Section implements \JsonSerializable
      */
     public function setCreatedAt($createdAt)
     {
+        if (is_null($createdAt)) {
+            $this->createdAt = null;
+            return $this;
+        }
+
         Assert::isDate($createdAt);
 
         $this->createdAt = is_string($createdAt)
@@ -126,6 +132,11 @@ class Section implements \JsonSerializable
      */
     public function setId($id)
     {
+        if (is_null($id)) {
+            $this->id = null;
+            return $this;
+        }
+
         Assert::uuid($id);
 
         $this->id = $id;
@@ -148,6 +159,11 @@ class Section implements \JsonSerializable
      */
     public function setIsDefault($isDefault)
     {
+        if (is_null($isDefault)) {
+            $this->isDefault = null;
+            return $this;
+        }
+
         Assert::boolean($isDefault);
 
         $this->isDefault = $isDefault;
@@ -170,6 +186,11 @@ class Section implements \JsonSerializable
      */
     public function setModifiedAt($modifiedAt)
     {
+        if (is_null($modifiedAt)) {
+            $this->modifiedAt = null;
+            return $this;
+        }
+
         Assert::isDate($modifiedAt);
 
         $this->modifiedAt = is_string($modifiedAt)
@@ -194,6 +215,11 @@ class Section implements \JsonSerializable
      */
     public function setName($name)
     {
+        if (is_null($name)) {
+            $this->name = null;
+            return $this;
+        }
+
         Assert::string($name);
 
         $this->name = $name;
@@ -216,6 +242,11 @@ class Section implements \JsonSerializable
      */
     public function setShareUrl($shareUrl)
     {
+        if (is_null($shareUrl)) {
+            $this->shareUrl = null;
+            return $this;
+        }
+
         Assert::string($shareUrl);
 
         $this->shareUrl = $shareUrl;
@@ -238,29 +269,15 @@ class Section implements \JsonSerializable
      */
     public function setType($type)
     {
+        if (is_null($type)) {
+            $this->type = null;
+            return $this;
+        }
+
         Assert::string($type);
 
         $this->type = $type;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

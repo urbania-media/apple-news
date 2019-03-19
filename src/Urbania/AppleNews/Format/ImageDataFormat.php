@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object that allows you to specify the minimum and maximum
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/imagedataformat
  */
-class ImageDataFormat extends DataFormat implements \JsonSerializable
+class ImageDataFormat extends DataFormat
 {
     /**
      * The maximum height of an image in a cell as an integer in points or as
@@ -85,6 +86,11 @@ class ImageDataFormat extends DataFormat implements \JsonSerializable
      */
     public function setMaximumHeight($maximumHeight)
     {
+        if (is_null($maximumHeight)) {
+            $this->maximumHeight = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($maximumHeight);
 
         $this->maximumHeight = $maximumHeight;
@@ -107,6 +113,11 @@ class ImageDataFormat extends DataFormat implements \JsonSerializable
      */
     public function setMaximumWidth($maximumWidth)
     {
+        if (is_null($maximumWidth)) {
+            $this->maximumWidth = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($maximumWidth);
 
         $this->maximumWidth = $maximumWidth;
@@ -129,6 +140,11 @@ class ImageDataFormat extends DataFormat implements \JsonSerializable
      */
     public function setMinimumHeight($minimumHeight)
     {
+        if (is_null($minimumHeight)) {
+            $this->minimumHeight = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($minimumHeight);
 
         $this->minimumHeight = $minimumHeight;
@@ -151,6 +167,11 @@ class ImageDataFormat extends DataFormat implements \JsonSerializable
      */
     public function setMinimumWidth($minimumWidth)
     {
+        if (is_null($minimumWidth)) {
+            $this->minimumWidth = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($minimumWidth);
 
         $this->minimumWidth = $minimumWidth;
@@ -164,25 +185,6 @@ class ImageDataFormat extends DataFormat implements \JsonSerializable
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

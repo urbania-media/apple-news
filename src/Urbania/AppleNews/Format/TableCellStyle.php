@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for applying styles to cells in a table.
  *
  * @see https://developer.apple.com/documentation/apple_news/tablecellstyle
  */
-class TableCellStyle implements \JsonSerializable
+class TableCellStyle extends BaseSdkObject
 {
     /**
      * The background color for the cell.
@@ -144,6 +145,11 @@ class TableCellStyle implements \JsonSerializable
      */
     public function setBackgroundColor($backgroundColor)
     {
+        if (is_null($backgroundColor)) {
+            $this->backgroundColor = null;
+            return $this;
+        }
+
         Assert::isColor($backgroundColor);
 
         $this->backgroundColor = $backgroundColor;
@@ -166,6 +172,11 @@ class TableCellStyle implements \JsonSerializable
      */
     public function setBorder($border)
     {
+        if (is_null($border)) {
+            $this->border = null;
+            return $this;
+        }
+
         if (is_object($border)) {
             Assert::isInstanceOf($border, TableBorder::class);
         } else {
@@ -192,6 +203,11 @@ class TableCellStyle implements \JsonSerializable
      */
     public function setConditional($conditional)
     {
+        if (is_null($conditional)) {
+            $this->conditional = null;
+            return $this;
+        }
+
         Assert::isArray($conditional);
         Assert::allIsInstanceOfOrArray(
             $conditional,
@@ -224,6 +240,11 @@ class TableCellStyle implements \JsonSerializable
      */
     public function setHeight($height)
     {
+        if (is_null($height)) {
+            $this->height = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($height);
 
         $this->height = $height;
@@ -246,6 +267,11 @@ class TableCellStyle implements \JsonSerializable
      */
     public function setHorizontalAlignment($horizontalAlignment)
     {
+        if (is_null($horizontalAlignment)) {
+            $this->horizontalAlignment = null;
+            return $this;
+        }
+
         Assert::oneOf($horizontalAlignment, ["left", "center", "right"]);
 
         $this->horizontalAlignment = $horizontalAlignment;
@@ -268,6 +294,11 @@ class TableCellStyle implements \JsonSerializable
      */
     public function setMinimumWidth($minimumWidth)
     {
+        if (is_null($minimumWidth)) {
+            $this->minimumWidth = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($minimumWidth);
 
         $this->minimumWidth = $minimumWidth;
@@ -290,6 +321,11 @@ class TableCellStyle implements \JsonSerializable
      */
     public function setPadding($padding)
     {
+        if (is_null($padding)) {
+            $this->padding = null;
+            return $this;
+        }
+
         if (is_object($padding)) {
             Assert::isInstanceOf($padding, Padding::class);
         } elseif (!is_array($padding)) {
@@ -316,6 +352,11 @@ class TableCellStyle implements \JsonSerializable
      */
     public function setTextStyle($textStyle)
     {
+        if (is_null($textStyle)) {
+            $this->textStyle = null;
+            return $this;
+        }
+
         if (is_object($textStyle)) {
             Assert::isInstanceOf($textStyle, ComponentTextStyle::class);
         } elseif (!is_array($textStyle)) {
@@ -344,6 +385,11 @@ class TableCellStyle implements \JsonSerializable
      */
     public function setVerticalAlignment($verticalAlignment)
     {
+        if (is_null($verticalAlignment)) {
+            $this->verticalAlignment = null;
+            return $this;
+        }
+
         Assert::oneOf($verticalAlignment, ["top", "center", "bottom"]);
 
         $this->verticalAlignment = $verticalAlignment;
@@ -366,29 +412,15 @@ class TableCellStyle implements \JsonSerializable
      */
     public function setWidth($width)
     {
+        if (is_null($width)) {
+            $this->width = null;
+            return $this;
+        }
+
         Assert::integer($width);
 
         $this->width = $width;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

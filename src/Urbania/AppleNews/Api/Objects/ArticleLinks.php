@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * See the links returned by the article endpoints.
  *
  * @see https://developer.apple.com/documentation/apple_news/articlelinks
  */
-class ArticleLinks implements \JsonSerializable
+class ArticleLinks extends BaseSdkObject
 {
     /**
      * The URL of the channel in which this article appears.
@@ -61,6 +62,11 @@ class ArticleLinks implements \JsonSerializable
      */
     public function setChannel($channel)
     {
+        if (is_null($channel)) {
+            $this->channel = null;
+            return $this;
+        }
+
         Assert::string($channel);
 
         $this->channel = $channel;
@@ -83,6 +89,11 @@ class ArticleLinks implements \JsonSerializable
      */
     public function setSections($sections)
     {
+        if (is_null($sections)) {
+            $this->sections = null;
+            return $this;
+        }
+
         Assert::isArray($sections);
         Assert::allString($sections);
 
@@ -106,29 +117,15 @@ class ArticleLinks implements \JsonSerializable
      */
     public function setSelf($self)
     {
+        if (is_null($self)) {
+            $this->self = null;
+            return $this;
+        }
+
         Assert::string($self);
 
         $this->self = $self;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

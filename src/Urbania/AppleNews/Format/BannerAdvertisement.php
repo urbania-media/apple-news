@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The component for adding a full-width banner ad.
  *
  * @see https://developer.apple.com/documentation/apple_news/banneradvertisement
  */
-class BannerAdvertisement extends Component implements \JsonSerializable
+class BannerAdvertisement extends Component
 {
     /**
      * The type of banner to show.
@@ -49,6 +50,11 @@ class BannerAdvertisement extends Component implements \JsonSerializable
      */
     public function setBannerType($bannerType)
     {
+        if (is_null($bannerType)) {
+            $this->bannerType = null;
+            return $this;
+        }
+
         Assert::oneOf($bannerType, [
             "any",
             "standard",
@@ -67,25 +73,6 @@ class BannerAdvertisement extends Component implements \JsonSerializable
     public function getRole()
     {
         return $this->role;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

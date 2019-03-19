@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object used in image components for displaying captions when the
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/captiondescriptor
  */
-class CaptionDescriptor implements \JsonSerializable
+class CaptionDescriptor extends BaseSdkObject
 {
     /**
      * An array of Link objects that provide additional information for
@@ -87,6 +88,11 @@ class CaptionDescriptor implements \JsonSerializable
      */
     public function setAdditions($additions)
     {
+        if (is_null($additions)) {
+            $this->additions = null;
+            return $this;
+        }
+
         Assert::isArray($additions);
         Assert::allIsInstanceOfOrArray($additions, Addition::class);
 
@@ -114,6 +120,11 @@ class CaptionDescriptor implements \JsonSerializable
      */
     public function setFormat($format)
     {
+        if (is_null($format)) {
+            $this->format = null;
+            return $this;
+        }
+
         Assert::oneOf($format, ["markdown", "html", "none"]);
 
         $this->format = $format;
@@ -136,6 +147,11 @@ class CaptionDescriptor implements \JsonSerializable
      */
     public function setInlineTextStyles($inlineTextStyles)
     {
+        if (is_null($inlineTextStyles)) {
+            $this->inlineTextStyles = null;
+            return $this;
+        }
+
         Assert::isArray($inlineTextStyles);
         Assert::allIsInstanceOfOrArray(
             $inlineTextStyles,
@@ -188,6 +204,11 @@ class CaptionDescriptor implements \JsonSerializable
      */
     public function setTextStyle($textStyle)
     {
+        if (is_null($textStyle)) {
+            $this->textStyle = null;
+            return $this;
+        }
+
         if (is_object($textStyle)) {
             Assert::isInstanceOf($textStyle, ComponentTextStyle::class);
         } elseif (!is_array($textStyle)) {
@@ -198,25 +219,6 @@ class CaptionDescriptor implements \JsonSerializable
             ? new ComponentTextStyle($textStyle)
             : $textStyle;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

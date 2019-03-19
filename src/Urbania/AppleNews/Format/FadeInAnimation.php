@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The animation whereby a component fades into view.
  *
  * @see https://developer.apple.com/documentation/apple_news/fadeinanimation
  */
-class FadeInAnimation extends ComponentAnimation implements \JsonSerializable
+class FadeInAnimation extends ComponentAnimation
 {
     /**
      * The initial transparency of the component. Set initialAlpha to a value
@@ -61,6 +62,11 @@ class FadeInAnimation extends ComponentAnimation implements \JsonSerializable
      */
     public function setInitialAlpha($initialAlpha)
     {
+        if (is_null($initialAlpha)) {
+            $this->initialAlpha = null;
+            return $this;
+        }
+
         Assert::number($initialAlpha);
 
         $this->initialAlpha = $initialAlpha;
@@ -92,29 +98,15 @@ class FadeInAnimation extends ComponentAnimation implements \JsonSerializable
      */
     public function setUserControllable($userControllable)
     {
+        if (is_null($userControllable)) {
+            $this->userControllable = null;
+            return $this;
+        }
+
         Assert::boolean($userControllable);
 
         $this->userControllable = $userControllable;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

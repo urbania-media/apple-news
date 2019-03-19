@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for defining the margin above and below advertising
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/advertisinglayout
  */
-class AdvertisingLayout implements \JsonSerializable
+class AdvertisingLayout extends BaseSdkObject
 {
     /**
      * Describes margins on top and bottom as a single integer or as an
@@ -51,25 +52,6 @@ class AdvertisingLayout implements \JsonSerializable
 
         $this->margin = is_array($margin) ? new Margin($margin) : $margin;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

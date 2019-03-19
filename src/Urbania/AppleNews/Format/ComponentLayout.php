@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for defining the positioning for a specific component
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/componentlayout
  */
-class ComponentLayout implements \JsonSerializable
+class ComponentLayout extends BaseSdkObject
 {
     /**
      * Indicates how many columns the component spans, based on the number of
@@ -149,6 +150,11 @@ class ComponentLayout implements \JsonSerializable
      */
     public function setColumnSpan($columnSpan)
     {
+        if (is_null($columnSpan)) {
+            $this->columnSpan = null;
+            return $this;
+        }
+
         Assert::integer($columnSpan);
 
         $this->columnSpan = $columnSpan;
@@ -171,6 +177,11 @@ class ComponentLayout implements \JsonSerializable
      */
     public function setColumnStart($columnStart)
     {
+        if (is_null($columnStart)) {
+            $this->columnStart = null;
+            return $this;
+        }
+
         Assert::integer($columnStart);
 
         $this->columnStart = $columnStart;
@@ -193,6 +204,11 @@ class ComponentLayout implements \JsonSerializable
      */
     public function setContentInset($contentInset)
     {
+        if (is_null($contentInset)) {
+            $this->contentInset = null;
+            return $this;
+        }
+
         if (is_object($contentInset)) {
             Assert::isInstanceOf($contentInset, ContentInset::class);
         } elseif (!is_array($contentInset)) {
@@ -221,6 +237,11 @@ class ComponentLayout implements \JsonSerializable
      */
     public function setHorizontalContentAlignment($horizontalContentAlignment)
     {
+        if (is_null($horizontalContentAlignment)) {
+            $this->horizontalContentAlignment = null;
+            return $this;
+        }
+
         Assert::oneOf($horizontalContentAlignment, ["left", "center", "right"]);
 
         $this->horizontalContentAlignment = $horizontalContentAlignment;
@@ -243,6 +264,11 @@ class ComponentLayout implements \JsonSerializable
      */
     public function setIgnoreDocumentGutter($ignoreDocumentGutter)
     {
+        if (is_null($ignoreDocumentGutter)) {
+            $this->ignoreDocumentGutter = null;
+            return $this;
+        }
+
         Assert::oneOf($ignoreDocumentGutter, [
             true,
             false,
@@ -272,6 +298,11 @@ class ComponentLayout implements \JsonSerializable
      */
     public function setIgnoreDocumentMargin($ignoreDocumentMargin)
     {
+        if (is_null($ignoreDocumentMargin)) {
+            $this->ignoreDocumentMargin = null;
+            return $this;
+        }
+
         Assert::oneOf($ignoreDocumentMargin, [
             true,
             false,
@@ -301,6 +332,11 @@ class ComponentLayout implements \JsonSerializable
      */
     public function setMargin($margin)
     {
+        if (is_null($margin)) {
+            $this->margin = null;
+            return $this;
+        }
+
         if (is_object($margin)) {
             Assert::isInstanceOf($margin, Margin::class);
         } elseif (!is_array($margin)) {
@@ -327,6 +363,11 @@ class ComponentLayout implements \JsonSerializable
      */
     public function setMaximumContentWidth($maximumContentWidth)
     {
+        if (is_null($maximumContentWidth)) {
+            $this->maximumContentWidth = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($maximumContentWidth);
 
         $this->maximumContentWidth = $maximumContentWidth;
@@ -349,29 +390,15 @@ class ComponentLayout implements \JsonSerializable
      */
     public function setMinimumHeight($minimumHeight)
     {
+        if (is_null($minimumHeight)) {
+            $this->minimumHeight = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($minimumHeight);
 
         $this->minimumHeight = $minimumHeight;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for defining color and width for text underline or
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/textdecoration
  */
-class TextDecoration implements \JsonSerializable
+class TextDecoration extends BaseSdkObject
 {
     /**
      * Color of the stroke. If omitted, the content’s stroke color will be
@@ -44,29 +45,15 @@ class TextDecoration implements \JsonSerializable
      */
     public function setColor($color)
     {
+        if (is_null($color)) {
+            $this->color = null;
+            return $this;
+        }
+
         Assert::isColor($color);
 
         $this->color = $color;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

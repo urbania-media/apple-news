@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The component for adding a playable music file.
  *
  * @see https://developer.apple.com/documentation/apple_news/music
  */
-class Music extends Component implements \JsonSerializable
+class Music extends Component
 {
     /**
      * The URL of an audio file (HTTP or HTTPS only). This component supports
@@ -97,6 +98,11 @@ class Music extends Component implements \JsonSerializable
      */
     public function setAccessibilityCaption($accessibilityCaption)
     {
+        if (is_null($accessibilityCaption)) {
+            $this->accessibilityCaption = null;
+            return $this;
+        }
+
         Assert::string($accessibilityCaption);
 
         $this->accessibilityCaption = $accessibilityCaption;
@@ -119,6 +125,11 @@ class Music extends Component implements \JsonSerializable
      */
     public function setCaption($caption)
     {
+        if (is_null($caption)) {
+            $this->caption = null;
+            return $this;
+        }
+
         Assert::string($caption);
 
         $this->caption = $caption;
@@ -141,6 +152,11 @@ class Music extends Component implements \JsonSerializable
      */
     public function setExplicitContent($explicitContent)
     {
+        if (is_null($explicitContent)) {
+            $this->explicitContent = null;
+            return $this;
+        }
+
         Assert::boolean($explicitContent);
 
         $this->explicitContent = $explicitContent;
@@ -163,6 +179,11 @@ class Music extends Component implements \JsonSerializable
      */
     public function setImageURL($imageURL)
     {
+        if (is_null($imageURL)) {
+            $this->imageURL = null;
+            return $this;
+        }
+
         Assert::string($imageURL);
 
         $this->imageURL = $imageURL;
@@ -198,25 +219,6 @@ class Music extends Component implements \JsonSerializable
 
         $this->URL = $URL;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

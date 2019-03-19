@@ -3,14 +3,15 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for defining space around the content in a table cell.
  *
  * @see https://developer.apple.com/documentation/apple_news/padding
  */
-class Padding implements \JsonSerializable
+class Padding extends BaseSdkObject
 {
     /**
      * The amount of padding between the bottom of the cell and the content,
@@ -79,6 +80,11 @@ class Padding implements \JsonSerializable
      */
     public function setBottom($bottom)
     {
+        if (is_null($bottom)) {
+            $this->bottom = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($bottom);
 
         $this->bottom = $bottom;
@@ -101,6 +107,11 @@ class Padding implements \JsonSerializable
      */
     public function setLeft($left)
     {
+        if (is_null($left)) {
+            $this->left = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($left);
 
         $this->left = $left;
@@ -123,6 +134,11 @@ class Padding implements \JsonSerializable
      */
     public function setRight($right)
     {
+        if (is_null($right)) {
+            $this->right = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($right);
 
         $this->right = $right;
@@ -145,29 +161,15 @@ class Padding implements \JsonSerializable
      */
     public function setTop($top)
     {
+        if (is_null($top)) {
+            $this->top = null;
+            return $this;
+        }
+
         Assert::isSupportedUnits($top);
 
         $this->top = $top;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**

@@ -3,7 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
-use Urbania\AppleNews\Assert;
+use Urbania\AppleNews\Support\Assert;
+use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for defining the text style (font family, size, color, and
@@ -11,7 +12,7 @@ use Urbania\AppleNews\Assert;
  *
  * @see https://developer.apple.com/documentation/apple_news/textstyle
  */
-class TextStyle implements \JsonSerializable
+class TextStyle extends BaseSdkObject
 {
     /**
      * The background color for text lines.
@@ -233,6 +234,11 @@ class TextStyle implements \JsonSerializable
      */
     public function setBackgroundColor($backgroundColor)
     {
+        if (is_null($backgroundColor)) {
+            $this->backgroundColor = null;
+            return $this;
+        }
+
         Assert::isColor($backgroundColor);
 
         $this->backgroundColor = $backgroundColor;
@@ -255,6 +261,11 @@ class TextStyle implements \JsonSerializable
      */
     public function setFontFamily($fontFamily)
     {
+        if (is_null($fontFamily)) {
+            $this->fontFamily = null;
+            return $this;
+        }
+
         Assert::string($fontFamily);
 
         $this->fontFamily = $fontFamily;
@@ -277,6 +288,11 @@ class TextStyle implements \JsonSerializable
      */
     public function setFontName($fontName)
     {
+        if (is_null($fontName)) {
+            $this->fontName = null;
+            return $this;
+        }
+
         Assert::string($fontName);
 
         $this->fontName = $fontName;
@@ -299,6 +315,11 @@ class TextStyle implements \JsonSerializable
      */
     public function setFontSize($fontSize)
     {
+        if (is_null($fontSize)) {
+            $this->fontSize = null;
+            return $this;
+        }
+
         Assert::integer($fontSize);
 
         $this->fontSize = $fontSize;
@@ -321,6 +342,11 @@ class TextStyle implements \JsonSerializable
      */
     public function setFontStyle($fontStyle)
     {
+        if (is_null($fontStyle)) {
+            $this->fontStyle = null;
+            return $this;
+        }
+
         Assert::oneOf($fontStyle, ["normal", "italic", "oblique"]);
 
         $this->fontStyle = $fontStyle;
@@ -343,6 +369,11 @@ class TextStyle implements \JsonSerializable
      */
     public function setFontWeight($fontWeight)
     {
+        if (is_null($fontWeight)) {
+            $this->fontWeight = null;
+            return $this;
+        }
+
         Assert::oneOf($fontWeight, [
             100,
             200,
@@ -398,6 +429,11 @@ class TextStyle implements \JsonSerializable
      */
     public function setFontWidth($fontWidth)
     {
+        if (is_null($fontWidth)) {
+            $this->fontWidth = null;
+            return $this;
+        }
+
         Assert::oneOf($fontWidth, [
             "ultra-condensed",
             "extra-condensed",
@@ -430,6 +466,11 @@ class TextStyle implements \JsonSerializable
      */
     public function setOrderedListItems($orderedListItems)
     {
+        if (is_null($orderedListItems)) {
+            $this->orderedListItems = null;
+            return $this;
+        }
+
         if (is_object($orderedListItems)) {
             Assert::isInstanceOf($orderedListItems, ListItemStyle::class);
         } else {
@@ -458,6 +499,11 @@ class TextStyle implements \JsonSerializable
      */
     public function setStrikethrough($strikethrough)
     {
+        if (is_null($strikethrough)) {
+            $this->strikethrough = null;
+            return $this;
+        }
+
         if (is_object($strikethrough)) {
             Assert::isInstanceOf($strikethrough, TextDecoration::class);
         } elseif (!is_array($strikethrough)) {
@@ -486,6 +532,11 @@ class TextStyle implements \JsonSerializable
      */
     public function setStroke($stroke)
     {
+        if (is_null($stroke)) {
+            $this->stroke = null;
+            return $this;
+        }
+
         if (is_object($stroke)) {
             Assert::isInstanceOf($stroke, TextStrokeStyle::class);
         } else {
@@ -514,6 +565,11 @@ class TextStyle implements \JsonSerializable
      */
     public function setTextColor($textColor)
     {
+        if (is_null($textColor)) {
+            $this->textColor = null;
+            return $this;
+        }
+
         Assert::isColor($textColor);
 
         $this->textColor = $textColor;
@@ -536,6 +592,11 @@ class TextStyle implements \JsonSerializable
      */
     public function setTextShadow($textShadow)
     {
+        if (is_null($textShadow)) {
+            $this->textShadow = null;
+            return $this;
+        }
+
         if (is_object($textShadow)) {
             Assert::isInstanceOf($textShadow, Shadow::class);
         } else {
@@ -564,6 +625,11 @@ class TextStyle implements \JsonSerializable
      */
     public function setTextTransform($textTransform)
     {
+        if (is_null($textTransform)) {
+            $this->textTransform = null;
+            return $this;
+        }
+
         Assert::string($textTransform);
 
         $this->textTransform = $textTransform;
@@ -586,6 +652,11 @@ class TextStyle implements \JsonSerializable
      */
     public function setTracking($tracking)
     {
+        if (is_null($tracking)) {
+            $this->tracking = null;
+            return $this;
+        }
+
         Assert::number($tracking);
 
         $this->tracking = $tracking;
@@ -608,6 +679,11 @@ class TextStyle implements \JsonSerializable
      */
     public function setUnderline($underline)
     {
+        if (is_null($underline)) {
+            $this->underline = null;
+            return $this;
+        }
+
         if (is_object($underline)) {
             Assert::isInstanceOf($underline, TextDecoration::class);
         } elseif (!is_array($underline)) {
@@ -636,6 +712,11 @@ class TextStyle implements \JsonSerializable
      */
     public function setUnorderedListItems($unorderedListItems)
     {
+        if (is_null($unorderedListItems)) {
+            $this->unorderedListItems = null;
+            return $this;
+        }
+
         if (is_object($unorderedListItems)) {
             Assert::isInstanceOf($unorderedListItems, ListItemStyle::class);
         } else {
@@ -664,29 +745,15 @@ class TextStyle implements \JsonSerializable
      */
     public function setVerticalAlignment($verticalAlignment)
     {
+        if (is_null($verticalAlignment)) {
+            $this->verticalAlignment = null;
+            return $this;
+        }
+
         Assert::string($verticalAlignment);
 
         $this->verticalAlignment = $verticalAlignment;
         return $this;
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Convert the instance to JSON.
-     * @param  int  $options
-     * @return string
-     */
-    public function toJson(int $options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
     }
 
     /**
