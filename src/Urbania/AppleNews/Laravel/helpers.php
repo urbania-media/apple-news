@@ -1,5 +1,17 @@
 <?php
 
+if (! function_exists('appleNews')) {
+    /**
+     * Get the AppleNews instance
+     *
+     * @return \Urbania\AppleNews\Laravel\AppleNews
+     */
+    function appleNews()
+    {
+        return app('apple-news');
+    }
+}
+
 if (! function_exists('article')) {
     /**
      * Create an article

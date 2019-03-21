@@ -5,6 +5,7 @@ namespace Urbania\AppleNews\Laravel;
 use Illuminate\Contracts\Container\Container;
 use Urbania\AppleNews\Contracts\Article as ArticleContract;
 use Urbania\AppleNews\Contracts\Api as ApiContract;
+use Closure;
 
 class AppleNews
 {
@@ -35,5 +36,10 @@ class AppleNews
     public function parser($parser = null)
     {
         return $this->parserManager->parser($parser);
+    }
+
+    public function extendParser($driver, Closure $callback)
+    {
+        return $this->parserManager->extend($driver, $callback);
     }
 }
