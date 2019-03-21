@@ -36,9 +36,81 @@ composer require urbania/apple-news
 
 #### All versions
 
-Publish the config file:
+Publish the config file to `config/apple-news.php`:
 ```bash
 php artisan vendor:publish
 ```
 
 ## Usage
+
+### Pure PHP
+
+Create a test article:
+```php
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Urbania\AppleNews\Article;
+
+$article = new Article([
+    'identifier' => 'test-article',
+    'language' => 'en-US',
+    'version' => '1.7',
+    'layout' => [
+        'columns' => 12,
+        'width' => 1024
+    ],
+    'title' => 'An article',
+    'components' => [
+        [
+            'role' => 'title',
+            'text' => 'This is a title'
+        ],
+        [
+            'role' => 'body',
+            'text' => 'This is a body'
+        ]
+    ]
+]);
+
+echo $article->toJson();
+
+```
+
+### Laravel
+
+Create a test article:
+```php
+
+// Using the facade
+use AppleNews;
+
+$article = AppleNews::article([
+    'identifier' => 'test-article',
+    'language' => 'en-US',
+    'version' => '1.7',
+    'layout' => [
+        'columns' => 12,
+        'width' => 1024
+    ],
+    'title' => 'An article',
+    'components' => [
+        [
+            'role' => 'title',
+            'text' => 'This is a title'
+        ],
+        [
+            'role' => 'body',
+            'text' => 'This is a body'
+        ]
+    ]
+]);
+
+// Using the helper
+$article = article([
+    // ... same as above
+]);
+
+echo $article->toJson();
+
+```
