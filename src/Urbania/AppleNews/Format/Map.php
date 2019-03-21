@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -184,7 +186,7 @@ class Map extends Component
         }
 
         Assert::isArray($items);
-        Assert::allIsInstanceOfOrArray($items, MapItem::class);
+        Assert::allIsSdkObject($items, MapItem::class);
 
         $items = [];
         foreach ($items as $key => $item) {
@@ -295,11 +297,7 @@ class Map extends Component
             return $this;
         }
 
-        if (is_object($span)) {
-            Assert::isInstanceOf($span, MapSpan::class);
-        } else {
-            Assert::isArray($span);
-        }
+        Assert::isSdkObject($span, MapSpan::class);
 
         $this->span = is_array($span) ? new MapSpan($span) : $span;
         return $this;
@@ -323,9 +321,10 @@ class Map extends Component
                 ? array_reduce(
                     array_keys($this->items),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->items[$key])
-                            ? $this->items[$key]->toArray()
-                            : $this->items[$key];
+                        $items[$key] =
+                            $this->items[$key] instanceof Arrayable
+                                ? $this->items[$key]->toArray()
+                                : $this->items[$key];
                         return $items;
                     },
                     []
@@ -345,9 +344,10 @@ class Map extends Component
             $data['role'] = $this->role;
         }
         if (isset($this->span)) {
-            $data['span'] = is_object($this->span)
-                ? $this->span->toArray()
-                : $this->span;
+            $data['span'] =
+                $this->span instanceof Arrayable
+                    ? $this->span->toArray()
+                    : $this->span;
         }
         return $data;
     }

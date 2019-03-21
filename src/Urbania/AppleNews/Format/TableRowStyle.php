@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -108,10 +110,7 @@ class TableRowStyle extends BaseSdkObject
         }
 
         Assert::isArray($conditional);
-        Assert::allIsInstanceOfOrArray(
-            $conditional,
-            ConditionalTableRowStyle::class
-        );
+        Assert::allIsSdkObject($conditional, ConditionalTableRowStyle::class);
 
         $items = [];
         foreach ($conditional as $key => $item) {
@@ -144,11 +143,7 @@ class TableRowStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($divider)) {
-            Assert::isInstanceOf($divider, TableStrokeStyle::class);
-        } else {
-            Assert::isArray($divider);
-        }
+        Assert::isSdkObject($divider, TableStrokeStyle::class);
 
         $this->divider = is_array($divider)
             ? new TableStrokeStyle($divider)
@@ -191,18 +186,20 @@ class TableRowStyle extends BaseSdkObject
     {
         $data = [];
         if (isset($this->backgroundColor)) {
-            $data['backgroundColor'] = is_object($this->backgroundColor)
-                ? $this->backgroundColor->toArray()
-                : $this->backgroundColor;
+            $data['backgroundColor'] =
+                $this->backgroundColor instanceof Arrayable
+                    ? $this->backgroundColor->toArray()
+                    : $this->backgroundColor;
         }
         if (isset($this->conditional)) {
             $data['conditional'] = !is_null($this->conditional)
                 ? array_reduce(
                     array_keys($this->conditional),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->conditional[$key])
-                            ? $this->conditional[$key]->toArray()
-                            : $this->conditional[$key];
+                        $items[$key] =
+                            $this->conditional[$key] instanceof Arrayable
+                                ? $this->conditional[$key]->toArray()
+                                : $this->conditional[$key];
                         return $items;
                     },
                     []
@@ -210,14 +207,16 @@ class TableRowStyle extends BaseSdkObject
                 : $this->conditional;
         }
         if (isset($this->divider)) {
-            $data['divider'] = is_object($this->divider)
-                ? $this->divider->toArray()
-                : $this->divider;
+            $data['divider'] =
+                $this->divider instanceof Arrayable
+                    ? $this->divider->toArray()
+                    : $this->divider;
         }
         if (isset($this->height)) {
-            $data['height'] = is_object($this->height)
-                ? $this->height->toArray()
-                : $this->height;
+            $data['height'] =
+                $this->height instanceof Arrayable
+                    ? $this->height->toArray()
+                    : $this->height;
         }
         return $data;
     }

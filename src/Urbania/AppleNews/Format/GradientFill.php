@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -56,7 +58,7 @@ class GradientFill extends Fill
     public function setColorStops($colorStops)
     {
         Assert::isArray($colorStops);
-        Assert::allIsInstanceOfOrArray($colorStops, ColorStop::class);
+        Assert::allIsSdkObject($colorStops, ColorStop::class);
 
         $items = [];
         foreach ($colorStops as $key => $item) {
@@ -100,9 +102,10 @@ class GradientFill extends Fill
                 ? array_reduce(
                     array_keys($this->colorStops),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->colorStops[$key])
-                            ? $this->colorStops[$key]->toArray()
-                            : $this->colorStops[$key];
+                        $items[$key] =
+                            $this->colorStops[$key] instanceof Arrayable
+                                ? $this->colorStops[$key]->toArray()
+                                : $this->colorStops[$key];
                         return $items;
                     },
                     []

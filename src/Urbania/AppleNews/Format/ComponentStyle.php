@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -122,11 +124,7 @@ class ComponentStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($border)) {
-            Assert::isInstanceOf($border, Border::class);
-        } else {
-            Assert::isArray($border);
-        }
+        Assert::isSdkObject($border, Border::class);
 
         $this->border = is_array($border) ? new Border($border) : $border;
         return $this;
@@ -153,11 +151,7 @@ class ComponentStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($fill)) {
-            Assert::isInstanceOf($fill, Fill::class);
-        } else {
-            Assert::isArray($fill);
-        }
+        Assert::isSdkObject($fill, Fill::class);
 
         $this->fill = is_array($fill) ? Fill::createTyped($fill) : $fill;
         return $this;
@@ -211,11 +205,7 @@ class ComponentStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($tableStyle)) {
-            Assert::isInstanceOf($tableStyle, TableStyle::class);
-        } else {
-            Assert::isArray($tableStyle);
-        }
+        Assert::isSdkObject($tableStyle, TableStyle::class);
 
         $this->tableStyle = is_array($tableStyle)
             ? new TableStyle($tableStyle)
@@ -231,27 +221,31 @@ class ComponentStyle extends BaseSdkObject
     {
         $data = [];
         if (isset($this->backgroundColor)) {
-            $data['backgroundColor'] = is_object($this->backgroundColor)
-                ? $this->backgroundColor->toArray()
-                : $this->backgroundColor;
+            $data['backgroundColor'] =
+                $this->backgroundColor instanceof Arrayable
+                    ? $this->backgroundColor->toArray()
+                    : $this->backgroundColor;
         }
         if (isset($this->border)) {
-            $data['border'] = is_object($this->border)
-                ? $this->border->toArray()
-                : $this->border;
+            $data['border'] =
+                $this->border instanceof Arrayable
+                    ? $this->border->toArray()
+                    : $this->border;
         }
         if (isset($this->fill)) {
-            $data['fill'] = is_object($this->fill)
-                ? $this->fill->toArray()
-                : $this->fill;
+            $data['fill'] =
+                $this->fill instanceof Arrayable
+                    ? $this->fill->toArray()
+                    : $this->fill;
         }
         if (isset($this->opacity)) {
             $data['opacity'] = $this->opacity;
         }
         if (isset($this->tableStyle)) {
-            $data['tableStyle'] = is_object($this->tableStyle)
-                ? $this->tableStyle->toArray()
-                : $this->tableStyle;
+            $data['tableStyle'] =
+                $this->tableStyle instanceof Arrayable
+                    ? $this->tableStyle->toArray()
+                    : $this->tableStyle;
         }
         return $data;
     }

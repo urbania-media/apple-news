@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -99,11 +101,7 @@ class Shadow extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($offset)) {
-            Assert::isInstanceOf($offset, Offset::class);
-        } else {
-            Assert::isArray($offset);
-        }
+        Assert::isSdkObject($offset, Offset::class);
 
         $this->offset = is_array($offset) ? new Offset($offset) : $offset;
         return $this;
@@ -166,14 +164,16 @@ class Shadow extends BaseSdkObject
     {
         $data = [];
         if (isset($this->color)) {
-            $data['color'] = is_object($this->color)
-                ? $this->color->toArray()
-                : $this->color;
+            $data['color'] =
+                $this->color instanceof Arrayable
+                    ? $this->color->toArray()
+                    : $this->color;
         }
         if (isset($this->offset)) {
-            $data['offset'] = is_object($this->offset)
-                ? $this->offset->toArray()
-                : $this->offset;
+            $data['offset'] =
+                $this->offset instanceof Arrayable
+                    ? $this->offset->toArray()
+                    : $this->offset;
         }
         if (isset($this->opacity)) {
             $data['opacity'] = $this->opacity;

@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -173,11 +175,7 @@ class AdvertisingSettings extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($layout)) {
-            Assert::isInstanceOf($layout, AdvertisingLayout::class);
-        } else {
-            Assert::isArray($layout);
-        }
+        Assert::isSdkObject($layout, AdvertisingLayout::class);
 
         $this->layout = is_array($layout)
             ? new AdvertisingLayout($layout)
@@ -196,17 +194,19 @@ class AdvertisingSettings extends BaseSdkObject
             $data['bannerType'] = $this->bannerType;
         }
         if (isset($this->distanceFromMedia)) {
-            $data['distanceFromMedia'] = is_object($this->distanceFromMedia)
-                ? $this->distanceFromMedia->toArray()
-                : $this->distanceFromMedia;
+            $data['distanceFromMedia'] =
+                $this->distanceFromMedia instanceof Arrayable
+                    ? $this->distanceFromMedia->toArray()
+                    : $this->distanceFromMedia;
         }
         if (isset($this->frequency)) {
             $data['frequency'] = $this->frequency;
         }
         if (isset($this->layout)) {
-            $data['layout'] = is_object($this->layout)
-                ? $this->layout->toArray()
-                : $this->layout;
+            $data['layout'] =
+                $this->layout instanceof Arrayable
+                    ? $this->layout->toArray()
+                    : $this->layout;
         }
         return $data;
     }

@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -172,11 +174,7 @@ class Error extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($status)) {
-            Assert::isInstanceOf($status, Status::class);
-        } else {
-            Assert::isArray($status);
-        }
+        Assert::isSdkObject($status, Status::class);
 
         $this->status = is_array($status) ? new Status($status) : $status;
         return $this;
@@ -217,9 +215,10 @@ class Error extends BaseSdkObject
     {
         $data = [];
         if (isset($this->code)) {
-            $data['code'] = is_object($this->code)
-                ? $this->code->toArray()
-                : $this->code;
+            $data['code'] =
+                $this->code instanceof Arrayable
+                    ? $this->code->toArray()
+                    : $this->code;
         }
         if (isset($this->keyPath)) {
             $data['keyPath'] = $this->keyPath;
@@ -228,9 +227,10 @@ class Error extends BaseSdkObject
             $data['message'] = $this->message;
         }
         if (isset($this->status)) {
-            $data['status'] = is_object($this->status)
-                ? $this->status->toArray()
-                : $this->status;
+            $data['status'] =
+                $this->status instanceof Arrayable
+                    ? $this->status->toArray()
+                    : $this->status;
         }
         if (isset($this->value)) {
             $data['value'] = $this->value;

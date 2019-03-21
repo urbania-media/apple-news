@@ -86,11 +86,11 @@ class ObjectClassBuilder
             $class->setExtends($this->getNamespace($extends));
         } elseif (!is_null($baseExtends)) {
             $class->setExtends($this->getNamespace($baseExtends));
-        } else if (!is_null($this->baseExtends)) {
+        } elseif (!is_null($this->baseExtends)) {
             $class->setExtends($this->getNamespace($this->baseExtends));
         }
 
-        $propertiesMember = $this->buildProperties($properties);
+        $propertiesMember = $this->buildProperties($properties, $baseClassName);
         foreach ($propertiesMember as $propertyMember) {
             $class->addMember($propertyMember);
         }
@@ -168,9 +168,9 @@ class ObjectClassBuilder
         return $this->constantsBuilder->build($constants);
     }
 
-    protected function buildProperties(array $properties)
+    protected function buildProperties(array $properties, $baseClassName)
     {
-        return $this->propertiesBuilder->build($properties);
+        return $this->propertiesBuilder->build($properties, $baseClassName);
     }
 
     protected function buildConstructMethod(array $properties, $extends)

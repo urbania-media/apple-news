@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -94,7 +96,7 @@ class CaptionDescriptor extends BaseSdkObject
         }
 
         Assert::isArray($additions);
-        Assert::allIsInstanceOfOrArray($additions, Addition::class);
+        Assert::allIsSdkObject($additions, Addition::class);
 
         $items = [];
         foreach ($additions as $key => $item) {
@@ -153,10 +155,7 @@ class CaptionDescriptor extends BaseSdkObject
         }
 
         Assert::isArray($inlineTextStyles);
-        Assert::allIsInstanceOfOrArray(
-            $inlineTextStyles,
-            InlineTextStyle::class
-        );
+        Assert::allIsSdkObject($inlineTextStyles, InlineTextStyle::class);
 
         $items = [];
         foreach ($inlineTextStyles as $key => $item) {
@@ -210,7 +209,7 @@ class CaptionDescriptor extends BaseSdkObject
         }
 
         if (is_object($textStyle)) {
-            Assert::isInstanceOf($textStyle, ComponentTextStyle::class);
+            Assert::isSdkObject($textStyle, ComponentTextStyle::class);
         } elseif (!is_array($textStyle)) {
             Assert::string($textStyle);
         }
@@ -233,9 +232,10 @@ class CaptionDescriptor extends BaseSdkObject
                 ? array_reduce(
                     array_keys($this->additions),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->additions[$key])
-                            ? $this->additions[$key]->toArray()
-                            : $this->additions[$key];
+                        $items[$key] =
+                            $this->additions[$key] instanceof Arrayable
+                                ? $this->additions[$key]->toArray()
+                                : $this->additions[$key];
                         return $items;
                     },
                     []
@@ -250,9 +250,10 @@ class CaptionDescriptor extends BaseSdkObject
                 ? array_reduce(
                     array_keys($this->inlineTextStyles),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->inlineTextStyles[$key])
-                            ? $this->inlineTextStyles[$key]->toArray()
-                            : $this->inlineTextStyles[$key];
+                        $items[$key] =
+                            $this->inlineTextStyles[$key] instanceof Arrayable
+                                ? $this->inlineTextStyles[$key]->toArray()
+                                : $this->inlineTextStyles[$key];
                         return $items;
                     },
                     []
@@ -263,9 +264,10 @@ class CaptionDescriptor extends BaseSdkObject
             $data['text'] = $this->text;
         }
         if (isset($this->textStyle)) {
-            $data['textStyle'] = is_object($this->textStyle)
-                ? $this->textStyle->toArray()
-                : $this->textStyle;
+            $data['textStyle'] =
+                $this->textStyle instanceof Arrayable
+                    ? $this->textStyle->toArray()
+                    : $this->textStyle;
         }
         return $data;
     }

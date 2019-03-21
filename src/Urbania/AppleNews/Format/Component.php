@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -173,11 +175,7 @@ class Component extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($anchor)) {
-            Assert::isInstanceOf($anchor, Anchor::class);
-        } else {
-            Assert::isArray($anchor);
-        }
+        Assert::isSdkObject($anchor, Anchor::class);
 
         $this->anchor = is_array($anchor) ? new Anchor($anchor) : $anchor;
         return $this;
@@ -204,11 +202,7 @@ class Component extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($animation)) {
-            Assert::isInstanceOf($animation, ComponentAnimation::class);
-        } else {
-            Assert::isArray($animation);
-        }
+        Assert::isSdkObject($animation, ComponentAnimation::class);
 
         $this->animation = is_array($animation)
             ? ComponentAnimation::createTyped($animation)
@@ -237,11 +231,7 @@ class Component extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($behavior)) {
-            Assert::isInstanceOf($behavior, Behavior::class);
-        } else {
-            Assert::isArray($behavior);
-        }
+        Assert::isSdkObject($behavior, Behavior::class);
 
         $this->behavior = is_array($behavior)
             ? Behavior::createTyped($behavior)
@@ -298,7 +288,7 @@ class Component extends BaseSdkObject
         }
 
         if (is_object($layout)) {
-            Assert::isInstanceOf($layout, ComponentLayout::class);
+            Assert::isSdkObject($layout, ComponentLayout::class);
         } elseif (!is_array($layout)) {
             Assert::string($layout);
         }
@@ -353,7 +343,7 @@ class Component extends BaseSdkObject
         }
 
         if (is_object($style)) {
-            Assert::isInstanceOf($style, ComponentStyle::class);
+            Assert::isSdkObject($style, ComponentStyle::class);
         } elseif (!is_array($style)) {
             Assert::string($style);
         }
@@ -370,35 +360,40 @@ class Component extends BaseSdkObject
     {
         $data = [];
         if (isset($this->anchor)) {
-            $data['anchor'] = is_object($this->anchor)
-                ? $this->anchor->toArray()
-                : $this->anchor;
+            $data['anchor'] =
+                $this->anchor instanceof Arrayable
+                    ? $this->anchor->toArray()
+                    : $this->anchor;
         }
         if (isset($this->animation)) {
-            $data['animation'] = is_object($this->animation)
-                ? $this->animation->toArray()
-                : $this->animation;
+            $data['animation'] =
+                $this->animation instanceof Arrayable
+                    ? $this->animation->toArray()
+                    : $this->animation;
         }
         if (isset($this->behavior)) {
-            $data['behavior'] = is_object($this->behavior)
-                ? $this->behavior->toArray()
-                : $this->behavior;
+            $data['behavior'] =
+                $this->behavior instanceof Arrayable
+                    ? $this->behavior->toArray()
+                    : $this->behavior;
         }
         if (isset($this->identifier)) {
             $data['identifier'] = $this->identifier;
         }
         if (isset($this->layout)) {
-            $data['layout'] = is_object($this->layout)
-                ? $this->layout->toArray()
-                : $this->layout;
+            $data['layout'] =
+                $this->layout instanceof Arrayable
+                    ? $this->layout->toArray()
+                    : $this->layout;
         }
         if (isset($this->role)) {
             $data['role'] = $this->role;
         }
         if (isset($this->style)) {
-            $data['style'] = is_object($this->style)
-                ? $this->style->toArray()
-                : $this->style;
+            $data['style'] =
+                $this->style instanceof Arrayable
+                    ? $this->style->toArray()
+                    : $this->style;
         }
         return $data;
     }

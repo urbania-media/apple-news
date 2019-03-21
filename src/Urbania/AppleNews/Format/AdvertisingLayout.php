@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -45,7 +47,7 @@ class AdvertisingLayout extends BaseSdkObject
     public function setMargin($margin)
     {
         if (is_object($margin)) {
-            Assert::isInstanceOf($margin, Margin::class);
+            Assert::isSdkObject($margin, Margin::class);
         } elseif (!is_array($margin)) {
             Assert::integer($margin);
         }
@@ -62,9 +64,10 @@ class AdvertisingLayout extends BaseSdkObject
     {
         $data = [];
         if (isset($this->margin)) {
-            $data['margin'] = is_object($this->margin)
-                ? $this->margin->toArray()
-                : $this->margin;
+            $data['margin'] =
+                $this->margin instanceof Arrayable
+                    ? $this->margin->toArray()
+                    : $this->margin;
         }
         return $data;
     }

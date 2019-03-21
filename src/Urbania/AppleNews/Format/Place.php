@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -250,11 +252,7 @@ class Place extends Component
             return $this;
         }
 
-        if (is_object($span)) {
-            Assert::isInstanceOf($span, MapSpan::class);
-        } else {
-            Assert::isArray($span);
-        }
+        Assert::isSdkObject($span, MapSpan::class);
 
         $this->span = is_array($span) ? new MapSpan($span) : $span;
         return $this;
@@ -286,9 +284,10 @@ class Place extends Component
             $data['role'] = $this->role;
         }
         if (isset($this->span)) {
-            $data['span'] = is_object($this->span)
-                ? $this->span->toArray()
-                : $this->span;
+            $data['span'] =
+                $this->span instanceof Arrayable
+                    ? $this->span->toArray()
+                    : $this->span;
         }
         return $data;
     }

@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -97,11 +99,7 @@ class DataTable extends Component
      */
     public function setData($data)
     {
-        if (is_object($data)) {
-            Assert::isInstanceOf($data, RecordStore::class);
-        } else {
-            Assert::isArray($data);
-        }
+        Assert::isSdkObject($data, RecordStore::class);
 
         $this->data = is_array($data) ? new RecordStore($data) : $data;
         return $this;
@@ -192,7 +190,7 @@ class DataTable extends Component
         }
 
         Assert::isArray($sortBy);
-        Assert::allIsInstanceOfOrArray($sortBy, DataTableSorting::class);
+        Assert::allIsSdkObject($sortBy, DataTableSorting::class);
 
         $items = [];
         foreach ($sortBy as $key => $item) {
@@ -226,7 +224,7 @@ class DataTable extends Component
         }
 
         if (is_object($style)) {
-            Assert::isInstanceOf($style, ComponentStyle::class);
+            Assert::isSdkObject($style, ComponentStyle::class);
         } elseif (!is_array($style)) {
             Assert::string($style);
         }
@@ -243,9 +241,10 @@ class DataTable extends Component
     {
         $data = parent::toArray();
         if (isset($this->data)) {
-            $data['data'] = is_object($this->data)
-                ? $this->data->toArray()
-                : $this->data;
+            $data['data'] =
+                $this->data instanceof Arrayable
+                    ? $this->data->toArray()
+                    : $this->data;
         }
         if (isset($this->dataOrientation)) {
             $data['dataOrientation'] = $this->dataOrientation;
@@ -261,9 +260,10 @@ class DataTable extends Component
                 ? array_reduce(
                     array_keys($this->sortBy),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->sortBy[$key])
-                            ? $this->sortBy[$key]->toArray()
-                            : $this->sortBy[$key];
+                        $items[$key] =
+                            $this->sortBy[$key] instanceof Arrayable
+                                ? $this->sortBy[$key]->toArray()
+                                : $this->sortBy[$key];
                         return $items;
                     },
                     []
@@ -271,9 +271,10 @@ class DataTable extends Component
                 : $this->sortBy;
         }
         if (isset($this->style)) {
-            $data['style'] = is_object($this->style)
-                ? $this->style->toArray()
-                : $this->style;
+            $data['style'] =
+                $this->style instanceof Arrayable
+                    ? $this->style->toArray()
+                    : $this->style;
         }
         return $data;
     }

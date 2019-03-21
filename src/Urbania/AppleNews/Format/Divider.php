@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -82,11 +84,7 @@ class Divider extends Component
             return $this;
         }
 
-        if (is_object($stroke)) {
-            Assert::isInstanceOf($stroke, StrokeStyle::class);
-        } else {
-            Assert::isArray($stroke);
-        }
+        Assert::isSdkObject($stroke, StrokeStyle::class);
 
         $this->stroke = is_array($stroke) ? new StrokeStyle($stroke) : $stroke;
         return $this;
@@ -103,9 +101,10 @@ class Divider extends Component
             $data['role'] = $this->role;
         }
         if (isset($this->stroke)) {
-            $data['stroke'] = is_object($this->stroke)
-                ? $this->stroke->toArray()
-                : $this->stroke;
+            $data['stroke'] =
+                $this->stroke instanceof Arrayable
+                    ? $this->stroke->toArray()
+                    : $this->stroke;
         }
         return $data;
     }

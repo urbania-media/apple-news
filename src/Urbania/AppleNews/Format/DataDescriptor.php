@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -127,11 +129,7 @@ class DataDescriptor extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($format)) {
-            Assert::isInstanceOf($format, DataFormat::class);
-        } else {
-            Assert::isArray($format);
-        }
+        Assert::isSdkObject($format, DataFormat::class);
 
         $this->format = is_array($format)
             ? DataFormat::createTyped($format)
@@ -205,7 +203,7 @@ class DataDescriptor extends BaseSdkObject
     public function setLabel($label)
     {
         if (is_object($label)) {
-            Assert::isInstanceOf($label, FormattedText::class);
+            Assert::isSdkObject($label, FormattedText::class);
         } elseif (!is_array($label)) {
             Assert::string($label);
         }
@@ -225,9 +223,10 @@ class DataDescriptor extends BaseSdkObject
             $data['dataType'] = $this->dataType;
         }
         if (isset($this->format)) {
-            $data['format'] = is_object($this->format)
-                ? $this->format->toArray()
-                : $this->format;
+            $data['format'] =
+                $this->format instanceof Arrayable
+                    ? $this->format->toArray()
+                    : $this->format;
         }
         if (isset($this->identifier)) {
             $data['identifier'] = $this->identifier;
@@ -236,9 +235,10 @@ class DataDescriptor extends BaseSdkObject
             $data['key'] = $this->key;
         }
         if (isset($this->label)) {
-            $data['label'] = is_object($this->label)
-                ? $this->label->toArray()
-                : $this->label;
+            $data['label'] =
+                $this->label instanceof Arrayable
+                    ? $this->label->toArray()
+                    : $this->label;
         }
         return $data;
     }

@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -48,7 +50,7 @@ class ComponentLayouts extends BaseSdkObject
         }
 
         Assert::isMap($layouts);
-        Assert::allIsInstanceOfOrArray($layouts, ComponentLayout::class);
+        Assert::allIsSdkObject($layouts, ComponentLayout::class);
 
         $items = [];
         foreach ($layouts as $key => $item) {

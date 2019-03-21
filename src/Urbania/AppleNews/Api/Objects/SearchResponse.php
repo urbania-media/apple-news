@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -72,7 +74,7 @@ class SearchResponse extends BaseSdkObject
         }
 
         Assert::isArray($articles);
-        Assert::allIsInstanceOfOrArray($articles, Article::class);
+        Assert::allIsSdkObject($articles, Article::class);
 
         $items = [];
         foreach ($articles as $key => $item) {
@@ -103,11 +105,7 @@ class SearchResponse extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($links)) {
-            Assert::isInstanceOf($links, SearchResponseLinks::class);
-        } else {
-            Assert::isArray($links);
-        }
+        Assert::isSdkObject($links, SearchResponseLinks::class);
 
         $this->links = is_array($links)
             ? new SearchResponseLinks($links)
@@ -154,9 +152,10 @@ class SearchResponse extends BaseSdkObject
                 ? array_reduce(
                     array_keys($this->articles),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->articles[$key])
-                            ? $this->articles[$key]->toArray()
-                            : $this->articles[$key];
+                        $items[$key] =
+                            $this->articles[$key] instanceof Arrayable
+                                ? $this->articles[$key]->toArray()
+                                : $this->articles[$key];
                         return $items;
                     },
                     []
@@ -164,9 +163,10 @@ class SearchResponse extends BaseSdkObject
                 : $this->articles;
         }
         if (isset($this->links)) {
-            $data['links'] = is_object($this->links)
-                ? $this->links->toArray()
-                : $this->links;
+            $data['links'] =
+                $this->links instanceof Arrayable
+                    ? $this->links->toArray()
+                    : $this->links;
         }
         if (isset($this->meta)) {
             $data['meta'] = $this->meta;

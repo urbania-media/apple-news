@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -110,11 +112,7 @@ class ConditionalTableRowStyle extends TableRowStyle
             return $this;
         }
 
-        if (is_object($divider)) {
-            Assert::isInstanceOf($divider, TableStrokeStyle::class);
-        } else {
-            Assert::isArray($divider);
-        }
+        Assert::isSdkObject($divider, TableStrokeStyle::class);
 
         $this->divider = is_array($divider)
             ? new TableStrokeStyle($divider)
@@ -166,7 +164,7 @@ class ConditionalTableRowStyle extends TableRowStyle
     public function setSelectors($selectors)
     {
         Assert::isArray($selectors);
-        Assert::allIsInstanceOfOrArray($selectors, TableRowSelector::class);
+        Assert::allIsSdkObject($selectors, TableRowSelector::class);
 
         $items = [];
         foreach ($selectors as $key => $item) {
@@ -186,28 +184,32 @@ class ConditionalTableRowStyle extends TableRowStyle
     {
         $data = parent::toArray();
         if (isset($this->backgroundColor)) {
-            $data['backgroundColor'] = is_object($this->backgroundColor)
-                ? $this->backgroundColor->toArray()
-                : $this->backgroundColor;
+            $data['backgroundColor'] =
+                $this->backgroundColor instanceof Arrayable
+                    ? $this->backgroundColor->toArray()
+                    : $this->backgroundColor;
         }
         if (isset($this->divider)) {
-            $data['divider'] = is_object($this->divider)
-                ? $this->divider->toArray()
-                : $this->divider;
+            $data['divider'] =
+                $this->divider instanceof Arrayable
+                    ? $this->divider->toArray()
+                    : $this->divider;
         }
         if (isset($this->height)) {
-            $data['height'] = is_object($this->height)
-                ? $this->height->toArray()
-                : $this->height;
+            $data['height'] =
+                $this->height instanceof Arrayable
+                    ? $this->height->toArray()
+                    : $this->height;
         }
         if (isset($this->selectors)) {
             $data['selectors'] = !is_null($this->selectors)
                 ? array_reduce(
                     array_keys($this->selectors),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->selectors[$key])
-                            ? $this->selectors[$key]->toArray()
-                            : $this->selectors[$key];
+                        $items[$key] =
+                            $this->selectors[$key] instanceof Arrayable
+                                ? $this->selectors[$key]->toArray()
+                                : $this->selectors[$key];
                         return $items;
                     },
                     []

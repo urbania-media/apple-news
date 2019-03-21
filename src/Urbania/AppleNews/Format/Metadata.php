@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -92,14 +94,14 @@ class Metadata extends BaseSdkObject
      * document.
      * @var string
      */
-    protected $generatorName;
+    protected $generatorName = 'Urbania/AppleNews';
 
     /**
      * The version “number,” as a string, of the generator used to create
      * the JSON document.
      * @var string
      */
-    protected $generatorVersion;
+    protected $generatorVersion = '1.0';
 
     /**
      * Keywords that describe this article. You can define up to 50 keywords.
@@ -254,11 +256,7 @@ class Metadata extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($campaignData)) {
-            Assert::isInstanceOf($campaignData, CampaignData::class);
-        } else {
-            Assert::isArray($campaignData);
-        }
+        Assert::isSdkObject($campaignData, CampaignData::class);
 
         $this->campaignData = is_array($campaignData)
             ? new CampaignData($campaignData)
@@ -315,7 +313,7 @@ class Metadata extends BaseSdkObject
         }
 
         Assert::isArray($coverArt);
-        Assert::allIsInstanceOfOrArray($coverArt, CoverArt::class);
+        Assert::allIsSdkObject($coverArt, CoverArt::class);
 
         $items = [];
         foreach ($coverArt as $key => $item) {
@@ -570,7 +568,7 @@ class Metadata extends BaseSdkObject
         }
 
         Assert::isArray($links);
-        Assert::allIsInstanceOfOrArray($links, LinkedArticle::class);
+        Assert::allIsSdkObject($links, LinkedArticle::class);
 
         $items = [];
         foreach ($links as $key => $item) {
@@ -672,9 +670,10 @@ class Metadata extends BaseSdkObject
             $data['authors'] = $this->authors;
         }
         if (isset($this->campaignData)) {
-            $data['campaignData'] = is_object($this->campaignData)
-                ? $this->campaignData->toArray()
-                : $this->campaignData;
+            $data['campaignData'] =
+                $this->campaignData instanceof Arrayable
+                    ? $this->campaignData->toArray()
+                    : $this->campaignData;
         }
         if (isset($this->canonicalURL)) {
             $data['canonicalURL'] = $this->canonicalURL;
@@ -684,9 +683,10 @@ class Metadata extends BaseSdkObject
                 ? array_reduce(
                     array_keys($this->coverArt),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->coverArt[$key])
-                            ? $this->coverArt[$key]->toArray()
-                            : $this->coverArt[$key];
+                        $items[$key] =
+                            $this->coverArt[$key] instanceof Arrayable
+                                ? $this->coverArt[$key]->toArray()
+                                : $this->coverArt[$key];
                         return $items;
                     },
                     []
@@ -728,9 +728,10 @@ class Metadata extends BaseSdkObject
                 ? array_reduce(
                     array_keys($this->links),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->links[$key])
-                            ? $this->links[$key]->toArray()
-                            : $this->links[$key];
+                        $items[$key] =
+                            $this->links[$key] instanceof Arrayable
+                                ? $this->links[$key]->toArray()
+                                : $this->links[$key];
                         return $items;
                     },
                     []

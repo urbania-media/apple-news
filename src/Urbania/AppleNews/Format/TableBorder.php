@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -89,11 +91,7 @@ class TableBorder extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($all)) {
-            Assert::isInstanceOf($all, TableStrokeStyle::class);
-        } else {
-            Assert::isArray($all);
-        }
+        Assert::isSdkObject($all, TableStrokeStyle::class);
 
         $this->all = is_array($all) ? new TableStrokeStyle($all) : $all;
         return $this;
@@ -215,9 +213,10 @@ class TableBorder extends BaseSdkObject
     {
         $data = [];
         if (isset($this->all)) {
-            $data['all'] = is_object($this->all)
-                ? $this->all->toArray()
-                : $this->all;
+            $data['all'] =
+                $this->all instanceof Arrayable
+                    ? $this->all->toArray()
+                    : $this->all;
         }
         if (isset($this->bottom)) {
             $data['bottom'] = $this->bottom;

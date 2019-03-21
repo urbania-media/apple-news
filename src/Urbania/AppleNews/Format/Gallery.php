@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -54,7 +56,7 @@ class Gallery extends Component
     public function setItems($items)
     {
         Assert::isArray($items);
-        Assert::allIsInstanceOfOrArray($items, GalleryItem::class);
+        Assert::allIsSdkObject($items, GalleryItem::class);
 
         $items = [];
         foreach ($items as $key => $item) {
@@ -85,9 +87,10 @@ class Gallery extends Component
                 ? array_reduce(
                     array_keys($this->items),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->items[$key])
-                            ? $this->items[$key]->toArray()
-                            : $this->items[$key];
+                        $items[$key] =
+                            $this->items[$key] instanceof Arrayable
+                                ? $this->items[$key]->toArray()
+                                : $this->items[$key];
                         return $items;
                     },
                     []

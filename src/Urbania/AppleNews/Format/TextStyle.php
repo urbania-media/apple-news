@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -471,11 +473,7 @@ class TextStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($orderedListItems)) {
-            Assert::isInstanceOf($orderedListItems, ListItemStyle::class);
-        } else {
-            Assert::isArray($orderedListItems);
-        }
+        Assert::isSdkObject($orderedListItems, ListItemStyle::class);
 
         $this->orderedListItems = is_array($orderedListItems)
             ? new ListItemStyle($orderedListItems)
@@ -505,7 +503,7 @@ class TextStyle extends BaseSdkObject
         }
 
         if (is_object($strikethrough)) {
-            Assert::isInstanceOf($strikethrough, TextDecoration::class);
+            Assert::isSdkObject($strikethrough, TextDecoration::class);
         } elseif (!is_array($strikethrough)) {
             Assert::boolean($strikethrough);
         }
@@ -537,11 +535,7 @@ class TextStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($stroke)) {
-            Assert::isInstanceOf($stroke, TextStrokeStyle::class);
-        } else {
-            Assert::isArray($stroke);
-        }
+        Assert::isSdkObject($stroke, TextStrokeStyle::class);
 
         $this->stroke = is_array($stroke)
             ? new TextStrokeStyle($stroke)
@@ -597,11 +591,7 @@ class TextStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($textShadow)) {
-            Assert::isInstanceOf($textShadow, Shadow::class);
-        } else {
-            Assert::isArray($textShadow);
-        }
+        Assert::isSdkObject($textShadow, Shadow::class);
 
         $this->textShadow = is_array($textShadow)
             ? new Shadow($textShadow)
@@ -685,7 +675,7 @@ class TextStyle extends BaseSdkObject
         }
 
         if (is_object($underline)) {
-            Assert::isInstanceOf($underline, TextDecoration::class);
+            Assert::isSdkObject($underline, TextDecoration::class);
         } elseif (!is_array($underline)) {
             Assert::boolean($underline);
         }
@@ -717,11 +707,7 @@ class TextStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($unorderedListItems)) {
-            Assert::isInstanceOf($unorderedListItems, ListItemStyle::class);
-        } else {
-            Assert::isArray($unorderedListItems);
-        }
+        Assert::isSdkObject($unorderedListItems, ListItemStyle::class);
 
         $this->unorderedListItems = is_array($unorderedListItems)
             ? new ListItemStyle($unorderedListItems)
@@ -764,9 +750,10 @@ class TextStyle extends BaseSdkObject
     {
         $data = [];
         if (isset($this->backgroundColor)) {
-            $data['backgroundColor'] = is_object($this->backgroundColor)
-                ? $this->backgroundColor->toArray()
-                : $this->backgroundColor;
+            $data['backgroundColor'] =
+                $this->backgroundColor instanceof Arrayable
+                    ? $this->backgroundColor->toArray()
+                    : $this->backgroundColor;
         }
         if (isset($this->fontFamily)) {
             $data['fontFamily'] = $this->fontFamily;
@@ -787,42 +774,49 @@ class TextStyle extends BaseSdkObject
             $data['fontWidth'] = $this->fontWidth;
         }
         if (isset($this->orderedListItems)) {
-            $data['orderedListItems'] = is_object($this->orderedListItems)
-                ? $this->orderedListItems->toArray()
-                : $this->orderedListItems;
+            $data['orderedListItems'] =
+                $this->orderedListItems instanceof Arrayable
+                    ? $this->orderedListItems->toArray()
+                    : $this->orderedListItems;
         }
         if (isset($this->strikethrough)) {
-            $data['strikethrough'] = is_object($this->strikethrough)
-                ? $this->strikethrough->toArray()
-                : $this->strikethrough;
+            $data['strikethrough'] =
+                $this->strikethrough instanceof Arrayable
+                    ? $this->strikethrough->toArray()
+                    : $this->strikethrough;
         }
         if (isset($this->stroke)) {
-            $data['stroke'] = is_object($this->stroke)
-                ? $this->stroke->toArray()
-                : $this->stroke;
+            $data['stroke'] =
+                $this->stroke instanceof Arrayable
+                    ? $this->stroke->toArray()
+                    : $this->stroke;
         }
         if (isset($this->textColor)) {
-            $data['textColor'] = is_object($this->textColor)
-                ? $this->textColor->toArray()
-                : $this->textColor;
+            $data['textColor'] =
+                $this->textColor instanceof Arrayable
+                    ? $this->textColor->toArray()
+                    : $this->textColor;
         }
         if (isset($this->textShadow)) {
-            $data['textShadow'] = is_object($this->textShadow)
-                ? $this->textShadow->toArray()
-                : $this->textShadow;
+            $data['textShadow'] =
+                $this->textShadow instanceof Arrayable
+                    ? $this->textShadow->toArray()
+                    : $this->textShadow;
         }
         if (isset($this->tracking)) {
             $data['tracking'] = $this->tracking;
         }
         if (isset($this->underline)) {
-            $data['underline'] = is_object($this->underline)
-                ? $this->underline->toArray()
-                : $this->underline;
+            $data['underline'] =
+                $this->underline instanceof Arrayable
+                    ? $this->underline->toArray()
+                    : $this->underline;
         }
         if (isset($this->unorderedListItems)) {
-            $data['unorderedListItems'] = is_object($this->unorderedListItems)
-                ? $this->unorderedListItems->toArray()
-                : $this->unorderedListItems;
+            $data['unorderedListItems'] =
+                $this->unorderedListItems instanceof Arrayable
+                    ? $this->unorderedListItems->toArray()
+                    : $this->unorderedListItems;
         }
         if (isset($this->verticalAlignment)) {
             $data['verticalAlignment'] = $this->verticalAlignment;

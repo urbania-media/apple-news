@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -49,11 +51,7 @@ class Meta extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($throttling)) {
-            Assert::isInstanceOf($throttling, Throttling::class);
-        } else {
-            Assert::isArray($throttling);
-        }
+        Assert::isSdkObject($throttling, Throttling::class);
 
         $this->throttling = is_array($throttling)
             ? new Throttling($throttling)
@@ -69,9 +67,10 @@ class Meta extends BaseSdkObject
     {
         $data = [];
         if (isset($this->throttling)) {
-            $data['throttling'] = is_object($this->throttling)
-                ? $this->throttling->toArray()
-                : $this->throttling;
+            $data['throttling'] =
+                $this->throttling instanceof Arrayable
+                    ? $this->throttling->toArray()
+                    : $this->throttling;
         }
         return $data;
     }

@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -290,9 +292,10 @@ class DropCapStyle extends BaseSdkObject
     {
         $data = [];
         if (isset($this->backgroundColor)) {
-            $data['backgroundColor'] = is_object($this->backgroundColor)
-                ? $this->backgroundColor->toArray()
-                : $this->backgroundColor;
+            $data['backgroundColor'] =
+                $this->backgroundColor instanceof Arrayable
+                    ? $this->backgroundColor->toArray()
+                    : $this->backgroundColor;
         }
         if (isset($this->fontName)) {
             $data['fontName'] = $this->fontName;
@@ -310,9 +313,10 @@ class DropCapStyle extends BaseSdkObject
             $data['padding'] = $this->padding;
         }
         if (isset($this->textColor)) {
-            $data['textColor'] = is_object($this->textColor)
-                ? $this->textColor->toArray()
-                : $this->textColor;
+            $data['textColor'] =
+                $this->textColor instanceof Arrayable
+                    ? $this->textColor->toArray()
+                    : $this->textColor;
         }
         return $data;
     }

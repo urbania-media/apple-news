@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -257,7 +259,7 @@ class Article extends BaseSdkObject
         }
 
         if (is_object($document)) {
-            Assert::isInstanceOf(
+            Assert::isSdkObject(
                 $document,
                 \Urbania\AppleNews\Format\ArticleDocument::class
             );
@@ -599,7 +601,7 @@ class Article extends BaseSdkObject
         }
 
         Assert::isArray($warnings);
-        Assert::allIsInstanceOfOrArray($warnings, Warning::class);
+        Assert::allIsSdkObject($warnings, Warning::class);
 
         $items = [];
         foreach ($warnings as $key => $item) {
@@ -625,9 +627,10 @@ class Article extends BaseSdkObject
                 : null;
         }
         if (isset($this->document)) {
-            $data['document'] = is_object($this->document)
-                ? $this->document->toArray()
-                : $this->document;
+            $data['document'] =
+                $this->document instanceof Arrayable
+                    ? $this->document->toArray()
+                    : $this->document;
         }
         if (isset($this->id)) {
             $data['id'] = $this->id;
@@ -669,9 +672,10 @@ class Article extends BaseSdkObject
                 ? array_reduce(
                     array_keys($this->warnings),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->warnings[$key])
-                            ? $this->warnings[$key]->toArray()
-                            : $this->warnings[$key];
+                        $items[$key] =
+                            $this->warnings[$key] instanceof Arrayable
+                                ? $this->warnings[$key]->toArray()
+                                : $this->warnings[$key];
                         return $items;
                     },
                     []

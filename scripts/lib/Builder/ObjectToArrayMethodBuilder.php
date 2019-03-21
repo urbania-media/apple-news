@@ -58,7 +58,7 @@ class ObjectToArrayMethodBuilder
                     return sprintf(
                         '$data[\'%s\'] = !is_null($this->%1$s) ? ' .
                             'array_reduce(array_keys($this->%1$s), function ($items, $key) {' .
-                            '$items[$key] = is_object($this->%1$s[$key]) ? $this->%1$s[$key]->toArray() : $this->%1$s[$key];' .
+                            '$items[$key] = $this->%1$s[$key] instanceof Arrayable ? $this->%1$s[$key]->toArray() : $this->%1$s[$key];' .
                             'return $items;' .
                             '}, []) : $this->%1$s;',
                         $property['name']
@@ -74,7 +74,7 @@ class ObjectToArrayMethodBuilder
                 $mainType = $mainType === 'multiple' ? $property['type'][0] : $mainType;
                 if (preg_match('/^[A-Z]/', $mainType)) {
                     return sprintf(
-                        '$data[\'%s\'] = is_object($this->%1$s) ? $this->%1$s->toArray() : $this->%1$s;',
+                        '$data[\'%s\'] = $this->%1$s instanceof Arrayable ? $this->%1$s->toArray() : $this->%1$s;',
                         $property['name']
                     );
                 } else {

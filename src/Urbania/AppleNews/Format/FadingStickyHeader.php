@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -80,9 +82,10 @@ class FadingStickyHeader extends Scene
     {
         $data = parent::toArray();
         if (isset($this->fadeColor)) {
-            $data['fadeColor'] = is_object($this->fadeColor)
-                ? $this->fadeColor->toArray()
-                : $this->fadeColor;
+            $data['fadeColor'] =
+                $this->fadeColor instanceof Arrayable
+                    ? $this->fadeColor->toArray()
+                    : $this->fadeColor;
         }
         if (isset($this->type)) {
             $data['type'] = $this->type;

@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -46,11 +48,7 @@ class SectionResponse extends Section
             return $this;
         }
 
-        if (is_object($links)) {
-            Assert::isInstanceOf($links, SectionLinks::class);
-        } else {
-            Assert::isArray($links);
-        }
+        Assert::isSdkObject($links, SectionLinks::class);
 
         $this->links = is_array($links) ? new SectionLinks($links) : $links;
         return $this;
@@ -64,9 +62,10 @@ class SectionResponse extends Section
     {
         $data = parent::toArray();
         if (isset($this->links)) {
-            $data['links'] = is_object($this->links)
-                ? $this->links->toArray()
-                : $this->links;
+            $data['links'] =
+                $this->links instanceof Arrayable
+                    ? $this->links->toArray()
+                    : $this->links;
         }
         return $data;
     }

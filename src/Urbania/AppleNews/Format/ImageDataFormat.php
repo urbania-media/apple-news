@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -195,24 +197,28 @@ class ImageDataFormat extends DataFormat
     {
         $data = parent::toArray();
         if (isset($this->maximumHeight)) {
-            $data['maximumHeight'] = is_object($this->maximumHeight)
-                ? $this->maximumHeight->toArray()
-                : $this->maximumHeight;
+            $data['maximumHeight'] =
+                $this->maximumHeight instanceof Arrayable
+                    ? $this->maximumHeight->toArray()
+                    : $this->maximumHeight;
         }
         if (isset($this->maximumWidth)) {
-            $data['maximumWidth'] = is_object($this->maximumWidth)
-                ? $this->maximumWidth->toArray()
-                : $this->maximumWidth;
+            $data['maximumWidth'] =
+                $this->maximumWidth instanceof Arrayable
+                    ? $this->maximumWidth->toArray()
+                    : $this->maximumWidth;
         }
         if (isset($this->minimumHeight)) {
-            $data['minimumHeight'] = is_object($this->minimumHeight)
-                ? $this->minimumHeight->toArray()
-                : $this->minimumHeight;
+            $data['minimumHeight'] =
+                $this->minimumHeight instanceof Arrayable
+                    ? $this->minimumHeight->toArray()
+                    : $this->minimumHeight;
         }
         if (isset($this->minimumWidth)) {
-            $data['minimumWidth'] = is_object($this->minimumWidth)
-                ? $this->minimumWidth->toArray()
-                : $this->minimumWidth;
+            $data['minimumWidth'] =
+                $this->minimumWidth instanceof Arrayable
+                    ? $this->minimumWidth->toArray()
+                    : $this->minimumWidth;
         }
         if (isset($this->type)) {
             $data['type'] = $this->type;

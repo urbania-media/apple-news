@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -177,11 +179,7 @@ class ConditionalTableCellStyle extends TableCellStyle
             return $this;
         }
 
-        if (is_object($border)) {
-            Assert::isInstanceOf($border, TableBorder::class);
-        } else {
-            Assert::isArray($border);
-        }
+        Assert::isSdkObject($border, TableBorder::class);
 
         $this->border = is_array($border) ? new TableBorder($border) : $border;
         return $this;
@@ -290,7 +288,7 @@ class ConditionalTableCellStyle extends TableCellStyle
         }
 
         if (is_object($padding)) {
-            Assert::isInstanceOf($padding, Padding::class);
+            Assert::isSdkObject($padding, Padding::class);
         } elseif (!is_array($padding)) {
             Assert::SupportedUnits($padding);
         }
@@ -316,7 +314,7 @@ class ConditionalTableCellStyle extends TableCellStyle
     public function setSelectors($selectors)
     {
         Assert::isArray($selectors);
-        Assert::allIsInstanceOfOrArray($selectors, TableCellSelector::class);
+        Assert::allIsSdkObject($selectors, TableCellSelector::class);
 
         $items = [];
         foreach ($selectors as $key => $item) {
@@ -350,7 +348,7 @@ class ConditionalTableCellStyle extends TableCellStyle
         }
 
         if (is_object($textStyle)) {
-            Assert::isInstanceOf($textStyle, ComponentTextStyle::class);
+            Assert::isSdkObject($textStyle, ComponentTextStyle::class);
         } elseif (!is_array($textStyle)) {
             Assert::string($textStyle);
         }
@@ -423,41 +421,47 @@ class ConditionalTableCellStyle extends TableCellStyle
     {
         $data = parent::toArray();
         if (isset($this->backgroundColor)) {
-            $data['backgroundColor'] = is_object($this->backgroundColor)
-                ? $this->backgroundColor->toArray()
-                : $this->backgroundColor;
+            $data['backgroundColor'] =
+                $this->backgroundColor instanceof Arrayable
+                    ? $this->backgroundColor->toArray()
+                    : $this->backgroundColor;
         }
         if (isset($this->border)) {
-            $data['border'] = is_object($this->border)
-                ? $this->border->toArray()
-                : $this->border;
+            $data['border'] =
+                $this->border instanceof Arrayable
+                    ? $this->border->toArray()
+                    : $this->border;
         }
         if (isset($this->height)) {
-            $data['height'] = is_object($this->height)
-                ? $this->height->toArray()
-                : $this->height;
+            $data['height'] =
+                $this->height instanceof Arrayable
+                    ? $this->height->toArray()
+                    : $this->height;
         }
         if (isset($this->horizontalAlignment)) {
             $data['horizontalAlignment'] = $this->horizontalAlignment;
         }
         if (isset($this->minimumWidth)) {
-            $data['minimumWidth'] = is_object($this->minimumWidth)
-                ? $this->minimumWidth->toArray()
-                : $this->minimumWidth;
+            $data['minimumWidth'] =
+                $this->minimumWidth instanceof Arrayable
+                    ? $this->minimumWidth->toArray()
+                    : $this->minimumWidth;
         }
         if (isset($this->padding)) {
-            $data['padding'] = is_object($this->padding)
-                ? $this->padding->toArray()
-                : $this->padding;
+            $data['padding'] =
+                $this->padding instanceof Arrayable
+                    ? $this->padding->toArray()
+                    : $this->padding;
         }
         if (isset($this->selectors)) {
             $data['selectors'] = !is_null($this->selectors)
                 ? array_reduce(
                     array_keys($this->selectors),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->selectors[$key])
-                            ? $this->selectors[$key]->toArray()
-                            : $this->selectors[$key];
+                        $items[$key] =
+                            $this->selectors[$key] instanceof Arrayable
+                                ? $this->selectors[$key]->toArray()
+                                : $this->selectors[$key];
                         return $items;
                     },
                     []
@@ -465,9 +469,10 @@ class ConditionalTableCellStyle extends TableCellStyle
                 : $this->selectors;
         }
         if (isset($this->textStyle)) {
-            $data['textStyle'] = is_object($this->textStyle)
-                ? $this->textStyle->toArray()
-                : $this->textStyle;
+            $data['textStyle'] =
+                $this->textStyle instanceof Arrayable
+                    ? $this->textStyle->toArray()
+                    : $this->textStyle;
         }
         if (isset($this->verticalAlignment)) {
             $data['verticalAlignment'] = $this->verticalAlignment;

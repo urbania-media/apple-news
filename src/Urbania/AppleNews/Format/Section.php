@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -94,7 +96,7 @@ class Section extends Component
         }
 
         Assert::isArray($additions);
-        Assert::allIsInstanceOfOrArray($additions, ComponentLink::class);
+        Assert::allIsSdkObject($additions, ComponentLink::class);
 
         $items = [];
         foreach ($additions as $key => $item) {
@@ -126,13 +128,17 @@ class Section extends Component
         }
 
         Assert::isArray($components);
-        Assert::allIsInstanceOfOrArray($components, Component::class);
+        Assert::allIsComponent($components);
 
         $items = [];
         foreach ($components as $key => $item) {
-            $items[$key] = is_array($item)
-                ? Component::createTyped($item)
-                : $item;
+            if ($item instanceof Componentable) {
+                $items[$key] = $item->toComponent();
+            } elseif (is_array($item)) {
+                $items[$key] = Component::createTyped($item);
+            } else {
+                $items[$key] = $item;
+            }
         }
         $this->components = $items;
         return $this;
@@ -159,11 +165,7 @@ class Section extends Component
             return $this;
         }
 
-        if (is_object($contentDisplay)) {
-            Assert::isInstanceOf($contentDisplay, CollectionDisplay::class);
-        } else {
-            Assert::isArray($contentDisplay);
-        }
+        Assert::isSdkObject($contentDisplay, CollectionDisplay::class);
 
         $this->contentDisplay = is_array($contentDisplay)
             ? new CollectionDisplay($contentDisplay)
@@ -201,11 +203,7 @@ class Section extends Component
             return $this;
         }
 
-        if (is_object($scene)) {
-            Assert::isInstanceOf($scene, Scene::class);
-        } else {
-            Assert::isArray($scene);
-        }
+        Assert::isSdkObject($scene, Scene::class);
 
         $this->scene = is_array($scene) ? Scene::createTyped($scene) : $scene;
         return $this;
@@ -223,9 +221,10 @@ class Section extends Component
                 ? array_reduce(
                     array_keys($this->additions),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->additions[$key])
-                            ? $this->additions[$key]->toArray()
-                            : $this->additions[$key];
+                        $items[$key] =
+                            $this->additions[$key] instanceof Arrayable
+                                ? $this->additions[$key]->toArray()
+                                : $this->additions[$key];
                         return $items;
                     },
                     []
@@ -237,9 +236,10 @@ class Section extends Component
                 ? array_reduce(
                     array_keys($this->components),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->components[$key])
-                            ? $this->components[$key]->toArray()
-                            : $this->components[$key];
+                        $items[$key] =
+                            $this->components[$key] instanceof Arrayable
+                                ? $this->components[$key]->toArray()
+                                : $this->components[$key];
                         return $items;
                     },
                     []
@@ -247,17 +247,19 @@ class Section extends Component
                 : $this->components;
         }
         if (isset($this->contentDisplay)) {
-            $data['contentDisplay'] = is_object($this->contentDisplay)
-                ? $this->contentDisplay->toArray()
-                : $this->contentDisplay;
+            $data['contentDisplay'] =
+                $this->contentDisplay instanceof Arrayable
+                    ? $this->contentDisplay->toArray()
+                    : $this->contentDisplay;
         }
         if (isset($this->role)) {
             $data['role'] = $this->role;
         }
         if (isset($this->scene)) {
-            $data['scene'] = is_object($this->scene)
-                ? $this->scene->toArray()
-                : $this->scene;
+            $data['scene'] =
+                $this->scene instanceof Arrayable
+                    ? $this->scene->toArray()
+                    : $this->scene;
         }
         return $data;
     }

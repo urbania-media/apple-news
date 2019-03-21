@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -121,7 +123,7 @@ class Photo extends Component
         }
 
         if (is_object($caption)) {
-            Assert::isInstanceOf($caption, CaptionDescriptor::class);
+            Assert::isSdkObject($caption, CaptionDescriptor::class);
         } elseif (!is_array($caption)) {
             Assert::string($caption);
         }
@@ -204,9 +206,10 @@ class Photo extends Component
             $data['accessibilityCaption'] = $this->accessibilityCaption;
         }
         if (isset($this->caption)) {
-            $data['caption'] = is_object($this->caption)
-                ? $this->caption->toArray()
-                : $this->caption;
+            $data['caption'] =
+                $this->caption instanceof Arrayable
+                    ? $this->caption->toArray()
+                    : $this->caption;
         }
         if (isset($this->explicitContent)) {
             $data['explicitContent'] = $this->explicitContent;

@@ -39,6 +39,8 @@ class ObjectFileBuilder
         $namespace->addUse('Carbon\Carbon');
         $namespace->addUse('Urbania\AppleNews\Support\Assert');
         $namespace->addUse('Urbania\AppleNews\Support\BaseSdkObject');
+        $namespace->addUse('Urbania\AppleNews\Contracts\Componentable');
+        $namespace->addUse('Illuminate\Contracts\Support\Arrayable');
         return $namespace;
     }
 

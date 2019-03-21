@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -111,7 +113,7 @@ class InlineTextStyle extends BaseSdkObject
     public function setTextStyle($textStyle)
     {
         if (is_object($textStyle)) {
-            Assert::isInstanceOf($textStyle, TextStyle::class);
+            Assert::isSdkObject($textStyle, TextStyle::class);
         } elseif (!is_array($textStyle)) {
             Assert::string($textStyle);
         }
@@ -136,9 +138,10 @@ class InlineTextStyle extends BaseSdkObject
             $data['rangeStart'] = $this->rangeStart;
         }
         if (isset($this->textStyle)) {
-            $data['textStyle'] = is_object($this->textStyle)
-                ? $this->textStyle->toArray()
-                : $this->textStyle;
+            $data['textStyle'] =
+                $this->textStyle instanceof Arrayable
+                    ? $this->textStyle->toArray()
+                    : $this->textStyle;
         }
         return $data;
     }

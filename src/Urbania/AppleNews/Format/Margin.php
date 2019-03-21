@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -100,14 +102,16 @@ class Margin extends BaseSdkObject
     {
         $data = [];
         if (isset($this->bottom)) {
-            $data['bottom'] = is_object($this->bottom)
-                ? $this->bottom->toArray()
-                : $this->bottom;
+            $data['bottom'] =
+                $this->bottom instanceof Arrayable
+                    ? $this->bottom->toArray()
+                    : $this->bottom;
         }
         if (isset($this->top)) {
-            $data['top'] = is_object($this->top)
-                ? $this->top->toArray()
-                : $this->top;
+            $data['top'] =
+                $this->top instanceof Arrayable
+                    ? $this->top->toArray()
+                    : $this->top;
         }
         return $data;
     }

@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -352,24 +354,28 @@ class CollectionDisplay extends BaseSdkObject
             $data['distribution'] = $this->distribution;
         }
         if (isset($this->gutter)) {
-            $data['gutter'] = is_object($this->gutter)
-                ? $this->gutter->toArray()
-                : $this->gutter;
+            $data['gutter'] =
+                $this->gutter instanceof Arrayable
+                    ? $this->gutter->toArray()
+                    : $this->gutter;
         }
         if (isset($this->maximumWidth)) {
-            $data['maximumWidth'] = is_object($this->maximumWidth)
-                ? $this->maximumWidth->toArray()
-                : $this->maximumWidth;
+            $data['maximumWidth'] =
+                $this->maximumWidth instanceof Arrayable
+                    ? $this->maximumWidth->toArray()
+                    : $this->maximumWidth;
         }
         if (isset($this->minimumWidth)) {
-            $data['minimumWidth'] = is_object($this->minimumWidth)
-                ? $this->minimumWidth->toArray()
-                : $this->minimumWidth;
+            $data['minimumWidth'] =
+                $this->minimumWidth instanceof Arrayable
+                    ? $this->minimumWidth->toArray()
+                    : $this->minimumWidth;
         }
         if (isset($this->rowSpacing)) {
-            $data['rowSpacing'] = is_object($this->rowSpacing)
-                ? $this->rowSpacing->toArray()
-                : $this->rowSpacing;
+            $data['rowSpacing'] =
+                $this->rowSpacing instanceof Arrayable
+                    ? $this->rowSpacing->toArray()
+                    : $this->rowSpacing;
         }
         if (isset($this->type)) {
             $data['type'] = $this->type;

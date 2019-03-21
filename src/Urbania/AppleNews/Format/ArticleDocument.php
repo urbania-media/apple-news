@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -201,14 +203,7 @@ class ArticleDocument extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($advertisingSettings)) {
-            Assert::isInstanceOf(
-                $advertisingSettings,
-                AdvertisingSettings::class
-            );
-        } else {
-            Assert::isArray($advertisingSettings);
-        }
+        Assert::isSdkObject($advertisingSettings, AdvertisingSettings::class);
 
         $this->advertisingSettings = is_array($advertisingSettings)
             ? new AdvertisingSettings($advertisingSettings)
@@ -237,11 +232,7 @@ class ArticleDocument extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($componentLayouts)) {
-            Assert::isInstanceOf($componentLayouts, ComponentLayouts::class);
-        } else {
-            Assert::isArray($componentLayouts);
-        }
+        Assert::isSdkObject($componentLayouts, ComponentLayouts::class);
 
         $this->componentLayouts = is_array($componentLayouts)
             ? new ComponentLayouts($componentLayouts)
@@ -270,11 +261,7 @@ class ArticleDocument extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($componentStyles)) {
-            Assert::isInstanceOf($componentStyles, ComponentStyles::class);
-        } else {
-            Assert::isArray($componentStyles);
-        }
+        Assert::isSdkObject($componentStyles, ComponentStyles::class);
 
         $this->componentStyles = is_array($componentStyles)
             ? new ComponentStyles($componentStyles)
@@ -298,14 +285,7 @@ class ArticleDocument extends BaseSdkObject
      */
     public function setComponentTextStyles($componentTextStyles)
     {
-        if (is_object($componentTextStyles)) {
-            Assert::isInstanceOf(
-                $componentTextStyles,
-                ComponentTextStyles::class
-            );
-        } else {
-            Assert::isArray($componentTextStyles);
-        }
+        Assert::isSdkObject($componentTextStyles, ComponentTextStyles::class);
 
         $this->componentTextStyles = is_array($componentTextStyles)
             ? new ComponentTextStyles($componentTextStyles)
@@ -330,13 +310,17 @@ class ArticleDocument extends BaseSdkObject
     public function setComponents($components)
     {
         Assert::isArray($components);
-        Assert::allIsInstanceOfOrArray($components, Component::class);
+        Assert::allIsComponent($components);
 
         $items = [];
         foreach ($components as $key => $item) {
-            $items[$key] = is_array($item)
-                ? Component::createTyped($item)
-                : $item;
+            if ($item instanceof Componentable) {
+                $items[$key] = $item->toComponent();
+            } elseif (is_array($item)) {
+                $items[$key] = Component::createTyped($item);
+            } else {
+                $items[$key] = $item;
+            }
         }
         $this->components = $items;
         return $this;
@@ -363,11 +347,7 @@ class ArticleDocument extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($documentStyle)) {
-            Assert::isInstanceOf($documentStyle, DocumentStyle::class);
-        } else {
-            Assert::isArray($documentStyle);
-        }
+        Assert::isSdkObject($documentStyle, DocumentStyle::class);
 
         $this->documentStyle = is_array($documentStyle)
             ? new DocumentStyle($documentStyle)
@@ -435,11 +415,7 @@ class ArticleDocument extends BaseSdkObject
      */
     public function setLayout($layout)
     {
-        if (is_object($layout)) {
-            Assert::isInstanceOf($layout, Layout::class);
-        } else {
-            Assert::isArray($layout);
-        }
+        Assert::isSdkObject($layout, Layout::class);
 
         $this->layout = is_array($layout) ? new Layout($layout) : $layout;
         return $this;
@@ -466,11 +442,7 @@ class ArticleDocument extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($metadata)) {
-            Assert::isInstanceOf($metadata, Metadata::class);
-        } else {
-            Assert::isArray($metadata);
-        }
+        Assert::isSdkObject($metadata, Metadata::class);
 
         $this->metadata = is_array($metadata)
             ? new Metadata($metadata)
@@ -526,11 +498,7 @@ class ArticleDocument extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($textStyles)) {
-            Assert::isInstanceOf($textStyles, TextStyles::class);
-        } else {
-            Assert::isArray($textStyles);
-        }
+        Assert::isSdkObject($textStyles, TextStyles::class);
 
         $this->textStyles = is_array($textStyles)
             ? new TextStyles($textStyles)
@@ -602,18 +570,20 @@ class ArticleDocument extends BaseSdkObject
             $data['language'] = $this->language;
         }
         if (isset($this->layout)) {
-            $data['layout'] = is_object($this->layout)
-                ? $this->layout->toArray()
-                : $this->layout;
+            $data['layout'] =
+                $this->layout instanceof Arrayable
+                    ? $this->layout->toArray()
+                    : $this->layout;
         }
         if (isset($this->components)) {
             $data['components'] = !is_null($this->components)
                 ? array_reduce(
                     array_keys($this->components),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->components[$key])
-                            ? $this->components[$key]->toArray()
-                            : $this->components[$key];
+                        $items[$key] =
+                            $this->components[$key] instanceof Arrayable
+                                ? $this->components[$key]->toArray()
+                                : $this->components[$key];
                         return $items;
                     },
                     []
@@ -621,42 +591,49 @@ class ArticleDocument extends BaseSdkObject
                 : $this->components;
         }
         if (isset($this->componentTextStyles)) {
-            $data['componentTextStyles'] = is_object($this->componentTextStyles)
-                ? $this->componentTextStyles->toArray()
-                : $this->componentTextStyles;
+            $data['componentTextStyles'] =
+                $this->componentTextStyles instanceof Arrayable
+                    ? $this->componentTextStyles->toArray()
+                    : $this->componentTextStyles;
         }
         if (isset($this->advertisingSettings)) {
-            $data['advertisingSettings'] = is_object($this->advertisingSettings)
-                ? $this->advertisingSettings->toArray()
-                : $this->advertisingSettings;
+            $data['advertisingSettings'] =
+                $this->advertisingSettings instanceof Arrayable
+                    ? $this->advertisingSettings->toArray()
+                    : $this->advertisingSettings;
         }
         if (isset($this->subtitle)) {
             $data['subtitle'] = $this->subtitle;
         }
         if (isset($this->metadata)) {
-            $data['metadata'] = is_object($this->metadata)
-                ? $this->metadata->toArray()
-                : $this->metadata;
+            $data['metadata'] =
+                $this->metadata instanceof Arrayable
+                    ? $this->metadata->toArray()
+                    : $this->metadata;
         }
         if (isset($this->documentStyle)) {
-            $data['documentStyle'] = is_object($this->documentStyle)
-                ? $this->documentStyle->toArray()
-                : $this->documentStyle;
+            $data['documentStyle'] =
+                $this->documentStyle instanceof Arrayable
+                    ? $this->documentStyle->toArray()
+                    : $this->documentStyle;
         }
         if (isset($this->textStyles)) {
-            $data['textStyles'] = is_object($this->textStyles)
-                ? $this->textStyles->toArray()
-                : $this->textStyles;
+            $data['textStyles'] =
+                $this->textStyles instanceof Arrayable
+                    ? $this->textStyles->toArray()
+                    : $this->textStyles;
         }
         if (isset($this->componentLayouts)) {
-            $data['componentLayouts'] = is_object($this->componentLayouts)
-                ? $this->componentLayouts->toArray()
-                : $this->componentLayouts;
+            $data['componentLayouts'] =
+                $this->componentLayouts instanceof Arrayable
+                    ? $this->componentLayouts->toArray()
+                    : $this->componentLayouts;
         }
         if (isset($this->componentStyles)) {
-            $data['componentStyles'] = is_object($this->componentStyles)
-                ? $this->componentStyles->toArray()
-                : $this->componentStyles;
+            $data['componentStyles'] =
+                $this->componentStyles instanceof Arrayable
+                    ? $this->componentStyles->toArray()
+                    : $this->componentStyles;
         }
         return $data;
     }

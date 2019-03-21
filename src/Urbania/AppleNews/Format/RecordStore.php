@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -54,7 +56,7 @@ class RecordStore extends BaseSdkObject
     public function setDescriptors($descriptors)
     {
         Assert::isArray($descriptors);
-        Assert::allIsInstanceOfOrArray($descriptors, DataDescriptor::class);
+        Assert::allIsSdkObject($descriptors, DataDescriptor::class);
 
         $items = [];
         foreach ($descriptors as $key => $item) {
@@ -81,7 +83,7 @@ class RecordStore extends BaseSdkObject
     public function setRecords($records)
     {
         Assert::isArray($records);
-        Assert::allIsInstanceOfOrArray($records, Records::class);
+        Assert::allIsSdkObject($records, Records::class);
 
         $items = [];
         foreach ($records as $key => $item) {
@@ -103,9 +105,10 @@ class RecordStore extends BaseSdkObject
                 ? array_reduce(
                     array_keys($this->descriptors),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->descriptors[$key])
-                            ? $this->descriptors[$key]->toArray()
-                            : $this->descriptors[$key];
+                        $items[$key] =
+                            $this->descriptors[$key] instanceof Arrayable
+                                ? $this->descriptors[$key]->toArray()
+                                : $this->descriptors[$key];
                         return $items;
                     },
                     []
@@ -117,9 +120,10 @@ class RecordStore extends BaseSdkObject
                 ? array_reduce(
                     array_keys($this->records),
                     function ($items, $key) {
-                        $items[$key] = is_object($this->records[$key])
-                            ? $this->records[$key]->toArray()
-                            : $this->records[$key];
+                        $items[$key] =
+                            $this->records[$key] instanceof Arrayable
+                                ? $this->records[$key]->toArray()
+                                : $this->records[$key];
                         return $items;
                     },
                     []

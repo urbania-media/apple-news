@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -210,7 +212,7 @@ class ComponentLayout extends BaseSdkObject
         }
 
         if (is_object($contentInset)) {
-            Assert::isInstanceOf($contentInset, ContentInset::class);
+            Assert::isSdkObject($contentInset, ContentInset::class);
         } elseif (!is_array($contentInset)) {
             Assert::boolean($contentInset);
         }
@@ -338,7 +340,7 @@ class ComponentLayout extends BaseSdkObject
         }
 
         if (is_object($margin)) {
-            Assert::isInstanceOf($margin, Margin::class);
+            Assert::isSdkObject($margin, Margin::class);
         } elseif (!is_array($margin)) {
             Assert::integer($margin);
         }
@@ -415,9 +417,10 @@ class ComponentLayout extends BaseSdkObject
             $data['columnStart'] = $this->columnStart;
         }
         if (isset($this->contentInset)) {
-            $data['contentInset'] = is_object($this->contentInset)
-                ? $this->contentInset->toArray()
-                : $this->contentInset;
+            $data['contentInset'] =
+                $this->contentInset instanceof Arrayable
+                    ? $this->contentInset->toArray()
+                    : $this->contentInset;
         }
         if (isset($this->horizontalContentAlignment)) {
             $data['horizontalContentAlignment'] =
@@ -430,19 +433,22 @@ class ComponentLayout extends BaseSdkObject
             $data['ignoreDocumentMargin'] = $this->ignoreDocumentMargin;
         }
         if (isset($this->margin)) {
-            $data['margin'] = is_object($this->margin)
-                ? $this->margin->toArray()
-                : $this->margin;
+            $data['margin'] =
+                $this->margin instanceof Arrayable
+                    ? $this->margin->toArray()
+                    : $this->margin;
         }
         if (isset($this->maximumContentWidth)) {
-            $data['maximumContentWidth'] = is_object($this->maximumContentWidth)
-                ? $this->maximumContentWidth->toArray()
-                : $this->maximumContentWidth;
+            $data['maximumContentWidth'] =
+                $this->maximumContentWidth instanceof Arrayable
+                    ? $this->maximumContentWidth->toArray()
+                    : $this->maximumContentWidth;
         }
         if (isset($this->minimumHeight)) {
-            $data['minimumHeight'] = is_object($this->minimumHeight)
-                ? $this->minimumHeight->toArray()
-                : $this->minimumHeight;
+            $data['minimumHeight'] =
+                $this->minimumHeight instanceof Arrayable
+                    ? $this->minimumHeight->toArray()
+                    : $this->minimumHeight;
         }
         return $data;
     }

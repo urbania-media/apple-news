@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -64,9 +66,10 @@ class TextDecoration extends BaseSdkObject
     {
         $data = [];
         if (isset($this->color)) {
-            $data['color'] = is_object($this->color)
-                ? $this->color->toArray()
-                : $this->color;
+            $data['color'] =
+                $this->color instanceof Arrayable
+                    ? $this->color->toArray()
+                    : $this->color;
         }
         return $data;
     }

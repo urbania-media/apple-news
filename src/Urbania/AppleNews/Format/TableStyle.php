@@ -3,6 +3,8 @@
 namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -100,11 +102,7 @@ class TableStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($cells)) {
-            Assert::isInstanceOf($cells, TableCellStyle::class);
-        } else {
-            Assert::isArray($cells);
-        }
+        Assert::isSdkObject($cells, TableCellStyle::class);
 
         $this->cells = is_array($cells) ? new TableCellStyle($cells) : $cells;
         return $this;
@@ -131,11 +129,7 @@ class TableStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($columns)) {
-            Assert::isInstanceOf($columns, TableColumnStyle::class);
-        } else {
-            Assert::isArray($columns);
-        }
+        Assert::isSdkObject($columns, TableColumnStyle::class);
 
         $this->columns = is_array($columns)
             ? new TableColumnStyle($columns)
@@ -164,11 +158,7 @@ class TableStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($headerCells)) {
-            Assert::isInstanceOf($headerCells, TableCellStyle::class);
-        } else {
-            Assert::isArray($headerCells);
-        }
+        Assert::isSdkObject($headerCells, TableCellStyle::class);
 
         $this->headerCells = is_array($headerCells)
             ? new TableCellStyle($headerCells)
@@ -197,11 +187,7 @@ class TableStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($headerColumns)) {
-            Assert::isInstanceOf($headerColumns, TableColumnStyle::class);
-        } else {
-            Assert::isArray($headerColumns);
-        }
+        Assert::isSdkObject($headerColumns, TableColumnStyle::class);
 
         $this->headerColumns = is_array($headerColumns)
             ? new TableColumnStyle($headerColumns)
@@ -230,11 +216,7 @@ class TableStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($headerRows)) {
-            Assert::isInstanceOf($headerRows, TableRowStyle::class);
-        } else {
-            Assert::isArray($headerRows);
-        }
+        Assert::isSdkObject($headerRows, TableRowStyle::class);
 
         $this->headerRows = is_array($headerRows)
             ? new TableRowStyle($headerRows)
@@ -263,11 +245,7 @@ class TableStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($rows)) {
-            Assert::isInstanceOf($rows, TableRowStyle::class);
-        } else {
-            Assert::isArray($rows);
-        }
+        Assert::isSdkObject($rows, TableRowStyle::class);
 
         $this->rows = is_array($rows) ? new TableRowStyle($rows) : $rows;
         return $this;
@@ -281,34 +259,40 @@ class TableStyle extends BaseSdkObject
     {
         $data = [];
         if (isset($this->cells)) {
-            $data['cells'] = is_object($this->cells)
-                ? $this->cells->toArray()
-                : $this->cells;
+            $data['cells'] =
+                $this->cells instanceof Arrayable
+                    ? $this->cells->toArray()
+                    : $this->cells;
         }
         if (isset($this->columns)) {
-            $data['columns'] = is_object($this->columns)
-                ? $this->columns->toArray()
-                : $this->columns;
+            $data['columns'] =
+                $this->columns instanceof Arrayable
+                    ? $this->columns->toArray()
+                    : $this->columns;
         }
         if (isset($this->headerCells)) {
-            $data['headerCells'] = is_object($this->headerCells)
-                ? $this->headerCells->toArray()
-                : $this->headerCells;
+            $data['headerCells'] =
+                $this->headerCells instanceof Arrayable
+                    ? $this->headerCells->toArray()
+                    : $this->headerCells;
         }
         if (isset($this->headerColumns)) {
-            $data['headerColumns'] = is_object($this->headerColumns)
-                ? $this->headerColumns->toArray()
-                : $this->headerColumns;
+            $data['headerColumns'] =
+                $this->headerColumns instanceof Arrayable
+                    ? $this->headerColumns->toArray()
+                    : $this->headerColumns;
         }
         if (isset($this->headerRows)) {
-            $data['headerRows'] = is_object($this->headerRows)
-                ? $this->headerRows->toArray()
-                : $this->headerRows;
+            $data['headerRows'] =
+                $this->headerRows instanceof Arrayable
+                    ? $this->headerRows->toArray()
+                    : $this->headerRows;
         }
         if (isset($this->rows)) {
-            $data['rows'] = is_object($this->rows)
-                ? $this->rows->toArray()
-                : $this->rows;
+            $data['rows'] =
+                $this->rows instanceof Arrayable
+                    ? $this->rows->toArray()
+                    : $this->rows;
         }
         return $data;
     }
