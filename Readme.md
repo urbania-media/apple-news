@@ -81,7 +81,7 @@ echo $article->toJson();
 
 ### Laravel
 
-Create a test article:
+Create a test article: (when creating an article with the facade or the helper, it takes into account the default `article` values found in `config/apple-news.php`)
 ```php
 
 // Using the facade
@@ -89,12 +89,6 @@ use AppleNews;
 
 $article = AppleNews::article([
     'identifier' => 'test-article',
-    'language' => 'en-US',
-    'version' => '1.7',
-    'layout' => [
-        'columns' => 12,
-        'width' => 1024
-    ],
     'title' => 'An article',
     'components' => [
         [
