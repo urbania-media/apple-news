@@ -9,12 +9,12 @@
     "authors": [
         {
             "name": "Folklore",
-            "email": "info@atelierfolklore.ca",
-            "homepage": "http://atelierfolklore.ca"
+            "email": "info@folklore.email",
+            "homepage": "http://folkloreinc.ca"
         },
         {
             "name": "David Mongeau-Petitpas",
-            "email": "dmp@atelierfolklore.ca",
+            "email": "dmp@folklore.email",
             "homepage": "http://mongo.ca",
             "role": "Developer"
         }
