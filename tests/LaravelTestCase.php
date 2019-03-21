@@ -26,7 +26,7 @@ class LaravelTestCase extends BaseTestCase
     protected function getPackageAliases($app)
     {
         return [
-
+            'AppleNews' => \Urbania\AppleNews\Laravel\AppleNewsFacade::class
         ];
     }
 }
