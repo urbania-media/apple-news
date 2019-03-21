@@ -1,3 +1,7 @@
-Package
+Apple News PHP
 ============
-This is a description
+This package offer a wrapper around the Apple News API and Apple News Format
+
+```
+composer require urbania/apple-news
+```
