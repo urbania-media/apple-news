@@ -22,7 +22,7 @@ class Chapter extends Component
      * links used in its child components will no longer be interactable.
      * @var Format\ComponentLink[]
      */
-    protected $additions;
+    protected $additions = [];
 
     /**
      * An array of components to display as child components. Child
@@ -30,7 +30,7 @@ class Chapter extends Component
      * component.
      * @var Format\Component[]
      */
-    protected $components;
+    protected $components = [];
 
     /**
      * Defines how child components are positioned within this chapter
@@ -75,6 +75,27 @@ class Chapter extends Component
     }
 
     /**
+     * Add an item to additions
+     * @param \Urbania\AppleNews\Format\ComponentLink|array $item
+     * @return $this
+     */
+    public function addAddition($item)
+    {
+        return $this->setAdditions(array_merge($this->additions, [$item]));
+    }
+
+    /**
+     * Add items to additions
+     * @param array $items
+     * @return $this
+     */
+    public function addAdditions($items)
+    {
+        Assert::isArray($items);
+        return $this->setAdditions(array_merge($this->additions, $items));
+    }
+
+    /**
      * Get the additions
      * @return Format\ComponentLink[]
      */
@@ -104,6 +125,27 @@ class Chapter extends Component
         }
         $this->additions = $items;
         return $this;
+    }
+
+    /**
+     * Add an item to components
+     * @param \Urbania\AppleNews\Format\Component|array $item
+     * @return $this
+     */
+    public function addComponent($item)
+    {
+        return $this->setComponents(array_merge($this->components, [$item]));
+    }
+
+    /**
+     * Add items to components
+     * @param array $items
+     * @return $this
+     */
+    public function addComponents($items)
+    {
+        Assert::isArray($items);
+        return $this->setComponents(array_merge($this->components, $items));
     }
 
     /**

@@ -19,7 +19,7 @@ class SearchResponse extends BaseSdkObject
      * A list of article objects.
      * @var Api\Objects\Article[]
      */
-    protected $articles;
+    protected $articles = [];
 
     /**
      * A list of fields returned by the Search Articles in a Section and
@@ -50,6 +50,27 @@ class SearchResponse extends BaseSdkObject
         if (isset($data['meta'])) {
             $this->setMeta($data['meta']);
         }
+    }
+
+    /**
+     * Add an item to articles
+     * @param \Urbania\AppleNews\Api\Objects\Article|array $item
+     * @return $this
+     */
+    public function addArticle($item)
+    {
+        return $this->setArticles(array_merge($this->articles, [$item]));
+    }
+
+    /**
+     * Add items to articles
+     * @param array $items
+     * @return $this
+     */
+    public function addArticles($items)
+    {
+        Assert::isArray($items);
+        return $this->setArticles(array_merge($this->articles, $items));
     }
 
     /**

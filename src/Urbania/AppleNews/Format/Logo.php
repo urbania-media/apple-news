@@ -38,7 +38,7 @@ class Logo extends Component
      * links used in its child components will no longer be interactable.
      * @var Format\ComponentLink[]
      */
-    protected $additions;
+    protected $additions = [];
 
     /**
      * A caption that describes the image. This text can be used by VoiceOver
@@ -109,6 +109,27 @@ class Logo extends Component
 
         $this->accessibilityCaption = $accessibilityCaption;
         return $this;
+    }
+
+    /**
+     * Add an item to additions
+     * @param \Urbania\AppleNews\Format\ComponentLink|array $item
+     * @return $this
+     */
+    public function addAddition($item)
+    {
+        return $this->setAdditions(array_merge($this->additions, [$item]));
+    }
+
+    /**
+     * Add items to additions
+     * @param array $items
+     * @return $this
+     */
+    public function addAdditions($items)
+    {
+        Assert::isArray($items);
+        return $this->setAdditions(array_merge($this->additions, $items));
     }
 
     /**

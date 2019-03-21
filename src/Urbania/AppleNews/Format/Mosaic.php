@@ -24,7 +24,7 @@ class Mosaic extends Component
      * animation plays only in full screen.
      * @var Format\GalleryItem[]
      */
-    protected $items;
+    protected $items = [];
 
     /**
      * This component always has a role of mosaic.
@@ -39,6 +39,27 @@ class Mosaic extends Component
         if (isset($data['items'])) {
             $this->setItems($data['items']);
         }
+    }
+
+    /**
+     * Add an item to items
+     * @param \Urbania\AppleNews\Format\GalleryItem|array $item
+     * @return $this
+     */
+    public function addItem($item)
+    {
+        return $this->setItems(array_merge($this->items, [$item]));
+    }
+
+    /**
+     * Add items to items
+     * @param array $items
+     * @return $this
+     */
+    public function addItems($items)
+    {
+        Assert::isArray($items);
+        return $this->setItems(array_merge($this->items, $items));
     }
 
     /**

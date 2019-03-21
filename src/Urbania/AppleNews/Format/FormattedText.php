@@ -21,7 +21,7 @@ class FormattedText extends BaseSdkObject
      * ranges of text in the text property.
      * @var Format\Addition[]
      */
-    protected $additions;
+    protected $additions = [];
 
     /**
      * The formatting or markup method applied to the text. If format is set
@@ -35,7 +35,7 @@ class FormattedText extends BaseSdkObject
      * apply to each range.
      * @var Format\InlineTextStyle[]
      */
-    protected $inlineTextStyles;
+    protected $inlineTextStyles = [];
 
     /**
      * The text, including any HTML tags.
@@ -77,6 +77,27 @@ class FormattedText extends BaseSdkObject
         if (isset($data['textStyle'])) {
             $this->setTextStyle($data['textStyle']);
         }
+    }
+
+    /**
+     * Add an item to additions
+     * @param \Urbania\AppleNews\Format\Addition|array $item
+     * @return $this
+     */
+    public function addAddition($item)
+    {
+        return $this->setAdditions(array_merge($this->additions, [$item]));
+    }
+
+    /**
+     * Add items to additions
+     * @param array $items
+     * @return $this
+     */
+    public function addAdditions($items)
+    {
+        Assert::isArray($items);
+        return $this->setAdditions(array_merge($this->additions, $items));
     }
 
     /**
@@ -136,6 +157,31 @@ class FormattedText extends BaseSdkObject
 
         $this->format = $format;
         return $this;
+    }
+
+    /**
+     * Add an item to inlineTextStyles
+     * @param \Urbania\AppleNews\Format\InlineTextStyle|array $item
+     * @return $this
+     */
+    public function addInlineTextStyle($item)
+    {
+        return $this->setInlineTextStyles(
+            array_merge($this->inlineTextStyles, [$item])
+        );
+    }
+
+    /**
+     * Add items to inlineTextStyles
+     * @param array $items
+     * @return $this
+     */
+    public function addInlineTextStyles($items)
+    {
+        Assert::isArray($items);
+        return $this->setInlineTextStyles(
+            array_merge($this->inlineTextStyles, $items)
+        );
     }
 
     /**

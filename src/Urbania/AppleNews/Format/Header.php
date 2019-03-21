@@ -22,7 +22,7 @@ class Header extends Component
      * component.
      * @var Format\Component[]
      */
-    protected $components;
+    protected $components = [];
 
     /**
      * Defines how child components are positioned within this header
@@ -49,6 +49,27 @@ class Header extends Component
         if (isset($data['contentDisplay'])) {
             $this->setContentDisplay($data['contentDisplay']);
         }
+    }
+
+    /**
+     * Add an item to components
+     * @param \Urbania\AppleNews\Format\Component|array $item
+     * @return $this
+     */
+    public function addComponent($item)
+    {
+        return $this->setComponents(array_merge($this->components, [$item]));
+    }
+
+    /**
+     * Add items to components
+     * @param array $items
+     * @return $this
+     */
+    public function addComponents($items)
+    {
+        Assert::isArray($items);
+        return $this->setComponents(array_merge($this->components, $items));
     }
 
     /**

@@ -27,7 +27,7 @@ class TableColumnStyle extends BaseSdkObject
      * background colors.
      * @var Format\ConditionalTableColumnStyle[]
      */
-    protected $conditional;
+    protected $conditional = [];
 
     /**
      * The stroke style for the divider lines between columns.
@@ -99,6 +99,16 @@ class TableColumnStyle extends BaseSdkObject
 
         $this->backgroundColor = $backgroundColor;
         return $this;
+    }
+
+    /**
+     * Add an item to conditional
+     * @param \Urbania\AppleNews\Format\ConditionalTableColumnStyle|array $item
+     * @return $this
+     */
+    public function addConditional($item)
+    {
+        return $this->setConditional(array_merge($this->conditional, [$item]));
     }
 
     /**

@@ -29,6 +29,7 @@ class ObjectClassBuilder
         $this->constructMethodBuilder = new ObjectConstructMethodBuilder();
         $this->getMethodBuilder = new ObjectGetMethodBuilder();
         $this->setMethodBuilder = new ObjectSetMethodBuilder();
+        $this->arrayMethodsBuilder = new ObjectArrayMethodsBuilder();
         $this->toArrayMethodBuilder = new ObjectToArrayMethodBuilder();
     }
 
@@ -184,11 +185,17 @@ class ObjectClassBuilder
         foreach ($properties as $property) {
             $methods[] = $this->buildPropertyGetMethod($property);
             $readOnly = $property['read_only'] ?? false;
+            $isArray = is_string($property['type']) && current(explode(':', $property['type'])) === 'array';
             if (!$readOnly) {
                 $methods[] = $this->buildPropertySetMethod(
                     $property,
                     $baseNamespace
                 );
+            }
+            if ($isArray) {
+                $methods = array_merge($methods, $this->buildPropertyArrayMethods(
+                    $property
+                ));
             }
         }
         return $methods;
@@ -202,6 +209,11 @@ class ObjectClassBuilder
     protected function buildPropertySetMethod($property, $baseNamespace)
     {
         return $this->setMethodBuilder->build($property, $baseNamespace);
+    }
+
+    protected function buildPropertyArrayMethods($property)
+    {
+        return $this->arrayMethodsBuilder->build($property);
     }
 
     protected function buildToArrayMethod(array $properties, $extends)

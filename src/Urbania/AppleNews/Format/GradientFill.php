@@ -20,7 +20,7 @@ class GradientFill extends Fill
      * gradient.
      * @var Format\ColorStop[]
      */
-    protected $colorStops;
+    protected $colorStops = [];
 
     /**
      * The type of gradient; for example linear_gradient.
@@ -39,6 +39,27 @@ class GradientFill extends Fill
         if (isset($data['type'])) {
             $this->setType($data['type']);
         }
+    }
+
+    /**
+     * Add an item to colorStops
+     * @param \Urbania\AppleNews\Format\ColorStop|array $item
+     * @return $this
+     */
+    public function addColorStop($item)
+    {
+        return $this->setColorStops(array_merge($this->colorStops, [$item]));
+    }
+
+    /**
+     * Add items to colorStops
+     * @param array $items
+     * @return $this
+     */
+    public function addColorStops($items)
+    {
+        Assert::isArray($items);
+        return $this->setColorStops(array_merge($this->colorStops, $items));
     }
 
     /**

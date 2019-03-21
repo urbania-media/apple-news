@@ -21,7 +21,7 @@ class Metadata extends BaseSdkObject
      * component.
      * @var string[]
      */
-    protected $authors;
+    protected $authors = [];
 
     /**
      * A set of key-value pairs that can be leveraged to target your
@@ -47,7 +47,7 @@ class Metadata extends BaseSdkObject
      * Featured Stories.
      * @var Format\CoverArt[]
      */
-    protected $coverArt;
+    protected $coverArt = [];
 
     /**
      * The UTC date in ISO 8601 format (YYYY-MM-DDTHH:mm:ss±ZZ:ZZ) on which
@@ -107,13 +107,13 @@ class Metadata extends BaseSdkObject
      * Keywords that describe this article. You can define up to 50 keywords.
      * @var string[]
      */
-    protected $keywords;
+    protected $keywords = [];
 
     /**
      * An array of links to other articles in Apple News.
      * @var Format\LinkedArticle[]
      */
-    protected $links;
+    protected $links = [];
 
     /**
      * The URL of an image that can represent this article in a News feed
@@ -208,6 +208,27 @@ class Metadata extends BaseSdkObject
     }
 
     /**
+     * Add an item to authors
+     * @param string $item
+     * @return $this
+     */
+    public function addAuthor($item)
+    {
+        return $this->setAuthors(array_merge($this->authors, [$item]));
+    }
+
+    /**
+     * Add items to authors
+     * @param array $items
+     * @return $this
+     */
+    public function addAuthors($items)
+    {
+        Assert::isArray($items);
+        return $this->setAuthors(array_merge($this->authors, $items));
+    }
+
+    /**
      * Get the authors
      * @return string[]
      */
@@ -289,6 +310,16 @@ class Metadata extends BaseSdkObject
 
         $this->canonicalURL = $canonicalURL;
         return $this;
+    }
+
+    /**
+     * Add an item to coverArt
+     * @param \Urbania\AppleNews\Format\CoverArt|array $item
+     * @return $this
+     */
+    public function addCoverArt($item)
+    {
+        return $this->setCoverArt(array_merge($this->coverArt, [$item]));
     }
 
     /**
@@ -519,6 +550,27 @@ class Metadata extends BaseSdkObject
     }
 
     /**
+     * Add an item to keywords
+     * @param string $item
+     * @return $this
+     */
+    public function addKeyword($item)
+    {
+        return $this->setKeywords(array_merge($this->keywords, [$item]));
+    }
+
+    /**
+     * Add items to keywords
+     * @param array $items
+     * @return $this
+     */
+    public function addKeywords($items)
+    {
+        Assert::isArray($items);
+        return $this->setKeywords(array_merge($this->keywords, $items));
+    }
+
+    /**
      * Get the keywords
      * @return string[]
      */
@@ -544,6 +596,27 @@ class Metadata extends BaseSdkObject
 
         $this->keywords = $keywords;
         return $this;
+    }
+
+    /**
+     * Add an item to links
+     * @param \Urbania\AppleNews\Format\LinkedArticle|array $item
+     * @return $this
+     */
+    public function addLink($item)
+    {
+        return $this->setLinks(array_merge($this->links, [$item]));
+    }
+
+    /**
+     * Add items to links
+     * @param array $items
+     * @return $this
+     */
+    public function addLinks($items)
+    {
+        Assert::isArray($items);
+        return $this->setLinks(array_merge($this->links, $items));
     }
 
     /**

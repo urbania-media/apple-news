@@ -20,7 +20,7 @@ class Warning extends BaseSdkObject
      * input of the request.
      * @var string[]
      */
-    protected $keypath;
+    protected $keypath = [];
 
     /**
      * A user friendly, detailed explanation of the non-fatal warning.
@@ -48,6 +48,16 @@ class Warning extends BaseSdkObject
         if (isset($data['value'])) {
             $this->setValue($data['value']);
         }
+    }
+
+    /**
+     * Add an item to keypath
+     * @param string $item
+     * @return $this
+     */
+    public function addKeypath($item)
+    {
+        return $this->setKeypath(array_merge($this->keypath, [$item]));
     }
 
     /**

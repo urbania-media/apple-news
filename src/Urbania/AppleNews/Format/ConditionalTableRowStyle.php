@@ -41,7 +41,7 @@ class ConditionalTableRowStyle extends TableRowStyle
      * conditions.
      * @var Format\TableRowSelector[]
      */
-    protected $selectors;
+    protected $selectors = [];
 
     public function __construct(array $data = [])
     {
@@ -145,6 +145,27 @@ class ConditionalTableRowStyle extends TableRowStyle
 
         $this->height = $height;
         return $this;
+    }
+
+    /**
+     * Add an item to selectors
+     * @param \Urbania\AppleNews\Format\TableRowSelector|array $item
+     * @return $this
+     */
+    public function addSelector($item)
+    {
+        return $this->setSelectors(array_merge($this->selectors, [$item]));
+    }
+
+    /**
+     * Add items to selectors
+     * @param array $items
+     * @return $this
+     */
+    public function addSelectors($items)
+    {
+        Assert::isArray($items);
+        return $this->setSelectors(array_merge($this->selectors, $items));
     }
 
     /**

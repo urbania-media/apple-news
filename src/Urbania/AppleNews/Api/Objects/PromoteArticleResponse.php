@@ -19,13 +19,38 @@ class PromoteArticleResponse extends BaseSdkObject
      * List of URLs for the promoted articles.
      * @var string[]
      */
-    protected $promotedArticles;
+    protected $promotedArticles = [];
 
     public function __construct(array $data = [])
     {
         if (isset($data['promotedArticles'])) {
             $this->setPromotedArticles($data['promotedArticles']);
         }
+    }
+
+    /**
+     * Add an item to promotedArticles
+     * @param string $item
+     * @return $this
+     */
+    public function addPromotedArticle($item)
+    {
+        return $this->setPromotedArticles(
+            array_merge($this->promotedArticles, [$item])
+        );
+    }
+
+    /**
+     * Add items to promotedArticles
+     * @param array $items
+     * @return $this
+     */
+    public function addPromotedArticles($items)
+    {
+        Assert::isArray($items);
+        return $this->setPromotedArticles(
+            array_merge($this->promotedArticles, $items)
+        );
     }
 
     /**

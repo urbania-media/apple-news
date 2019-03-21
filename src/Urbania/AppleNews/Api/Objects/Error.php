@@ -27,7 +27,7 @@ class Error extends BaseSdkObject
      * input of the request. See Understanding the keyPath Array.
      * @var string[]
      */
-    protected $keyPath;
+    protected $keyPath = [];
 
     /**
      * A user friendly detailed explanation of the error code.
@@ -96,6 +96,16 @@ class Error extends BaseSdkObject
 
         $this->code = $code;
         return $this;
+    }
+
+    /**
+     * Add an item to keyPath
+     * @param string $item
+     * @return $this
+     */
+    public function addKeyPath($item)
+    {
+        return $this->setKeyPath(array_merge($this->keyPath, [$item]));
     }
 
     /**

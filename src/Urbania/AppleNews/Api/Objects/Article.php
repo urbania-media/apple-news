@@ -116,7 +116,7 @@ class Article extends BaseSdkObject
      * are not fatal.
      * @var Api\Objects\Warning[]
      */
-    protected $warnings;
+    protected $warnings = [];
 
     public function __construct(array $data = [])
     {
@@ -577,6 +577,27 @@ class Article extends BaseSdkObject
 
         $this->type = $type;
         return $this;
+    }
+
+    /**
+     * Add an item to warnings
+     * @param \Urbania\AppleNews\Api\Objects\Warning|array $item
+     * @return $this
+     */
+    public function addWarning($item)
+    {
+        return $this->setWarnings(array_merge($this->warnings, [$item]));
+    }
+
+    /**
+     * Add items to warnings
+     * @param array $items
+     * @return $this
+     */
+    public function addWarnings($items)
+    {
+        Assert::isArray($items);
+        return $this->setWarnings(array_merge($this->warnings, $items));
     }
 
     /**

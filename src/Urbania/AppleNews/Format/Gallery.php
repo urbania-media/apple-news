@@ -22,7 +22,7 @@ class Gallery extends Component
      * can be JPEG (with .jpg or .jpeg extension), PNG, or GIF images.
      * @var Format\GalleryItem[]
      */
-    protected $items;
+    protected $items = [];
 
     /**
      * This component always has a role of gallery.
@@ -37,6 +37,27 @@ class Gallery extends Component
         if (isset($data['items'])) {
             $this->setItems($data['items']);
         }
+    }
+
+    /**
+     * Add an item to items
+     * @param \Urbania\AppleNews\Format\GalleryItem|array $item
+     * @return $this
+     */
+    public function addItem($item)
+    {
+        return $this->setItems(array_merge($this->items, [$item]));
+    }
+
+    /**
+     * Add items to items
+     * @param array $items
+     * @return $this
+     */
+    public function addItems($items)
+    {
+        Assert::isArray($items);
+        return $this->setItems(array_merge($this->items, $items));
     }
 
     /**

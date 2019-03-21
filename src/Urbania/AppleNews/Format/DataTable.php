@@ -48,7 +48,7 @@ class DataTable extends Component
      * in the order in which they are provided in the array.
      * @var Format\DataTableSorting[]
      */
-    protected $sortBy;
+    protected $sortBy = [];
 
     /**
      * Either an inline ComponentStyle object that defines the appearance of
@@ -166,6 +166,16 @@ class DataTable extends Component
 
         $this->showDescriptorLabels = $showDescriptorLabels;
         return $this;
+    }
+
+    /**
+     * Add an item to sortBy
+     * @param \Urbania\AppleNews\Format\DataTableSorting|array $item
+     * @return $this
+     */
+    public function addSortBy($item)
+    {
+        return $this->setSortBy(array_merge($this->sortBy, [$item]));
     }
 
     /**

@@ -19,14 +19,14 @@ class RecordStore extends BaseSdkObject
      * Provides information about the data that can be in each data record.
      * @var Format\DataDescriptor[]
      */
-    protected $descriptors;
+    protected $descriptors = [];
 
     /**
      * Provides data records that fit within the structure defined by
      * descriptors. Each descriptor can be used only once per record.
      * @var Format\Records[]
      */
-    protected $records;
+    protected $records = [];
 
     public function __construct(array $data = [])
     {
@@ -37,6 +37,27 @@ class RecordStore extends BaseSdkObject
         if (isset($data['records'])) {
             $this->setRecords($data['records']);
         }
+    }
+
+    /**
+     * Add an item to descriptors
+     * @param \Urbania\AppleNews\Format\DataDescriptor|array $item
+     * @return $this
+     */
+    public function addDescriptor($item)
+    {
+        return $this->setDescriptors(array_merge($this->descriptors, [$item]));
+    }
+
+    /**
+     * Add items to descriptors
+     * @param array $items
+     * @return $this
+     */
+    public function addDescriptors($items)
+    {
+        Assert::isArray($items);
+        return $this->setDescriptors(array_merge($this->descriptors, $items));
     }
 
     /**
@@ -64,6 +85,27 @@ class RecordStore extends BaseSdkObject
         }
         $this->descriptors = $items;
         return $this;
+    }
+
+    /**
+     * Add an item to records
+     * @param \Urbania\AppleNews\Format\Records|array $item
+     * @return $this
+     */
+    public function addRecord($item)
+    {
+        return $this->setRecords(array_merge($this->records, [$item]));
+    }
+
+    /**
+     * Add items to records
+     * @param array $items
+     * @return $this
+     */
+    public function addRecords($items)
+    {
+        Assert::isArray($items);
+        return $this->setRecords(array_merge($this->records, $items));
     }
 
     /**

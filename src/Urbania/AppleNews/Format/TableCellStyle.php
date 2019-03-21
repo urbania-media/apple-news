@@ -35,7 +35,7 @@ class TableCellStyle extends BaseSdkObject
      * table cells.
      * @var Format\ConditionalTableCellStyle[]
      */
-    protected $conditional;
+    protected $conditional = [];
 
     /**
      * The height of the cell and its row, as an integer in points, or using
@@ -183,6 +183,16 @@ class TableCellStyle extends BaseSdkObject
 
         $this->border = is_array($border) ? new TableBorder($border) : $border;
         return $this;
+    }
+
+    /**
+     * Add an item to conditional
+     * @param \Urbania\AppleNews\Format\ConditionalTableCellStyle|array $item
+     * @return $this
+     */
+    public function addConditional($item)
+    {
+        return $this->setConditional(array_merge($this->conditional, [$item]));
     }
 
     /**

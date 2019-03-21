@@ -21,7 +21,7 @@ class CaptionDescriptor extends BaseSdkObject
      * ranges of the caption text in the text property.
      * @var Format\Addition[]
      */
-    protected $additions;
+    protected $additions = [];
 
     /**
      * The formatting or markup method applied to the text.
@@ -34,7 +34,7 @@ class CaptionDescriptor extends BaseSdkObject
      * caption’s text.
      * @var Format\InlineTextStyle[]
      */
-    protected $inlineTextStyles;
+    protected $inlineTextStyles = [];
 
     /**
      * The text to display in the caption, including any formatting tags or
@@ -72,6 +72,27 @@ class CaptionDescriptor extends BaseSdkObject
         if (isset($data['textStyle'])) {
             $this->setTextStyle($data['textStyle']);
         }
+    }
+
+    /**
+     * Add an item to additions
+     * @param \Urbania\AppleNews\Format\Addition|array $item
+     * @return $this
+     */
+    public function addAddition($item)
+    {
+        return $this->setAdditions(array_merge($this->additions, [$item]));
+    }
+
+    /**
+     * Add items to additions
+     * @param array $items
+     * @return $this
+     */
+    public function addAdditions($items)
+    {
+        Assert::isArray($items);
+        return $this->setAdditions(array_merge($this->additions, $items));
     }
 
     /**
@@ -131,6 +152,31 @@ class CaptionDescriptor extends BaseSdkObject
 
         $this->format = $format;
         return $this;
+    }
+
+    /**
+     * Add an item to inlineTextStyles
+     * @param \Urbania\AppleNews\Format\InlineTextStyle|array $item
+     * @return $this
+     */
+    public function addInlineTextStyle($item)
+    {
+        return $this->setInlineTextStyles(
+            array_merge($this->inlineTextStyles, [$item])
+        );
+    }
+
+    /**
+     * Add items to inlineTextStyles
+     * @param array $items
+     * @return $this
+     */
+    public function addInlineTextStyles($items)
+    {
+        Assert::isArray($items);
+        return $this->setInlineTextStyles(
+            array_merge($this->inlineTextStyles, $items)
+        );
     }
 
     /**

@@ -20,13 +20,34 @@ class PromoteArticleRequest extends BaseSdkObject
      * list may be empty.
      * @var string[]
      */
-    protected $articleIds;
+    protected $articleIds = [];
 
     public function __construct(array $data = [])
     {
         if (isset($data['articleIds'])) {
             $this->setArticleIds($data['articleIds']);
         }
+    }
+
+    /**
+     * Add an item to articleIds
+     * @param string $item
+     * @return $this
+     */
+    public function addArticleId($item)
+    {
+        return $this->setArticleIds(array_merge($this->articleIds, [$item]));
+    }
+
+    /**
+     * Add items to articleIds
+     * @param array $items
+     * @return $this
+     */
+    public function addArticleIds($items)
+    {
+        Assert::isArray($items);
+        return $this->setArticleIds(array_merge($this->articleIds, $items));
     }
 
     /**

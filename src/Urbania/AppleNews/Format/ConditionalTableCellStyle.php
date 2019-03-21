@@ -63,7 +63,7 @@ class ConditionalTableCellStyle extends TableCellStyle
      * conditions.
      * @var Format\TableCellSelector[]
      */
-    protected $selectors;
+    protected $selectors = [];
 
     /**
      * The name string of one of your styles in the Article
@@ -295,6 +295,27 @@ class ConditionalTableCellStyle extends TableCellStyle
 
         $this->padding = is_array($padding) ? new Padding($padding) : $padding;
         return $this;
+    }
+
+    /**
+     * Add an item to selectors
+     * @param \Urbania\AppleNews\Format\TableCellSelector|array $item
+     * @return $this
+     */
+    public function addSelector($item)
+    {
+        return $this->setSelectors(array_merge($this->selectors, [$item]));
+    }
+
+    /**
+     * Add items to selectors
+     * @param array $items
+     * @return $this
+     */
+    public function addSelectors($items)
+    {
+        Assert::isArray($items);
+        return $this->setSelectors(array_merge($this->selectors, $items));
     }
 
     /**

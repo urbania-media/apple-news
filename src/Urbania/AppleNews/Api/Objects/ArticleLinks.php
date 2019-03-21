@@ -25,7 +25,7 @@ class ArticleLinks extends BaseSdkObject
      * The sections, if any, in which this article appears.
      * @var string[]
      */
-    protected $sections;
+    protected $sections = [];
 
     /**
      * The URL at which this resource can be read, updated, and deleted.
@@ -73,6 +73,27 @@ class ArticleLinks extends BaseSdkObject
 
         $this->channel = $channel;
         return $this;
+    }
+
+    /**
+     * Add an item to sections
+     * @param string $item
+     * @return $this
+     */
+    public function addSection($item)
+    {
+        return $this->setSections(array_merge($this->sections, [$item]));
+    }
+
+    /**
+     * Add items to sections
+     * @param array $items
+     * @return $this
+     */
+    public function addSections($items)
+    {
+        Assert::isArray($items);
+        return $this->setSections(array_merge($this->sections, $items));
     }
 
     /**

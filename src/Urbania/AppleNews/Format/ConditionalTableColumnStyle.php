@@ -41,7 +41,7 @@ class ConditionalTableColumnStyle extends TableColumnStyle
      * conditions.
      * @var Format\TableColumnSelector[]
      */
-    protected $selectors;
+    protected $selectors = [];
 
     /**
      * The relative column width. This value influences the distribution of
@@ -157,6 +157,27 @@ class ConditionalTableColumnStyle extends TableColumnStyle
 
         $this->minimumWidth = $minimumWidth;
         return $this;
+    }
+
+    /**
+     * Add an item to selectors
+     * @param \Urbania\AppleNews\Format\TableColumnSelector|array $item
+     * @return $this
+     */
+    public function addSelector($item)
+    {
+        return $this->setSelectors(array_merge($this->selectors, [$item]));
+    }
+
+    /**
+     * Add items to selectors
+     * @param array $items
+     * @return $this
+     */
+    public function addSelectors($items)
+    {
+        Assert::isArray($items);
+        return $this->setSelectors(array_merge($this->selectors, $items));
     }
 
     /**

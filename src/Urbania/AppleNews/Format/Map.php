@@ -40,7 +40,7 @@ class Map extends Component
      * array.
      * @var Format\MapItem[]
      */
-    protected $items;
+    protected $items = [];
 
     /**
      * The latitude of the map’s center. Provide both a latitude and
@@ -162,6 +162,27 @@ class Map extends Component
 
         $this->caption = $caption;
         return $this;
+    }
+
+    /**
+     * Add an item to items
+     * @param \Urbania\AppleNews\Format\MapItem|array $item
+     * @return $this
+     */
+    public function addItem($item)
+    {
+        return $this->setItems(array_merge($this->items, [$item]));
+    }
+
+    /**
+     * Add items to items
+     * @param array $items
+     * @return $this
+     */
+    public function addItems($items)
+    {
+        Assert::isArray($items);
+        return $this->setItems(array_merge($this->items, $items));
     }
 
     /**

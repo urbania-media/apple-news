@@ -61,7 +61,7 @@ class ArticleDocument extends BaseSdkObject
      * Components have different roles and types, such as Photo and Music.
      * @var Format\Component[]
      */
-    protected $components;
+    protected $components = [];
 
     /**
      * The component text styles that can be referred to by components in
@@ -212,6 +212,16 @@ class ArticleDocument extends BaseSdkObject
     }
 
     /**
+     * Add an item to components
+     * @param \Urbania\AppleNews\Format\Component|array $item
+     * @return $this
+     */
+    public function addComponent($item)
+    {
+        return $this->setComponents(array_merge($this->components, [$item]));
+    }
+
+    /**
      * Get the componentLayouts
      * @return \Urbania\AppleNews\Format\ComponentLayouts
      */
@@ -291,6 +301,17 @@ class ArticleDocument extends BaseSdkObject
             ? new ComponentTextStyles($componentTextStyles)
             : $componentTextStyles;
         return $this;
+    }
+
+    /**
+     * Add items to components
+     * @param array $items
+     * @return $this
+     */
+    public function addComponents($items)
+    {
+        Assert::isArray($items);
+        return $this->setComponents(array_merge($this->components, $items));
     }
 
     /**

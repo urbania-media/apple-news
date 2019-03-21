@@ -27,7 +27,7 @@ class TableRowStyle extends BaseSdkObject
      * background colors.
      * @var Format\ConditionalTableRowStyle[]
      */
-    protected $conditional;
+    protected $conditional = [];
 
     /**
      * The stroke style for the divider lines between rows.
@@ -86,6 +86,16 @@ class TableRowStyle extends BaseSdkObject
 
         $this->backgroundColor = $backgroundColor;
         return $this;
+    }
+
+    /**
+     * Add an item to conditional
+     * @param \Urbania\AppleNews\Format\ConditionalTableRowStyle|array $item
+     * @return $this
+     */
+    public function addConditional($item)
+    {
+        return $this->setConditional(array_merge($this->conditional, [$item]));
     }
 
     /**
