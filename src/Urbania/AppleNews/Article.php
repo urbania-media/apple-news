@@ -26,9 +26,11 @@ class Article extends BaseObject
      * @param ApiArticle|ArticleDocument|string|array $data The article data
      * @param UpdateArticleMetadataFields|CreateArticleMetadataFields|array $metdata The article metadata
      */
-    public function __construct($data, $metadata = null)
+    public function __construct($data = [], $metadata = null)
     {
-        if ($data instanceof ApiArticle ||
+        if ($data instanceof self) {
+            $this->merge($data, $metadata);
+        } elseif ($data instanceof ApiArticle ||
             (is_array($data) && isset($data['document']))
         ) {
             $this->setArticle($data);
@@ -109,11 +111,15 @@ class Article extends BaseObject
     }
 
     /**
-     * Merge a document into this one
+     * Merge a document into this article
+     * @param ArticleDocument|array|string $document The document
      * @return $this
      */
     public function mergeDocument($document)
     {
+        if (is_null($document)) {
+            return $this;
+        }
         if (is_null($this->document)) {
             $this->setDocument($document);
         } else {
@@ -145,6 +151,42 @@ class Article extends BaseObject
         } else {
             $this->metadata = $metadata;
         }
+        return $this;
+    }
+
+    /**
+     * Merge metadata into this article
+     * @param UpdateArticleMetadataFields|CreateArticleMetadataFields|array $metadata The metadata
+     * @return $this
+     */
+    public function mergeMetadata($metadata)
+    {
+        if (is_null($metadata)) {
+            return $this;
+        }
+        if (is_null($this->metadata)) {
+            $this->setMetadata($metadata);
+        } else {
+            $this->metadata->merge($metadata);
+        }
+        return $this;
+    }
+
+    /**
+     * Merge an article into this one
+     * @param Article|array $article The article
+     * @param UpdateArticleMetadataFields|CreateArticleMetadataFields|array $metadata The metadata
+     * @return $this
+     */
+    public function merge($article, $metadata = null)
+    {
+        if ($article instanceof self) {
+            $this->mergeDocument($article->getDocument());
+            $this->mergeMetadata($article->getMetadata());
+        } else {
+            $this->mergeDocument($article);
+        }
+        $this->mergeMetadata($metadata);
         return $this;
     }
 

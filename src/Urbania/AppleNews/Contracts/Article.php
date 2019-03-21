@@ -36,6 +36,7 @@ interface Article extends JsonSerializable, Arrayable, Jsonable
 
     /**
      * Merge a document into this one
+     * @param ArticleDocument|array|string $document The document
      * @return $this
      */
     public function mergeDocument($document);
@@ -52,4 +53,19 @@ interface Article extends JsonSerializable, Arrayable, Jsonable
      * @return $this
      */
     public function setMetadata($metadata);
+
+    /**
+     * Merge metadata into this article
+     * @param UpdateArticleMetadataFields|CreateArticleMetadataFields|array $metadata The metadata
+     * @return $this
+     */
+    public function mergeMetadata($metadata);
+
+    /**
+     * Merge an article into this one
+     * @param Article|array $article The article
+     * @param UpdateArticleMetadataFields|CreateArticleMetadataFields|array $metadata The metadata
+     * @return $this
+     */
+    public function merge($article, $metadata = null);
 }
