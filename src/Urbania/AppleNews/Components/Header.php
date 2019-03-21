@@ -20,9 +20,9 @@ class Header extends Component
         $this->image = $image;
     }
 
-    public function getComponent()
+    protected function getTitleComponent()
     {
-        $title = new Title([
+        return new Title([
             'text' => $this->title,
             'anchor' => new Anchor([
                 'targetAnchorPosition' => 'bottom',
@@ -39,14 +39,17 @@ class Header extends Component
                 ]
             ]
         ]);
+    }
 
+    public function toComponent()
+    {
         $imageFill = !is_null($this->image) ? new ImageFill([
             'URL' => $this->image
         ]) : null;
 
         return new HeaderComponent([
             'components' => [
-                $title,
+                $this->getTitleComponent(),
             ],
             'layout' => [
                 'minimumHeight' => '50vh',
