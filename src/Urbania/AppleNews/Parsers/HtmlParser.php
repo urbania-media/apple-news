@@ -10,15 +10,7 @@ use Urbania\AppleNews\Support\Parser;
 
 class HtmlParser extends Parser
 {
-    protected $article = [
-        'componentLayouts' => [
-            'paragraph' => [
-                'margin' => [
-                    'bottom' => 20
-                ]
-            ]
-        ]
-    ];
+    protected $article = [];
 
     protected $moveUpContainers = [
         [
@@ -94,7 +86,6 @@ class HtmlParser extends Parser
                     'role' => 'body',
                     'format' => 'html',
                     'text' => $this->getBlockAsHtml($block),
-                    'layout' => 'paragraph'
                 ];
             } elseif ($this->isHeading($block['tag'])) {
                 $components[] = isset($block['text']) ? [

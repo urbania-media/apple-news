@@ -12,15 +12,7 @@ class WordpressParser extends Parser
     protected $client;
     protected $htmlParser;
 
-    protected $article = [
-        'componentLayouts' => [
-            'paragraph' => [
-                'margin' => [
-                    'bottom' => 20
-                ]
-            ]
-        ]
-    ];
+    protected $article = [];
 
     protected $url;
 

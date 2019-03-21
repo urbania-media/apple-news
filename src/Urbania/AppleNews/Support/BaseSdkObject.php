@@ -16,16 +16,15 @@ abstract class BaseSdkObject extends BaseObject
                 continue;
             }
 
-            $currentValue = $this->{$key};
-            if (is_array($currentValue)) {
-                $this->{$key} = array_merge(
+            $studlyKey = Utils::studlyCase($key);
+            $currentValue = $this->{'get'.$studlyKey}();
+            if ($currentValue instanceof BaseSdkObject) {
+                $currentValue->merge($value);
+            } else {
+                $this->{'set'.$studlyKey}(is_array($currentValue) ? array_merge(
                     $currentValue,
                     $value
-                );
-            } elseif ($currentValue instanceof BaseSdkObject) {
-                $this->{$key}->merge($value);
-            } else {
-                $this->{$key} = $value;
+                ) : $value);
             }
         }
         return $this;
@@ -97,11 +96,6 @@ abstract class BaseSdkObject extends BaseObject
      */
     protected function propertyExists($name)
     {
-        if (property_exists($this, $name)) {
-            return isset($this->{$name});
-        }
-
-        $this->triggerPropertyError('Checking undefined property %s', $name);
-        return false;
+        return property_exists($this, $name) && isset($this->{$name});
     }
 }

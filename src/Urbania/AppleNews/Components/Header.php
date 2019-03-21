@@ -23,15 +23,12 @@ class Header extends Component
     protected function getTitleComponent()
     {
         return new Title([
+            'identifier' => 'header_title',
             'text' => $this->title,
             'anchor' => new Anchor([
                 'targetAnchorPosition' => 'bottom',
                 'originAnchorPosition' => 'bottom'
             ]),
-            'textStyle' => [
-                'textColor' => '#fff',
-                'fontSize' => 40
-            ],
             'layout' => [
                 'contentInset' => [
                     'top' => true,
@@ -48,6 +45,7 @@ class Header extends Component
         ]) : null;
 
         return new HeaderComponent([
+            'identifier' => 'header',
             'components' => [
                 $this->getTitleComponent(),
             ],
