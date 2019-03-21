@@ -2,9 +2,11 @@ Apple News PHP
 ============
 This package offer a wrapper around the Apple News API and Apple News Format in PHP. It includes support for Laravel, Wordpress and an HTML parser.
 
-- [Installation](#Installation)
-    - [Laravel](#Laravel)
-- [Usage](#Usage)
+- [Installation](#installation)
+    - [Laravel](#laravel)
+- [Usage](#usage)
+    - [Pure PHP](#pure-php)
+    - [Laravel](#laravel-1)
 
 ## Installation
 ```bash
