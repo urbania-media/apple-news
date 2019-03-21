@@ -12,43 +12,43 @@ class WordpressClient
     public function __construct($baseUri, $opts = [])
     {
         $this->client = new HttpClient(array_merge([
-            'base_uri' => rtrim($baseUri, '/')
+            'base_uri' => rtrim($baseUri, '/').'/'
         ], $opts));
     }
 
     public function getPosts()
     {
-        $response = $this->makeRequest('/wp-json/wp/v2/posts');
+        $response = $this->makeRequest('wp/v2/posts');
         return $response;
     }
 
     public function getPost($postId)
     {
-        $response = $this->makeRequest(sprintf('/wp-json/wp/v2/posts/%s', $postId));
+        $response = $this->makeRequest(sprintf('wp/v2/posts/%s', $postId));
         return $response;
     }
 
     public function getMedias()
     {
-        $response = $this->makeRequest('/wp-json/wp/v2/media');
+        $response = $this->makeRequest('wp/v2/media');
         return $response;
     }
 
     public function getMedia($mediaId)
     {
-        $response = $this->makeRequest(sprintf('/wp-json/wp/v2/media/%s', $mediaId));
+        $response = $this->makeRequest(sprintf('wp/v2/media/%s', $mediaId));
         return $response;
     }
 
     public function getUsers()
     {
-        $response = $this->makeRequest('/wp-json/wp/v2/users');
+        $response = $this->makeRequest('wp/v2/users');
         return $response;
     }
 
     public function getUser($userId)
     {
-        $response = $this->makeRequest(sprintf('/wp-json/wp/v2/users/%s', $userId));
+        $response = $this->makeRequest(sprintf('wp/v2/users/%s', $userId));
         return $response;
     }
 
