@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Str;
 use Closure;
 use InvalidArgumentException;
+use Urbania\AppleNews\Contracts\Article as ArticleContract;
 use Urbania\AppleNews\Parsers\HTMLParser;
 use Urbania\AppleNews\Parsers\WordpressParser;
 
@@ -59,7 +60,7 @@ class ParserManager
      * @param  array  $config
      * @return \Urbania\AppleNews\Contracts\Parser
      */
-    protected function createWordpress($config)
+    protected function createWordpressDriver($config)
     {
         return new WordpressParser($config);
     }
@@ -70,7 +71,7 @@ class ParserManager
      * @param  array  $config
      * @return \Urbania\AppleNews\Contracts\Parser
      */
-    protected function createHtml($config)
+    protected function createHtmlDriver($config)
     {
         return new HtmlParser($config);
     }
@@ -188,9 +189,9 @@ class ParserManager
      *
      * @return string
      */
-    protected function getArticleDefaults()
+    protected function getDefaultArticle()
     {
-        return $this->app['config']->get('apple-news.article', []);
+        return value($this->app['config']->get('apple-news.article', []));
     }
 
     /**
@@ -206,16 +207,23 @@ class ParserManager
                 "apple-news.parsers.{$name}",
                 []
             );
-            $config['defaults'] = array_merge(
-                $this->getArticleDefaults(),
-                $config['defaults'] ?? []
-            );
+
+            $defaultArticle = $this->getDefaultArticle();
+            $configArticle = value($config['article'] ?? []);
+            if ($defaultArticle instanceof ArticleContract) {
+                $config['article'] = $defaultArticle->merge($configArticle);
+            } elseif ($configArticle instanceof ArticleContract) {
+                $config['article'] = $this->app->make(ArticleContract::class)->merge($configArticle);
+            } else {
+                $config['article'] = array_merge($defaultArticle, $configArticle);
+            }
+
             return $config;
         }
 
         return [
             'driver' => 'null',
-            'defaults' => $this->getArticleDefaults()
+            'article' => $this->getDefaultArticle()
         ];
     }
 }

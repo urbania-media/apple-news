@@ -37,13 +37,13 @@ return [
     'parsers' => [
         'html' => [
             'driver' => 'html',
-            'article' => []
+            'article' => null
         ],
         'wordpress' => [
             'driver' => 'wordpress',
             'url' => null,
             'postUrlPattern' => null,
-            'article' => []
+            'article' => null
         ]
     ]
 ];
