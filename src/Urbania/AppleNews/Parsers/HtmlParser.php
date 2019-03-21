@@ -10,36 +10,44 @@ use Urbania\AppleNews\Support\Parser;
 
 class HtmlParser extends Parser
 {
-    protected $options = [
-        'ignoreContainers' => [
-            [
-                'tag' => 'div',
-                'class' => 'articleTitle'
-            ],
-            [
-                'tag' => 'div',
-                'class' => 'articleContent'
+    protected $article = [
+        'componentLayouts' => [
+            'paragraph' => [
+                'margin' => [
+                    'bottom' => 20
+                ]
             ]
         ]
     ];
 
-    protected $articleDefaults = [
-        // 'componentLayouts' => [
-        //     'paragraph' => [
-        //         'contentInset' => [
-        //             'bottom' => true
-        //         ]
-        //     ]
-        // ]
+    protected $moveUpContainers = [
+        [
+            'tag' => 'div',
+            'class' => 'articleTitle'
+        ],
+        [
+            'tag' => 'div',
+            'class' => 'articleContent'
+        ]
     ];
 
-    public function __construct($opts = [], $defaults = [])
+    public function __construct($opts = [])
     {
-        $this->options = array_merge($this->options, $opts);
-        $this->articleDefaults = array_merge($this->articleDefaults, $defaults);
+        $this->setOptions($opts);
     }
 
-    public function parse($html, $defaults = [])
+    public function setOptions(array $opts)
+    {
+        if (isset($opts['article'])) {
+            $this->article = $opts['article'];
+        }
+
+        if (isset($opts['moveUpContainers'])) {
+            $this->moveUpContainers = $opts['moveUpContainers'];
+        }
+    }
+
+    public function parse($html, $article = null)
     {
         $document = new Document($html);
         $body = $document->find('body')[0] ?? null;
@@ -64,7 +72,13 @@ class HtmlParser extends Parser
             $data['title'] = $title->text();
         }
 
-        return new Article(array_merge($this->articleDefaults, $defaults, $data));
+        $parsedArticle = new Article($this->article);
+        if (!is_null($article)) {
+            $parsedArticle->merge($article);
+        }
+        $parsedArticle->merge($data);
+
+        return $parsedArticle;
     }
 
     protected function getComponentsFromBlocks($blocks, $components = [])
@@ -192,7 +206,7 @@ class HtmlParser extends Parser
                 $childBlocks = $this->getBlocks($child);
             }
 
-            if ($this->isIgnoredContainers($block)) {
+            if ($this->isMoveUpContainer($block)) {
                 if (!is_null($text)) {
                     $blocks[] = $text;
                 } else {
@@ -223,10 +237,9 @@ class HtmlParser extends Parser
         return preg_match('/^h[1-6]$/', $tag) === 1;
     }
 
-    protected function isIgnoredContainers($block)
+    protected function isMoveUpContainer($block)
     {
-        $ignoreContainers = $this->options['ignoreContainers'] ?? [];
-        return array_reduce($ignoreContainers, function ($ignore, $container) use ($block) {
+        return array_reduce($this->moveUpContainers, function ($ignore, $container) use ($block) {
             return $ignore || $this->isBlockEquals($container, $block);
         }, false);
     }

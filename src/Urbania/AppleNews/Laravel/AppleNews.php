@@ -4,35 +4,36 @@ namespace Urbania\AppleNews\Laravel;
 
 use Illuminate\Contracts\Container\Container;
 use Urbania\AppleNews\Contracts\Article as ArticleContract;
-use \Urbania\AppleNews\Contracts\Api as ApiContract;
+use Urbania\AppleNews\Contracts\Api as ApiContract;
 
 class AppleNews
 {
     protected $container;
 
-    public function __construct(Container $container)
-    {
+    protected $parserManager;
+
+    public function __construct(
+        Container $container,
+        ParserManager $parserManager
+    ) {
         $this->container = $container;
+        $this->parserManager = $parserManager;
     }
 
-    public function article($data, $metadata = null)
+    public function article($data = [], $metadata = null)
     {
         $article = $this->container->make(ArticleContract::class);
-
-        if ($data instanceof ApiArticle ||
-            (is_array($data) && isset($data['document']))
-        ) {
-            $article->setArticle($data);
-        } else {
-            $article->setDocument($data);
-            $article->setMetadata($metadata);
-        }
-
+        $article->merge($data, $metadata);
         return $article;
     }
 
     public function api()
     {
         return $this->container->make(ApiContract::class);
+    }
+
+    public function parser($parser = null)
+    {
+        return $this->parserManager->parser($parser);
     }
 }

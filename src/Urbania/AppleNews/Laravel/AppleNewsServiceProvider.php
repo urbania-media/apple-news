@@ -6,7 +6,6 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 class AppleNewsServiceProvider extends BaseServiceProvider
 {
-
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -38,9 +37,12 @@ class AppleNewsServiceProvider extends BaseServiceProvider
         $this->mergeConfigFrom($configPath, 'apple-news');
 
         // Publish
-        $this->publishes([
-            $configPath => config_path('apple-news.php')
-        ], 'config');
+        $this->publishes(
+            [
+                $configPath => config_path('apple-news.php')
+            ],
+            'config'
+        );
     }
 
     /**
@@ -54,41 +56,68 @@ class AppleNewsServiceProvider extends BaseServiceProvider
 
         $this->registerArticle();
 
+        $this->registerParserManager();
+
         $this->registerAppleNews();
     }
 
     public function registerApi()
     {
-        $this->app->when(\Urbania\AppleNews\Laravel\Api::class)
+        $this->app
+            ->when(\Urbania\AppleNews\Laravel\Api::class)
             ->needs('$apiKey')
             ->give(function () {
-                return $this->app['config']->get('apple-news.api_key', $this->app['config']->get('services.apple_news.key'));
+                return $this->app['config']->get(
+                    'apple-news.api_key',
+                    $this->app['config']->get('services.apple_news.key')
+                );
             });
 
-        $this->app->when(\Urbania\AppleNews\Laravel\Api::class)
+        $this->app
+            ->when(\Urbania\AppleNews\Laravel\Api::class)
             ->needs('$apiSecret')
             ->give(function () {
-                return $this->app['config']->get('apple-news.api_secret', $this->app['config']->get('services.apple_news.secret'));
+                return $this->app['config']->get(
+                    'apple-news.api_secret',
+                    $this->app['config']->get('services.apple_news.secret')
+                );
             });
 
-        $this->app->when(\Urbania\AppleNews\Laravel\Api::class)
+        $this->app
+            ->when(\Urbania\AppleNews\Laravel\Api::class)
             ->needs('$channelId')
             ->give(function () {
                 return $this->app['config']->get('apple-news.channel_id');
             });
 
-        $this->app->bind(\Urbania\AppleNews\Contracts\Api::class, \Urbania\AppleNews\Laravel\Api::class);
+        $this->app->bind(
+            \Urbania\AppleNews\Contracts\Api::class,
+            \Urbania\AppleNews\Laravel\Api::class
+        );
     }
 
     public function registerArticle()
     {
-        $this->app->bind(\Urbania\AppleNews\Contracts\Article::class, \Urbania\AppleNews\Article::class);
+        $this->app->bind(\Urbania\AppleNews\Contracts\Article::class, function (
+            $app
+        ) {
+            $defaults = value($app['config']->get('apple-news.article', []));
+            $article = new \Urbania\AppleNews\Article($defaults);
+            return $article;
+        });
+    }
+
+    public function registerParserManager()
+    {
+        $this->app->singleton('apple-news.parser-manager', function ($app) {
+            return new ParserManager($app);
+        });
     }
 
     public function registerAppleNews()
     {
         $this->app->singleton('apple-news', function ($app) {
-            return new AppleNews($app);
+            return new AppleNews($app, $app['apple-news.parser-manager']);
         });
     }
 

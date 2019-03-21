@@ -8,7 +8,7 @@ if (! function_exists('article')) {
      * @param  object|array|null  $metadata
      * @return mixed
      */
-    function article($data, $metadata = null)
+    function article($data = [], $metadata = null)
     {
         return app('apple-news')->article($data, $metadata);
     }

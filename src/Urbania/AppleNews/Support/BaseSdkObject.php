@@ -20,7 +20,7 @@ abstract class BaseSdkObject extends BaseObject
             if (is_array($currentValue)) {
                 $this->{$key} = array_merge(
                     $currentValue,
-                    $value,
+                    $value
                 );
             } elseif ($currentValue instanceof BaseSdkObject) {
                 $this->{$key}->merge($value);

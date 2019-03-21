@@ -10,7 +10,7 @@ class Api extends BaseApi
 
     public function __construct($apiKey, $apiSecret, $channelId, $opts = [])
     {
-        parent::__construct($apiKey, $apiSecret, $channelId, $opts);
+        parent::__construct($apiKey, $apiSecret, $opts);
         $this->channelId = $channelId;
     }
 
