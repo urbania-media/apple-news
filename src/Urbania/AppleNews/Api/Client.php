@@ -66,9 +66,4 @@ class Client
             return null;
         }
     }
-
-    public function channels($channelId = null)
-    {
-        return new ChannelsClient($this, $channelId);
-    }
 }

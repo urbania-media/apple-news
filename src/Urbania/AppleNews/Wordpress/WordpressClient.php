@@ -28,6 +28,18 @@ class WordpressClient
         return $response;
     }
 
+    public function getMedias()
+    {
+        $response = $this->makeRequest('/wp-json/wp/v2/media');
+        return $response;
+    }
+
+    public function getMedia($mediaId)
+    {
+        $response = $this->makeRequest(sprintf('/wp-json/wp/v2/media/%s', $mediaId));
+        return $response;
+    }
+
     public function getUsers()
     {
         $response = $this->makeRequest('/wp-json/wp/v2/users');

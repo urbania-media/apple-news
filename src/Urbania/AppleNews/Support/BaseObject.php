@@ -4,6 +4,9 @@ namespace Urbania\AppleNews\Support;
 
 use ArrayAccess;
 use JsonSerializable;
+use IteratorAggregate;
+use ReflectionClass;
+use ReflectionProperty;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Arrayable;
 
@@ -11,8 +14,15 @@ abstract class BaseObject implements
     ArrayAccess,
     Arrayable,
     Jsonable,
-    JsonSerializable
+    JsonSerializable,
+    IteratorAggregate
 {
+    /**
+     * Get the object iterator
+     * @return \Iterator
+     */
+    abstract public function getIterator();
+
     /**
      * Get a property value
      * @param  string $name The name of the property
@@ -41,6 +51,13 @@ abstract class BaseObject implements
      * @return mixed|null
      */
     abstract protected function propertyExists($name);
+
+    /**
+     * Merge an object
+     * @param  mixed $object The object to merge
+     * @return $this
+     */
+    // abstract protected function merge($object);
 
     /**
      * Trigger a property error

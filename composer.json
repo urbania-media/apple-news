@@ -43,6 +43,9 @@
         "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
+        "files": [
+            "src/Urbania/AppleNews/Laravel/helpers.php"
+        ],
         "psr-0": {
             "Urbania\\AppleNews": "src/"
         }
@@ -62,7 +65,9 @@
             "providers": [
                 "Urbania\\AppleNews\\Laravel\\AppleNewsServiceProvider"
             ],
-            "aliases": {}
+            "aliases": {
+                "AppleNews": "Urbania\\AppleNews\\Laravel\\AppleNewsFacade"
+            }
         }
     }
 }

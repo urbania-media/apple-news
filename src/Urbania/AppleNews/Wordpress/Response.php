@@ -3,6 +3,7 @@
 namespace Urbania\AppleNews\Wordpress;
 
 use Closure;
+use ArrayIterator;
 use Psr\Http\Message\ResponseInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\BaseObject;
@@ -61,6 +62,15 @@ class Response extends BaseObject
     public function isError()
     {
         return $this->response->getStatusCode() >= 400;
+    }
+
+    /**
+     * Get the object iterator
+     * @return \Iterator
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->data);
     }
 
     /**

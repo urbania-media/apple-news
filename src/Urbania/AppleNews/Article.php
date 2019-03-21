@@ -2,21 +2,30 @@
 
 namespace Urbania\AppleNews;
 
+use Urbania\AppleNews\Support\BaseObject;
+use Urbania\AppleNews\Support\BaseObjectIterator;
+use Urbania\AppleNews\Support\Concerns\GetMultipartBody;
+use Urbania\AppleNews\Support\Concerns\SaveJsonToFile;
 use Urbania\AppleNews\Format\ArticleDocument;
 use Urbania\AppleNews\Api\Objects\Article as ApiArticle;
 use Urbania\AppleNews\Api\Objects\CreateArticleMetadataFields;
 use Urbania\AppleNews\Api\Objects\UpdateArticleMetadataFields;
 use Urbania\AppleNews\Support\Utils;
-use Urbania\AppleNews\Support\BaseObject;
 
 class Article extends BaseObject
 {
+    use GetMultipartBody, SaveJsonToFile;
+
     protected $article;
 
     protected $document;
 
     protected $metadata;
 
+    /**
+     * @param ApiArticle|ArticleDocument|string|array $data The article data
+     * @param UpdateArticleMetadataFields|CreateArticleMetadataFields|array $metdata The article metadata
+     */
     public function __construct($data, $metadata = null)
     {
         if ($data instanceof ApiArticle ||
@@ -29,22 +38,41 @@ class Article extends BaseObject
         }
     }
 
+    /**
+     * Create an article from a JSON file
+     * @param string $page The path to the JSON file
+     * @return Article
+     */
     public static function fromFile(string $path)
     {
         $contents = file_get_contents($path);
         return static::fromJson($contents);
     }
 
+    /**
+     * Create an article from a JSON string
+     * @param string $json The JSON data
+     * @return Article
+     */
     public static function fromJson(string $json)
     {
         return new static(json_decode($json, true));
     }
 
+    /**
+     * Get the article
+     * @return ApiArticle
+     */
     public function getArticle()
     {
         return $this->article;
     }
 
+    /**
+     * Set the document and metadata from an article
+     * @param ApiArticle|array $article The article
+     * @return $this
+     */
     public function setArticle($article)
     {
         $this->article = is_array($article)
@@ -55,11 +83,20 @@ class Article extends BaseObject
         return $this;
     }
 
+    /**
+     * Get the document
+     * @return ArticleDocument
+     */
     public function getDocument()
     {
         return $this->document;
     }
 
+    /**
+     * Set the document
+     * @param ArticleDocument|array|string $document The document
+     * @return $this
+     */
     public function setDocument($document)
     {
         if (is_string($document)) {
@@ -71,11 +108,34 @@ class Article extends BaseObject
         return $this;
     }
 
+    /**
+     * Merge a document into this one
+     * @return $this
+     */
+    public function mergeDocument($document)
+    {
+        if (is_null($this->document)) {
+            $this->setDocument($document);
+        } else {
+            $this->document->merge($document);
+        }
+        return $this;
+    }
+
+    /**
+     * Get the article metadata
+     * @return UpdateArticleMetadataFields|CreateArticleMetadataFields
+     */
     public function getMetadata()
     {
         return $this->metadata;
     }
 
+    /**
+     * Set the article metadata
+     * @param UpdateArticleMetadataFields|CreateArticleMetadataFields|array $metadata The metadata
+     * @return $this
+     */
     public function setMetadata($metadata)
     {
         if (is_array($metadata)) {
@@ -89,34 +149,12 @@ class Article extends BaseObject
     }
 
     /**
-     * Get the article as a multipart body
-     * @return array The multipart body
+     * Get the object iterator
+     * @return \Iterator
      */
-    public function getMultipartBody()
+    public function getIterator()
     {
-        $body = [
-            [
-                'name' => 'article.json',
-                'contents' => json_encode($this),
-                'filename' => 'article.json',
-                'headers' => [
-                    'Content-type' => 'application/json'
-                ]
-            ]
-        ];
-
-        $metadata = $this->getMetadata();
-        if (!is_null($metadata)) {
-            $body[] = [
-                'name' => 'metadata',
-                'contents' => json_encode($metadata),
-                'headers' => [
-                    'Content-type' => 'application/json'
-                ]
-            ];
-        }
-
-        return $body;
+        return $this->document->getIterator();
     }
 
     /**

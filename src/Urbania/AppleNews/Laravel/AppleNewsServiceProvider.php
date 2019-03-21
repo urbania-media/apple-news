@@ -33,8 +33,6 @@ class AppleNewsServiceProvider extends BaseServiceProvider
     {
         // Config file path
         $configPath = __DIR__ . '/config.php';
-        $viewsPath = __DIR__ . '/resources/views/';
-        $langPath = __DIR__ . '/resources/lang/';
 
         // Merge files
         $this->mergeConfigFrom($configPath, 'apple-news');
@@ -43,14 +41,6 @@ class AppleNewsServiceProvider extends BaseServiceProvider
         $this->publishes([
             $configPath => config_path('apple-news.php')
         ], 'config');
-
-        $this->publishes([
-            $viewsPath => base_path('resources/views/vendor/folklore/apple-news')
-        ], 'views');
-
-        $this->publishes([
-            $langPath => base_path('resources/lang/vendor/folklore/apple-news')
-        ], 'lang');
     }
 
     /**
@@ -60,7 +50,46 @@ class AppleNewsServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
+        $this->registerApi();
 
+        $this->registerArticle();
+
+        $this->registerAppleNews();
+    }
+
+    public function registerApi()
+    {
+        $this->app->when(\Urbania\AppleNews\Laravel\Api::class)
+            ->needs('$apiKey')
+            ->give(function () {
+                return $this->app['config']->get('apple-news.api_key', $this->app['config']->get('services.apple_news.key'));
+            });
+
+        $this->app->when(\Urbania\AppleNews\Laravel\Api::class)
+            ->needs('$apiSecret')
+            ->give(function () {
+                return $this->app['config']->get('apple-news.api_secret', $this->app['config']->get('services.apple_news.secret'));
+            });
+
+        $this->app->when(\Urbania\AppleNews\Laravel\Api::class)
+            ->needs('$channelId')
+            ->give(function () {
+                return $this->app['config']->get('apple-news.channel_id');
+            });
+
+        $this->app->bind(\Urbania\AppleNews\Contracts\Api::class, \Urbania\AppleNews\Laravel\Api::class);
+    }
+
+    public function registerArticle()
+    {
+        $this->app->bind(\Urbania\AppleNews\Contracts\Article::class, \Urbania\AppleNews\Article::class);
+    }
+
+    public function registerAppleNews()
+    {
+        $this->app->singleton('apple-news', function ($app) {
+            return new AppleNews($app);
+        });
     }
 
     /**

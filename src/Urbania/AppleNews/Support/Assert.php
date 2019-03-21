@@ -4,6 +4,7 @@ namespace Urbania\AppleNews\Support;
 
 use Webmozart\Assert\Assert as BaseAssert;
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
 
 class Assert extends BaseAssert
 {
@@ -13,6 +14,21 @@ class Assert extends BaseAssert
 
     const REGEXP_COLOR = '/^#([0-9A-F]{3}|[0-9A-F]{4}|[0-9A-F]{6}|[0-9A-F]{8}|aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkgrey|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkslategrey|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dimgrey|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|grey|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgray|lightgreen|lightgrey|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightslategrey|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|rebeccapurple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|slategrey|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen)$/i';
 
+    public static function isComponent($value, $message = '')
+    {
+        if (is_array($value)) {
+            static::keyExists($value, 'role', $message);
+        } else {
+            static::isInstanceOfAny(
+                $value,
+                [
+                    \Urbania\AppleNews\Format\Component::class,
+                    \Urbania\AppleNews\Contracts\Componentable::class
+                ],
+                $message
+            );
+        }
+    }
 
     public static function isColor($value, $message = '')
     {
@@ -24,10 +40,12 @@ class Assert extends BaseAssert
         if (is_string($value)) {
             static::regex($value, static::REGEXP_SUPPORTED_UNITS, $message);
         } elseif (!is_float($value) && !is_integer($value)) {
-            static::reportInvalidArgument(sprintf(
-                $message ?: 'Expected a number. Got: %s',
-                static::typeToString($value)
-            ));
+            static::reportInvalidArgument(
+                sprintf(
+                    $message ?: 'Expected a number. Got: %s',
+                    static::typeToString($value)
+                )
+            );
         }
     }
 
@@ -43,21 +61,26 @@ class Assert extends BaseAssert
     public static function number($value, $message = '')
     {
         if (!is_float($value) && !is_integer($value)) {
-            static::reportInvalidArgument(sprintf(
-                $message ?: 'Expected a number. Got: %s',
-                static::typeToString($value),
-            ));
+            static::reportInvalidArgument(
+                sprintf(
+                    $message ?: 'Expected a number. Got: %s',
+                    static::typeToString($value)
+                )
+            );
         }
     }
 
-    public static function isInstanceOfOrArray($value, $class, $message = '')
+    public static function isSdkObject($value, $class, $message = '')
     {
         if (!($value instanceof $class) && !is_array($value)) {
-            static::reportInvalidArgument(sprintf(
-                $message ?: 'Expected an instance of %2$s or an array. Got: %s',
-                static::typeToString($value),
-                $class
-            ));
+            static::reportInvalidArgument(
+                sprintf(
+                    $message ?:
+                    'Expected an instance of %2$s or an array. Got: %s',
+                    static::typeToString($value),
+                    $class
+                )
+            );
         }
     }
 

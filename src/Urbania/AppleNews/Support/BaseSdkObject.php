@@ -5,6 +5,42 @@ namespace Urbania\AppleNews\Support;
 abstract class BaseSdkObject extends BaseObject
 {
     /**
+     * Merge data into this object
+     * @param  BaseObject|array $data The data to merge
+     * @return $this
+     */
+    public function merge($data)
+    {
+        foreach ($data as $key => $value) {
+            if (is_null($value)) {
+                continue;
+            }
+
+            $currentValue = $this->{$key};
+            if (is_array($currentValue)) {
+                $this->{$key} = array_merge(
+                    $currentValue,
+                    $value,
+                );
+            } elseif ($currentValue instanceof BaseSdkObject) {
+                $this->{$key}->merge($value);
+            } else {
+                $this->{$key} = $value;
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Get the object iterator
+     * @return \Iterator
+     */
+    public function getIterator()
+    {
+        return new BaseObjectIterator($this, array_keys(get_object_vars($this)));
+    }
+
+    /**
      * Get a property value
      * @param  string $name The name of the property
      * @return mixed|null

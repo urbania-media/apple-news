@@ -7,6 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Api\Objects\Error;
 use Urbania\AppleNews\Support\BaseObject;
+use Urbania\AppleNews\Support\BaseObjectIterator;
 
 class Response extends BaseObject
 {
@@ -94,6 +95,15 @@ class Response extends BaseObject
         }
 
         return $this;
+    }
+
+    /**
+     * Get the object iterator
+     * @return \Iterator
+     */
+    public function getIterator()
+    {
+        return $this->object->getIterator();
     }
 
     /**

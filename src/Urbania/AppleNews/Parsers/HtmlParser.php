@@ -6,6 +6,7 @@ use DiDom\Document;
 use DiDom\Element;
 use DOMText;
 use Urbania\AppleNews\Article;
+use Urbania\AppleNews\Support\Parser;
 
 class HtmlParser extends Parser
 {
@@ -22,22 +23,48 @@ class HtmlParser extends Parser
         ]
     ];
 
-    public function __construct($opts = [])
+    protected $articleDefaults = [
+        // 'componentLayouts' => [
+        //     'paragraph' => [
+        //         'contentInset' => [
+        //             'bottom' => true
+        //         ]
+        //     ]
+        // ]
+    ];
+
+    public function __construct($opts = [], $defaults = [])
     {
         $this->options = array_merge($this->options, $opts);
+        $this->articleDefaults = array_merge($this->articleDefaults, $defaults);
     }
 
-    public function parse($html)
+    public function parse($html, $defaults = [])
     {
         $document = new Document($html);
-        $body = $document->find('body')[0];
-        $innerNode = $this->getInnerNode($body);
-        $blocks = $this->getBlocks($innerNode);
-        $components = $this->getComponentsFromBlocks($blocks);
+        $body = $document->find('body')[0] ?? null;
+        $title = $document->find('title')[0] ?? null;
+        if (!is_null($body)) {
+            $innerNode = $this->getInnerNode($body);
+            $blocks = $this->getBlocks($innerNode);
+            $components = $this->getComponentsFromBlocks($blocks);
+        } else {
+            $components = [
+                [
+                    'role' => 'body',
+                    'text' => $html,
+                ]
+            ];
+        }
 
-        return new Article([
+        $data = [
             'components' => $components
-        ]);
+        ];
+        if (!is_null($title)) {
+            $data['title'] = $title->text();
+        }
+
+        return new Article(array_merge($this->articleDefaults, $defaults, $data));
     }
 
     protected function getComponentsFromBlocks($blocks, $components = [])
@@ -53,6 +80,7 @@ class HtmlParser extends Parser
                     'role' => 'body',
                     'format' => 'html',
                     'text' => $this->getBlockAsHtml($block),
+                    'layout' => 'paragraph'
                 ];
             } elseif ($this->isHeading($block['tag'])) {
                 $components[] = isset($block['text']) ? [
@@ -81,9 +109,11 @@ class HtmlParser extends Parser
             return new Element(new DOMText($block));
         }
 
-        $element = new Element($block['tag'], null, sizeof($block['class']) ? [
+        $attributes = array_merge($block['attributes'], sizeof($block['class']) ? [
             'data-anf-textstyle' => implode('-', $block['class']),
         ] : []);
+
+        $element = new Element($block['tag'], null, $attributes);
         if (isset($block['text'])) {
             $element->setValue(htmlspecialchars($block['text']));
         }
@@ -135,7 +165,7 @@ class HtmlParser extends Parser
             }
 
             if ($child->isTextNode()) {
-                $blocks[] = $this->trimText($child->text());
+                $blocks[] = $child->text();
                 $lastWasInline= true;
                 continue;
             }
@@ -145,7 +175,12 @@ class HtmlParser extends Parser
             $block = [
                 'tag' => $child->tag,
                 'class' => $classes,
+                'attributes' => []
             ];
+
+            if ($block['tag'] === 'a') {
+                $block['attributes']['href'] = (string)$child->getAttribute('href');
+            }
 
             $lastWasInline = $this->isInline($child->tag);
 
