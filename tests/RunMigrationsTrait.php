@@ -1,5 +1,7 @@
 <?php
 
+namespace Urbania\AppleNews\Tests;
+
 trait RunMigrationsTrait
 {
     public function runMigrations()

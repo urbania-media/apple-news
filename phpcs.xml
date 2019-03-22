@@ -9,7 +9,8 @@
 
     <rule ref="PSR2"/>
     <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
-        <exclude-pattern>*/tests/*</exclude-pattern>
+        <exclude-pattern>*/examples/*</exclude-pattern>
+        <exclude-pattern>*/tests/fixture/*</exclude-pattern>
         <exclude-pattern>*/scripts/stubs/*</exclude-pattern>
     </rule>
 </ruleset>

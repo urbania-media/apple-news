@@ -4,7 +4,7 @@ namespace Urbania\AppleNews\Tests\Unit;
 
 use Urbania\AppleNews\Tests\TestCase;
 
-class UnitTest extends TestCase
+class ArticleTest extends TestCase
 {
     public function setUp()
     {

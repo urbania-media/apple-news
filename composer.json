@@ -52,12 +52,13 @@
     },
     "autoload-dev": {
         "classmap": [
-            "tests/",
+            "tests/fixture",
             "scripts/stubs/",
             "examples/lib"
         ],
         "psr-4": {
-            "Urbania\\AppleNews\\Scripts\\": "scripts/lib"
+            "Urbania\\AppleNews\\Scripts\\": "scripts/lib",
+            "Urbania\\AppleNews\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "stable",

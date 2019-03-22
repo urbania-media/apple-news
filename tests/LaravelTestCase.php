@@ -1,5 +1,7 @@
 <?php
 
+namespace Urbania\AppleNews\Tests;
+
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 

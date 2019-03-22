@@ -1,5 +1,7 @@
 <?php
 
+namespace Urbania\AppleNews\Tests;
+
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use Dotenv\Dotenv;
 

@@ -1,5 +1,8 @@
 <?php
 
+namespace Urbania\AppleNews\Tests\Feature;
+
+use Urbania\AppleNews\Tests\TestCase;
 use Urbania\AppleNews\Article;
 
 class ArticleTest extends TestCase
