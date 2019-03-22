@@ -2,7 +2,7 @@
 
 namespace Urbania\AppleNews\Support;
 
-use Symfony\Component\CssSelector\Parser\Parser;
+use Symfony\Component\CssSelector\Parser\Parser as CssParser;
 use Symfony\Component\CssSelector\Node\CombinedSelectorNode;
 use Symfony\Component\CssSelector\Node\HashNode;
 use Symfony\Component\CssSelector\Node\ElementNode;
@@ -15,7 +15,7 @@ class ComponentsFinder
 
     public function __construct()
     {
-        $this->parser = new Parser();
+        $this->parser = new CssParser();
     }
 
     public function find($selector, $components)
