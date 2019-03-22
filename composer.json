@@ -36,7 +36,7 @@
         "phpunit/phpunit": "~7.0|^7.5|^8.0",
         "php-coveralls/php-coveralls": "^2.1",
         "doctrine/dbal": "^2.0",
-        "vlucas/phpdotenv": "^2.2",
+        "vlucas/phpdotenv": "~1.0|^2.2",
         "nette/php-generator": "^2.6|^3.2",
         "symfony/finder": "2.7.*|2.8.*|3.0.*|^3.4|^4.2",
         "squizlabs/php_codesniffer": "*"
