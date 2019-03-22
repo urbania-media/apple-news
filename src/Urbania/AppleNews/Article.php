@@ -56,7 +56,7 @@ class Article extends BaseObject implements ArticleContract
      * @param string $page The path to the JSON file
      * @return Article
      */
-    public static function fromFile(string $path, $metadata = null)
+    public static function fromFile($path, $metadata = null)
     {
         $contents = file_get_contents($path);
         return static::fromJson($contents, $metadata);
@@ -67,7 +67,7 @@ class Article extends BaseObject implements ArticleContract
      * @param string $json The JSON data
      * @return Article
      */
-    public static function fromJson(string $json, $metadata = null)
+    public static function fromJson($json, $metadata = null)
     {
         return new static(json_decode($json, true), $metadata);
     }
@@ -256,7 +256,7 @@ class Article extends BaseObject implements ArticleContract
      * @param string $path The path of a font
      * @return $this
      */
-    public function addFont(string $path)
+    public function addFont($path)
     {
         $this->fonts[] = $path;
         return $this;
@@ -298,7 +298,7 @@ class Article extends BaseObject implements ArticleContract
      * @param string $path The path of a image
      * @return $this
      */
-    public function addImage(string $path)
+    public function addImage($path)
     {
         $this->images[] = $path;
         return $this;
@@ -399,7 +399,7 @@ class Article extends BaseObject implements ArticleContract
      * @param  array  $arguments The arguments
      * @return mixed
      */
-    public function __call(string $name, array $arguments)
+    public function __call($name, array $arguments)
     {
         $document = !is_null($this->documentWithTheme) ? $this->documentWithTheme : $this->document;
         return call_user_func_array([$document, $name], $arguments);

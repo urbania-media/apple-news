@@ -96,7 +96,7 @@ interface Article extends JsonSerializable, Arrayable, Jsonable
      * @param string $path The path of a font
      * @return $this
      */
-    public function addFont(string $path);
+    public function addFont($path);
 
     /**
      * Add a fonts
@@ -123,7 +123,7 @@ interface Article extends JsonSerializable, Arrayable, Jsonable
      * @param string $path The path of a image
      * @return $this
      */
-    public function addImage(string $path);
+    public function addImage($path);
 
     /**
      * Add a images

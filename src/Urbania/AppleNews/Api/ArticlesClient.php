@@ -22,7 +22,7 @@ class ArticlesClient
      * @param  string $articleId The article ID
      * @return ArticleResponse The article
      */
-    public function find(string $articleId)
+    public function find($articleId)
     {
         Assert::uuid($articleId);
 

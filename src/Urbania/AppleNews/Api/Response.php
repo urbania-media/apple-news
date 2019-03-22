@@ -154,7 +154,7 @@ class Response extends BaseObject
      * @param  array  $arguments The arguments
      * @return mixed
      */
-    public function __call(string $name, array $arguments)
+    public function __call($name, array $arguments)
     {
         return call_user_func_array([$this->object, $name], $arguments);
     }
