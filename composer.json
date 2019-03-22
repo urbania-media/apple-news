@@ -38,7 +38,7 @@
         "doctrine/dbal": "^2.0",
         "vlucas/phpdotenv": "^2.2",
         "nette/php-generator": "^2.6|^3.2",
-        "symfony/finder": "^3.4|^4.2",
+        "symfony/finder": "2.8.*|3.0.*|^3.4|^4.2",
         "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
