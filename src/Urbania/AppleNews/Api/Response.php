@@ -32,13 +32,13 @@ class Response extends BaseObject
     public function getData()
     {
         $payload = $this->getPayload();
-        return $payload['data'] ?? null;
+        return isset($payload['data']) ? $payload['data'] : null;
     }
 
     public function getErrors()
     {
         $payload = $this->getPayload();
-        return $payload['errors'] ?? [];
+        return isset($payload['errors']) ? $payload['errors'] : [];
     }
 
     public function getResponse()
@@ -54,9 +54,9 @@ class Response extends BaseObject
     public function getNextPageToken()
     {
         $payload = $this->getPayload();
-        $meta = $payload['meta'] ?? null;
+        $meta = isset($payload['meta']) ? $payload['meta'] : null;
         if (!is_null($meta)) {
-            return $meta['nextPageToken'] ?? null;
+            return isset($meta['nextPageToken']) ? $meta['nextPageToken'] : null;
         }
         return null;
     }

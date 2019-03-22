@@ -42,8 +42,10 @@ class HtmlParser extends Parser
     public function parse($html, $article = null)
     {
         $document = new Document($html);
-        $body = $document->find('body')[0] ?? null;
-        $title = $document->find('title')[0] ?? null;
+        $bodyElements = $document->find('body');
+        $titleElements = $document->find('body');
+        $body = sizeof($bodyElements) ? $bodyElements[0] : null;
+        $title = sizeof($titleElements) ? $titleElements[0] : null;
         if (!is_null($body)) {
             $innerNode = $this->getInnerNode($body);
             $blocks = $this->getBlocks($innerNode);

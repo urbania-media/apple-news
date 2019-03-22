@@ -58,7 +58,7 @@ class WordpressParser extends Parser
             return null;
         }
 
-        $featuredMediaId = $post['featured_media'] ?? null;
+        $featuredMediaId = isset($post['featured_media']) ? $post['featured_media'] : null;
         $featuredMedia = !is_null($featuredMediaId) ? $this->client->getMedia($featuredMediaId) : null;
 
         $title = html_entity_decode($post['title']['rendered'], ENT_QUOTES, 'utf-8');
@@ -77,8 +77,8 @@ class WordpressParser extends Parser
         }
         $parsedArticle->merge($data);
 
-        $content = $post['content'] ?? null;
-        $html = !is_null($content) ? $content['rendered'] ?? null : null;
+        $content = isset($post['content']) ? $post['content'] : null;
+        $html = !is_null($content) && isset($content['rendered']) ? $content['rendered'] : null;
         $parsedArticle = $this->htmlParser->parse($html, $parsedArticle);
 
         return $parsedArticle;

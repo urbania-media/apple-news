@@ -24,7 +24,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*",
         "illuminate/contracts": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*",
-        "symfony/filesystem": "^4.2",
+        "symfony/filesystem": "^3.4|^4.2",
         "webmozart/assert": "^1.4",
         "imangazaliev/didom": "^1.14",
         "symfony/css-selector": "^4.2"

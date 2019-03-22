@@ -86,7 +86,7 @@ class ParserManager
      */
     public function parser($parser = null)
     {
-        $parser = $parser ?: $this->getDefaultParser();
+        $parser = isset($parser) ? $parser : $this->getDefaultParser();
 
         if (is_null($parser)) {
             throw new InvalidArgumentException(
@@ -209,7 +209,7 @@ class ParserManager
             );
 
             $defaultArticle = $this->getDefaultArticle();
-            $configArticle = value($config['article'] ?? []);
+            $configArticle = value(isset($config['article']) ? $config['article'] : []);
             if ($defaultArticle instanceof ArticleContract) {
                 $config['article'] = $defaultArticle->merge($configArticle);
             } elseif ($configArticle instanceof ArticleContract) {

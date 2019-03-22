@@ -138,7 +138,9 @@ class Component extends BaseSdkObject
     {
         if (isset($data[static::$typeProperty])) {
             $typeName = $data[static::$typeProperty];
-            $type = static::$types[$typeName] ?? null;
+            $type = isset(static::$types[$typeName])
+                ? static::$types[$typeName]
+                : null;
             if (!is_null($type)) {
                 $namespace = implode(
                     '\\',

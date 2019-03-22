@@ -96,7 +96,9 @@ class ComponentsFinder
         if ($functionName === 'eq') {
             $arguments = $selector->getArguments();
             $index = (int) $arguments[0]->getValue();
-            $component = $components[$index] ?? null;
+            $component = isset($components[$index])
+                ? $components[$index]
+                : null;
             return !is_null($component) ? [$component] : [];
         }
         return $components;
@@ -105,10 +107,13 @@ class ComponentsFinder
     protected function matchComponent($component, $selector)
     {
         if ($selector instanceof HashNode) {
-            return $selector->getId() === ($component->identifier ?? null);
+            return $selector->getId() ===
+                (isset($component->identifier) ? $component->identifier : null);
         } elseif ($selector instanceof ElementNode) {
             $element = $selector->getElement();
-            return is_null($element) || $element === ($component->role ?? null);
+            return is_null($element) ||
+                $element ===
+                    (isset($component->role) ? $component->role : null);
         } elseif ($selector instanceof AttributeNode) {
             $attribute = $selector->getAttribute();
             $value = $selector->getValue();
