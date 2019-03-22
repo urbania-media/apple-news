@@ -27,7 +27,7 @@
         "symfony/filesystem": "^3.4|^4.2",
         "webmozart/assert": "^1.4",
         "imangazaliev/didom": "^1.14",
-        "symfony/css-selector": "3.0.*|^3.4|^4.2"
+        "symfony/css-selector": "2.7.*|3.0.*|^3.4|^4.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
