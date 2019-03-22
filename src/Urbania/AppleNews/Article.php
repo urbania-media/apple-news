@@ -29,6 +29,10 @@ class Article extends BaseObject implements ArticleContract
 
     protected $theme;
 
+    protected $fonts = [];
+
+    protected $images = [];
+
     /**
      * @param ApiArticle|ArticleDocument|string|array $data The article data
      * @param UpdateArticleMetadataFields|CreateArticleMetadataFields|array $metdata The article metadata
@@ -52,10 +56,10 @@ class Article extends BaseObject implements ArticleContract
      * @param string $page The path to the JSON file
      * @return Article
      */
-    public static function fromFile(string $path)
+    public static function fromFile(string $path, $metadata = null)
     {
         $contents = file_get_contents($path);
-        return static::fromJson($contents);
+        return static::fromJson($contents, $metadata);
     }
 
     /**
@@ -63,9 +67,9 @@ class Article extends BaseObject implements ArticleContract
      * @param string $json The JSON data
      * @return Article
      */
-    public static function fromJson(string $json)
+    public static function fromJson(string $json, $metadata = null)
     {
-        return new static(json_decode($json, true));
+        return new static(json_decode($json, true), $metadata);
     }
 
     /**
@@ -228,6 +232,90 @@ class Article extends BaseObject implements ArticleContract
     }
 
     /**
+     * Set the fonts
+     * @param array $fonts An array of fonts path
+     * @return $this
+     */
+    public function setFonts(array $fonts)
+    {
+        $this->fonts = $fonts;
+        return $this;
+    }
+
+    /**
+     * Get the fonts
+     * @return array
+     */
+    public function getFonts()
+    {
+        return $this->fonts;
+    }
+
+    /**
+     * Add a font
+     * @param string $path The path of a font
+     * @return $this
+     */
+    public function addFont(string $path)
+    {
+        $this->fonts[] = $path;
+        return $this;
+    }
+
+    /**
+     * Add a fonts
+     * @param array $fonts An array of fonts
+     * @return $this
+     */
+    public function addFonts(array $fonts)
+    {
+        $this->fonts = array_merge($this->fonts, $fonts);
+        return $this;
+    }
+
+    /**
+     * Set the images
+     * @param array $images An array of images path
+     * @return $this
+     */
+    public function setImages(array $images)
+    {
+        $this->images = $images;
+        return $this;
+    }
+
+    /**
+     * Get the images
+     * @return array
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * Add a image
+     * @param string $path The path of a image
+     * @return $this
+     */
+    public function addImage(string $path)
+    {
+        $this->images[] = $path;
+        return $this;
+    }
+
+    /**
+     * Add a images
+     * @param array $images An array of images
+     * @return $this
+     */
+    public function addImages(array $images)
+    {
+        $this->images = array_merge($this->images, $images);
+        return $this;
+    }
+
+    /**
      * Merge an article into this one
      * @param Article|array $article The article
      * @param UpdateArticleMetadataFields|CreateArticleMetadataFields|array $metadata The metadata
@@ -332,13 +420,21 @@ class Article extends BaseObject implements ArticleContract
      */
     public function __clone()
     {
+        $article = $this->getArticle();
         $document = $this->getDocument();
         $metadata = $this->getMetadata();
+        $theme = $this->getTheme();
+        if (!is_null($article)) {
+            $this->setArticle(clone $article);
+        }
         if (!is_null($document)) {
             $this->setDocument(clone $document);
         }
         if (!is_null($metadata)) {
             $this->setMetadata(clone $metadata);
+        }
+        if (!is_null($theme)) {
+            $this->setMetadata(clone $theme);
         }
     }
 }

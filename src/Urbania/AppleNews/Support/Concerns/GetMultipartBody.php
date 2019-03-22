@@ -32,6 +32,32 @@ trait GetMultipartBody
             ];
         }
 
+        $fonts = $this->getFonts();
+        if (sizeof($fonts)) {
+            foreach ($fonts as $key => $font) {
+                $body[] = [
+                    'name' => 'font-'.$key,
+                    'contents' => fopen($font, 'r'),
+                    'headers' => [
+                        'Content-type' => 'application/octet-stream'
+                    ]
+                ];
+            }
+        }
+
+        $images = $this->getImages();
+        if (sizeof($images)) {
+            foreach ($images as $key => $image) {
+                $body[] = [
+                    'name' => 'image-'.$key,
+                    'contents' => fopen($image, 'r'),
+                    'headers' => [
+                        'Content-type' => mime_content_type($image)
+                    ]
+                ];
+            }
+        }
+
         return $body;
     }
 }
