@@ -53,7 +53,8 @@
     "autoload-dev": {
         "classmap": [
             "tests/",
-            "scripts/stubs/"
+            "scripts/stubs/",
+            "examples/lib"
         ],
         "psr-4": {
             "Urbania\\AppleNews\\Scripts\\": "scripts/lib"

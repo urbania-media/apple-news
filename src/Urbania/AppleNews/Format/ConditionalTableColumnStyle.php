@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Format;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -41,7 +39,7 @@ class ConditionalTableColumnStyle extends TableColumnStyle
      * conditions.
      * @var Format\TableColumnSelector[]
      */
-    protected $selectors = [];
+    protected $selectors;
 
     /**
      * The relative column width. This value influences the distribution of
@@ -166,7 +164,11 @@ class ConditionalTableColumnStyle extends TableColumnStyle
      */
     public function addSelector($item)
     {
-        return $this->setSelectors(array_merge($this->selectors, [$item]));
+        return $this->setSelectors(
+            !is_null($this->selectors)
+                ? array_merge($this->selectors, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -177,7 +179,11 @@ class ConditionalTableColumnStyle extends TableColumnStyle
     public function addSelectors($items)
     {
         Assert::isArray($items);
-        return $this->setSelectors(array_merge($this->selectors, $items));
+        return $this->setSelectors(
+            !is_null($this->selectors)
+                ? array_merge($this->selectors, $items)
+                : $items
+        );
     }
 
     /**

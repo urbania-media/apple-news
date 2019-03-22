@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Format;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -19,14 +17,14 @@ class RecordStore extends BaseSdkObject
      * Provides information about the data that can be in each data record.
      * @var Format\DataDescriptor[]
      */
-    protected $descriptors = [];
+    protected $descriptors;
 
     /**
      * Provides data records that fit within the structure defined by
      * descriptors. Each descriptor can be used only once per record.
      * @var Format\Records[]
      */
-    protected $records = [];
+    protected $records;
 
     public function __construct(array $data = [])
     {
@@ -46,7 +44,11 @@ class RecordStore extends BaseSdkObject
      */
     public function addDescriptor($item)
     {
-        return $this->setDescriptors(array_merge($this->descriptors, [$item]));
+        return $this->setDescriptors(
+            !is_null($this->descriptors)
+                ? array_merge($this->descriptors, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -57,7 +59,11 @@ class RecordStore extends BaseSdkObject
     public function addDescriptors($items)
     {
         Assert::isArray($items);
-        return $this->setDescriptors(array_merge($this->descriptors, $items));
+        return $this->setDescriptors(
+            !is_null($this->descriptors)
+                ? array_merge($this->descriptors, $items)
+                : $items
+        );
     }
 
     /**
@@ -94,7 +100,11 @@ class RecordStore extends BaseSdkObject
      */
     public function addRecord($item)
     {
-        return $this->setRecords(array_merge($this->records, [$item]));
+        return $this->setRecords(
+            !is_null($this->records)
+                ? array_merge($this->records, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -105,7 +115,11 @@ class RecordStore extends BaseSdkObject
     public function addRecords($items)
     {
         Assert::isArray($items);
-        return $this->setRecords(array_merge($this->records, $items));
+        return $this->setRecords(
+            !is_null($this->records)
+                ? array_merge($this->records, $items)
+                : $items
+        );
     }
 
     /**

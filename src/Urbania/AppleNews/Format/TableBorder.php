@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Format;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 

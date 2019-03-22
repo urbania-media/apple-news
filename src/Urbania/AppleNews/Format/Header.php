@@ -2,11 +2,11 @@
 
 namespace Urbania\AppleNews\Format;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Concerns\FindsComponents;
 
 /**
  * The component for defining the top area of an article, chapter, or
@@ -16,13 +16,15 @@ use Urbania\AppleNews\Support\BaseSdkObject;
  */
 class Header extends Component
 {
+    use FindsComponents;
+
     /**
      * An array of components to display as child components. Child
      * components are positioned and rendered relative to their parent
      * component.
      * @var Format\Component[]
      */
-    protected $components = [];
+    protected $components;
 
     /**
      * Defines how child components are positioned within this header
@@ -58,7 +60,11 @@ class Header extends Component
      */
     public function addComponent($item)
     {
-        return $this->setComponents(array_merge($this->components, [$item]));
+        return $this->setComponents(
+            !is_null($this->components)
+                ? array_merge($this->components, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -69,7 +75,11 @@ class Header extends Component
     public function addComponents($items)
     {
         Assert::isArray($items);
-        return $this->setComponents(array_merge($this->components, $items));
+        return $this->setComponents(
+            !is_null($this->components)
+                ? array_merge($this->components, $items)
+                : $items
+        );
     }
 
     /**

@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Format;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -20,7 +18,7 @@ class GradientFill extends Fill
      * gradient.
      * @var Format\ColorStop[]
      */
-    protected $colorStops = [];
+    protected $colorStops;
 
     /**
      * The type of gradient; for example linear_gradient.
@@ -48,7 +46,11 @@ class GradientFill extends Fill
      */
     public function addColorStop($item)
     {
-        return $this->setColorStops(array_merge($this->colorStops, [$item]));
+        return $this->setColorStops(
+            !is_null($this->colorStops)
+                ? array_merge($this->colorStops, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -59,7 +61,11 @@ class GradientFill extends Fill
     public function addColorStops($items)
     {
         Assert::isArray($items);
-        return $this->setColorStops(array_merge($this->colorStops, $items));
+        return $this->setColorStops(
+            !is_null($this->colorStops)
+                ? array_merge($this->colorStops, $items)
+                : $items
+        );
     }
 
     /**

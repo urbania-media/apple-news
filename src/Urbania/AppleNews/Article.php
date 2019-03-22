@@ -6,21 +6,28 @@ use Urbania\AppleNews\Support\BaseObject;
 use Urbania\AppleNews\Support\BaseObjectIterator;
 use Urbania\AppleNews\Support\Concerns\GetMultipartBody;
 use Urbania\AppleNews\Support\Concerns\SaveJsonToFile;
+use Urbania\AppleNews\Support\Concerns\FindsComponents;
 use Urbania\AppleNews\Format\ArticleDocument;
 use Urbania\AppleNews\Api\Objects\Article as ApiArticle;
 use Urbania\AppleNews\Api\Objects\CreateArticleMetadataFields;
 use Urbania\AppleNews\Api\Objects\UpdateArticleMetadataFields;
 use Urbania\AppleNews\Support\Utils;
+use Urbania\AppleNews\Contracts\Theme as ThemeContract;
+use Urbania\AppleNews\Contracts\Article as ArticleContract;
 
-class Article extends BaseObject
+class Article extends BaseObject implements ArticleContract
 {
-    use GetMultipartBody, SaveJsonToFile;
+    use GetMultipartBody, SaveJsonToFile, FindsComponents;
 
     protected $article;
 
     protected $document;
 
+    protected $documentWithTheme;
+
     protected $metadata;
+
+    protected $theme;
 
     /**
      * @param ApiArticle|ArticleDocument|string|array $data The article data
@@ -95,6 +102,15 @@ class Article extends BaseObject
     }
 
     /**
+     * Get the document with applyied theme
+     * @return ArticleDocument
+     */
+    public function getDocumentWithTheme()
+    {
+        return $this->documentWithTheme;
+    }
+
+    /**
      * Set the document
      * @param ArticleDocument|array|string $document The document
      * @return $this
@@ -107,6 +123,9 @@ class Article extends BaseObject
         $this->document = is_array($document)
             ? new ArticleDocument($document)
             : $document;
+
+        $this->updateTheme();
+
         return $this;
     }
 
@@ -124,7 +143,9 @@ class Article extends BaseObject
             $this->setDocument($document);
         } else {
             $this->document->merge($document);
+            $this->updateTheme();
         }
+
         return $this;
     }
 
@@ -173,6 +194,40 @@ class Article extends BaseObject
     }
 
     /**
+     * Get the article theme
+     * @return ThemeContract
+     */
+    public function getTheme()
+    {
+        return $this->theme;
+    }
+
+    /**
+     * Set the article theme
+     * @param ThemeContract $metadata The metadata
+     * @return $this
+     */
+    public function setTheme(ThemeContract $theme)
+    {
+        $this->theme = $theme;
+        $this->updateTheme();
+        return $this;
+    }
+
+    /**
+     * Update the theme on the document
+     * @return void
+     */
+    protected function updateTheme()
+    {
+        if (!is_null($this->theme) && !is_null($this->document)) {
+            $this->documentWithTheme = $this->theme->apply($this->document);
+        } else {
+            $this->documentWithTheme = null;
+        }
+    }
+
+    /**
      * Merge an article into this one
      * @param Article|array $article The article
      * @param UpdateArticleMetadataFields|CreateArticleMetadataFields|array $metadata The metadata
@@ -196,7 +251,8 @@ class Article extends BaseObject
      */
     public function getIterator()
     {
-        return $this->document->getIterator();
+        $document = !is_null($this->documentWithTheme) ? $this->documentWithTheme : $this->document;
+        return $document->getIterator();
     }
 
     /**
@@ -206,7 +262,8 @@ class Article extends BaseObject
      */
     protected function propertyGet($name)
     {
-        return $this->document->{$name};
+        $document = !is_null($this->documentWithTheme) ? $this->documentWithTheme : $this->document;
+        return $document->{$name};
     }
 
     /**
@@ -217,7 +274,10 @@ class Article extends BaseObject
      */
     protected function propertySet($name, $value)
     {
-        $this->document->{$name} = $value;
+        if (!is_null($this->document)) {
+            $this->document->{$name} = $value;
+            $this->updateTheme();
+        }
         return $this;
     }
 
@@ -228,7 +288,10 @@ class Article extends BaseObject
      */
     protected function propertyUnset($name)
     {
-        unset($this->document->{$name});
+        if (!is_null($this->document)) {
+            unset($this->document->{$name});
+            $this->updateTheme();
+        }
     }
 
     /**
@@ -238,7 +301,8 @@ class Article extends BaseObject
      */
     protected function propertyExists($name)
     {
-        return isset($this->document->{$name});
+        $document = !is_null($this->documentWithTheme) ? $this->documentWithTheme : $this->document;
+        return isset($document->{$name});
     }
 
     /**
@@ -249,7 +313,8 @@ class Article extends BaseObject
      */
     public function __call(string $name, array $arguments)
     {
-        return call_user_func_array([$this->document, $name], $arguments);
+        $document = !is_null($this->documentWithTheme) ? $this->documentWithTheme : $this->document;
+        return call_user_func_array([$document, $name], $arguments);
     }
 
     /**
@@ -258,6 +323,22 @@ class Article extends BaseObject
      */
     public function toArray()
     {
-        return $this->document->toArray();
+        $document = !is_null($this->documentWithTheme) ? $this->documentWithTheme : $this->document;
+        return $document->toArray();
+    }
+
+    /**
+     * When cloning an article, clone document and metadata
+     */
+    public function __clone()
+    {
+        $document = $this->getDocument();
+        $metadata = $this->getMetadata();
+        if (!is_null($document)) {
+            $this->setDocument(clone $document);
+        }
+        if (!is_null($metadata)) {
+            $this->setMetadata(clone $metadata);
+        }
     }
 }

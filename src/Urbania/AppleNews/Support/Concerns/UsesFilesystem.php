@@ -6,7 +6,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 trait UsesFilesystem
 {
-    protected $filesystem;
+    private $filesystem;
 
     public function getFilesystem()
     {

@@ -4,7 +4,6 @@ namespace Urbania\AppleNews\Api\Objects;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -116,7 +115,7 @@ class Article extends BaseSdkObject
      * are not fatal.
      * @var Api\Objects\Warning[]
      */
-    protected $warnings = [];
+    protected $warnings;
 
     public function __construct(array $data = [])
     {
@@ -586,7 +585,11 @@ class Article extends BaseSdkObject
      */
     public function addWarning($item)
     {
-        return $this->setWarnings(array_merge($this->warnings, [$item]));
+        return $this->setWarnings(
+            !is_null($this->warnings)
+                ? array_merge($this->warnings, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -597,7 +600,11 @@ class Article extends BaseSdkObject
     public function addWarnings($items)
     {
         Assert::isArray($items);
-        return $this->setWarnings(array_merge($this->warnings, $items));
+        return $this->setWarnings(
+            !is_null($this->warnings)
+                ? array_merge($this->warnings, $items)
+                : $items
+        );
     }
 
     /**

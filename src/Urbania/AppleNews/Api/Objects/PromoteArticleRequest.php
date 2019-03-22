@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Api\Objects;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -20,7 +18,7 @@ class PromoteArticleRequest extends BaseSdkObject
      * list may be empty.
      * @var string[]
      */
-    protected $articleIds = [];
+    protected $articleIds;
 
     public function __construct(array $data = [])
     {
@@ -36,7 +34,11 @@ class PromoteArticleRequest extends BaseSdkObject
      */
     public function addArticleId($item)
     {
-        return $this->setArticleIds(array_merge($this->articleIds, [$item]));
+        return $this->setArticleIds(
+            !is_null($this->articleIds)
+                ? array_merge($this->articleIds, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -47,7 +49,11 @@ class PromoteArticleRequest extends BaseSdkObject
     public function addArticleIds($items)
     {
         Assert::isArray($items);
-        return $this->setArticleIds(array_merge($this->articleIds, $items));
+        return $this->setArticleIds(
+            !is_null($this->articleIds)
+                ? array_merge($this->articleIds, $items)
+                : $items
+        );
     }
 
     /**

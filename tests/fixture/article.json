@@ -12,7 +12,9 @@
   "subtitle": "Non occidere quae cumque vi ventia",
   "metadata": {
     "excerpt": "Simple with Headline above Header Image",
-    "thumbnailURL": "https://developer.apple.com/news-publisher/download/Apple-News-Example-Articles/images/Iceland01.jpg"
+    "thumbnailURL": "https://developer.apple.com/news-publisher/download/Apple-News-Example-Articles/images/Iceland01.jpg",
+    "generatorName": "Apple",
+    "generatorVersion": "1.0"
   },
   "documentStyle": {
     "backgroundColor": "#f6f6f6"

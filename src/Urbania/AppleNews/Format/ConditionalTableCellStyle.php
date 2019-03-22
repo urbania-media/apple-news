@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Format;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -63,7 +61,7 @@ class ConditionalTableCellStyle extends TableCellStyle
      * conditions.
      * @var Format\TableCellSelector[]
      */
-    protected $selectors = [];
+    protected $selectors;
 
     /**
      * The name string of one of your styles in the Article
@@ -304,7 +302,11 @@ class ConditionalTableCellStyle extends TableCellStyle
      */
     public function addSelector($item)
     {
-        return $this->setSelectors(array_merge($this->selectors, [$item]));
+        return $this->setSelectors(
+            !is_null($this->selectors)
+                ? array_merge($this->selectors, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -315,7 +317,11 @@ class ConditionalTableCellStyle extends TableCellStyle
     public function addSelectors($items)
     {
         Assert::isArray($items);
-        return $this->setSelectors(array_merge($this->selectors, $items));
+        return $this->setSelectors(
+            !is_null($this->selectors)
+                ? array_merge($this->selectors, $items)
+                : $items
+        );
     }
 
     /**

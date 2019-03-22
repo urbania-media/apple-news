@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Format;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -24,7 +22,7 @@ class Mosaic extends Component
      * animation plays only in full screen.
      * @var Format\GalleryItem[]
      */
-    protected $items = [];
+    protected $items;
 
     /**
      * This component always has a role of mosaic.
@@ -48,7 +46,11 @@ class Mosaic extends Component
      */
     public function addItem($item)
     {
-        return $this->setItems(array_merge($this->items, [$item]));
+        return $this->setItems(
+            !is_null($this->items)
+                ? array_merge($this->items, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -59,7 +61,9 @@ class Mosaic extends Component
     public function addItems($items)
     {
         Assert::isArray($items);
-        return $this->setItems(array_merge($this->items, $items));
+        return $this->setItems(
+            !is_null($this->items) ? array_merge($this->items, $items) : $items
+        );
     }
 
     /**

@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Api\Objects;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -27,7 +25,7 @@ class Error extends BaseSdkObject
      * input of the request. See Understanding the keyPath Array.
      * @var string[]
      */
-    protected $keyPath = [];
+    protected $keyPath;
 
     /**
      * A user friendly detailed explanation of the error code.
@@ -105,7 +103,11 @@ class Error extends BaseSdkObject
      */
     public function addKeyPath($item)
     {
-        return $this->setKeyPath(array_merge($this->keyPath, [$item]));
+        return $this->setKeyPath(
+            !is_null($this->keyPath)
+                ? array_merge($this->keyPath, [$item])
+                : [$item]
+        );
     }
 
     /**

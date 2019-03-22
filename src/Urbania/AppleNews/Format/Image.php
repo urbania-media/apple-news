@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Format;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -36,7 +34,7 @@ class Image extends Component
      * ComponentLink, allowing a link to anywhere in News.
      * @var Format\ComponentLink[]
      */
-    protected $additions = [];
+    protected $additions;
 
     /**
      * A caption that describes the image. This text can be used by VoiceOver
@@ -122,7 +120,11 @@ class Image extends Component
      */
     public function addAddition($item)
     {
-        return $this->setAdditions(array_merge($this->additions, [$item]));
+        return $this->setAdditions(
+            !is_null($this->additions)
+                ? array_merge($this->additions, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -133,7 +135,11 @@ class Image extends Component
     public function addAdditions($items)
     {
         Assert::isArray($items);
-        return $this->setAdditions(array_merge($this->additions, $items));
+        return $this->setAdditions(
+            !is_null($this->additions)
+                ? array_merge($this->additions, $items)
+                : $items
+        );
     }
 
     /**

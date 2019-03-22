@@ -100,4 +100,18 @@ trait ClassUtils
     {
         return str_repeat(' ', $count * 4).$line;
     }
+
+    protected function hasDateTimeProperty($object)
+    {
+        return array_reduce($object['properties'] ?? [], function ($hasDateTime, $property) {
+            return $hasDateTime || $property['type'] === 'date-time';
+        }, false);
+    }
+
+    protected function hasComponentsProperty($object)
+    {
+        return array_reduce($object['properties'] ?? [], function ($hasComponents, $property) {
+            return $hasComponents || $property['name'] === 'components';
+        }, false);
+    }
 }

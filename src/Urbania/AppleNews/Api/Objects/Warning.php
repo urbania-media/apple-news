@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Api\Objects;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -20,7 +18,7 @@ class Warning extends BaseSdkObject
      * input of the request.
      * @var string[]
      */
-    protected $keypath = [];
+    protected $keypath;
 
     /**
      * A user friendly, detailed explanation of the non-fatal warning.
@@ -57,7 +55,11 @@ class Warning extends BaseSdkObject
      */
     public function addKeypath($item)
     {
-        return $this->setKeypath(array_merge($this->keypath, [$item]));
+        return $this->setKeypath(
+            !is_null($this->keypath)
+                ? array_merge($this->keypath, [$item])
+                : [$item]
+        );
     }
 
     /**

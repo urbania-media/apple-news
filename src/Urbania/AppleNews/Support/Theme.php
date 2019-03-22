@@ -53,18 +53,18 @@ class Theme implements ThemeContract
             'componentStyles' => $this->getComponentStyles(),
         ]);
 
-        $articleWithTheme = new Article($article);
+        $articleWithTheme = new Article(clone $article);
         $articleWithTheme = $articleWithTheme->merge($themeArticle);
 
-        $this->applyToComponents($articleWithTheme->components);
+        $rules = $this->getComponentRules();
+        $this->applyRulesToComponents($rules, $articleWithTheme->components);
 
         return $articleWithTheme;
     }
 
-    protected function applyToComponents($components)
+    protected function applyRulesToComponents($rules, $components)
     {
         $finder = new ComponentsFinder();
-        $rules = $this->getComponentRules();
         foreach ($rules as $rule) {
             $selector = $rule['selector'];
             $foundComponents = $finder->find($selector, $components);

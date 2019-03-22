@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Api\Objects;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -19,7 +17,7 @@ class SearchResponse extends BaseSdkObject
      * A list of article objects.
      * @var Api\Objects\Article[]
      */
-    protected $articles = [];
+    protected $articles;
 
     /**
      * A list of fields returned by the Search Articles in a Section and
@@ -59,7 +57,11 @@ class SearchResponse extends BaseSdkObject
      */
     public function addArticle($item)
     {
-        return $this->setArticles(array_merge($this->articles, [$item]));
+        return $this->setArticles(
+            !is_null($this->articles)
+                ? array_merge($this->articles, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -70,7 +72,11 @@ class SearchResponse extends BaseSdkObject
     public function addArticles($items)
     {
         Assert::isArray($items);
-        return $this->setArticles(array_merge($this->articles, $items));
+        return $this->setArticles(
+            !is_null($this->articles)
+                ? array_merge($this->articles, $items)
+                : $items
+        );
     }
 
     /**

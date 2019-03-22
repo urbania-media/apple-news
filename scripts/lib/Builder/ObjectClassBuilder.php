@@ -62,6 +62,10 @@ class ObjectClassBuilder
             $class = new ClassType($baseClassName);
         }
 
+        if ($this->hasComponentsProperty($object)) {
+            $class->addTrait('Urbania\AppleNews\Support\Concerns\FindsComponents');
+        }
+
         if (!is_null($typed)) {
             $typedMembers = $this->buildTyped($typed);
             foreach ($typedMembers as $typedMember) {

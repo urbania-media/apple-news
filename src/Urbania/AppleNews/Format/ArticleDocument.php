@@ -2,11 +2,11 @@
 
 namespace Urbania\AppleNews\Format;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Concerns\FindsComponents;
 
 /**
  * The root object of an Apple News article, containing required
@@ -16,6 +16,8 @@ use Urbania\AppleNews\Support\BaseSdkObject;
  */
 class ArticleDocument extends BaseSdkObject
 {
+    use FindsComponents;
+
     /**
      * The version of Apple News Format used in the JSON document. The
      * documentation notes the version of each property.
@@ -61,7 +63,7 @@ class ArticleDocument extends BaseSdkObject
      * Components have different roles and types, such as Photo and Music.
      * @var Format\Component[]
      */
-    protected $components = [];
+    protected $components;
 
     /**
      * The component text styles that can be referred to by components in
@@ -218,7 +220,11 @@ class ArticleDocument extends BaseSdkObject
      */
     public function addComponent($item)
     {
-        return $this->setComponents(array_merge($this->components, [$item]));
+        return $this->setComponents(
+            !is_null($this->components)
+                ? array_merge($this->components, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -311,7 +317,11 @@ class ArticleDocument extends BaseSdkObject
     public function addComponents($items)
     {
         Assert::isArray($items);
-        return $this->setComponents(array_merge($this->components, $items));
+        return $this->setComponents(
+            !is_null($this->components)
+                ? array_merge($this->components, $items)
+                : $items
+        );
     }
 
     /**

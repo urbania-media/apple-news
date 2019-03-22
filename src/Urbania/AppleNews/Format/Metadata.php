@@ -4,7 +4,6 @@ namespace Urbania\AppleNews\Format;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -21,7 +20,7 @@ class Metadata extends BaseSdkObject
      * component.
      * @var string[]
      */
-    protected $authors = [];
+    protected $authors;
 
     /**
      * A set of key-value pairs that can be leveraged to target your
@@ -47,7 +46,7 @@ class Metadata extends BaseSdkObject
      * Featured Stories.
      * @var Format\CoverArt[]
      */
-    protected $coverArt = [];
+    protected $coverArt;
 
     /**
      * The UTC date in ISO 8601 format (YYYY-MM-DDTHH:mm:ss±ZZ:ZZ) on which
@@ -107,13 +106,13 @@ class Metadata extends BaseSdkObject
      * Keywords that describe this article. You can define up to 50 keywords.
      * @var string[]
      */
-    protected $keywords = [];
+    protected $keywords;
 
     /**
      * An array of links to other articles in Apple News.
      * @var Format\LinkedArticle[]
      */
-    protected $links = [];
+    protected $links;
 
     /**
      * The URL of an image that can represent this article in a News feed
@@ -214,7 +213,11 @@ class Metadata extends BaseSdkObject
      */
     public function addAuthor($item)
     {
-        return $this->setAuthors(array_merge($this->authors, [$item]));
+        return $this->setAuthors(
+            !is_null($this->authors)
+                ? array_merge($this->authors, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -225,7 +228,11 @@ class Metadata extends BaseSdkObject
     public function addAuthors($items)
     {
         Assert::isArray($items);
-        return $this->setAuthors(array_merge($this->authors, $items));
+        return $this->setAuthors(
+            !is_null($this->authors)
+                ? array_merge($this->authors, $items)
+                : $items
+        );
     }
 
     /**
@@ -319,7 +326,11 @@ class Metadata extends BaseSdkObject
      */
     public function addCoverArt($item)
     {
-        return $this->setCoverArt(array_merge($this->coverArt, [$item]));
+        return $this->setCoverArt(
+            !is_null($this->coverArt)
+                ? array_merge($this->coverArt, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -556,7 +567,11 @@ class Metadata extends BaseSdkObject
      */
     public function addKeyword($item)
     {
-        return $this->setKeywords(array_merge($this->keywords, [$item]));
+        return $this->setKeywords(
+            !is_null($this->keywords)
+                ? array_merge($this->keywords, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -567,7 +582,11 @@ class Metadata extends BaseSdkObject
     public function addKeywords($items)
     {
         Assert::isArray($items);
-        return $this->setKeywords(array_merge($this->keywords, $items));
+        return $this->setKeywords(
+            !is_null($this->keywords)
+                ? array_merge($this->keywords, $items)
+                : $items
+        );
     }
 
     /**
@@ -605,7 +624,11 @@ class Metadata extends BaseSdkObject
      */
     public function addLink($item)
     {
-        return $this->setLinks(array_merge($this->links, [$item]));
+        return $this->setLinks(
+            !is_null($this->links)
+                ? array_merge($this->links, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -616,7 +639,9 @@ class Metadata extends BaseSdkObject
     public function addLinks($items)
     {
         Assert::isArray($items);
-        return $this->setLinks(array_merge($this->links, $items));
+        return $this->setLinks(
+            !is_null($this->links) ? array_merge($this->links, $items) : $items
+        );
     }
 
     /**

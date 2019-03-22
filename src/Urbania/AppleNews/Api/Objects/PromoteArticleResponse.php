@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Api\Objects;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -19,7 +17,7 @@ class PromoteArticleResponse extends BaseSdkObject
      * List of URLs for the promoted articles.
      * @var string[]
      */
-    protected $promotedArticles = [];
+    protected $promotedArticles;
 
     public function __construct(array $data = [])
     {
@@ -36,7 +34,9 @@ class PromoteArticleResponse extends BaseSdkObject
     public function addPromotedArticle($item)
     {
         return $this->setPromotedArticles(
-            array_merge($this->promotedArticles, [$item])
+            !is_null($this->promotedArticles)
+                ? array_merge($this->promotedArticles, [$item])
+                : [$item]
         );
     }
 
@@ -49,7 +49,9 @@ class PromoteArticleResponse extends BaseSdkObject
     {
         Assert::isArray($items);
         return $this->setPromotedArticles(
-            array_merge($this->promotedArticles, $items)
+            !is_null($this->promotedArticles)
+                ? array_merge($this->promotedArticles, $items)
+                : $items
         );
     }
 

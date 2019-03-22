@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Format;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -20,7 +18,7 @@ class Text extends Component
      * ranges of text in the text property.
      * @var Format\Addition[]
      */
-    protected $additions = [];
+    protected $additions;
 
     /**
      * The formatting or markup method applied to the text.
@@ -36,7 +34,7 @@ class Text extends Component
      * document.
      * @var Format\InlineTextStyle[]
      */
-    protected $inlineTextStyles = [];
+    protected $inlineTextStyles;
 
     /**
      * The role of a text component depends on the type of content it
@@ -99,7 +97,11 @@ class Text extends Component
      */
     public function addAddition($item)
     {
-        return $this->setAdditions(array_merge($this->additions, [$item]));
+        return $this->setAdditions(
+            !is_null($this->additions)
+                ? array_merge($this->additions, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -110,7 +112,11 @@ class Text extends Component
     public function addAdditions($items)
     {
         Assert::isArray($items);
-        return $this->setAdditions(array_merge($this->additions, $items));
+        return $this->setAdditions(
+            !is_null($this->additions)
+                ? array_merge($this->additions, $items)
+                : $items
+        );
     }
 
     /**
@@ -180,7 +186,9 @@ class Text extends Component
     public function addInlineTextStyle($item)
     {
         return $this->setInlineTextStyles(
-            array_merge($this->inlineTextStyles, [$item])
+            !is_null($this->inlineTextStyles)
+                ? array_merge($this->inlineTextStyles, [$item])
+                : [$item]
         );
     }
 
@@ -193,7 +201,9 @@ class Text extends Component
     {
         Assert::isArray($items);
         return $this->setInlineTextStyles(
-            array_merge($this->inlineTextStyles, $items)
+            !is_null($this->inlineTextStyles)
+                ? array_merge($this->inlineTextStyles, $items)
+                : $items
         );
     }
 

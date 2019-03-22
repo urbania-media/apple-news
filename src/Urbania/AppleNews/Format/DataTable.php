@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Format;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -48,7 +46,7 @@ class DataTable extends Component
      * in the order in which they are provided in the array.
      * @var Format\DataTableSorting[]
      */
-    protected $sortBy = [];
+    protected $sortBy;
 
     /**
      * Either an inline ComponentStyle object that defines the appearance of
@@ -175,7 +173,11 @@ class DataTable extends Component
      */
     public function addSortBy($item)
     {
-        return $this->setSortBy(array_merge($this->sortBy, [$item]));
+        return $this->setSortBy(
+            !is_null($this->sortBy)
+                ? array_merge($this->sortBy, [$item])
+                : [$item]
+        );
     }
 
     /**

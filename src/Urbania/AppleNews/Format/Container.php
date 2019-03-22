@@ -2,11 +2,11 @@
 
 namespace Urbania\AppleNews\Format;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Concerns\FindsComponents;
 
 /**
  * Properties shared by all container types.
@@ -15,6 +15,8 @@ use Urbania\AppleNews\Support\BaseSdkObject;
  */
 class Container extends Component
 {
+    use FindsComponents;
+
     /**
      * An array of ComponentLink objects. This can be used to create a
      * ComponentLink, allowing a link to anywhere in News. Adding a link to a
@@ -22,7 +24,7 @@ class Container extends Component
      * links used in its child components will no longer be interactable.
      * @var Format\ComponentLink[]
      */
-    protected $additions = [];
+    protected $additions;
 
     /**
      * An array of components to display as child components. Child
@@ -30,7 +32,7 @@ class Container extends Component
      * component.
      * @var Format\Component[]
      */
-    protected $components = [];
+    protected $components;
 
     /**
      * Defines how child components are positioned within this container
@@ -70,7 +72,11 @@ class Container extends Component
      */
     public function addAddition($item)
     {
-        return $this->setAdditions(array_merge($this->additions, [$item]));
+        return $this->setAdditions(
+            !is_null($this->additions)
+                ? array_merge($this->additions, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -81,7 +87,11 @@ class Container extends Component
     public function addAdditions($items)
     {
         Assert::isArray($items);
-        return $this->setAdditions(array_merge($this->additions, $items));
+        return $this->setAdditions(
+            !is_null($this->additions)
+                ? array_merge($this->additions, $items)
+                : $items
+        );
     }
 
     /**
@@ -123,7 +133,11 @@ class Container extends Component
      */
     public function addComponent($item)
     {
-        return $this->setComponents(array_merge($this->components, [$item]));
+        return $this->setComponents(
+            !is_null($this->components)
+                ? array_merge($this->components, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -134,7 +148,11 @@ class Container extends Component
     public function addComponents($items)
     {
         Assert::isArray($items);
-        return $this->setComponents(array_merge($this->components, $items));
+        return $this->setComponents(
+            !is_null($this->components)
+                ? array_merge($this->components, $items)
+                : $items
+        );
     }
 
     /**

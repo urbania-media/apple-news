@@ -98,4 +98,16 @@ abstract class BaseSdkObject extends BaseObject
     {
         return property_exists($this, $name) && isset($this->{$name});
     }
+
+    /**
+     * When cloning this object, we convert it to array and set every property
+     */
+    public function __clone()
+    {
+        $data = $this->toArray();
+        foreach ($data as $key => $value) {
+            $methodName = 'set' . Utils::studlyCase($key);
+            $this->{$methodName}($value);
+        }
+    }
 }

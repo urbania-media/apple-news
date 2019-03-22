@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Format;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -35,7 +33,7 @@ class TableCellStyle extends BaseSdkObject
      * table cells.
      * @var Format\ConditionalTableCellStyle[]
      */
-    protected $conditional = [];
+    protected $conditional;
 
     /**
      * The height of the cell and its row, as an integer in points, or using
@@ -192,7 +190,11 @@ class TableCellStyle extends BaseSdkObject
      */
     public function addConditional($item)
     {
-        return $this->setConditional(array_merge($this->conditional, [$item]));
+        return $this->setConditional(
+            !is_null($this->conditional)
+                ? array_merge($this->conditional, [$item])
+                : [$item]
+        );
     }
 
     /**

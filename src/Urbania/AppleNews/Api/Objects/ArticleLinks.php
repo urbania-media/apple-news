@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Api\Objects;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -25,7 +23,7 @@ class ArticleLinks extends BaseSdkObject
      * The sections, if any, in which this article appears.
      * @var string[]
      */
-    protected $sections = [];
+    protected $sections;
 
     /**
      * The URL at which this resource can be read, updated, and deleted.
@@ -82,7 +80,11 @@ class ArticleLinks extends BaseSdkObject
      */
     public function addSection($item)
     {
-        return $this->setSections(array_merge($this->sections, [$item]));
+        return $this->setSections(
+            !is_null($this->sections)
+                ? array_merge($this->sections, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -93,7 +95,11 @@ class ArticleLinks extends BaseSdkObject
     public function addSections($items)
     {
         Assert::isArray($items);
-        return $this->setSections(array_merge($this->sections, $items));
+        return $this->setSections(
+            !is_null($this->sections)
+                ? array_merge($this->sections, $items)
+                : $items
+        );
     }
 
     /**

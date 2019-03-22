@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Format;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -40,7 +38,7 @@ class Map extends Component
      * array.
      * @var Format\MapItem[]
      */
-    protected $items = [];
+    protected $items;
 
     /**
      * The latitude of the map’s center. Provide both a latitude and
@@ -171,7 +169,11 @@ class Map extends Component
      */
     public function addItem($item)
     {
-        return $this->setItems(array_merge($this->items, [$item]));
+        return $this->setItems(
+            !is_null($this->items)
+                ? array_merge($this->items, [$item])
+                : [$item]
+        );
     }
 
     /**
@@ -182,7 +184,9 @@ class Map extends Component
     public function addItems($items)
     {
         Assert::isArray($items);
-        return $this->setItems(array_merge($this->items, $items));
+        return $this->setItems(
+            !is_null($this->items) ? array_merge($this->items, $items) : $items
+        );
     }
 
     /**

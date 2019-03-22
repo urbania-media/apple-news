@@ -43,8 +43,6 @@ class ObjectPropertiesBuilder
                 $property->setValue(
                     $this->defaultValues[$baseClassName][$item['name']]
                 );
-            } elseif (is_string($item['type']) && current(explode(':', $item['type'])) === 'array') {
-                $property->setValue([]);
             }
             $properties[] = $property;
         }

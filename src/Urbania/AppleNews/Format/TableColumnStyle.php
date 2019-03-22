@@ -2,9 +2,7 @@
 
 namespace Urbania\AppleNews\Format;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
@@ -27,7 +25,7 @@ class TableColumnStyle extends BaseSdkObject
      * background colors.
      * @var Format\ConditionalTableColumnStyle[]
      */
-    protected $conditional = [];
+    protected $conditional;
 
     /**
      * The stroke style for the divider lines between columns.
@@ -108,7 +106,11 @@ class TableColumnStyle extends BaseSdkObject
      */
     public function addConditional($item)
     {
-        return $this->setConditional(array_merge($this->conditional, [$item]));
+        return $this->setConditional(
+            !is_null($this->conditional)
+                ? array_merge($this->conditional, [$item])
+                : [$item]
+        );
     }
 
     /**

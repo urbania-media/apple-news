@@ -33,7 +33,7 @@ class ObjectArrayMethodsBuilder
 
         $method->setBody(sprintf(
             'Assert::isArray($items);'.
-            'return $this->set%s(array_merge($this->%s, $items));',
+            'return $this->set%s(!is_null($this->%2$s) ? array_merge($this->%2$s, $items) : $items);',
             $studlyName,
             $property['name']
         ));
@@ -54,7 +54,7 @@ class ObjectArrayMethodsBuilder
         $method->setVisibility('public');
 
         $method->setBody(sprintf(
-            'return $this->set%s(array_merge($this->%s, [$item]));',
+            'return $this->set%s(!is_null($this->%2$s) ? array_merge($this->%2$s, [$item]) : [$item]);',
             $studlyName,
             $property['name']
         ));
