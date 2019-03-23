@@ -15,7 +15,7 @@ class Tweet extends Component
 {
     /**
      * The URL of the tweet you want to embed.
-     * @var uri
+     * @var string
      */
     protected $URL;
 
@@ -45,7 +45,7 @@ class Tweet extends Component
 
     /**
      * Get the URL
-     * @return uri
+     * @return string
      */
     public function getURL()
     {
@@ -54,7 +54,7 @@ class Tweet extends Component
 
     /**
      * Set the URL
-     * @param uri $URL
+     * @param string $URL
      * @return $this
      */
     public function setURL($URL)

@@ -47,7 +47,9 @@ class ComponentLayouts extends BaseSdkObject
             return $this;
         }
 
-        Assert::isMap($layouts);
+        if (is_array($layouts) && sizeof($layouts) > 0) {
+            Assert::isMap($layouts);
+        }
         Assert::allIsSdkObject($layouts, ComponentLayout::class);
 
         $items = [];

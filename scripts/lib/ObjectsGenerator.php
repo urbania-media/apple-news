@@ -54,13 +54,8 @@ class ObjectsGenerator
 
     protected function writeFile(PhpFile $file, $outputPath)
     {
-        $namespaces = $file->getNamespaces();
-        $namespace = array_keys($namespaces)[0];
-        $classes = $namespaces[$namespace]->getClasses();
-        $className = array_keys($classes)[0];
-        $namespacePath = preg_replace('/^'.preg_quote($this->getBaseNamespace(), '/').'?(.*)$/', '$1', $namespace);
-        $namespacePath = !empty($namespacePath) ? str_replace('\\', '/', $namespacePath).'/' : '';
-        $classPath = $outputPath.'/'.trim($namespacePath, '/').'/'.$className.'.php';
+        $className = $this->getClassNameFromFile($file);
+        $classPath = $outputPath.'/'.$this->getClassPathFromFile($file);
 
         $this->output->writeLn('<comment>Writing:</comment> Class '.$className.' to '.$classPath.'...');
         $printer = new PsrPrinter();
@@ -70,6 +65,29 @@ class ObjectsGenerator
         $this->prettyFile($classPath);
         $this->output->writeLn('<info>Writed:</info> Class '.$className.' to '.$classPath.'.');
         return $classPath;
+    }
+
+    protected function getNamespaceFromFile(PhpFile $file)
+    {
+        $namespaces = $file->getNamespaces();
+        return array_keys($namespaces)[0];
+    }
+
+    protected function getClassNameFromFile(PhpFile $file)
+    {
+        $namespaces = $file->getNamespaces();
+        $namespace = array_keys($namespaces)[0];
+        $classes = $namespaces[$namespace]->getClasses();
+        return array_keys($classes)[0];
+    }
+
+    protected function getClassPathFromFile(PhpFile $file)
+    {
+        $className = $this->getClassNameFromFile($file);
+        $namespace = $this->getNamespaceFromFile($file);
+        $namespacePath = preg_replace('/^'.preg_quote($this->getBaseNamespace(), '/').'?(.*)$/', '$1', $namespace);
+        $namespacePath = !empty($namespacePath) ? str_replace('\\', '/', $namespacePath).'/' : '';
+        return trim($namespacePath, '/').'/'.$className.'.php';
     }
 
     protected function prettyFile($path)

@@ -9,6 +9,16 @@ trait ClassUtils
         return 'Urbania\AppleNews';
     }
 
+    protected function getTestsBaseNamespace()
+    {
+        return 'Urbania\AppleNews\Tests';
+    }
+
+    protected function getUnitTestsBaseNamespace()
+    {
+        return 'Urbania\AppleNews\Tests\Unit';
+    }
+
     protected function getNamespace($path = null)
     {
         if (is_null($path)) {
@@ -20,15 +30,48 @@ trait ClassUtils
         return implode('\\', $namespace);
     }
 
-    protected function getClassBaseName($name)
+    protected function getTestsNamespace($path = null)
     {
-        return last(explode('\\', $name));
+        if (is_null($path)) {
+            return $this->getTestsBaseNamespace();
+        }
+        $namespace = array_merge([
+            $this->getTestsBaseNamespace(),
+        ], !is_array($path) ? [$path] : $path);
+        return implode('\\', $namespace);
+    }
+
+    protected function getUnitTestsNamespace($path = null)
+    {
+        if (is_null($path)) {
+            return $this->getUnitTestsBaseNamespace();
+        }
+        $namespace = array_merge([
+            $this->getUnitTestsBaseNamespace(),
+        ], !is_array($path) ? [$path] : $path);
+        return implode('\\', $namespace);
     }
 
     protected function getClassNamespace($name)
     {
         $nameParts = explode('\\', $name);
         return $this->getNamespace(sizeof($nameParts) > 1 ? array_slice($nameParts, 0, -1) : []);
+    }
+
+    protected function getUnitTestClassNamespace($name)
+    {
+        $nameParts = explode('\\', $name);
+        return $this->getUnitTestsNamespace(sizeof($nameParts) > 1 ? array_slice($nameParts, 0, -1) : []);
+    }
+
+    protected function getClassBaseName($name)
+    {
+        return last(explode('\\', $name));
+    }
+
+    protected function getTestClassBaseName($name)
+    {
+        return last(explode('\\', $name)).'Test';
     }
 
     protected function removeNamespaceFromClassPath($namespace, $name)
@@ -43,6 +86,11 @@ trait ClassUtils
     protected function getFullClassPath($name)
     {
         return '\\'.$this->getBaseNamespace().'\\'.$name;
+    }
+
+    protected function getUnitTestsFullClassPath($name)
+    {
+        return '\\'.$this->getUnitTestsBaseNamespace().'\\'.$name;
     }
 
     protected function getTypeHint($type, $method = 'get')
@@ -78,6 +126,7 @@ trait ClassUtils
                 case 'Color':
                 case 'Code':
                 case 'uuid':
+                case 'uri':
                     $typeHints[] = 'string';
                     break;
                 default:

@@ -16,7 +16,7 @@ class EmbedWebVideo extends Component
     /**
      * The URL of the embeddable video to display (the YouTube or Vimeo embed
      * link). The embed URL is usually different from the standard video URL.
-     * @var uri
+     * @var string
      */
     protected $URL;
 
@@ -201,7 +201,7 @@ class EmbedWebVideo extends Component
 
     /**
      * Get the URL
-     * @return uri
+     * @return string
      */
     public function getURL()
     {
@@ -210,7 +210,7 @@ class EmbedWebVideo extends Component
 
     /**
      * Set the URL
-     * @param uri $URL
+     * @param string $URL
      * @return $this
      */
     public function setURL($URL)

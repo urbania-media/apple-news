@@ -19,7 +19,7 @@ class LinkedArticle extends BaseSdkObject
      * website, as long as the website link matches the canonicalURL metadata
      * property of the linked article. For more information about
      * canonicalURL, see Metadata.
-     * @var uri
+     * @var string
      */
     protected $URL;
 
@@ -65,7 +65,7 @@ class LinkedArticle extends BaseSdkObject
 
     /**
      * Get the URL
-     * @return uri
+     * @return string
      */
     public function getURL()
     {
@@ -74,7 +74,7 @@ class LinkedArticle extends BaseSdkObject
 
     /**
      * Set the URL
-     * @param uri $URL
+     * @param string $URL
      * @return $this
      */
     public function setURL($URL)

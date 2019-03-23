@@ -103,4 +103,16 @@ class Assert extends BaseAssert
             static::oneOf($value['sortDir'], ['ASC', 'DESC']);
         }
     }
+
+    public static function uri($value, $message = '')
+    {
+        if (!filter_var($value, FILTER_VALIDATE_URL)) {
+            static::reportInvalidArgument(
+                sprintf(
+                    $message ?: 'Expected an url. Got: %s',
+                    $value
+                )
+            );
+        }
+    }
 }

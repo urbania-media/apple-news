@@ -36,7 +36,7 @@ class Metadata extends BaseSdkObject
      * property to the URL of the web article. This property can be used to
      * point to one version of the article as well as to redirect devices
      * that do not support News content.
-     * @var uri
+     * @var string
      */
     protected $canonicalURL;
 
@@ -135,7 +135,7 @@ class Metadata extends BaseSdkObject
      * Defines the URL for the video that represents this article. A glyph
      * will appear on the thumbnail of the article tile, allowing the video
      * to be playable from For You, topic, and channel feeds.
-     * @var uri
+     * @var string
      */
     protected $videoURL;
 
@@ -294,7 +294,7 @@ class Metadata extends BaseSdkObject
 
     /**
      * Get the canonicalURL
-     * @return uri
+     * @return string
      */
     public function getCanonicalURL()
     {
@@ -303,7 +303,7 @@ class Metadata extends BaseSdkObject
 
     /**
      * Set the canonicalURL
-     * @param uri $canonicalURL
+     * @param string $canonicalURL
      * @return $this
      */
     public function setCanonicalURL($canonicalURL)
@@ -732,7 +732,7 @@ class Metadata extends BaseSdkObject
 
     /**
      * Get the videoURL
-     * @return uri
+     * @return string
      */
     public function getVideoURL()
     {
@@ -741,7 +741,7 @@ class Metadata extends BaseSdkObject
 
     /**
      * Set the videoURL
-     * @param uri $videoURL
+     * @param string $videoURL
      * @return $this
      */
     public function setVideoURL($videoURL)

@@ -18,7 +18,7 @@ class VideoFill extends Fill
      * Streaming (HLS) is highly recommended (.M3U8). For more information on
      * HLS, refer to the iOS developer documentation on HTTP Live Streaming,
      * especially the following sections of the HTTP Live Streaming Overview:
-     * @var uri
+     * @var string
      */
     protected $URL;
 
@@ -221,7 +221,7 @@ class VideoFill extends Fill
 
     /**
      * Get the URL
-     * @return uri
+     * @return string
      */
     public function getURL()
     {
@@ -230,7 +230,7 @@ class VideoFill extends Fill
 
     /**
      * Set the URL
-     * @param uri $URL
+     * @param string $URL
      * @return $this
      */
     public function setURL($URL)

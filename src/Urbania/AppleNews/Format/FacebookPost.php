@@ -16,7 +16,7 @@ class FacebookPost extends Component
     /**
      * The URL of the Facebook post you want to embed. URLs for Facebook
      * posts must include the identifier for the post.
-     * @var uri
+     * @var string
      */
     protected $URL;
 
@@ -46,7 +46,7 @@ class FacebookPost extends Component
 
     /**
      * Get the URL
-     * @return uri
+     * @return string
      */
     public function getURL()
     {
@@ -55,7 +55,7 @@ class FacebookPost extends Component
 
     /**
      * Set the URL
-     * @param uri $URL
+     * @param string $URL
      * @return $this
      */
     public function setURL($URL)

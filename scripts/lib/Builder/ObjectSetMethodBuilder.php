@@ -131,7 +131,7 @@ class ObjectSetMethodBuilder
             case 'array':
                 $itemType = $typeParts[1] ?? null;
                 if ($mainType === 'map') {
-                    $lines[] = sprintf('Assert::isMap(%s);', $variableName);
+                    $lines[] = sprintf('if(is_array(%1$s) && sizeof(%1$s) > 0) { Assert::isMap(%1$s); }', $variableName);
                 } else {
                     $lines[] = sprintf('Assert::isArray(%s);', $variableName);
                 }

@@ -47,7 +47,9 @@ class TextStyles extends BaseSdkObject
             return $this;
         }
 
-        Assert::isMap($styles);
+        if (is_array($styles) && sizeof($styles) > 0) {
+            Assert::isMap($styles);
+        }
         Assert::allIsSdkObject($styles, TextStyle::class);
 
         $items = [];

@@ -16,7 +16,7 @@ class Music extends Component
     /**
      * The URL of an audio file (HTTP or HTTPS only). This component supports
      * all AVPlayer audio formats, including the following:
-     * @var uri
+     * @var string
      */
     protected $URL;
 
@@ -201,7 +201,7 @@ class Music extends Component
 
     /**
      * Get the URL
-     * @return uri
+     * @return string
      */
     public function getURL()
     {
@@ -210,7 +210,7 @@ class Music extends Component
 
     /**
      * Set the URL
-     * @param uri $URL
+     * @param string $URL
      * @return $this
      */
     public function setURL($URL)
