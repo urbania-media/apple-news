@@ -2,6 +2,10 @@ Apple News PHP
 ============
 This package offer a wrapper around the Apple News API and Apple News Format in PHP. It includes support for Laravel, Wordpress and an HTML parser.
 
+[![Packagist](https://img.shields.io/packagist/v/urbania/apple-news.svg)](https://packagist.org/packages/urbania/apple-news)
+[![Travis (.org) branch](https://img.shields.io/travis/urbania-media/apple-news/master.svg)](https://travis-ci.org/urbania-media/apple-news)
+[![Coveralls github](https://img.shields.io/coveralls/github/urbania-media/apple-news.svg)](https://coveralls.io/github/urbania-media/apple-news)
+
 - [Installation](#installation)
     - [Laravel](#laravel)
 - [Usage](#usage)
