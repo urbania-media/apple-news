@@ -18,7 +18,7 @@ class Divider extends Component
      * This component always has the role of divider.
      * @var string
      */
-    protected $role;
+    protected $role = 'divider';
 
     /**
      * Stroke properties to apply to the horizontal line.
@@ -29,10 +29,6 @@ class Divider extends Component
     public function __construct(array $data = [])
     {
         parent::__construct($data);
-
-        if (isset($data['role'])) {
-            $this->setRole($data['role']);
-        }
 
         if (isset($data['stroke'])) {
             $this->setStroke($data['stroke']);
@@ -46,19 +42,6 @@ class Divider extends Component
     public function getRole()
     {
         return $this->role;
-    }
-
-    /**
-     * Set the role
-     * @param string $role
-     * @return $this
-     */
-    public function setRole($role)
-    {
-        Assert::string($role);
-
-        $this->role = $role;
-        return $this;
     }
 
     /**

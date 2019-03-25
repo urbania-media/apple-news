@@ -47,6 +47,7 @@ class ObjectDocument extends Document
 
     public function getProperties()
     {
+        $objectName = $this->getName();
         $fromClass = $this->getFromClass();
         $rows = $this->document->find('#properties .parametertable-row');
         $properties = [];
@@ -69,6 +70,9 @@ class ObjectDocument extends Document
                 usort($property['type'], function ($a, $b) {
                     return preg_match('/^[A-Z]/', $a) === 0 ? 1 : -1;
                 });
+            }
+            if ($objectName === 'Heading' && $property['name'] === 'role' && !isset($property['value'])) {
+                $property['value'] = $property['enum_values'][0];
             }
             $property['typed'] = $this->isPropertyCreatesTyped($property);
             $properties[] = $property;
@@ -184,11 +188,11 @@ class ObjectDocument extends Document
             return $matches[1];
         }
         return preg_match(
-            '/always has (a role of|the type) ([a-zA-Z0-9_-]+)./',
+            '/always has ((a|the) role of|the type) ([a-zA-Z0-9_-]+)./',
             $text,
             $matches
         )
-            ? $matches[2]
+            ? $matches[3]
             : null;
     }
 
@@ -395,14 +399,21 @@ class ObjectDocument extends Document
         $types = [];
         foreach ($this->getTypedChildClasses() as $childObject) {
             $properties = $childObject->getProperties();
-            $typeKey = null;
+            $typeKeys = [];
             foreach ($properties as $property) {
                 if ($property['name'] === $typedProperty) {
-                    $typeKey = $property['value'] ?? null;
+                    if (isset($property['enum_values'])) {
+                        $typeKeys = array_merge($typeKeys, $property['enum_values']);
+                    } elseif (isset($property['value'])) {
+                        $typeKeys[] = $property['value'];
+                    }
                 }
             }
-            if (!is_null($typeKey)) {
-                $types[$typeKey] = $childObject->getName();
+            if (sizeof($typeKeys)) {
+                $childObjectName = $childObject->getName();
+                foreach ($typeKeys as $typeKey) {
+                    $types[$typeKey] = $childObjectName;
+                }
             }
         }
         return $types;

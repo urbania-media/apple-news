@@ -53,7 +53,7 @@ class SectionTest extends TestCase
      */
     public function idProvider()
     {
-        return [["bf246764-4f0c-11e9-80f8-a820661ee8b5"]];
+        return [["278292f2-4f2d-11e9-bb22-f45c899bcb9d"]];
     }
 
     /**

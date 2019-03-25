@@ -99,7 +99,7 @@ class ArticleTest extends TestCase
      */
     public function idProvider()
     {
-        return [["bf2495ea-4f0c-11e9-835f-a820661ee8b5"]];
+        return [["2782fe72-4f2d-11e9-a580-f45c899bcb9d"]];
     }
 
     /**

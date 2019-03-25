@@ -12,6 +12,8 @@
             "type": "string",
             "required": true,
             "description": "This component always has the role of divider.",
+            "value": "divider",
+            "read_only": true,
             "version": "1.0",
             "typed": false
         },

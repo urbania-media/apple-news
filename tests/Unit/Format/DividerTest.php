@@ -15,12 +15,10 @@ class DividerTest extends TestCase
      * @test
      * @dataProvider roleProvider
      * @covers ::getRole
-     * @covers ::setRole
      */
     public function testPropertyRole($value)
     {
         $object = new Divider();
-        $object->setRole($value);
 
         $this->assertEquals($value, $object->getRole());
     }
@@ -30,7 +28,7 @@ class DividerTest extends TestCase
      */
     public function roleProvider()
     {
-        return [["a string"]];
+        return [["divider"]];
     }
 
     /**

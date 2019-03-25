@@ -18,7 +18,7 @@ class Heading extends Text
      * heading1, heading2, heading3, heading4, heading5, or heading6.
      * @var string
      */
-    protected $role;
+    protected $role = 'heading';
 
     public function __construct(array $data = [])
     {
