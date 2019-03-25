@@ -12,7 +12,6 @@
             "type": "Color",
             "required": true,
             "description": "The color of this color stop.",
-            "version": "1.0",
             "typed": false
         },
         {
@@ -20,7 +19,6 @@
             "type": "number",
             "required": false,
             "description": "An optional location of the color stop within the gradient, as a percentage of the gradient size. If location is omitted, the length of the stop is calculated by first subtracting color stops with specified locations from the full length, then equally distributing the remaining length.",
-            "version": "1.0",
             "minimum": 0,
             "maximum": 100,
             "typed": false

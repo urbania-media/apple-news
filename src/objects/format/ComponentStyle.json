@@ -8,11 +8,17 @@
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/componentstyle",
     "properties": [
         {
+            "name": "conditional",
+            "type": "array:Format\\ConditionalComponentStyle",
+            "required": false,
+            "description": "An array of component style properties that are applied conditionally, and the conditions that cause them to be applied.",
+            "typed": false
+        },
+        {
             "name": "backgroundColor",
             "type": "Color",
             "required": false,
-            "description": "The component's background color. Defaults to transparent.",
-            "version": "1.0",
+            "description": "The component's background color. The value defaults to transparent.",
             "typed": false
         },
         {
@@ -20,7 +26,6 @@
             "type": "Format\\Border",
             "required": false,
             "description": "The border for the component. Because the border is drawn inside the component, it affects the size of the content within the component. The bigger the border, the less available space for content.",
-            "version": "1.0",
             "typed": false
         },
         {
@@ -28,15 +33,20 @@
             "type": "Format\\Fill",
             "required": false,
             "description": "A Fill object, such as an ImageFill, that will be applied on top of the specified backgroundColor.",
-            "version": "1.0",
             "typed": true
+        },
+        {
+            "name": "mask",
+            "type": "Format\\CornerMask",
+            "required": false,
+            "description": "The object that defines a mask that clips the contents of the component to the specified masking behavior.",
+            "typed": false
         },
         {
             "name": "opacity",
             "type": "number",
             "required": false,
             "description": "The opacity of the component, set as a float value between 0 (completely transparent) and 1 (completely opaque). The effects of the component\u2019s opacity are inherited by any child components. See Nesting Components in an Article.",
-            "version": "1.0",
             "default": 1,
             "typed": false
         },
@@ -45,7 +55,6 @@
             "type": "Format\\TableStyle",
             "required": false,
             "description": "The styling for the rows, columns, and cells of the component, if it is a DataTable or HTMLTable component.",
-            "version": "1.5",
             "typed": false
         }
     ]

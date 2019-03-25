@@ -15,10 +15,17 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class Anchor extends BaseSdkObject
 {
     /**
-     * Sets which point in the origin component will get anchored to the
-     * target component. The originating anchor will be positioned as closely
-     * as possible to the intended targetAnchorPosition. If this property is
-     * omitted, the value of targetAnchorPosition will be used.
+     * A value that sets the anchor point in the target component, relative
+     * to the originAnchorPosition.
+     * @var string
+     */
+    protected $targetAnchorPosition;
+
+    /**
+     * A string value that sets which point in the origin component gets
+     * anchored to the target component. The originating anchor is positioned
+     * as closely as possible to the intended targetAnchorPosition. If this
+     * property is omitted, the value of targetAnchorPosition is used.
      * @var string
      */
     protected $originAnchorPosition;
@@ -46,17 +53,10 @@ class Anchor extends BaseSdkObject
     protected $target;
 
     /**
-     * Sets the anchor point in the target component, relative to the
-     * originAnchorPosition. Valid values:
-     * @var string
-     */
-    protected $targetAnchorPosition;
-
-    /**
      * The identifier of the component to anchor to.
      * targetComponentIdentifier cannot refer to the current component’s
      * parent, child components, or components in another container. When
-     * this property is omitted, the anchor will be applied to the parent
+     * this property is omitted, the anchor is applied to the parent
      * component, if one exists.
      * @var string
      */
@@ -64,6 +64,10 @@ class Anchor extends BaseSdkObject
 
     public function __construct(array $data = [])
     {
+        if (isset($data['targetAnchorPosition'])) {
+            $this->setTargetAnchorPosition($data['targetAnchorPosition']);
+        }
+
         if (isset($data['originAnchorPosition'])) {
             $this->setOriginAnchorPosition($data['originAnchorPosition']);
         }
@@ -78,10 +82,6 @@ class Anchor extends BaseSdkObject
 
         if (isset($data['target'])) {
             $this->setTarget($data['target']);
-        }
-
-        if (isset($data['targetAnchorPosition'])) {
-            $this->setTargetAnchorPosition($data['targetAnchorPosition']);
         }
 
         if (isset($data['targetComponentIdentifier'])) {
@@ -255,6 +255,9 @@ class Anchor extends BaseSdkObject
     public function toArray()
     {
         $data = [];
+        if (isset($this->targetAnchorPosition)) {
+            $data['targetAnchorPosition'] = $this->targetAnchorPosition;
+        }
         if (isset($this->originAnchorPosition)) {
             $data['originAnchorPosition'] = $this->originAnchorPosition;
         }
@@ -266,9 +269,6 @@ class Anchor extends BaseSdkObject
         }
         if (isset($this->target)) {
             $data['target'] = $this->target;
-        }
-        if (isset($this->targetAnchorPosition)) {
-            $data['targetAnchorPosition'] = $this->targetAnchorPosition;
         }
         if (isset($this->targetComponentIdentifier)) {
             $data['targetComponentIdentifier'] =

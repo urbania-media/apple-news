@@ -11,10 +11,9 @@
             "name": "type",
             "type": "string",
             "required": true,
-            "description": "This behavior\u2019s type is always springy.",
+            "description": "Always springy for this behavior.",
             "value": "springy",
             "read_only": true,
-            "version": "1.0",
             "typed": false
         }
     ]

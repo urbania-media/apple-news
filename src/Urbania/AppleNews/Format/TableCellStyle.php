@@ -37,14 +37,15 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * The height of the cell and its row, as an integer in points, or using
-     * one of the units of measure for components.See Specifying Measurements
-     * for Components.
-     * @var string|integer
+     * one of the units of measure for components. See Specifying
+     * Measurements for Components.
+     * @var integer|string
      */
     protected $height;
 
     /**
-     * Defines the horizontal alignment of content inside cells.
+     * A string that defines the horizontal alignment of content inside
+     * cells.
      * @var string
      */
     protected $horizontalAlignment;
@@ -53,7 +54,7 @@ class TableCellStyle extends BaseSdkObject
      * The minimum width of the cell and its column, as an integer in points
      * or in one of the available units of measure for components. See
      * Specifying Measurements for Components.
-     * @var string|integer
+     * @var integer|string
      */
     protected $minimumWidth;
 
@@ -61,7 +62,7 @@ class TableCellStyle extends BaseSdkObject
      * The space around the content in a table cell in points, supported
      * units, or a Padding object that specifies padding for each side
      * separately.
-     * @var \Urbania\AppleNews\Format\Padding|string|integer
+     * @var \Urbania\AppleNews\Format\Padding|integer|string
      */
     protected $padding;
 
@@ -73,7 +74,7 @@ class TableCellStyle extends BaseSdkObject
     protected $textStyle;
 
     /**
-     * Defines the vertical alignment of content inside cells.
+     * A string that defines the vertical alignment of content inside cells.
      * @var string
      */
     protected $verticalAlignment;
@@ -237,7 +238,7 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * Get the height
-     * @return string|integer
+     * @return integer|string
      */
     public function getHeight()
     {
@@ -246,7 +247,7 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * Set the height
-     * @param string|integer $height
+     * @param integer|string $height
      * @return $this
      */
     public function setHeight($height)
@@ -291,7 +292,7 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * Get the minimumWidth
-     * @return string|integer
+     * @return integer|string
      */
     public function getMinimumWidth()
     {
@@ -300,7 +301,7 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * Set the minimumWidth
-     * @param string|integer $minimumWidth
+     * @param integer|string $minimumWidth
      * @return $this
      */
     public function setMinimumWidth($minimumWidth)
@@ -318,7 +319,7 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * Get the padding
-     * @return \Urbania\AppleNews\Format\Padding|string|integer
+     * @return \Urbania\AppleNews\Format\Padding|integer|string
      */
     public function getPadding()
     {
@@ -327,7 +328,7 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * Set the padding
-     * @param \Urbania\AppleNews\Format\Padding|array|string|integer $padding
+     * @param \Urbania\AppleNews\Format\Padding|array|integer|string $padding
      * @return $this
      */
     public function setPadding($padding)
@@ -337,10 +338,10 @@ class TableCellStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($padding)) {
+        if (is_object($padding) || is_array($padding)) {
             Assert::isSdkObject($padding, Padding::class);
-        } elseif (!is_array($padding)) {
-            Assert::SupportedUnits($padding);
+        } else {
+            Assert::isSupportedUnits($padding);
         }
 
         $this->padding = is_array($padding) ? new Padding($padding) : $padding;
@@ -368,9 +369,9 @@ class TableCellStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($textStyle)) {
+        if (is_object($textStyle) || is_array($textStyle)) {
             Assert::isSdkObject($textStyle, ComponentTextStyle::class);
-        } elseif (!is_array($textStyle)) {
+        } else {
             Assert::string($textStyle);
         }
 

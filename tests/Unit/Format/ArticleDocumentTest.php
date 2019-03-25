@@ -11,26 +11,49 @@ use Urbania\AppleNews\Tests\TestCase;
 class ArticleDocumentTest extends TestCase
 {
     /**
-     * Test the property version
+     * Test the property components
      * @test
-     * @dataProvider versionProvider
-     * @covers ::getVersion
-     * @covers ::setVersion
+     * @dataProvider componentsProvider
+     * @covers ::getComponents
+     * @covers ::setComponents
      */
-    public function testPropertyVersion($value)
+    public function testPropertyComponents($value)
     {
         $object = new ArticleDocument();
-        $object->setVersion($value);
+        $object->setComponents($value);
 
-        $this->assertEquals($value, $object->getVersion());
+        $this->assertEquals($value, $object->getComponents());
     }
 
     /**
-     * Data provider for property version
+     * Data provider for property components
      */
-    public function versionProvider()
+    public function componentsProvider()
     {
-        return [["a string"]];
+        return [[[new \Urbania\AppleNews\Format\Component()]]];
+    }
+
+    /**
+     * Test the property componentTextStyles
+     * @test
+     * @dataProvider componentTextStylesProvider
+     * @covers ::getComponentTextStyles
+     * @covers ::setComponentTextStyles
+     */
+    public function testPropertyComponentTextStyles($value)
+    {
+        $object = new ArticleDocument();
+        $object->setComponentTextStyles($value);
+
+        $this->assertEquals($value, $object->getComponentTextStyles());
+    }
+
+    /**
+     * Data provider for property componentTextStyles
+     */
+    public function componentTextStylesProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\ComponentTextStyles()]];
     }
 
     /**
@@ -52,29 +75,6 @@ class ArticleDocumentTest extends TestCase
      * Data provider for property identifier
      */
     public function identifierProvider()
-    {
-        return [["a string"]];
-    }
-
-    /**
-     * Test the property title
-     * @test
-     * @dataProvider titleProvider
-     * @covers ::getTitle
-     * @covers ::setTitle
-     */
-    public function testPropertyTitle($value)
-    {
-        $object = new ArticleDocument();
-        $object->setTitle($value);
-
-        $this->assertEquals($value, $object->getTitle());
-    }
-
-    /**
-     * Data provider for property title
-     */
-    public function titleProvider()
     {
         return [["a string"]];
     }
@@ -126,49 +126,49 @@ class ArticleDocumentTest extends TestCase
     }
 
     /**
-     * Test the property components
+     * Test the property title
      * @test
-     * @dataProvider componentsProvider
-     * @covers ::getComponents
-     * @covers ::setComponents
+     * @dataProvider titleProvider
+     * @covers ::getTitle
+     * @covers ::setTitle
      */
-    public function testPropertyComponents($value)
+    public function testPropertyTitle($value)
     {
         $object = new ArticleDocument();
-        $object->setComponents($value);
+        $object->setTitle($value);
 
-        $this->assertEquals($value, $object->getComponents());
+        $this->assertEquals($value, $object->getTitle());
     }
 
     /**
-     * Data provider for property components
+     * Data provider for property title
      */
-    public function componentsProvider()
+    public function titleProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\Component()]]];
+        return [["a string"]];
     }
 
     /**
-     * Test the property componentTextStyles
+     * Test the property version
      * @test
-     * @dataProvider componentTextStylesProvider
-     * @covers ::getComponentTextStyles
-     * @covers ::setComponentTextStyles
+     * @dataProvider versionProvider
+     * @covers ::getVersion
+     * @covers ::setVersion
      */
-    public function testPropertyComponentTextStyles($value)
+    public function testPropertyVersion($value)
     {
         $object = new ArticleDocument();
-        $object->setComponentTextStyles($value);
+        $object->setVersion($value);
 
-        $this->assertEquals($value, $object->getComponentTextStyles());
+        $this->assertEquals($value, $object->getVersion());
     }
 
     /**
-     * Data provider for property componentTextStyles
+     * Data provider for property version
      */
-    public function componentTextStylesProvider()
+    public function versionProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentTextStyles()]];
+        return [["a string"]];
     }
 
     /**
@@ -195,95 +195,26 @@ class ArticleDocumentTest extends TestCase
     }
 
     /**
-     * Test the property subtitle
+     * Test the property autoplacement
      * @test
-     * @dataProvider subtitleProvider
-     * @covers ::getSubtitle
-     * @covers ::setSubtitle
+     * @dataProvider autoplacementProvider
+     * @covers ::getAutoplacement
+     * @covers ::setAutoplacement
      */
-    public function testPropertySubtitle($value)
+    public function testPropertyAutoplacement($value)
     {
         $object = new ArticleDocument();
-        $object->setSubtitle($value);
+        $object->setAutoplacement($value);
 
-        $this->assertEquals($value, $object->getSubtitle());
+        $this->assertEquals($value, $object->getAutoplacement());
     }
 
     /**
-     * Data provider for property subtitle
+     * Data provider for property autoplacement
      */
-    public function subtitleProvider()
+    public function autoplacementProvider()
     {
-        return [["a string"]];
-    }
-
-    /**
-     * Test the property metadata
-     * @test
-     * @dataProvider metadataProvider
-     * @covers ::getMetadata
-     * @covers ::setMetadata
-     */
-    public function testPropertyMetadata($value)
-    {
-        $object = new ArticleDocument();
-        $object->setMetadata($value);
-
-        $this->assertEquals($value, $object->getMetadata());
-    }
-
-    /**
-     * Data provider for property metadata
-     */
-    public function metadataProvider()
-    {
-        return [[new \Urbania\AppleNews\Format\Metadata()]];
-    }
-
-    /**
-     * Test the property documentStyle
-     * @test
-     * @dataProvider documentStyleProvider
-     * @covers ::getDocumentStyle
-     * @covers ::setDocumentStyle
-     */
-    public function testPropertyDocumentStyle($value)
-    {
-        $object = new ArticleDocument();
-        $object->setDocumentStyle($value);
-
-        $this->assertEquals($value, $object->getDocumentStyle());
-    }
-
-    /**
-     * Data provider for property documentStyle
-     */
-    public function documentStyleProvider()
-    {
-        return [[new \Urbania\AppleNews\Format\DocumentStyle()]];
-    }
-
-    /**
-     * Test the property textStyles
-     * @test
-     * @dataProvider textStylesProvider
-     * @covers ::getTextStyles
-     * @covers ::setTextStyles
-     */
-    public function testPropertyTextStyles($value)
-    {
-        $object = new ArticleDocument();
-        $object->setTextStyles($value);
-
-        $this->assertEquals($value, $object->getTextStyles());
-    }
-
-    /**
-     * Data provider for property textStyles
-     */
-    public function textStylesProvider()
-    {
-        return [[new \Urbania\AppleNews\Format\TextStyles()]];
+        return [[new \Urbania\AppleNews\Format\AutoPlacement()]];
     }
 
     /**
@@ -330,5 +261,97 @@ class ArticleDocumentTest extends TestCase
     public function componentStylesProvider()
     {
         return [[new \Urbania\AppleNews\Format\ComponentStyles()]];
+    }
+
+    /**
+     * Test the property documentStyle
+     * @test
+     * @dataProvider documentStyleProvider
+     * @covers ::getDocumentStyle
+     * @covers ::setDocumentStyle
+     */
+    public function testPropertyDocumentStyle($value)
+    {
+        $object = new ArticleDocument();
+        $object->setDocumentStyle($value);
+
+        $this->assertEquals($value, $object->getDocumentStyle());
+    }
+
+    /**
+     * Data provider for property documentStyle
+     */
+    public function documentStyleProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\DocumentStyle()]];
+    }
+
+    /**
+     * Test the property metadata
+     * @test
+     * @dataProvider metadataProvider
+     * @covers ::getMetadata
+     * @covers ::setMetadata
+     */
+    public function testPropertyMetadata($value)
+    {
+        $object = new ArticleDocument();
+        $object->setMetadata($value);
+
+        $this->assertEquals($value, $object->getMetadata());
+    }
+
+    /**
+     * Data provider for property metadata
+     */
+    public function metadataProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\Metadata()]];
+    }
+
+    /**
+     * Test the property subtitle
+     * @test
+     * @dataProvider subtitleProvider
+     * @covers ::getSubtitle
+     * @covers ::setSubtitle
+     */
+    public function testPropertySubtitle($value)
+    {
+        $object = new ArticleDocument();
+        $object->setSubtitle($value);
+
+        $this->assertEquals($value, $object->getSubtitle());
+    }
+
+    /**
+     * Data provider for property subtitle
+     */
+    public function subtitleProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
+     * Test the property textStyles
+     * @test
+     * @dataProvider textStylesProvider
+     * @covers ::getTextStyles
+     * @covers ::setTextStyles
+     */
+    public function testPropertyTextStyles($value)
+    {
+        $object = new ArticleDocument();
+        $object->setTextStyles($value);
+
+        $this->assertEquals($value, $object->getTextStyles());
+    }
+
+    /**
+     * Data provider for property textStyles
+     */
+    public function textStylesProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\TextStyles()]];
     }
 }

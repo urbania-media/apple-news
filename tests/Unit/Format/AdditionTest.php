@@ -11,6 +11,29 @@ use Urbania\AppleNews\Tests\TestCase;
 class AdditionTest extends TestCase
 {
     /**
+     * Test the property type
+     * @test
+     * @dataProvider typeProvider
+     * @covers ::getType
+     * @covers ::setType
+     */
+    public function testPropertyType($value)
+    {
+        $object = new Addition();
+        $object->setType($value);
+
+        $this->assertEquals($value, $object->getType());
+    }
+
+    /**
+     * Data provider for property type
+     */
+    public function typeProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property rangeLength
      * @test
      * @dataProvider rangeLengthProvider
@@ -54,28 +77,5 @@ class AdditionTest extends TestCase
     public function rangeStartProvider()
     {
         return [[1]];
-    }
-
-    /**
-     * Test the property type
-     * @test
-     * @dataProvider typeProvider
-     * @covers ::getType
-     * @covers ::setType
-     */
-    public function testPropertyType($value)
-    {
-        $object = new Addition();
-        $object->setType($value);
-
-        $this->assertEquals($value, $object->getType());
-    }
-
-    /**
-     * Data provider for property type
-     */
-    public function typeProvider()
-    {
-        return [["a string"]];
     }
 }

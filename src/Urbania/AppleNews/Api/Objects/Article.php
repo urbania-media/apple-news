@@ -257,12 +257,12 @@ class Article extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($document)) {
+        if (is_object($document) || is_array($document)) {
             Assert::isSdkObject(
                 $document,
                 \Urbania\AppleNews\Format\ArticleDocument::class
             );
-        } elseif (!is_array($document)) {
+        } else {
             Assert::string($document);
         }
 

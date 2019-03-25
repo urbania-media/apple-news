@@ -22,6 +22,13 @@ class Layout extends BaseSdkObject
     protected $columns;
 
     /**
+     * The width (in points) this article was designed for. This property is
+     * used to calculate down-scaling scenarios for smaller devices.
+     * @var integer
+     */
+    protected $width;
+
+    /**
      * The gutter size for the article (in points). The gutter provides
      * spacing between columns. This property should always be an even
      * number; odd numbers are rounded up to the next even number. If this
@@ -34,23 +41,20 @@ class Layout extends BaseSdkObject
     /**
      * The outer (left and right) margins of the article, in points. If this
      * property is omitted, a default article margin of 60 is applied. If the
-     * margin is negative, the number will be set to 0. If the margin is
-     * greater than or equal to the width/2, the article delivery will fail.
+     * margin is negative, the number is set to 0. If the margin is greater
+     * than or equal to the width/2, the article delivery fails.
      * @var integer
      */
     protected $margin;
-
-    /**
-     * The width (in points) this article was designed for. This property is
-     * used to calculate down-scaling scenarios for smaller devices.
-     * @var integer
-     */
-    protected $width;
 
     public function __construct(array $data = [])
     {
         if (isset($data['columns'])) {
             $this->setColumns($data['columns']);
+        }
+
+        if (isset($data['width'])) {
+            $this->setWidth($data['width']);
         }
 
         if (isset($data['gutter'])) {
@@ -59,10 +63,6 @@ class Layout extends BaseSdkObject
 
         if (isset($data['margin'])) {
             $this->setMargin($data['margin']);
-        }
-
-        if (isset($data['width'])) {
-            $this->setWidth($data['width']);
         }
     }
 
@@ -174,14 +174,14 @@ class Layout extends BaseSdkObject
         if (isset($this->columns)) {
             $data['columns'] = $this->columns;
         }
+        if (isset($this->width)) {
+            $data['width'] = $this->width;
+        }
         if (isset($this->gutter)) {
             $data['gutter'] = $this->gutter;
         }
         if (isset($this->margin)) {
             $data['margin'] = $this->margin;
-        }
-        if (isset($this->width)) {
-            $data['width'] = $this->width;
         }
         return $data;
     }

@@ -12,7 +12,6 @@
             "type": "Color",
             "required": false,
             "description": "The background color for the table row.",
-            "version": "1.5",
             "typed": false
         },
         {
@@ -20,7 +19,6 @@
             "type": "array:Format\\ConditionalTableRowStyle",
             "required": false,
             "description": "An array of styles to be applied only to rows that meet specified conditions. This can be used to create a table with alternating row background colors.",
-            "version": "1.5",
             "typed": false
         },
         {
@@ -28,7 +26,6 @@
             "type": "Format\\TableStrokeStyle",
             "required": false,
             "description": "The stroke style for the divider lines between rows.",
-            "version": "1.5",
             "typed": false
         },
         {
@@ -39,7 +36,6 @@
             ],
             "required": false,
             "description": "The height of the table row, as an integer in points, or using the available units for components.",
-            "version": "1.5",
             "typed": false
         }
     ]

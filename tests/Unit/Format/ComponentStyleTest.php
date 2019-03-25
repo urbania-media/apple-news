@@ -11,6 +11,29 @@ use Urbania\AppleNews\Tests\TestCase;
 class ComponentStyleTest extends TestCase
 {
     /**
+     * Test the property conditional
+     * @test
+     * @dataProvider conditionalProvider
+     * @covers ::getConditional
+     * @covers ::setConditional
+     */
+    public function testPropertyConditional($value)
+    {
+        $object = new ComponentStyle();
+        $object->setConditional($value);
+
+        $this->assertEquals($value, $object->getConditional());
+    }
+
+    /**
+     * Data provider for property conditional
+     */
+    public function conditionalProvider()
+    {
+        return [[[new \Urbania\AppleNews\Format\ConditionalComponentStyle()]]];
+    }
+
+    /**
      * Test the property backgroundColor
      * @test
      * @dataProvider backgroundColorProvider
@@ -77,6 +100,29 @@ class ComponentStyleTest extends TestCase
     public function fillProvider()
     {
         return [[new \Urbania\AppleNews\Format\Fill()]];
+    }
+
+    /**
+     * Test the property mask
+     * @test
+     * @dataProvider maskProvider
+     * @covers ::getMask
+     * @covers ::setMask
+     */
+    public function testPropertyMask($value)
+    {
+        $object = new ComponentStyle();
+        $object->setMask($value);
+
+        $this->assertEquals($value, $object->getMask());
+    }
+
+    /**
+     * Data provider for property mask
+     */
+    public function maskProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\CornerMask()]];
     }
 
     /**

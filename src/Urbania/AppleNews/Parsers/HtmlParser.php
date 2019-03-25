@@ -12,6 +12,8 @@ class HtmlParser extends Parser
 {
     protected $article = [];
 
+    protected $addClassAsInlineStyle = true;
+
     protected $moveUpContainers = [
         [
             'tag' => 'div',
@@ -34,6 +36,10 @@ class HtmlParser extends Parser
             $this->article = $opts['article'];
         }
 
+        if (isset($opts['addClassAsInlineStyle'])) {
+            $this->addClassAsInlineStyle = $opts['addClassAsInlineStyle'];
+        }
+
         if (isset($opts['moveUpContainers'])) {
             $this->moveUpContainers = $opts['moveUpContainers'];
         }
@@ -54,7 +60,7 @@ class HtmlParser extends Parser
             $components = [
                 [
                     'role' => 'body',
-                    'text' => $html,
+                    'text' => $html
                 ]
             ];
         }
@@ -81,22 +87,40 @@ class HtmlParser extends Parser
             if (is_string($block)) {
                 $components[] = [
                     'role' => 'body',
-                    'text' => $block,
+                    'text' => $block
                 ];
             } elseif ($block['tag'] === 'p') {
                 $components[] = [
                     'role' => 'body',
                     'format' => 'html',
-                    'text' => $this->getBlockAsHtml($block),
+                    'text' => $this->getBlockAsHtml($block)
                 ];
-            } elseif ($this->isHeading($block['tag'])) {
-                $components[] = isset($block['text']) ? [
-                    'role' => 'title',
-                    'text' => $block['text'],
-                ] : [
-                    'role' => 'title',
-                    'format' => 'html',
-                    'text' => $this->getBlockAsHtml($block),
+            } elseif ($this->isTitle($block['tag'])) {
+                $components[] = isset($block['text'])
+                    ? [
+                        'role' => 'title',
+                        'text' => $this->removeWrapper($block['text'])
+                    ]
+                    : [
+                        'role' => 'title',
+                        'format' => 'html',
+                        'text' => $this->getBlockAsHtml($block, true)
+                    ];
+            } elseif ($heading = $this->isHeading($block['tag'])) {
+                $components[] = isset($block['text'])
+                    ? [
+                        'role' => 'heading' . $heading,
+                        'text' => $this->removeWrapper($block['text'])
+                    ]
+                    : [
+                        'role' => 'heading' . $heading,
+                        'format' => 'html',
+                        'text' => $this->getBlockAsHtml($block, true)
+                    ];
+            } elseif ($this->isEmbed($block)) {
+                $components[] = [
+                    'role' => 'embedwebvideo',
+                    'URL' => $block['attributes']['src']
                 ];
             }
         }
@@ -104,10 +128,18 @@ class HtmlParser extends Parser
         return $components;
     }
 
-    protected function getBlockAsHtml($block)
+    protected function getBlockAsHtml($block, $removeWrapper = false)
     {
         $element = $this->getBlockElement($block);
-        return $element->html();
+        $html = $element->html();
+        return $removeWrapper ? $this->removeWrapper($html) : $html;
+    }
+
+    protected function removeWrapper($html)
+    {
+        return $this->trimText(
+            preg_replace('/^(<[^>]+>)?(.*?)(<\/[^>]+>)?$/si', '$2', $html)
+        );
     }
 
     protected function getBlockElement($block)
@@ -116,9 +148,14 @@ class HtmlParser extends Parser
             return new Element(new DOMText($block));
         }
 
-        $attributes = array_merge($block['attributes'], sizeof($block['class']) ? [
-            'data-anf-textstyle' => implode('-', $block['class']),
-        ] : []);
+        $attributes = array_merge(
+            $block['attributes'],
+            $this->addClassAsInlineStyle && sizeof($block['class'])
+                ? [
+                    'data-anf-textstyle' => implode('-', $block['class'])
+                ]
+                : []
+        );
 
         $element = new Element($block['tag'], null, $attributes);
         if (isset($block['text'])) {
@@ -144,15 +181,21 @@ class HtmlParser extends Parser
                 $notEmptyChildren[] = $child;
             }
         }
-        return sizeof($notEmptyChildren) === 1 ? $this->getInnerNode($notEmptyChildren[0]) : $node;
+        return sizeof($notEmptyChildren) === 1
+            ? $this->getInnerNode($notEmptyChildren[0])
+            : $node;
     }
 
     public function allChildrenAreTextNodes($node)
     {
         $children = $node->children();
-        return array_reduce($children, function ($textNode, $child) {
-            return $textNode && $child->isTextNode();
-        }, true);
+        return array_reduce(
+            $children,
+            function ($textNode, $child) {
+                return $textNode && $child->isTextNode();
+            },
+            true
+        );
     }
 
     protected function isNodeEmpty($node)
@@ -161,32 +204,61 @@ class HtmlParser extends Parser
         return empty($text);
     }
 
+    protected function isEmbed($block)
+    {
+        return $block['tag'] === 'iframe' &&
+            preg_match(
+                '/(youtube\.com|vimeo\.com)/i',
+                $block['attributes']['src']
+            ) === 1;
+    }
+
+    protected function containsIframe($node)
+    {
+        $html = $node->html();
+        return preg_match('/<(amp-)iframe[^>]*><\/(amp-)iframe[^>]*>/i', $html);
+    }
+
+    protected function isIframe($node)
+    {
+        return preg_match('/^(amp-)iframe$/i', $node->tag);
+    }
+
     public function getBlocks($node)
     {
         $blocks = [];
         $children = $node->children();
         $lastWasInline = false;
         foreach ($children as $child) {
-            if (!$lastWasInline && $this->isNodeEmpty($child)) {
+            $nodeIsEmpty = $this->isNodeEmpty($child);
+            $containsIframe = $this->containsIframe($child);
+            if (!$lastWasInline && $nodeIsEmpty && !$containsIframe) {
                 continue;
             }
 
             if ($child->isTextNode()) {
                 $blocks[] = $child->text();
-                $lastWasInline= true;
+                $lastWasInline = true;
                 continue;
             }
 
+            $isIframe = $this->isIframe($child);
             $classes = $child->classes()->getAll();
             sort($classes);
             $block = [
-                'tag' => $child->tag,
+                'tag' => $isIframe ? 'iframe' : $child->tag,
                 'class' => $classes,
                 'attributes' => []
             ];
 
             if ($block['tag'] === 'a') {
-                $block['attributes']['href'] = (string)$child->getAttribute('href');
+                $block['attributes']['href'] = (string) $child->getAttribute(
+                    'href'
+                );
+            } elseif ($isIframe) {
+                $block['attributes']['src'] = (string) $child->getAttribute(
+                    'src'
+                );
             }
 
             $lastWasInline = $this->isInline($child->tag);
@@ -205,6 +277,11 @@ class HtmlParser extends Parser
                 } else {
                     $blocks = array_merge($blocks, $childBlocks);
                 }
+                continue;
+            }
+
+            if ($nodeIsEmpty && $containsIframe && !$isIframe) {
+                $blocks = array_merge($blocks, $childBlocks);
                 continue;
             }
 
@@ -227,14 +304,25 @@ class HtmlParser extends Parser
 
     protected function isHeading($tag)
     {
-        return preg_match('/^h[1-6]$/', $tag) === 1;
+        return preg_match('/^h([2-6])$/', $tag, $matches) === 1
+            ? (int) $matches[1]
+            : false;
+    }
+
+    protected function isTitle($tag)
+    {
+        return preg_match('/^h1$/', $tag) === 1;
     }
 
     protected function isMoveUpContainer($block)
     {
-        return array_reduce($this->moveUpContainers, function ($ignore, $container) use ($block) {
-            return $ignore || $this->isBlockEquals($container, $block);
-        }, false);
+        return array_reduce(
+            $this->moveUpContainers,
+            function ($ignore, $container) use ($block) {
+                return $ignore || $this->isBlockEquals($container, $block);
+            },
+            false
+        );
     }
 
     protected function isBlockEquals($a, $b)
@@ -242,9 +330,10 @@ class HtmlParser extends Parser
         if (is_string($a) || is_string($b)) {
             return $a === $b;
         }
-        $aClass = (array)$a['class'];
-        $bClass = (array)$b['class'];
-        return $a['tag'] === $b['tag'] && sizeof(array_diff($aClass, $bClass)) === 0;
+        $aClass = (array) $a['class'];
+        $bClass = (array) $b['class'];
+        return $a['tag'] === $b['tag'] &&
+            sizeof(array_diff($aClass, $bClass)) === 0;
     }
 
     protected function trimText($text)

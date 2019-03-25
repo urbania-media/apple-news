@@ -11,6 +11,27 @@ use Urbania\AppleNews\Tests\TestCase;
 class ImageDataFormatTest extends TestCase
 {
     /**
+     * Test the property type
+     * @test
+     * @dataProvider typeProvider
+     * @covers ::getType
+     */
+    public function testPropertyType($value)
+    {
+        $object = new ImageDataFormat();
+
+        $this->assertEquals($value, $object->getType());
+    }
+
+    /**
+     * Data provider for property type
+     */
+    public function typeProvider()
+    {
+        return [["image"]];
+    }
+
+    /**
      * Test the property maximumHeight
      * @test
      * @dataProvider maximumHeightProvider
@@ -100,26 +121,5 @@ class ImageDataFormatTest extends TestCase
     public function minimumWidthProvider()
     {
         return [["1vh"], [1], ["1vmin"]];
-    }
-
-    /**
-     * Test the property type
-     * @test
-     * @dataProvider typeProvider
-     * @covers ::getType
-     */
-    public function testPropertyType($value)
-    {
-        $object = new ImageDataFormat();
-
-        $this->assertEquals($value, $object->getType());
-    }
-
-    /**
-     * Data provider for property type
-     */
-    public function typeProvider()
-    {
-        return [["image"]];
     }
 }

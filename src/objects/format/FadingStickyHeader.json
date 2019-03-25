@@ -12,17 +12,15 @@
             "type": "Color",
             "required": false,
             "description": "The color the header background will fade to, defined as a 3- to 8-character hexadecimal string or a color name string.",
-            "version": "1.0",
             "typed": false
         },
         {
             "name": "type",
             "type": "string",
             "required": true,
-            "description": "This scene always has the type fading_sticky_header.",
+            "description": "Always fading_sticky_header for this scene type.",
             "value": "fading_sticky_header",
             "read_only": true,
-            "version": "1.0",
             "typed": false
         }
     ]

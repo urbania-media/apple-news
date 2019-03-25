@@ -14,23 +14,33 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class LinearGradientFill extends GradientFill
 {
     /**
-     * The angle of the gradient fill, in degrees. Use the angle to set the
-     * direction of the gradient. For example, a value of 180 defines a
-     * gradient that changes color from top to bottom. An angle of 90 defines
-     * a gradient that changes color from left to right.
-     * @var integer|float
+     * An array of color stops. Each stop sets a color and percentage.
+     * @var Format\ColorStop[]
      */
-    protected $angle;
+    protected $colorStops;
 
     /**
-     * This fill always has the type linear_gradient.
+     * Always linear_gradient for this object.
      * @var string
      */
     protected $type = 'linear_gradient';
 
+    /**
+     * The angle of the gradient fill, in degrees. Use the angle to set the
+     * direction of the gradient. For example, a value of 180 defines a
+     * gradient that changes color from top to bottom. An angle of 90 defines
+     * a gradient that changes color from left to right.
+     * @var float|integer
+     */
+    protected $angle;
+
     public function __construct(array $data = [])
     {
         parent::__construct($data);
+
+        if (isset($data['colorStops'])) {
+            $this->setColorStops($data['colorStops']);
+        }
 
         if (isset($data['angle'])) {
             $this->setAngle($data['angle']);
@@ -39,7 +49,7 @@ class LinearGradientFill extends GradientFill
 
     /**
      * Get the angle
-     * @return integer|float
+     * @return float|integer
      */
     public function getAngle()
     {
@@ -48,7 +58,7 @@ class LinearGradientFill extends GradientFill
 
     /**
      * Set the angle
-     * @param integer|float $angle
+     * @param float|integer $angle
      * @return $this
      */
     public function setAngle($angle)
@@ -61,6 +71,66 @@ class LinearGradientFill extends GradientFill
         Assert::number($angle);
 
         $this->angle = $angle;
+        return $this;
+    }
+
+    /**
+     * Add an item to colorStops
+     * @param \Urbania\AppleNews\Format\ColorStop|array $item
+     * @return $this
+     */
+    public function addColorStop($item)
+    {
+        return $this->setColorStops(
+            !is_null($this->colorStops)
+                ? array_merge($this->colorStops, [$item])
+                : [$item]
+        );
+    }
+
+    /**
+     * Add items to colorStops
+     * @param array $items
+     * @return $this
+     */
+    public function addColorStops($items)
+    {
+        Assert::isArray($items);
+        return $this->setColorStops(
+            !is_null($this->colorStops)
+                ? array_merge($this->colorStops, $items)
+                : $items
+        );
+    }
+
+    /**
+     * Get the colorStops
+     * @return Format\ColorStop[]
+     */
+    public function getColorStops()
+    {
+        return $this->colorStops;
+    }
+
+    /**
+     * Set the colorStops
+     * @param Format\ColorStop[] $colorStops
+     * @return $this
+     */
+    public function setColorStops($colorStops)
+    {
+        Assert::isArray($colorStops);
+        Assert::allIsSdkObject($colorStops, ColorStop::class);
+
+        $this->colorStops = array_reduce(
+            array_keys($colorStops),
+            function ($array, $key) use ($colorStops) {
+                $item = $colorStops[$key];
+                $array[$key] = is_array($item) ? new ColorStop($item) : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 
@@ -80,11 +150,26 @@ class LinearGradientFill extends GradientFill
     public function toArray()
     {
         $data = parent::toArray();
-        if (isset($this->angle)) {
-            $data['angle'] = $this->angle;
+        if (isset($this->colorStops)) {
+            $data['colorStops'] = !is_null($this->colorStops)
+                ? array_reduce(
+                    array_keys($this->colorStops),
+                    function ($items, $key) {
+                        $items[$key] =
+                            $this->colorStops[$key] instanceof Arrayable
+                                ? $this->colorStops[$key]->toArray()
+                                : $this->colorStops[$key];
+                        return $items;
+                    },
+                    []
+                )
+                : $this->colorStops;
         }
         if (isset($this->type)) {
             $data['type'] = $this->type;
+        }
+        if (isset($this->angle)) {
+            $data['angle'] = $this->angle;
         }
         return $data;
     }

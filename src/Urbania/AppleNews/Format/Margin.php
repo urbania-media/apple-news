@@ -16,14 +16,14 @@ class Margin extends BaseSdkObject
     /**
      * The bottom margin in points, or with any of the units of measure for
      * components. See Specifying Measurements for Components.
-     * @var string|integer
+     * @var integer|string
      */
     protected $bottom;
 
     /**
      * The top margin in points, or with any of the units of measure for
      * components. See Specifying Measurements for Components.
-     * @var string|integer
+     * @var integer|string
      */
     protected $top;
 
@@ -40,7 +40,7 @@ class Margin extends BaseSdkObject
 
     /**
      * Get the bottom
-     * @return string|integer
+     * @return integer|string
      */
     public function getBottom()
     {
@@ -49,7 +49,7 @@ class Margin extends BaseSdkObject
 
     /**
      * Set the bottom
-     * @param string|integer $bottom
+     * @param integer|string $bottom
      * @return $this
      */
     public function setBottom($bottom)
@@ -67,7 +67,7 @@ class Margin extends BaseSdkObject
 
     /**
      * Get the top
-     * @return string|integer
+     * @return integer|string
      */
     public function getTop()
     {
@@ -76,7 +76,7 @@ class Margin extends BaseSdkObject
 
     /**
      * Set the top
-     * @param string|integer $top
+     * @param integer|string $top
      * @return $this
      */
     public function setTop($top)

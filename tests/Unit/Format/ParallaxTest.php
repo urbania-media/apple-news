@@ -11,6 +11,27 @@ use Urbania\AppleNews\Tests\TestCase;
 class ParallaxTest extends TestCase
 {
     /**
+     * Test the property type
+     * @test
+     * @dataProvider typeProvider
+     * @covers ::getType
+     */
+    public function testPropertyType($value)
+    {
+        $object = new Parallax();
+
+        $this->assertEquals($value, $object->getType());
+    }
+
+    /**
+     * Data provider for property type
+     */
+    public function typeProvider()
+    {
+        return [["parallax"]];
+    }
+
+    /**
      * Test the property factor
      * @test
      * @dataProvider factorProvider
@@ -31,26 +52,5 @@ class ParallaxTest extends TestCase
     public function factorProvider()
     {
         return [[1.1], [1]];
-    }
-
-    /**
-     * Test the property type
-     * @test
-     * @dataProvider typeProvider
-     * @covers ::getType
-     */
-    public function testPropertyType($value)
-    {
-        $object = new Parallax();
-
-        $this->assertEquals($value, $object->getType());
-    }
-
-    /**
-     * Data provider for property type
-     */
-    public function typeProvider()
-    {
-        return [["parallax"]];
     }
 }

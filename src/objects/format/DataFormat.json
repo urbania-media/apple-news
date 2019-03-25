@@ -15,12 +15,15 @@
     "properties": [
         {
             "name": "type",
-            "type": "string",
+            "type": "enum:string",
             "required": true,
             "description": "The type of format. This must be float for a FloatDataFormat object or image for an ImageDataFormat object.",
             "value": "float",
             "read_only": true,
-            "version": "1.5",
+            "enum_values": [
+                "float",
+                "image"
+            ],
             "typed": false
         }
     ]

@@ -9,18 +9,16 @@
     "properties": [
         {
             "name": "URL",
-            "type": "string",
+            "type": "uri",
             "required": true,
             "description": "The URL of an image to display in a gallery or mosaic.",
-            "version": "1.0",
             "typed": false
         },
         {
             "name": "accessibilityCaption",
             "type": "string",
             "required": false,
-            "description": "A caption that describes the image. Note that this property differs from caption: although the caption can be displayed to users, accessibilityCaption is used by VoiceOver for iOS only. If accessibilityCaption is omitted, the caption value is used.",
-            "version": "1.0",
+            "description": "A caption that describes the image. The text is used for VoiceOver for iOS and VoiceOver for macOS. If accessibilityCaption is not provided, the caption value is used for VoiceOver for iOS and VoiceOver for macOS.",
             "typed": false
         },
         {
@@ -30,16 +28,14 @@
                 "string"
             ],
             "required": false,
-            "description": "A caption that describes the image. This text can be used by VoiceOver for iOS if if accessibilityCaption is not provided. The gallery component does not display the caption to the user except when the gallery is clicked to display it full screen.",
-            "version": "1.0",
+            "description": "A caption that describes the image. The text is seen when the image is in full screen. This text is also used by VoiceOver for iOS and VoiceOver for macOS, if accessibilityCaption text is not provided. The caption text does not appear in the main article view. To display a caption in the main article view, use the Caption component.",
             "typed": false
         },
         {
             "name": "explicitContent",
             "type": "boolean",
             "required": false,
-            "description": "Indicates that the image may contain explicit content.",
-            "version": "1.0",
+            "description": "A Boolean value that indicates the image may contain explicit content.",
             "typed": false
         }
     ]

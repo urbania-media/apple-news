@@ -15,18 +15,18 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class Parallax extends Behavior
 {
     /**
-     * The speed of the component, as a factor of the scroll speed.The value
-     * of factor must be between 0.5 and 2.0. Values outside this range will
-     * be reset to the minimum or maximum value.
-     * @var integer|float
-     */
-    protected $factor;
-
-    /**
-     * This behavior’s type is always parallax.
+     * Always parallax for this behavior.
      * @var string
      */
     protected $type = 'parallax';
+
+    /**
+     * The speed of the component, as a factor of the scroll speed.The value
+     * of factor must be between 0.5 and 2.0. Values outside this range will
+     * be reset to the minimum or maximum value.
+     * @var float|integer
+     */
+    protected $factor;
 
     public function __construct(array $data = [])
     {
@@ -39,7 +39,7 @@ class Parallax extends Behavior
 
     /**
      * Get the factor
-     * @return integer|float
+     * @return float|integer
      */
     public function getFactor()
     {
@@ -48,7 +48,7 @@ class Parallax extends Behavior
 
     /**
      * Set the factor
-     * @param integer|float $factor
+     * @param float|integer $factor
      * @return $this
      */
     public function setFactor($factor)
@@ -80,11 +80,11 @@ class Parallax extends Behavior
     public function toArray()
     {
         $data = parent::toArray();
-        if (isset($this->factor)) {
-            $data['factor'] = $this->factor;
-        }
         if (isset($this->type)) {
             $data['type'] = $this->type;
+        }
+        if (isset($this->factor)) {
+            $data['factor'] = $this->factor;
         }
         return $data;
     }

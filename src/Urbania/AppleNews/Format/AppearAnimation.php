@@ -14,7 +14,7 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class AppearAnimation extends ComponentAnimation
 {
     /**
-     * This animation’s type is always appear.
+     * Always appear for this animation type.
      * @var string
      */
     protected $type = 'appear';

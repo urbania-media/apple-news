@@ -15,6 +15,13 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class ConditionalTableCellStyle extends TableCellStyle
 {
     /**
+     * An array of one or more selectors, each of which specifies one or more
+     * conditions.
+     * @var Format\TableCellSelector[]
+     */
+    protected $selectors;
+
+    /**
      * The background color for the cell.
      * @var string
      */
@@ -31,7 +38,7 @@ class ConditionalTableCellStyle extends TableCellStyle
     /**
      * The height of the cell and its row, as an integer in points, or using
      * one of the available units of measure for components.
-     * @var string|integer
+     * @var integer|string
      */
     protected $height;
 
@@ -44,7 +51,7 @@ class ConditionalTableCellStyle extends TableCellStyle
     /**
      * The minimum width of the cell and its column, as an integer in points
      * or using one of the available units of measure for components.
-     * @var string|integer
+     * @var integer|string
      */
     protected $minimumWidth;
 
@@ -52,16 +59,9 @@ class ConditionalTableCellStyle extends TableCellStyle
      * The space around the content in a table cell in points, supported
      * units, or a Padding object that specifies padding for each side
      * separately.
-     * @var \Urbania\AppleNews\Format\Padding|string|integer
+     * @var \Urbania\AppleNews\Format\Padding|integer|string
      */
     protected $padding;
-
-    /**
-     * An array of one or more selectors, each of which specifies one or more
-     * conditions.
-     * @var Format\TableCellSelector[]
-     */
-    protected $selectors;
 
     /**
      * The name string of one of your styles in the Article
@@ -71,7 +71,7 @@ class ConditionalTableCellStyle extends TableCellStyle
     protected $textStyle;
 
     /**
-     * Defines the vertical alignment of content inside cells.
+     * A string that defines the vertical alignment of content inside cells.
      * @var string
      */
     protected $verticalAlignment;
@@ -87,6 +87,10 @@ class ConditionalTableCellStyle extends TableCellStyle
     public function __construct(array $data = [])
     {
         parent::__construct($data);
+
+        if (isset($data['selectors'])) {
+            $this->setSelectors($data['selectors']);
+        }
 
         if (isset($data['backgroundColor'])) {
             $this->setBackgroundColor($data['backgroundColor']);
@@ -110,10 +114,6 @@ class ConditionalTableCellStyle extends TableCellStyle
 
         if (isset($data['padding'])) {
             $this->setPadding($data['padding']);
-        }
-
-        if (isset($data['selectors'])) {
-            $this->setSelectors($data['selectors']);
         }
 
         if (isset($data['textStyle'])) {
@@ -185,7 +185,7 @@ class ConditionalTableCellStyle extends TableCellStyle
 
     /**
      * Get the height
-     * @return string|integer
+     * @return integer|string
      */
     public function getHeight()
     {
@@ -194,7 +194,7 @@ class ConditionalTableCellStyle extends TableCellStyle
 
     /**
      * Set the height
-     * @param string|integer $height
+     * @param integer|string $height
      * @return $this
      */
     public function setHeight($height)
@@ -239,7 +239,7 @@ class ConditionalTableCellStyle extends TableCellStyle
 
     /**
      * Get the minimumWidth
-     * @return string|integer
+     * @return integer|string
      */
     public function getMinimumWidth()
     {
@@ -248,7 +248,7 @@ class ConditionalTableCellStyle extends TableCellStyle
 
     /**
      * Set the minimumWidth
-     * @param string|integer $minimumWidth
+     * @param integer|string $minimumWidth
      * @return $this
      */
     public function setMinimumWidth($minimumWidth)
@@ -266,7 +266,7 @@ class ConditionalTableCellStyle extends TableCellStyle
 
     /**
      * Get the padding
-     * @return \Urbania\AppleNews\Format\Padding|string|integer
+     * @return \Urbania\AppleNews\Format\Padding|integer|string
      */
     public function getPadding()
     {
@@ -275,7 +275,7 @@ class ConditionalTableCellStyle extends TableCellStyle
 
     /**
      * Set the padding
-     * @param \Urbania\AppleNews\Format\Padding|array|string|integer $padding
+     * @param \Urbania\AppleNews\Format\Padding|array|integer|string $padding
      * @return $this
      */
     public function setPadding($padding)
@@ -285,10 +285,10 @@ class ConditionalTableCellStyle extends TableCellStyle
             return $this;
         }
 
-        if (is_object($padding)) {
+        if (is_object($padding) || is_array($padding)) {
             Assert::isSdkObject($padding, Padding::class);
-        } elseif (!is_array($padding)) {
-            Assert::SupportedUnits($padding);
+        } else {
+            Assert::isSupportedUnits($padding);
         }
 
         $this->padding = is_array($padding) ? new Padding($padding) : $padding;
@@ -378,9 +378,9 @@ class ConditionalTableCellStyle extends TableCellStyle
             return $this;
         }
 
-        if (is_object($textStyle)) {
+        if (is_object($textStyle) || is_array($textStyle)) {
             Assert::isSdkObject($textStyle, ComponentTextStyle::class);
-        } elseif (!is_array($textStyle)) {
+        } else {
             Assert::string($textStyle);
         }
 
@@ -451,6 +451,21 @@ class ConditionalTableCellStyle extends TableCellStyle
     public function toArray()
     {
         $data = parent::toArray();
+        if (isset($this->selectors)) {
+            $data['selectors'] = !is_null($this->selectors)
+                ? array_reduce(
+                    array_keys($this->selectors),
+                    function ($items, $key) {
+                        $items[$key] =
+                            $this->selectors[$key] instanceof Arrayable
+                                ? $this->selectors[$key]->toArray()
+                                : $this->selectors[$key];
+                        return $items;
+                    },
+                    []
+                )
+                : $this->selectors;
+        }
         if (isset($this->backgroundColor)) {
             $data['backgroundColor'] =
                 $this->backgroundColor instanceof Arrayable
@@ -483,21 +498,6 @@ class ConditionalTableCellStyle extends TableCellStyle
                 $this->padding instanceof Arrayable
                     ? $this->padding->toArray()
                     : $this->padding;
-        }
-        if (isset($this->selectors)) {
-            $data['selectors'] = !is_null($this->selectors)
-                ? array_reduce(
-                    array_keys($this->selectors),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->selectors[$key] instanceof Arrayable
-                                ? $this->selectors[$key]->toArray()
-                                : $this->selectors[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->selectors;
         }
         if (isset($this->textStyle)) {
             $data['textStyle'] =

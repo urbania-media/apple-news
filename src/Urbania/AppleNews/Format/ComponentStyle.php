@@ -15,7 +15,14 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class ComponentStyle extends BaseSdkObject
 {
     /**
-     * The component's background color. Defaults to transparent.
+     * An array of component style properties that are applied conditionally,
+     * and the conditions that cause them to be applied.
+     * @var Format\ConditionalComponentStyle[]
+     */
+    protected $conditional;
+
+    /**
+     * The component's background color. The value defaults to transparent.
      * @var string
      */
     protected $backgroundColor;
@@ -36,11 +43,18 @@ class ComponentStyle extends BaseSdkObject
     protected $fill;
 
     /**
+     * The object that defines a mask that clips the contents of the
+     * component to the specified masking behavior.
+     * @var \Urbania\AppleNews\Format\CornerMask
+     */
+    protected $mask;
+
+    /**
      * The opacity of the component, set as a float value between 0
      * (completely transparent) and 1 (completely opaque). The effects of the
      * component’s opacity are inherited by any child components. See
      * Nesting Components in an Article.
-     * @var integer|float
+     * @var float|integer
      */
     protected $opacity;
 
@@ -53,6 +67,10 @@ class ComponentStyle extends BaseSdkObject
 
     public function __construct(array $data = [])
     {
+        if (isset($data['conditional'])) {
+            $this->setConditional($data['conditional']);
+        }
+
         if (isset($data['backgroundColor'])) {
             $this->setBackgroundColor($data['backgroundColor']);
         }
@@ -63,6 +81,10 @@ class ComponentStyle extends BaseSdkObject
 
         if (isset($data['fill'])) {
             $this->setFill($data['fill']);
+        }
+
+        if (isset($data['mask'])) {
+            $this->setMask($data['mask']);
         }
 
         if (isset($data['opacity'])) {
@@ -129,6 +151,58 @@ class ComponentStyle extends BaseSdkObject
     }
 
     /**
+     * Add an item to conditional
+     * @param \Urbania\AppleNews\Format\ConditionalComponentStyle|array $item
+     * @return $this
+     */
+    public function addConditional($item)
+    {
+        return $this->setConditional(
+            !is_null($this->conditional)
+                ? array_merge($this->conditional, [$item])
+                : [$item]
+        );
+    }
+
+    /**
+     * Get the conditional
+     * @return Format\ConditionalComponentStyle[]
+     */
+    public function getConditional()
+    {
+        return $this->conditional;
+    }
+
+    /**
+     * Set the conditional
+     * @param Format\ConditionalComponentStyle[] $conditional
+     * @return $this
+     */
+    public function setConditional($conditional)
+    {
+        if (is_null($conditional)) {
+            $this->conditional = null;
+            return $this;
+        }
+
+        Assert::isArray($conditional);
+        Assert::allIsSdkObject($conditional, ConditionalComponentStyle::class);
+
+        $this->conditional = array_reduce(
+            array_keys($conditional),
+            function ($array, $key) use ($conditional) {
+                $item = $conditional[$key];
+                $array[$key] = is_array($item)
+                    ? new ConditionalComponentStyle($item)
+                    : $item;
+                return $array;
+            },
+            []
+        );
+        return $this;
+    }
+
+    /**
      * Get the fill
      * @return \Urbania\AppleNews\Format\Fill
      */
@@ -156,8 +230,35 @@ class ComponentStyle extends BaseSdkObject
     }
 
     /**
+     * Get the mask
+     * @return \Urbania\AppleNews\Format\CornerMask
+     */
+    public function getMask()
+    {
+        return $this->mask;
+    }
+
+    /**
+     * Set the mask
+     * @param \Urbania\AppleNews\Format\CornerMask|array $mask
+     * @return $this
+     */
+    public function setMask($mask)
+    {
+        if (is_null($mask)) {
+            $this->mask = null;
+            return $this;
+        }
+
+        Assert::isSdkObject($mask, CornerMask::class);
+
+        $this->mask = is_array($mask) ? new CornerMask($mask) : $mask;
+        return $this;
+    }
+
+    /**
      * Get the opacity
-     * @return integer|float
+     * @return float|integer
      */
     public function getOpacity()
     {
@@ -166,7 +267,7 @@ class ComponentStyle extends BaseSdkObject
 
     /**
      * Set the opacity
-     * @param integer|float $opacity
+     * @param float|integer $opacity
      * @return $this
      */
     public function setOpacity($opacity)
@@ -218,6 +319,21 @@ class ComponentStyle extends BaseSdkObject
     public function toArray()
     {
         $data = [];
+        if (isset($this->conditional)) {
+            $data['conditional'] = !is_null($this->conditional)
+                ? array_reduce(
+                    array_keys($this->conditional),
+                    function ($items, $key) {
+                        $items[$key] =
+                            $this->conditional[$key] instanceof Arrayable
+                                ? $this->conditional[$key]->toArray()
+                                : $this->conditional[$key];
+                        return $items;
+                    },
+                    []
+                )
+                : $this->conditional;
+        }
         if (isset($this->backgroundColor)) {
             $data['backgroundColor'] =
                 $this->backgroundColor instanceof Arrayable
@@ -235,6 +351,12 @@ class ComponentStyle extends BaseSdkObject
                 $this->fill instanceof Arrayable
                     ? $this->fill->toArray()
                     : $this->fill;
+        }
+        if (isset($this->mask)) {
+            $data['mask'] =
+                $this->mask instanceof Arrayable
+                    ? $this->mask->toArray()
+                    : $this->mask;
         }
         if (isset($this->opacity)) {
             $data['opacity'] = $this->opacity;

@@ -14,7 +14,7 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class Springy extends Behavior
 {
     /**
-     * This behavior’s type is always springy.
+     * Always springy for this behavior.
      * @var string
      */
     protected $type = 'springy';

@@ -20,7 +20,7 @@ class TextStrokeStyle extends BaseSdkObject
     protected $color;
 
     /**
-     * Width of the stroke as a percentage relative to the font size.
+     * The width of the stroke as a percentage relative to the font size.
      * @var integer
      */
     protected $width;

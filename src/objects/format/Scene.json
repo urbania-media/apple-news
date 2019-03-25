@@ -1,6 +1,6 @@
 {
     "name": "Format\\Scene",
-    "description": "A combination of animations and behaviors to use in section and chapter that have headers.",
+    "description": "A combination of animations and behaviors to use in sections and chapters that have headers.",
     "version": "1.7+",
     "from_class": null,
     "extends": null,
@@ -15,10 +15,13 @@
     "properties": [
         {
             "name": "type",
-            "type": "string",
+            "type": "enum:string",
             "required": true,
             "description": "The type of scene. For example, parallax_scale for a Parallax Scale Header scene or fading_sticky_header for a Fading Sticky Header.",
-            "version": "1.0",
+            "enum_values": [
+                "fading_sticky_header",
+                "parallax_scale"
+            ],
             "typed": false
         }
     ]

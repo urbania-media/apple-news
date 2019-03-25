@@ -11,8 +11,7 @@
             "name": "backgroundColor",
             "type": "Color",
             "required": false,
-            "description": "The article\u2019s background color.",
-            "version": "1.0",
+            "description": "The article\u2019s background color. The value defaults to white.",
             "typed": false
         }
     ]

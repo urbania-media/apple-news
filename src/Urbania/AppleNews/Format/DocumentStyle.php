@@ -14,7 +14,7 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class DocumentStyle extends BaseSdkObject
 {
     /**
-     * The article’s background color.
+     * The article’s background color. The value defaults to white.
      * @var string
      */
     protected $backgroundColor;

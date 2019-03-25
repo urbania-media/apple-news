@@ -26,7 +26,7 @@ class ColorStop extends BaseSdkObject
      * the stop is calculated by first subtracting color stops with specified
      * locations from the full length, then equally distributing the
      * remaining length.
-     * @var integer|float
+     * @var float|integer
      */
     protected $location;
 
@@ -65,7 +65,7 @@ class ColorStop extends BaseSdkObject
 
     /**
      * Get the location
-     * @return integer|float
+     * @return float|integer
      */
     public function getLocation()
     {
@@ -74,7 +74,7 @@ class ColorStop extends BaseSdkObject
 
     /**
      * Set the location
-     * @param integer|float $location
+     * @param float|integer $location
      * @return $this
      */
     public function setLocation($location)

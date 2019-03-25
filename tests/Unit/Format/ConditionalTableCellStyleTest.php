@@ -11,6 +11,29 @@ use Urbania\AppleNews\Tests\TestCase;
 class ConditionalTableCellStyleTest extends TestCase
 {
     /**
+     * Test the property selectors
+     * @test
+     * @dataProvider selectorsProvider
+     * @covers ::getSelectors
+     * @covers ::setSelectors
+     */
+    public function testPropertySelectors($value)
+    {
+        $object = new ConditionalTableCellStyle();
+        $object->setSelectors($value);
+
+        $this->assertEquals($value, $object->getSelectors());
+    }
+
+    /**
+     * Data provider for property selectors
+     */
+    public function selectorsProvider()
+    {
+        return [[[new \Urbania\AppleNews\Format\TableCellSelector()]]];
+    }
+
+    /**
      * Test the property backgroundColor
      * @test
      * @dataProvider backgroundColorProvider
@@ -146,29 +169,6 @@ class ConditionalTableCellStyleTest extends TestCase
     public function paddingProvider()
     {
         return [[new \Urbania\AppleNews\Format\Padding()]];
-    }
-
-    /**
-     * Test the property selectors
-     * @test
-     * @dataProvider selectorsProvider
-     * @covers ::getSelectors
-     * @covers ::setSelectors
-     */
-    public function testPropertySelectors($value)
-    {
-        $object = new ConditionalTableCellStyle();
-        $object->setSelectors($value);
-
-        $this->assertEquals($value, $object->getSelectors());
-    }
-
-    /**
-     * Data provider for property selectors
-     */
-    public function selectorsProvider()
-    {
-        return [[[new \Urbania\AppleNews\Format\TableCellSelector()]]];
     }
 
     /**

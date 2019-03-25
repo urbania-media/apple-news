@@ -26,6 +26,13 @@ class GradientFill extends Fill
      */
     protected $type;
 
+    /**
+     * A string that indicates how the fill should behave when a user
+     * scrolls.
+     * @var string
+     */
+    protected $attachment;
+
     public function __construct(array $data = [])
     {
         parent::__construct($data);
@@ -37,6 +44,37 @@ class GradientFill extends Fill
         if (isset($data['type'])) {
             $this->setType($data['type']);
         }
+
+        if (isset($data['attachment'])) {
+            $this->setAttachment($data['attachment']);
+        }
+    }
+
+    /**
+     * Get the attachment
+     * @return string
+     */
+    public function getAttachment()
+    {
+        return $this->attachment;
+    }
+
+    /**
+     * Set the attachment
+     * @param string $attachment
+     * @return $this
+     */
+    public function setAttachment($attachment)
+    {
+        if (is_null($attachment)) {
+            $this->attachment = null;
+            return $this;
+        }
+
+        Assert::oneOf($attachment, ["fixed", "scroll"]);
+
+        $this->attachment = $attachment;
+        return $this;
     }
 
     /**
@@ -145,6 +183,9 @@ class GradientFill extends Fill
         }
         if (isset($this->type)) {
             $data['type'] = $this->type;
+        }
+        if (isset($this->attachment)) {
+            $data['attachment'] = $this->attachment;
         }
         return $data;
     }

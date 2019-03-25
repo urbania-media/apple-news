@@ -36,7 +36,7 @@ class TableRowStyle extends BaseSdkObject
     /**
      * The height of the table row, as an integer in points, or using the
      * available units for components.
-     * @var string|integer
+     * @var integer|string
      */
     protected $height;
 
@@ -169,7 +169,7 @@ class TableRowStyle extends BaseSdkObject
 
     /**
      * Get the height
-     * @return string|integer
+     * @return integer|string
      */
     public function getHeight()
     {
@@ -178,7 +178,7 @@ class TableRowStyle extends BaseSdkObject
 
     /**
      * Set the height
-     * @param string|integer $height
+     * @param integer|string $height
      * @return $this
      */
     public function setHeight($height)

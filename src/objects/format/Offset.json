@@ -12,7 +12,6 @@
             "type": "number",
             "required": true,
             "description": "The x offset, as a value between -50.0 and 50.0. Implementation is device dependent.",
-            "version": "1.0",
             "minimum": -50,
             "maximum": 50,
             "typed": false
@@ -22,7 +21,6 @@
             "type": "number",
             "required": true,
             "description": "The y offset, as a value between -50.0 and 50.0. Implementation is device dependent.",
-            "version": "1.0",
             "minimum": -50,
             "maximum": 50,
             "typed": false

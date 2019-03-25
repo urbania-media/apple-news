@@ -30,6 +30,12 @@ class BehaviorTest extends TestCase
      */
     public function typeProvider()
     {
-        return [["a string"]];
+        return [
+            ["background_motion"],
+            ["background_parallax"],
+            ["motion"],
+            ["parallax"],
+            ["springy"]
+        ];
     }
 }

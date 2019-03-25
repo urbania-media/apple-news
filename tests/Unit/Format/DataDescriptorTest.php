@@ -41,6 +41,29 @@ class DataDescriptorTest extends TestCase
     }
 
     /**
+     * Test the property key
+     * @test
+     * @dataProvider keyProvider
+     * @covers ::getKey
+     * @covers ::setKey
+     */
+    public function testPropertyKey($value)
+    {
+        $object = new DataDescriptor();
+        $object->setKey($value);
+
+        $this->assertEquals($value, $object->getKey());
+    }
+
+    /**
+     * Data provider for property key
+     */
+    public function keyProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property format
      * @test
      * @dataProvider formatProvider
@@ -82,29 +105,6 @@ class DataDescriptorTest extends TestCase
      * Data provider for property identifier
      */
     public function identifierProvider()
-    {
-        return [["a string"]];
-    }
-
-    /**
-     * Test the property key
-     * @test
-     * @dataProvider keyProvider
-     * @covers ::getKey
-     * @covers ::setKey
-     */
-    public function testPropertyKey($value)
-    {
-        $object = new DataDescriptor();
-        $object->setKey($value);
-
-        $this->assertEquals($value, $object->getKey());
-    }
-
-    /**
-     * Data provider for property key
-     */
-    public function keyProvider()
     {
         return [["a string"]];
     }

@@ -11,24 +11,28 @@
             "name": "backgroundColor",
             "type": "Color",
             "required": false,
-            "description": "The background color for text lines.",
-            "version": "1.0",
+            "description": "The background color for text lines. The value defaults to transparent.",
+            "typed": false
+        },
+        {
+            "name": "conditional",
+            "type": "array:Format\\ConditionalComponentTextStyle",
+            "required": false,
+            "description": "An array of component text style properties that can be applied conditionally, and the conditions that cause them to be applied.",
             "typed": false
         },
         {
             "name": "dropCapStyle",
             "type": "Format\\DropCapStyle",
             "required": false,
-            "description": "Defines the style of drop cap to apply to the first paragraph of the component.",
-            "version": "1.0",
+            "description": "The style of drop cap to apply to the first paragraph of the component.",
             "typed": false
         },
         {
             "name": "firstLineIndent",
             "type": "integer",
             "required": false,
-            "description": "Defines the indent of the first line of each paragraph in points.",
-            "version": "1.1",
+            "description": "The indent of the first line of each paragraph in points.",
             "typed": false
         },
         {
@@ -36,15 +40,13 @@
             "type": "string",
             "required": false,
             "description": "The font family to use for text rendering, for example Gill Sans. Using a combination of fontFamily, fontWidth, fontWeight, and fontStyle you can define the appearance of the text. News automatically selects the appropriate font variant from the available variants in that family.",
-            "version": "1.7",
             "typed": false
         },
         {
             "name": "fontName",
             "type": "string",
             "required": false,
-            "description": "Use fontName to refer to an explicit font variant\u2019s Postscript name, such as GillSans-Bold. Alternatively, you can use a combination of fontFamily, fontWeight, fontWidth and\/or fontStyle to have News automatically select the appropriate variant depending on the text formatting used.",
-            "version": "1.7",
+            "description": "The fontName to refer to an explicit font variant\u2019s Postscript name, such as GillSans-Bold. Alternatively, you can use a combination of fontFamily, fontWeight, fontWidth and\/or fontStyle to have News automatically select the appropriate variant depending on the text formatting used.",
             "typed": false
         },
         {
@@ -52,15 +54,13 @@
             "type": "integer",
             "required": false,
             "description": "The size of the font, in points. By default, the font size will be inherited from a parent component or a default style. As a best practice, try not to go below 16 points for body text. The fontSize may be automatically resized for different device sizes or for iOS devices with Larger Accessibility Sizes enabled.",
-            "version": "1.0",
             "typed": false
         },
         {
             "name": "fontStyle",
             "type": "enum:string",
             "required": false,
-            "description": "The font style to apply. Available options are:",
-            "version": "1.7",
+            "description": "The font style to apply.",
             "enum_values": [
                 "normal",
                 "italic",
@@ -73,7 +73,6 @@
             "type": "enum:integer|string",
             "required": false,
             "description": "The font weight to apply for font selection. In addition to explicit weights (named or numerical), lighter and bolder are available, to set text in a lighter or bolder font as compared to its surrounding text.",
-            "version": "1.7",
             "enum_values": [
                 100,
                 200,
@@ -114,8 +113,7 @@
             "name": "fontWidth",
             "type": "enum:string",
             "required": false,
-            "description": "The font width to apply for font selection (known in CSS as font-stretch) defines the width characteristics of a font variant between normal, condensed and expanded. Some font families have separate families assigned for different widths (for example, \"Avenir Next\" and \"Avenir Next Condensed\"), so make sure that the fontFamily you select supports the specified fontWidth. Available options are:",
-            "version": "1.7",
+            "description": "The font width to apply for font selection (known in CSS as font-stretch) defines the width characteristics of a font variant between normal, condensed and expanded. Some font families have separate families assigned for different widths (for example, Avenir Next and Avenir Next Condensed), so make sure that the fontFamily you select supports the specified fontWidth.",
             "enum_values": [
                 "ultra-condensed",
                 "extra-condensed",
@@ -133,8 +131,7 @@
             "name": "hangingPunctuation",
             "type": "boolean",
             "required": false,
-            "description": "Defines whether punctuation should be positioned outside the margins of the text.",
-            "version": "1.0",
+            "description": "A Boolean value that defines whether punctuation should be positioned outside the margins of the text.",
             "default": "false",
             "typed": false
         },
@@ -142,48 +139,42 @@
             "name": "hyphenation",
             "type": "boolean",
             "required": false,
-            "description": "Indicates whether text should be hyphenated when necessary. By default, only components with a role of body or intro have hyphenation enabled. All other components default to false.",
-            "version": "1.0",
+            "description": "A Boolean value that indicates whether text should be hyphenated when necessary. By default, only components with a role of body or intro have hyphenation enabled. All other components default to false.",
             "typed": false
         },
         {
             "name": "lineHeight",
             "type": "integer",
             "required": false,
-            "description": "The default line height, in points. The lineHeight will be recalculated as necessary, relative to the fontSize. For example, when the font is automatically resized to fit a smaller screen, the line height will also be adjusted accordingly.",
-            "version": "1.0",
+            "description": "A number that provides the default line height, in points. The lineHeight is recalculated as necessary, relative to the fontSize. For example, when the font is automatically resized to fit a smaller screen, the line height will also be adjusted accordingly.",
             "typed": false
         },
         {
             "name": "linkStyle",
             "type": "Format\\TextStyle",
             "required": false,
-            "description": "Text styling for all links within a text component.",
-            "version": "1.0",
+            "description": "An object that provides text styling for all links within a text component.",
             "typed": false
         },
         {
             "name": "orderedListItems",
             "type": "Format\\ListItemStyle",
             "required": false,
-            "description": "For use with text components with HTML markup. You can create text styles containing an orderedListItems definition to configure how list items inside <ol> tags should be displayed.",
-            "version": "1.4",
+            "description": "An object for use with text components with HTML markup. You can create text styles containing an orderedListItems definition to configure how list items inside <ol> tags should be displayed.",
             "typed": false
         },
         {
             "name": "paragraphSpacingAfter",
             "type": "integer",
             "required": false,
-            "description": "Defines the spacing after each paragraph in points relative to the lineHeight.",
-            "version": "1.1",
+            "description": "A number that defines the spacing after each paragraph in points relative to the lineHeight.",
             "typed": false
         },
         {
             "name": "paragraphSpacingBefore",
             "type": "integer",
             "required": false,
-            "description": "Defines the spacing before each paragraph in points relative to the lineHeight.",
-            "version": "1.1",
+            "description": "A number that defines the spacing before each paragraph in points relative to the lineHeight.",
             "typed": false
         },
         {
@@ -194,7 +185,6 @@
             ],
             "required": false,
             "description": "The text strikethrough. Set strikethrough to true to use the text color inherited from the textColor property as the strikethrough color, or provide a text decoration definition with a different color.",
-            "version": "1.0",
             "typed": false
         },
         {
@@ -202,7 +192,6 @@
             "type": "Format\\TextStrokeStyle",
             "required": false,
             "description": "The stroke style for the text outline. By default, stroke will be omitted.",
-            "version": "1.1",
             "typed": false
         },
         {
@@ -210,7 +199,6 @@
             "type": "enum:string",
             "required": false,
             "description": "The justification for all text within the component.",
-            "version": "1.0",
             "default": "none",
             "enum_values": [
                 "left",
@@ -226,7 +214,6 @@
             "type": "Color",
             "required": false,
             "description": "The text color.",
-            "version": "1.0",
             "typed": false
         },
         {
@@ -234,7 +221,19 @@
             "type": "Format\\Shadow",
             "required": false,
             "description": "The text shadow for this style.",
-            "version": "1.1",
+            "typed": false
+        },
+        {
+            "name": "textTransform",
+            "type": "enum:string",
+            "required": false,
+            "description": "The transform to apply to the text.",
+            "enum_values": [
+                "uppercase",
+                "lowercase",
+                "capitalize",
+                "none"
+            ],
             "typed": false
         },
         {
@@ -242,7 +241,7 @@
             "type": "number",
             "required": false,
             "description": "The amount of tracking (spacing between characters) in text, as a percentage of the fontSize. The actual spacing between letters is determined by combining information from the font and font size.",
-            "version": "1.0",
+            "default": 0,
             "typed": false
         },
         {
@@ -253,23 +252,25 @@
             ],
             "required": false,
             "description": "The text underlining. This style can be used for links. Set underline to true to use the text color as the underline color, or provide a text decoration with a different color.",
-            "version": "1.0",
             "typed": false
         },
         {
             "name": "unorderedListItems",
             "type": "Format\\ListItemStyle",
             "required": false,
-            "description": "For use with text components with HTML marku. You can create text styles containing an unorderedListItems definition to configure how list items inside <ul> tags should be displayed.",
-            "version": "1.4",
+            "description": "The object for use with text components with HTML markup. You can create text styles containing an unorderedListItems definition to configure how list items inside <ul> tags should be displayed.",
             "typed": false
         },
         {
             "name": "verticalAlignment",
-            "type": "string",
+            "type": "enum:string",
             "required": false,
             "description": "The vertical alignment of the text. You can use this property for superscripts and subscripts.",
-            "version": "1.0",
+            "enum_values": [
+                "superscript",
+                "subscript",
+                "baseline"
+            ],
             "typed": false
         }
     ]

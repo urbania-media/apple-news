@@ -11,6 +11,27 @@ use Urbania\AppleNews\Tests\TestCase;
 class MoveInAnimationTest extends TestCase
 {
     /**
+     * Test the property type
+     * @test
+     * @dataProvider typeProvider
+     * @covers ::getType
+     */
+    public function testPropertyType($value)
+    {
+        $object = new MoveInAnimation();
+
+        $this->assertEquals($value, $object->getType());
+    }
+
+    /**
+     * Data provider for property type
+     */
+    public function typeProvider()
+    {
+        return [["move_in"]];
+    }
+
+    /**
      * Test the property preferredStartingPosition
      * @test
      * @dataProvider preferredStartingPositionProvider
@@ -31,27 +52,6 @@ class MoveInAnimationTest extends TestCase
     public function preferredStartingPositionProvider()
     {
         return [["left"], ["right"]];
-    }
-
-    /**
-     * Test the property type
-     * @test
-     * @dataProvider typeProvider
-     * @covers ::getType
-     */
-    public function testPropertyType($value)
-    {
-        $object = new MoveInAnimation();
-
-        $this->assertEquals($value, $object->getType());
-    }
-
-    /**
-     * Data provider for property type
-     */
-    public function typeProvider()
-    {
-        return [["move_in"]];
     }
 
     /**

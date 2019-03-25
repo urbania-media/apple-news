@@ -11,6 +11,29 @@ use Urbania\AppleNews\Tests\TestCase;
 class DropCapStyleTest extends TestCase
 {
     /**
+     * Test the property numberOfLines
+     * @test
+     * @dataProvider numberOfLinesProvider
+     * @covers ::getNumberOfLines
+     * @covers ::setNumberOfLines
+     */
+    public function testPropertyNumberOfLines($value)
+    {
+        $object = new DropCapStyle();
+        $object->setNumberOfLines($value);
+
+        $this->assertEquals($value, $object->getNumberOfLines());
+    }
+
+    /**
+     * Data provider for property numberOfLines
+     */
+    public function numberOfLinesProvider()
+    {
+        return [[1]];
+    }
+
+    /**
      * Test the property backgroundColor
      * @test
      * @dataProvider backgroundColorProvider
@@ -75,29 +98,6 @@ class DropCapStyleTest extends TestCase
      * Data provider for property numberOfCharacters
      */
     public function numberOfCharactersProvider()
-    {
-        return [[1]];
-    }
-
-    /**
-     * Test the property numberOfLines
-     * @test
-     * @dataProvider numberOfLinesProvider
-     * @covers ::getNumberOfLines
-     * @covers ::setNumberOfLines
-     */
-    public function testPropertyNumberOfLines($value)
-    {
-        $object = new DropCapStyle();
-        $object->setNumberOfLines($value);
-
-        $this->assertEquals($value, $object->getNumberOfLines());
-    }
-
-    /**
-     * Data provider for property numberOfLines
-     */
-    public function numberOfLinesProvider()
     {
         return [[1]];
     }

@@ -8,14 +8,14 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The scene that gives the impression of a parallax effect by zooming
- * out and scrolling slightly slower than the user’s action.
+ * out and scrolling slightly more slowly than the user’s action.
  *
  * @see https://developer.apple.com/documentation/apple_news/parallaxscaleheader
  */
 class ParallaxScaleHeader extends Scene
 {
     /**
-     * This scene always has the type parallax_scale.
+     * Always parallax_scale for this scene type.
      * @var string
      */
     protected $type = 'parallax_scale';

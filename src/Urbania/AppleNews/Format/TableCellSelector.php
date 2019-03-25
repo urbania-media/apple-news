@@ -15,45 +15,47 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class TableCellSelector extends BaseSdkObject
 {
     /**
-     * Specifies a column index. The leftmost column of data has an index of
-     * 0.
+     * The number that specifies a column index. The leftmost column of data
+     * has an index of 0.
      * @var integer
      */
     protected $columnIndex;
 
     /**
-     * Specifies the identifier of a specific data descriptor. All cells for
-     * this data descriptor will be selected. See DataDescriptor.
+     * A string that specifies the identifier of a specific data descriptor.
+     * All cells for this data descriptor will be selected. See
+     * DataDescriptor.
      * @var string
      */
     protected $descriptor;
 
     /**
-     * When true, selects the cells in even columns.
+     * A Boolean value when true, selects the cells in even columns.
      * @var boolean
      */
     protected $evenColumns;
 
     /**
-     * When true, selects the cells in even rows.
+     * A Boolean value when true, selects the cells in even rows.
      * @var boolean
      */
     protected $evenRows;
 
     /**
-     * When true, selects the cells in odd columns.
+     * A Boolean value when true, selects the cells in odd columns.
      * @var boolean
      */
     protected $oddColumns;
 
     /**
-     * When true, selects the cells in odd rows.
+     * A Boolean value when true, selects the cells in odd rows.
      * @var boolean
      */
     protected $oddRows;
 
     /**
-     * Specifies a row index. The topmost row of data has an index of 0.
+     * A number that specifies a row index. The topmost row of data has an
+     * index of 0.
      * @var integer
      */
     protected $rowIndex;

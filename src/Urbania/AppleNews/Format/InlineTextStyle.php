@@ -29,7 +29,7 @@ class InlineTextStyle extends BaseSdkObject
     protected $rangeStart;
 
     /**
-     * Either a TextStyle or the name of a TextStyle object defined in the
+     * A TextStyle or the name of a TextStyle object defined in the
      * ArticleDocument.textStyles object.
      * @var \Urbania\AppleNews\Format\TextStyle|string
      */
@@ -110,9 +110,9 @@ class InlineTextStyle extends BaseSdkObject
      */
     public function setTextStyle($textStyle)
     {
-        if (is_object($textStyle)) {
+        if (is_object($textStyle) || is_array($textStyle)) {
             Assert::isSdkObject($textStyle, TextStyle::class);
-        } elseif (!is_array($textStyle)) {
+        } else {
             Assert::string($textStyle);
         }
 

@@ -62,13 +62,26 @@ class ObjectDocument extends Document
                 $descriptionCell,
                 $property
             );
-            if (!is_null($fromClass) && $property['name'] === '*') {
+            if (!is_null($fromClass) && ($property['name'] === '*' || $property['name'] === 'Any Key')) {
                 $property['name'] = strtolower($fromClass);
                 $property['type'] = 'map:' . $property['type'];
             }
             if (is_array($property['type'])) {
                 usort($property['type'], function ($a, $b) {
-                    return preg_match('/^[A-Z]/', $a) === 0 ? 1 : -1;
+                    $aIsClass = preg_match('/^[A-Z]/', $a) === 1;
+                    $aIsObject = $aIsClass && preg_match('/\\\[A-Z]/', $a) === 1;
+                    $bIsClass = preg_match('/^[A-Z]/', $b) === 1;
+                    $bIsObject = $bIsClass && preg_match('/\\\[A-Z]/', $b) === 1;
+                    if ($aIsObject && $bIsObject) {
+                        return strcmp($a, $b);
+                    } elseif ($bIsObject && !$aIsObject) {
+                        return 1;
+                    } elseif ($aIsObject || $aIsClass) {
+                        return -1;
+                    } elseif (!$aIsObject && !$bIsClass) {
+                        return strcmp($aIsObject, $bIsClass);
+                    }
+                    return 1;
                 });
             }
             if ($objectName === 'Heading' && $property['name'] === 'role' && !isset($property['value'])) {
@@ -186,7 +199,14 @@ class ObjectDocument extends Document
             $matches
         )) {
             return $matches[1];
+        } elseif (preg_match(
+            '/Always ([a-zA-Z0-9_-]+) for (this|a|the)/',
+            $text,
+            $matches
+        )) {
+            return $matches[1];
         }
+
         return preg_match(
             '/always has ((a|the) role of|the type) ([a-zA-Z0-9_-]+)./',
             $text,
@@ -225,6 +245,31 @@ class ObjectDocument extends Document
         $types = array_map(function ($type) {
             return $this->getType($type);
         }, $this->getMetadataValues($children));
+
+        // If possible types is a string enum
+        $stringEnumValues = array_reduce($types, function ($stringListType, $type) {
+            if (preg_match('/string\(([^)]+)\)/i', $type, $matches)) {
+                return array_map(function ($value) {
+                    return json_decode(trim($value));
+                }, explode('|', $matches[1]));
+            }
+            return $stringListType;
+        }, null);
+        if (!is_null($stringEnumValues)) {
+            $enumTypes = array_map(function ($type) {
+                return preg_match('/^string\([^)]+\)/', $type) === 1 ? 'string' : $type;
+            }, $types);
+            $otherTypeEnumValues = array_reduce($enumTypes, function ($values, $type) {
+                if ($type === 'boolean') {
+                    return array_merge($values, [true, false]);
+                }
+                return $values;
+            }, []);
+            return array_merge($property, [
+                'type' => 'enum:'.implode('|', $enumTypes),
+                'enum_values' => array_merge($stringEnumValues, $otherTypeEnumValues)
+            ]);
+        }
 
         return array_merge($property, [
             'type' => $types

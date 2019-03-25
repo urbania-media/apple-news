@@ -15,6 +15,12 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class Link extends Addition
 {
     /**
+     * Always link for a Link object.
+     * @var string
+     */
+    protected $type = 'link';
+
+    /**
      * The URL that should be opened when a user interacts with the range of
      * text specified in the addition.
      * @var string
@@ -22,10 +28,17 @@ class Link extends Addition
     protected $URL;
 
     /**
-     * The type of addition should be link for a Link object.
-     * @var string
+     * The length (in characters) of the character range.
+     * @var integer
      */
-    protected $type = 'link';
+    protected $rangeLength;
+
+    /**
+     * The starting character index for which the addition is meant. A text
+     * range starts at 0 for the first character.
+     * @var integer
+     */
+    protected $rangeStart;
 
     public function __construct(array $data = [])
     {
@@ -34,6 +47,68 @@ class Link extends Addition
         if (isset($data['URL'])) {
             $this->setURL($data['URL']);
         }
+
+        if (isset($data['rangeLength'])) {
+            $this->setRangeLength($data['rangeLength']);
+        }
+
+        if (isset($data['rangeStart'])) {
+            $this->setRangeStart($data['rangeStart']);
+        }
+    }
+
+    /**
+     * Get the rangeLength
+     * @return integer
+     */
+    public function getRangeLength()
+    {
+        return $this->rangeLength;
+    }
+
+    /**
+     * Set the rangeLength
+     * @param integer $rangeLength
+     * @return $this
+     */
+    public function setRangeLength($rangeLength)
+    {
+        if (is_null($rangeLength)) {
+            $this->rangeLength = null;
+            return $this;
+        }
+
+        Assert::integer($rangeLength);
+
+        $this->rangeLength = $rangeLength;
+        return $this;
+    }
+
+    /**
+     * Get the rangeStart
+     * @return integer
+     */
+    public function getRangeStart()
+    {
+        return $this->rangeStart;
+    }
+
+    /**
+     * Set the rangeStart
+     * @param integer $rangeStart
+     * @return $this
+     */
+    public function setRangeStart($rangeStart)
+    {
+        if (is_null($rangeStart)) {
+            $this->rangeStart = null;
+            return $this;
+        }
+
+        Assert::integer($rangeStart);
+
+        $this->rangeStart = $rangeStart;
+        return $this;
     }
 
     /**
@@ -61,7 +136,7 @@ class Link extends Addition
      */
     public function setURL($URL)
     {
-        Assert::string($URL);
+        Assert::uri($URL);
 
         $this->URL = $URL;
         return $this;
@@ -74,11 +149,17 @@ class Link extends Addition
     public function toArray()
     {
         $data = parent::toArray();
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
         if (isset($this->URL)) {
             $data['URL'] = $this->URL;
         }
-        if (isset($this->type)) {
-            $data['type'] = $this->type;
+        if (isset($this->rangeLength)) {
+            $data['rangeLength'] = $this->rangeLength;
+        }
+        if (isset($this->rangeStart)) {
+            $data['rangeStart'] = $this->rangeStart;
         }
         return $data;
     }

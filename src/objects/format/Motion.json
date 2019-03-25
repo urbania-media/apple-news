@@ -11,10 +11,9 @@
             "name": "type",
             "type": "string",
             "required": true,
-            "description": "his behavior\u2019s type is always motion.",
+            "description": "Always motion for this behavior.",
             "value": "motion",
             "read_only": true,
-            "version": "1.0",
             "typed": false
         }
     ]

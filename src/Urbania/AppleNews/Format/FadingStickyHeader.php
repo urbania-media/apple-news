@@ -22,7 +22,7 @@ class FadingStickyHeader extends Scene
     protected $fadeColor;
 
     /**
-     * This scene always has the type fading_sticky_header.
+     * Always fading_sticky_header for this scene type.
      * @var string
      */
     protected $type = 'fading_sticky_header';

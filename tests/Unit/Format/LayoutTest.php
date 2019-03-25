@@ -34,6 +34,29 @@ class LayoutTest extends TestCase
     }
 
     /**
+     * Test the property width
+     * @test
+     * @dataProvider widthProvider
+     * @covers ::getWidth
+     * @covers ::setWidth
+     */
+    public function testPropertyWidth($value)
+    {
+        $object = new Layout();
+        $object->setWidth($value);
+
+        $this->assertEquals($value, $object->getWidth());
+    }
+
+    /**
+     * Data provider for property width
+     */
+    public function widthProvider()
+    {
+        return [[1]];
+    }
+
+    /**
      * Test the property gutter
      * @test
      * @dataProvider gutterProvider
@@ -75,29 +98,6 @@ class LayoutTest extends TestCase
      * Data provider for property margin
      */
     public function marginProvider()
-    {
-        return [[1]];
-    }
-
-    /**
-     * Test the property width
-     * @test
-     * @dataProvider widthProvider
-     * @covers ::getWidth
-     * @covers ::setWidth
-     */
-    public function testPropertyWidth($value)
-    {
-        $object = new Layout();
-        $object->setWidth($value);
-
-        $this->assertEquals($value, $object->getWidth());
-    }
-
-    /**
-     * Data provider for property width
-     */
-    public function widthProvider()
     {
         return [[1]];
     }

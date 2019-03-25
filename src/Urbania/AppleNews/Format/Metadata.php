@@ -41,14 +41,6 @@ class Metadata extends BaseSdkObject
     protected $canonicalURL;
 
     /**
-     * An array containing image URLs for cover art used in the Featured
-     * Stories section of the For You feed. See Creating Articles for
-     * Featured Stories.
-     * @var Format\CoverArt[]
-     */
-    protected $coverArt;
-
-    /**
      * The UTC date in ISO 8601 format (YYYY-MM-DDTHH:mm:ss±ZZ:ZZ) on which
      * this article was created. This value may or may not be the same as
      * datePublished.
@@ -103,7 +95,8 @@ class Metadata extends BaseSdkObject
     protected $generatorVersion = '1.0';
 
     /**
-     * Keywords that describe this article. You can define up to 50 keywords.
+     * The keywords that describe this article. You can define up to 50
+     * keywords.
      * @var string[]
      */
     protected $keywords;
@@ -117,14 +110,14 @@ class Metadata extends BaseSdkObject
     /**
      * The URL of an image that can represent this article in a News feed
      * view (channel, topic, or For You). For best results, provide a
-     * high-resolution image. The image will automatically be scaled down to
-     * the correct size.
+     * high-resolution image. The image is automatically scaled down to the
+     * correct size.
      * @var string
      */
     protected $thumbnailURL;
 
     /**
-     * A Boolean value that indicates whether this article should be shown
+     * A boolean value that indicates whether this article should be shown
      * with a transparent top toolbar that is overlaid on the the top portion
      * of the article.
      * @var boolean
@@ -132,9 +125,9 @@ class Metadata extends BaseSdkObject
     protected $transparentToolbar;
 
     /**
-     * Defines the URL for the video that represents this article. A glyph
-     * will appear on the thumbnail of the article tile, allowing the video
-     * to be playable from For You, topic, and channel feeds.
+     * The URL for the video that represents this article. A glyph appears on
+     * the thumbnail of the article tile, allowing the video to be playable
+     * from For You, topic, and channel feeds.
      * @var string
      */
     protected $videoURL;
@@ -151,10 +144,6 @@ class Metadata extends BaseSdkObject
 
         if (isset($data['canonicalURL'])) {
             $this->setCanonicalURL($data['canonicalURL']);
-        }
-
-        if (isset($data['coverArt'])) {
-            $this->setCoverArt($data['coverArt']);
         }
 
         if (isset($data['dateCreated'])) {
@@ -316,56 +305,6 @@ class Metadata extends BaseSdkObject
         Assert::uri($canonicalURL);
 
         $this->canonicalURL = $canonicalURL;
-        return $this;
-    }
-
-    /**
-     * Add an item to coverArt
-     * @param \Urbania\AppleNews\Format\CoverArt|array $item
-     * @return $this
-     */
-    public function addCoverArt($item)
-    {
-        return $this->setCoverArt(
-            !is_null($this->coverArt)
-                ? array_merge($this->coverArt, [$item])
-                : [$item]
-        );
-    }
-
-    /**
-     * Get the coverArt
-     * @return Format\CoverArt[]
-     */
-    public function getCoverArt()
-    {
-        return $this->coverArt;
-    }
-
-    /**
-     * Set the coverArt
-     * @param Format\CoverArt[] $coverArt
-     * @return $this
-     */
-    public function setCoverArt($coverArt)
-    {
-        if (is_null($coverArt)) {
-            $this->coverArt = null;
-            return $this;
-        }
-
-        Assert::isArray($coverArt);
-        Assert::allIsSdkObject($coverArt, CoverArt::class);
-
-        $this->coverArt = array_reduce(
-            array_keys($coverArt),
-            function ($array, $key) use ($coverArt) {
-                $item = $coverArt[$key];
-                $array[$key] = is_array($item) ? new CoverArt($item) : $item;
-                return $array;
-            },
-            []
-        );
         return $this;
     }
 
@@ -785,21 +724,6 @@ class Metadata extends BaseSdkObject
         }
         if (isset($this->canonicalURL)) {
             $data['canonicalURL'] = $this->canonicalURL;
-        }
-        if (isset($this->coverArt)) {
-            $data['coverArt'] = !is_null($this->coverArt)
-                ? array_reduce(
-                    array_keys($this->coverArt),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->coverArt[$key] instanceof Arrayable
-                                ? $this->coverArt[$key]->toArray()
-                                : $this->coverArt[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->coverArt;
         }
         if (isset($this->dateCreated)) {
             $data['dateCreated'] = !is_null($this->dateCreated)

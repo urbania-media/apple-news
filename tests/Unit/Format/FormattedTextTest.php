@@ -11,6 +11,50 @@ use Urbania\AppleNews\Tests\TestCase;
 class FormattedTextTest extends TestCase
 {
     /**
+     * Test the property text
+     * @test
+     * @dataProvider textProvider
+     * @covers ::getText
+     * @covers ::setText
+     */
+    public function testPropertyText($value)
+    {
+        $object = new FormattedText();
+        $object->setText($value);
+
+        $this->assertEquals($value, $object->getText());
+    }
+
+    /**
+     * Data provider for property text
+     */
+    public function textProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
+     * Test the property type
+     * @test
+     * @dataProvider typeProvider
+     * @covers ::getType
+     */
+    public function testPropertyType($value)
+    {
+        $object = new FormattedText();
+
+        $this->assertEquals($value, $object->getType());
+    }
+
+    /**
+     * Data provider for property type
+     */
+    public function typeProvider()
+    {
+        return [["formatted_text"]];
+    }
+
+    /**
      * Test the property additions
      * @test
      * @dataProvider additionsProvider
@@ -80,29 +124,6 @@ class FormattedTextTest extends TestCase
     }
 
     /**
-     * Test the property text
-     * @test
-     * @dataProvider textProvider
-     * @covers ::getText
-     * @covers ::setText
-     */
-    public function testPropertyText($value)
-    {
-        $object = new FormattedText();
-        $object->setText($value);
-
-        $this->assertEquals($value, $object->getText());
-    }
-
-    /**
-     * Data provider for property text
-     */
-    public function textProvider()
-    {
-        return [["a string"]];
-    }
-
-    /**
      * Test the property textStyle
      * @test
      * @dataProvider textStyleProvider
@@ -123,26 +144,5 @@ class FormattedTextTest extends TestCase
     public function textStyleProvider()
     {
         return [[new \Urbania\AppleNews\Format\ComponentTextStyle()]];
-    }
-
-    /**
-     * Test the property type
-     * @test
-     * @dataProvider typeProvider
-     * @covers ::getType
-     */
-    public function testPropertyType($value)
-    {
-        $object = new FormattedText();
-
-        $this->assertEquals($value, $object->getType());
-    }
-
-    /**
-     * Data provider for property type
-     */
-    public function typeProvider()
-    {
-        return [["formatted_text"]];
     }
 }

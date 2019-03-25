@@ -12,15 +12,13 @@
             "type": "Color",
             "required": false,
             "description": "The stroke color.",
-            "version": "1.0",
             "typed": false
         },
         {
             "name": "width",
             "type": "integer",
             "required": false,
-            "description": "Width of the stroke as a percentage relative to the font size.",
-            "version": "1.1",
+            "description": "The width of the stroke as a percentage relative to the font size.",
             "default": 3,
             "minimum": 0,
             "typed": false

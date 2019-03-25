@@ -15,39 +15,42 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class TableStyle extends BaseSdkObject
 {
     /**
-     * Defines the styling for individual cells in a table.
+     * The object that defines the styling for individual cells in a table.
      * @var \Urbania\AppleNews\Format\TableCellStyle
      */
     protected $cells;
 
     /**
-     * Defines the styling for table columns.
+     * The object that defines the styling for table columns.
      * @var \Urbania\AppleNews\Format\TableColumnStyle
      */
     protected $columns;
 
     /**
-     * Defines the styling for individual cells in table headers.
+     * The object that defines the styling for individual cells in table
+     * headers.
      * @var \Urbania\AppleNews\Format\TableCellStyle
      */
     protected $headerCells;
 
     /**
-     * Defines the styling for the table header columns, which are present if
-     * dataOrientation is set to vertical, which is the default.
+     * The object that defines the styling for the table header columns,
+     * which are present if dataOrientation is set to vertical, which is the
+     * default.
      * @var \Urbania\AppleNews\Format\TableColumnStyle
      */
     protected $headerColumns;
 
     /**
-     * Defines the styling for table header rows, which are present if
-     * dataOrientation is set to horizontal, which is not the default
+     * The object that defines the styling for table header rows, which are
+     * present if dataOrientation is set to horizontal, which is not the
+     * default.
      * @var \Urbania\AppleNews\Format\TableRowStyle
      */
     protected $headerRows;
 
     /**
-     * Defines the styling for table rows.
+     * The object that defines the styling for table rows.
      * @var \Urbania\AppleNews\Format\TableRowStyle
      */
     protected $rows;

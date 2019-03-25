@@ -14,34 +14,40 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class ImageFill extends Fill
 {
     /**
+     * Always image for this object.
+     * @var string
+     */
+    protected $type = 'image';
+
+    /**
      * The URL of the image file to use for filling the component.
      * @var string
      */
     protected $URL;
 
     /**
-     * Indicates how the image fill should be displayed. Valid values:
+     * A string that indicates how the fill should behave when a user
+     * scrolls.
+     * @var string
+     */
+    protected $attachment;
+
+    /**
+     * A string that indicates how the image fill should be displayed.
      * @var string
      */
     protected $fillMode;
 
     /**
-     * Sets the horizontal alignment of the image fill within its component.
-     * Valid values:
+     * A string that sets the horizontal alignment of the image fill within
+     * its component. Valid values:
      * @var string
      */
     protected $horizontalAlignment;
 
     /**
-     * The type of fill to apply. This property should always be set to
-     * image.
-     * @var string
-     */
-    protected $type = 'image';
-
-    /**
-     * Sets the vertical alignment of the image fill within its component.
-     * Valid values:
+     * A string that sets the vertical alignment of the image fill within its
+     * component. Valid values:
      * @var string
      */
     protected $verticalAlignment;
@@ -52,6 +58,10 @@ class ImageFill extends Fill
 
         if (isset($data['URL'])) {
             $this->setURL($data['URL']);
+        }
+
+        if (isset($data['attachment'])) {
+            $this->setAttachment($data['attachment']);
         }
 
         if (isset($data['fillMode'])) {
@@ -65,6 +75,33 @@ class ImageFill extends Fill
         if (isset($data['verticalAlignment'])) {
             $this->setVerticalAlignment($data['verticalAlignment']);
         }
+    }
+
+    /**
+     * Get the attachment
+     * @return string
+     */
+    public function getAttachment()
+    {
+        return $this->attachment;
+    }
+
+    /**
+     * Set the attachment
+     * @param string $attachment
+     * @return $this
+     */
+    public function setAttachment($attachment)
+    {
+        if (is_null($attachment)) {
+            $this->attachment = null;
+            return $this;
+        }
+
+        Assert::oneOf($attachment, ["fixed", "scroll"]);
+
+        $this->attachment = $attachment;
+        return $this;
     }
 
     /**
@@ -146,7 +183,7 @@ class ImageFill extends Fill
      */
     public function setURL($URL)
     {
-        Assert::string($URL);
+        Assert::uri($URL);
 
         $this->URL = $URL;
         return $this;
@@ -186,17 +223,20 @@ class ImageFill extends Fill
     public function toArray()
     {
         $data = parent::toArray();
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
         if (isset($this->URL)) {
             $data['URL'] = $this->URL;
+        }
+        if (isset($this->attachment)) {
+            $data['attachment'] = $this->attachment;
         }
         if (isset($this->fillMode)) {
             $data['fillMode'] = $this->fillMode;
         }
         if (isset($this->horizontalAlignment)) {
             $data['horizontalAlignment'] = $this->horizontalAlignment;
-        }
-        if (isset($this->type)) {
-            $data['type'] = $this->type;
         }
         if (isset($this->verticalAlignment)) {
             $data['verticalAlignment'] = $this->verticalAlignment;

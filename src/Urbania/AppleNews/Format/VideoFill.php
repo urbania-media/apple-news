@@ -14,6 +14,19 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class VideoFill extends Fill
 {
     /**
+     * The URL of the image file to use as a still image when the video is
+     * not playing.
+     * @var string
+     */
+    protected $stillURL;
+
+    /**
+     * Always video for this object.
+     * @var string
+     */
+    protected $type = 'video';
+
+    /**
      * The URL of a video file that can be played using AV Player. HTTP Live
      * Streaming (HLS) is highly recommended (.M3U8). For more information on
      * HLS, refer to the iOS developer documentation on HTTP Live Streaming,
@@ -23,40 +36,35 @@ class VideoFill extends Fill
     protected $URL;
 
     /**
-     * Indicates how the video fill should be displayed. Valid values:
+     * A string that indicates how the fill should behave when a user
+     * scrolls.
+     * @var string
+     */
+    protected $attachment;
+
+    /**
+     * A string that indicates how the video fill should be displayed.
      * @var string
      */
     protected $fillMode;
 
     /**
-     * Sets the horizontal alignment of the video fill within its component.
+     * A string that sets the horizontal alignment of the video fill within
+     * its component.
      * @var string
      */
     protected $horizontalAlignment;
 
     /**
-     * When true, it specifies that the video will start over again when it
-     * reaches the end.
+     * A Boolean value when set to true, specifies that the video will start
+     * over again when it reaches the end.
      * @var boolean
      */
     protected $loop;
 
     /**
-     * The URL of the image file to use as a still image when the video is
-     * not playing.
-     * @var string
-     */
-    protected $stillURL;
-
-    /**
-     * Describes the type of fill. Must be video for a video fill.
-     * @var string
-     */
-    protected $type;
-
-    /**
-     * Sets the vertical alignment of the video fill within its component.
-     * Valid values:
+     * A string value that sets the vertical alignment of the video fill
+     * within its component.
      * @var string
      */
     protected $verticalAlignment;
@@ -65,8 +73,16 @@ class VideoFill extends Fill
     {
         parent::__construct($data);
 
+        if (isset($data['stillURL'])) {
+            $this->setStillURL($data['stillURL']);
+        }
+
         if (isset($data['URL'])) {
             $this->setURL($data['URL']);
+        }
+
+        if (isset($data['attachment'])) {
+            $this->setAttachment($data['attachment']);
         }
 
         if (isset($data['fillMode'])) {
@@ -81,17 +97,36 @@ class VideoFill extends Fill
             $this->setLoop($data['loop']);
         }
 
-        if (isset($data['stillURL'])) {
-            $this->setStillURL($data['stillURL']);
-        }
-
-        if (isset($data['type'])) {
-            $this->setType($data['type']);
-        }
-
         if (isset($data['verticalAlignment'])) {
             $this->setVerticalAlignment($data['verticalAlignment']);
         }
+    }
+
+    /**
+     * Get the attachment
+     * @return string
+     */
+    public function getAttachment()
+    {
+        return $this->attachment;
+    }
+
+    /**
+     * Set the attachment
+     * @param string $attachment
+     * @return $this
+     */
+    public function setAttachment($attachment)
+    {
+        if (is_null($attachment)) {
+            $this->attachment = null;
+            return $this;
+        }
+
+        Assert::oneOf($attachment, ["fixed", "scroll"]);
+
+        $this->attachment = $attachment;
+        return $this;
     }
 
     /**
@@ -191,7 +226,7 @@ class VideoFill extends Fill
      */
     public function setStillURL($stillURL)
     {
-        Assert::string($stillURL);
+        Assert::uri($stillURL);
 
         $this->stillURL = $stillURL;
         return $this;
@@ -204,19 +239,6 @@ class VideoFill extends Fill
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * Set the type
-     * @param string $type
-     * @return $this
-     */
-    public function setType($type)
-    {
-        Assert::string($type);
-
-        $this->type = $type;
-        return $this;
     }
 
     /**
@@ -275,8 +297,17 @@ class VideoFill extends Fill
     public function toArray()
     {
         $data = parent::toArray();
+        if (isset($this->stillURL)) {
+            $data['stillURL'] = $this->stillURL;
+        }
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
         if (isset($this->URL)) {
             $data['URL'] = $this->URL;
+        }
+        if (isset($this->attachment)) {
+            $data['attachment'] = $this->attachment;
         }
         if (isset($this->fillMode)) {
             $data['fillMode'] = $this->fillMode;
@@ -286,12 +317,6 @@ class VideoFill extends Fill
         }
         if (isset($this->loop)) {
             $data['loop'] = $this->loop;
-        }
-        if (isset($this->stillURL)) {
-            $data['stillURL'] = $this->stillURL;
-        }
-        if (isset($this->type)) {
-            $data['type'] = $this->type;
         }
         if (isset($this->verticalAlignment)) {
             $data['verticalAlignment'] = $this->verticalAlignment;

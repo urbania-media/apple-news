@@ -84,6 +84,28 @@ class Assert extends BaseAssert
         }
     }
 
+    public static function isSdkObjects($value, $classes, $message = '')
+    {
+        if (is_array($value)) {
+            return;
+        }
+
+        foreach ($classes as $class) {
+            if ($value instanceof $class) {
+                return;
+            }
+        }
+
+        static::reportInvalidArgument(
+            sprintf(
+                $message ?:
+                'Expected an instance of any of %2$s or an array. Got: %s',
+                static::typeToString($value),
+                implode(', ', $classes)
+            )
+        );
+    }
+
     public static function searchArticlesQuery($value, $message = '')
     {
         static::isArray($value);

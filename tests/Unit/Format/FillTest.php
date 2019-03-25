@@ -11,6 +11,34 @@ use Urbania\AppleNews\Tests\TestCase;
 class FillTest extends TestCase
 {
     /**
+     * Test the property type
+     * @test
+     * @dataProvider typeProvider
+     * @covers ::getType
+     * @covers ::setType
+     */
+    public function testPropertyType($value)
+    {
+        $object = new Fill();
+        $object->setType($value);
+
+        $this->assertEquals($value, $object->getType());
+    }
+
+    /**
+     * Data provider for property type
+     */
+    public function typeProvider()
+    {
+        return [
+            ["linear_gradient"],
+            ["image"],
+            ["repeatable_image"],
+            ["video"]
+        ];
+    }
+
+    /**
      * Test the property attachment
      * @test
      * @dataProvider attachmentProvider
@@ -31,28 +59,5 @@ class FillTest extends TestCase
     public function attachmentProvider()
     {
         return [["fixed"], ["scroll"]];
-    }
-
-    /**
-     * Test the property type
-     * @test
-     * @dataProvider typeProvider
-     * @covers ::getType
-     * @covers ::setType
-     */
-    public function testPropertyType($value)
-    {
-        $object = new Fill();
-        $object->setType($value);
-
-        $this->assertEquals($value, $object->getType());
-    }
-
-    /**
-     * Data provider for property type
-     */
-    public function typeProvider()
-    {
-        return [["a string"]];
     }
 }

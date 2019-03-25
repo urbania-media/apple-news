@@ -21,7 +21,7 @@ class StrokeStyle extends BaseSdkObject
     protected $color;
 
     /**
-     * Defines the style of the stroke. Valid values:
+     * A string that defines the style of the stroke. Valid values:
      * @var string
      */
     protected $style;
@@ -30,7 +30,7 @@ class StrokeStyle extends BaseSdkObject
      * The width of the stroke line. Can be either an integer value in
      * points, or a string according to Specifying Measurements for
      * Components.
-     * @var string|integer
+     * @var integer|string
      */
     protected $width;
 
@@ -105,7 +105,7 @@ class StrokeStyle extends BaseSdkObject
 
     /**
      * Get the width
-     * @return string|integer
+     * @return integer|string
      */
     public function getWidth()
     {
@@ -114,7 +114,7 @@ class StrokeStyle extends BaseSdkObject
 
     /**
      * Set the width
-     * @param string|integer $width
+     * @param integer|string $width
      * @return $this
      */
     public function setWidth($width)

@@ -15,18 +15,17 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class FloatDataFormat extends DataFormat
 {
     /**
+     * Always float for a FloatDataFormat object.
+     * @var string
+     */
+    protected $type = 'float';
+
+    /**
      * The number of digits that can appear after the decimal point. The
      * number will be rounded to this number of digits after the decimal.
      * @var integer
      */
     protected $decimals;
-
-    /**
-     * The type of data format for this object. This must be float for a
-     * FloatDataFormat object.
-     * @var string
-     */
-    protected $type = 'float';
 
     public function __construct(array $data = [])
     {
@@ -80,11 +79,11 @@ class FloatDataFormat extends DataFormat
     public function toArray()
     {
         $data = parent::toArray();
-        if (isset($this->decimals)) {
-            $data['decimals'] = $this->decimals;
-        }
         if (isset($this->type)) {
             $data['type'] = $this->type;
+        }
+        if (isset($this->decimals)) {
+            $data['decimals'] = $this->decimals;
         }
         return $data;
     }

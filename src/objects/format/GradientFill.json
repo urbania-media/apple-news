@@ -12,7 +12,6 @@
             "type": "array:Format\\ColorStop",
             "required": true,
             "description": "An array of color stops. Each stop sets a color and location along the gradient.",
-            "version": "1.0",
             "typed": false
         },
         {
@@ -20,7 +19,18 @@
             "type": "string",
             "required": true,
             "description": "The type of gradient; for example linear_gradient.",
-            "version": "1.0",
+            "typed": false
+        },
+        {
+            "name": "attachment",
+            "type": "enum:string",
+            "required": false,
+            "description": "A string that indicates how the fill should behave when a user scrolls.",
+            "default": "scroll",
+            "enum_values": [
+                "fixed",
+                "scroll"
+            ],
             "typed": false
         }
     ]

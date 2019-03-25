@@ -15,6 +15,13 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class ConditionalTableRowStyle extends TableRowStyle
 {
     /**
+     * An array of one or more selectors, each of which specifies one or more
+     * conditions.
+     * @var Format\TableRowSelector[]
+     */
+    protected $selectors;
+
+    /**
      * The background color for the row.
      * @var string
      */
@@ -30,20 +37,17 @@ class ConditionalTableRowStyle extends TableRowStyle
      * The height of the row, as an integer in points, or using one of the
      * available units of measure for components. See Specifying Measurements
      * for Components.
-     * @var string|integer
+     * @var integer|string
      */
     protected $height;
-
-    /**
-     * An array of one or more selectors, each of which specifies one or more
-     * conditions.
-     * @var Format\TableRowSelector[]
-     */
-    protected $selectors;
 
     public function __construct(array $data = [])
     {
         parent::__construct($data);
+
+        if (isset($data['selectors'])) {
+            $this->setSelectors($data['selectors']);
+        }
 
         if (isset($data['backgroundColor'])) {
             $this->setBackgroundColor($data['backgroundColor']);
@@ -55,10 +59,6 @@ class ConditionalTableRowStyle extends TableRowStyle
 
         if (isset($data['height'])) {
             $this->setHeight($data['height']);
-        }
-
-        if (isset($data['selectors'])) {
-            $this->setSelectors($data['selectors']);
         }
     }
 
@@ -120,7 +120,7 @@ class ConditionalTableRowStyle extends TableRowStyle
 
     /**
      * Get the height
-     * @return string|integer
+     * @return integer|string
      */
     public function getHeight()
     {
@@ -129,7 +129,7 @@ class ConditionalTableRowStyle extends TableRowStyle
 
     /**
      * Set the height
-     * @param string|integer $height
+     * @param integer|string $height
      * @return $this
      */
     public function setHeight($height)
@@ -214,6 +214,21 @@ class ConditionalTableRowStyle extends TableRowStyle
     public function toArray()
     {
         $data = parent::toArray();
+        if (isset($this->selectors)) {
+            $data['selectors'] = !is_null($this->selectors)
+                ? array_reduce(
+                    array_keys($this->selectors),
+                    function ($items, $key) {
+                        $items[$key] =
+                            $this->selectors[$key] instanceof Arrayable
+                                ? $this->selectors[$key]->toArray()
+                                : $this->selectors[$key];
+                        return $items;
+                    },
+                    []
+                )
+                : $this->selectors;
+        }
         if (isset($this->backgroundColor)) {
             $data['backgroundColor'] =
                 $this->backgroundColor instanceof Arrayable
@@ -231,21 +246,6 @@ class ConditionalTableRowStyle extends TableRowStyle
                 $this->height instanceof Arrayable
                     ? $this->height->toArray()
                     : $this->height;
-        }
-        if (isset($this->selectors)) {
-            $data['selectors'] = !is_null($this->selectors)
-                ? array_reduce(
-                    array_keys($this->selectors),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->selectors[$key] instanceof Arrayable
-                                ? $this->selectors[$key]->toArray()
-                                : $this->selectors[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->selectors;
         }
         return $data;
     }

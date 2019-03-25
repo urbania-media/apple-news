@@ -12,7 +12,6 @@
             "type": "Color",
             "required": false,
             "description": "The background color for the table column.",
-            "version": "1.5",
             "typed": false
         },
         {
@@ -20,7 +19,6 @@
             "type": "array:Format\\ConditionalTableColumnStyle",
             "required": false,
             "description": "An array of styles to be applied only to columns that meet specified conditions. This can be used to create a table with alternating column background colors.",
-            "version": "1.5",
             "typed": false
         },
         {
@@ -28,7 +26,6 @@
             "type": "Format\\TableStrokeStyle",
             "required": false,
             "description": "The stroke style for the divider lines between columns.",
-            "version": "1.5",
             "typed": false
         },
         {
@@ -39,7 +36,6 @@
             ],
             "required": false,
             "description": "The minimum width of the columns, as an integer in points or using the available units of measure for components. See Specifying Measurements for Components.",
-            "version": "1.5",
             "typed": false
         },
         {
@@ -47,7 +43,6 @@
             "type": "integer",
             "required": false,
             "description": "The relative column width. This value influences the distribution of column width but does not dictate any exact values. To set an exact minimum width, use minimumWidth instead.",
-            "version": "1.5",
             "typed": false
         }
     ]

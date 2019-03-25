@@ -15,6 +15,18 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class FormattedText extends BaseSdkObject
 {
     /**
+     * The text, including any HTML tags.
+     * @var string
+     */
+    protected $text;
+
+    /**
+     * Always formatted_text for this object.
+     * @var string
+     */
+    protected $type = 'formatted_text';
+
+    /**
      * An array of Addition objects that supply additional information for
      * ranges of text in the text property.
      * @var Format\Addition[]
@@ -23,7 +35,7 @@ class FormattedText extends BaseSdkObject
 
     /**
      * The formatting or markup method applied to the text. If format is set
-     * to html, neither additions nor inlineTextStyles is supported.
+     * to html, neither additions nor inlineTextStyles are supported.
      * @var string
      */
     protected $format;
@@ -36,26 +48,18 @@ class FormattedText extends BaseSdkObject
     protected $inlineTextStyles;
 
     /**
-     * The text, including any HTML tags.
-     * @var string
-     */
-    protected $text;
-
-    /**
-     * Either a component TextStyle object, or the name string of one of your
-     * styles in the ArticleDocument.componentTextStyles object.
+     * A component TextStyle object, or the name string of one of your styles
+     * in the ArticleDocument.componentTextStyles object.
      * @var \Urbania\AppleNews\Format\ComponentTextStyle|string
      */
     protected $textStyle;
 
-    /**
-     * The type must be formatted_text.
-     * @var string
-     */
-    protected $type = 'formatted_text';
-
     public function __construct(array $data = [])
     {
+        if (isset($data['text'])) {
+            $this->setText($data['text']);
+        }
+
         if (isset($data['additions'])) {
             $this->setAdditions($data['additions']);
         }
@@ -66,10 +70,6 @@ class FormattedText extends BaseSdkObject
 
         if (isset($data['inlineTextStyles'])) {
             $this->setInlineTextStyles($data['inlineTextStyles']);
-        }
-
-        if (isset($data['text'])) {
-            $this->setText($data['text']);
         }
 
         if (isset($data['textStyle'])) {
@@ -279,9 +279,9 @@ class FormattedText extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($textStyle)) {
+        if (is_object($textStyle) || is_array($textStyle)) {
             Assert::isSdkObject($textStyle, ComponentTextStyle::class);
-        } elseif (!is_array($textStyle)) {
+        } else {
             Assert::string($textStyle);
         }
 
@@ -307,6 +307,12 @@ class FormattedText extends BaseSdkObject
     public function toArray()
     {
         $data = [];
+        if (isset($this->text)) {
+            $data['text'] = $this->text;
+        }
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
         if (isset($this->additions)) {
             $data['additions'] = !is_null($this->additions)
                 ? array_reduce(
@@ -340,17 +346,11 @@ class FormattedText extends BaseSdkObject
                 )
                 : $this->inlineTextStyles;
         }
-        if (isset($this->text)) {
-            $data['text'] = $this->text;
-        }
         if (isset($this->textStyle)) {
             $data['textStyle'] =
                 $this->textStyle instanceof Arrayable
                     ? $this->textStyle->toArray()
                     : $this->textStyle;
-        }
-        if (isset($this->type)) {
-            $data['type'] = $this->type;
         }
         return $data;
     }

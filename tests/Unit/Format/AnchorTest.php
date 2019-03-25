@@ -11,6 +11,29 @@ use Urbania\AppleNews\Tests\TestCase;
 class AnchorTest extends TestCase
 {
     /**
+     * Test the property targetAnchorPosition
+     * @test
+     * @dataProvider targetAnchorPositionProvider
+     * @covers ::getTargetAnchorPosition
+     * @covers ::setTargetAnchorPosition
+     */
+    public function testPropertyTargetAnchorPosition($value)
+    {
+        $object = new Anchor();
+        $object->setTargetAnchorPosition($value);
+
+        $this->assertEquals($value, $object->getTargetAnchorPosition());
+    }
+
+    /**
+     * Data provider for property targetAnchorPosition
+     */
+    public function targetAnchorPositionProvider()
+    {
+        return [["top"], ["center"], ["bottom"]];
+    }
+
+    /**
      * Test the property originAnchorPosition
      * @test
      * @dataProvider originAnchorPositionProvider
@@ -100,29 +123,6 @@ class AnchorTest extends TestCase
     public function targetProvider()
     {
         return [["a string"]];
-    }
-
-    /**
-     * Test the property targetAnchorPosition
-     * @test
-     * @dataProvider targetAnchorPositionProvider
-     * @covers ::getTargetAnchorPosition
-     * @covers ::setTargetAnchorPosition
-     */
-    public function testPropertyTargetAnchorPosition($value)
-    {
-        $object = new Anchor();
-        $object->setTargetAnchorPosition($value);
-
-        $this->assertEquals($value, $object->getTargetAnchorPosition());
-    }
-
-    /**
-     * Data provider for property targetAnchorPosition
-     */
-    public function targetAnchorPositionProvider()
-    {
-        return [["top"], ["center"], ["bottom"]];
     }
 
     /**

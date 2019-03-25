@@ -15,16 +15,25 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class DataDescriptor extends BaseSdkObject
 {
     /**
-     * The data type. Valid values:
+     * The data type.
      * @var string
      */
     protected $dataType;
 
     /**
-     * Sets some additional formatting preferences if you are using the float
-     * or image data type. For example, use a FloatDataFormat object in this
-     * property to control rounding, or use an ImageDataFormat to control
-     * image size.
+     * The name of this data descriptor. In a data record, you use this name
+     * as the key in a key-value pair, where the value is the data itself.
+     * This key must be unique across data descriptors in this data record
+     * store. See RecordStore.
+     * @var string
+     */
+    protected $key;
+
+    /**
+     * The object that sets some additional formatting preferences if you are
+     * using the float or image data type. For example, use a FloatDataFormat
+     * object in this property to control rounding, or use an ImageDataFormat
+     * to control image size.
      * @var \Urbania\AppleNews\Format\DataFormat
      */
     protected $format;
@@ -39,15 +48,6 @@ class DataDescriptor extends BaseSdkObject
     protected $identifier;
 
     /**
-     * The name of this data descriptor. In a data record, you will use this
-     * name as the key in a key-value pair, where the value is the data
-     * itself. This key must be unique across data descriptors in this data
-     * record store. See RecordStore.
-     * @var string
-     */
-    protected $key;
-
-    /**
      * The text to appear in the table header for this data category. This
      * text can be provided as a string or a FormattedText object.
      * @var \Urbania\AppleNews\Format\FormattedText|string
@@ -60,16 +60,16 @@ class DataDescriptor extends BaseSdkObject
             $this->setDataType($data['dataType']);
         }
 
+        if (isset($data['key'])) {
+            $this->setKey($data['key']);
+        }
+
         if (isset($data['format'])) {
             $this->setFormat($data['format']);
         }
 
         if (isset($data['identifier'])) {
             $this->setIdentifier($data['identifier']);
-        }
-
-        if (isset($data['key'])) {
-            $this->setKey($data['key']);
         }
 
         if (isset($data['label'])) {
@@ -200,9 +200,9 @@ class DataDescriptor extends BaseSdkObject
      */
     public function setLabel($label)
     {
-        if (is_object($label)) {
+        if (is_object($label) || is_array($label)) {
             Assert::isSdkObject($label, FormattedText::class);
-        } elseif (!is_array($label)) {
+        } else {
             Assert::string($label);
         }
 
@@ -220,6 +220,9 @@ class DataDescriptor extends BaseSdkObject
         if (isset($this->dataType)) {
             $data['dataType'] = $this->dataType;
         }
+        if (isset($this->key)) {
+            $data['key'] = $this->key;
+        }
         if (isset($this->format)) {
             $data['format'] =
                 $this->format instanceof Arrayable
@@ -228,9 +231,6 @@ class DataDescriptor extends BaseSdkObject
         }
         if (isset($this->identifier)) {
             $data['identifier'] = $this->identifier;
-        }
-        if (isset($this->key)) {
-            $data['key'] = $this->key;
         }
         if (isset($this->label)) {
             $data['label'] =

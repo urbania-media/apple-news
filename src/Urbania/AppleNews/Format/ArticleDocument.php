@@ -19,11 +19,20 @@ class ArticleDocument extends BaseSdkObject
     use FindsComponents;
 
     /**
-     * The version of Apple News Format used in the JSON document. The
-     * documentation notes the version of each property.
-     * @var string
+     * An array of components that form the content of this article.
+     * Components have different roles and types, such as Photo and Music.
+     * @var Format\Component[]
      */
-    protected $version;
+    protected $components;
+
+    /**
+     * The component text styles that can be referred to by components in
+     * this document. Each article.json file must have, at minimum, a default
+     * component text style named default. Defaults by component role can
+     * also be set. See Defining and Using Text Styles.
+     * @var \Urbania\AppleNews\Format\ComponentTextStyles
+     */
+    protected $componentTextStyles;
 
     /**
      * An unique, publisher-provided identifier for this article. This
@@ -32,13 +41,6 @@ class ArticleDocument extends BaseSdkObject
      * @var string
      */
     protected $identifier;
-
-    /**
-     * The article title or headline. Should be plain text; formatted text
-     * (HTML or Markdown) is not supported.
-     * @var string
-     */
-    protected $title;
 
     /**
      * A code that indicates the language of the article. Use the IANA.org
@@ -59,28 +61,60 @@ class ArticleDocument extends BaseSdkObject
     protected $layout;
 
     /**
-     * An array of components that form the content of this article.
-     * Components have different roles and types, such as Photo and Music.
-     * @var Format\Component[]
+     * The article title or headline. Should be plain text; formatted text
+     * (HTML or Markdown) is not supported.
+     * @var string
      */
-    protected $components;
+    protected $title;
 
     /**
-     * The component text styles that can be referred to by components in
-     * this document. Each article.json file must have, at minimum, a default
-     * component text style named default. Defaults by component role can
-     * also be set. See Defining and Using Text Styles.
-     * @var \Urbania\AppleNews\Format\ComponentTextStyles
+     * The version of Apple News Format used in the JSON document.
+     * @var string
      */
-    protected $componentTextStyles;
+    protected $version;
 
     /**
-     * Allows an advertisement to be inserted at a position that is both
-     * possible and optimal. You can specify what bannerType you want to have
+     * An advertisement to be inserted at a position that is both possible
+     * and optimal. You can specify what bannerType you want to have
      * automatically inserted.
      * @var \Urbania\AppleNews\Format\AdvertisingSettings
      */
     protected $advertisingSettings;
+
+    /**
+     * The metadata, appearance, and placement of advertising and related
+     * content components within Apple News Format articles.
+     * @var \Urbania\AppleNews\Format\AutoPlacement
+     */
+    protected $autoplacement;
+
+    /**
+     * The article-level ComponentLayout objects that can be referred to by
+     * their key within the ComponentLayouts object. See Positioning the
+     * Content in Your Article.
+     * @var \Urbania\AppleNews\Format\ComponentLayouts
+     */
+    protected $componentLayouts;
+
+    /**
+     * The component styles that can be referred to by components within this
+     * document. See Enhancing Your Articles with Styles.
+     * @var \Urbania\AppleNews\Format\ComponentStyles
+     */
+    protected $componentStyles;
+
+    /**
+     * An object containing the background color of the article.
+     * @var \Urbania\AppleNews\Format\DocumentStyle
+     */
+    protected $documentStyle;
+
+    /**
+     * The article's metadata, such as publication date, ad campaign data,
+     * and other information that is not part of the core article content.
+     * @var \Urbania\AppleNews\Format\Metadata
+     */
+    protected $metadata;
 
     /**
      * The article subtitle. Should be plain text; formatted text (HTML or
@@ -90,19 +124,6 @@ class ArticleDocument extends BaseSdkObject
     protected $subtitle;
 
     /**
-     * Article metadata, such as publication date, ad campaign data, and
-     * other information that is not part of the core article content.
-     * @var \Urbania\AppleNews\Format\Metadata
-     */
-    protected $metadata;
-
-    /**
-     * An object containing the background color of the article.
-     * @var \Urbania\AppleNews\Format\DocumentStyle
-     */
-    protected $documentStyle;
-
-    /**
      * The TextStyle objects available to use inline for text in Text
      * components. See Using HTML with Apple News Format, Using Markdown with
      * Apple News Format, and InlineTextStyle.
@@ -110,33 +131,18 @@ class ArticleDocument extends BaseSdkObject
      */
     protected $textStyles;
 
-    /**
-     * Article-level ComponentLayout objects that can be referred to by their
-     * key within the ComponentLayouts object. See Positioning the Content in
-     * Your Article.
-     * @var \Urbania\AppleNews\Format\ComponentLayouts
-     */
-    protected $componentLayouts;
-
-    /**
-     * The component styles that can be referred to by components within this
-     * document. See Understanding Styles.
-     * @var \Urbania\AppleNews\Format\ComponentStyles
-     */
-    protected $componentStyles;
-
     public function __construct(array $data = [])
     {
-        if (isset($data['version'])) {
-            $this->setVersion($data['version']);
+        if (isset($data['components'])) {
+            $this->setComponents($data['components']);
+        }
+
+        if (isset($data['componentTextStyles'])) {
+            $this->setComponentTextStyles($data['componentTextStyles']);
         }
 
         if (isset($data['identifier'])) {
             $this->setIdentifier($data['identifier']);
-        }
-
-        if (isset($data['title'])) {
-            $this->setTitle($data['title']);
         }
 
         if (isset($data['language'])) {
@@ -147,32 +153,20 @@ class ArticleDocument extends BaseSdkObject
             $this->setLayout($data['layout']);
         }
 
-        if (isset($data['components'])) {
-            $this->setComponents($data['components']);
+        if (isset($data['title'])) {
+            $this->setTitle($data['title']);
         }
 
-        if (isset($data['componentTextStyles'])) {
-            $this->setComponentTextStyles($data['componentTextStyles']);
+        if (isset($data['version'])) {
+            $this->setVersion($data['version']);
         }
 
         if (isset($data['advertisingSettings'])) {
             $this->setAdvertisingSettings($data['advertisingSettings']);
         }
 
-        if (isset($data['subtitle'])) {
-            $this->setSubtitle($data['subtitle']);
-        }
-
-        if (isset($data['metadata'])) {
-            $this->setMetadata($data['metadata']);
-        }
-
-        if (isset($data['documentStyle'])) {
-            $this->setDocumentStyle($data['documentStyle']);
-        }
-
-        if (isset($data['textStyles'])) {
-            $this->setTextStyles($data['textStyles']);
+        if (isset($data['autoplacement'])) {
+            $this->setAutoplacement($data['autoplacement']);
         }
 
         if (isset($data['componentLayouts'])) {
@@ -181,6 +175,22 @@ class ArticleDocument extends BaseSdkObject
 
         if (isset($data['componentStyles'])) {
             $this->setComponentStyles($data['componentStyles']);
+        }
+
+        if (isset($data['documentStyle'])) {
+            $this->setDocumentStyle($data['documentStyle']);
+        }
+
+        if (isset($data['metadata'])) {
+            $this->setMetadata($data['metadata']);
+        }
+
+        if (isset($data['subtitle'])) {
+            $this->setSubtitle($data['subtitle']);
+        }
+
+        if (isset($data['textStyles'])) {
+            $this->setTextStyles($data['textStyles']);
         }
     }
 
@@ -210,6 +220,35 @@ class ArticleDocument extends BaseSdkObject
         $this->advertisingSettings = is_array($advertisingSettings)
             ? new AdvertisingSettings($advertisingSettings)
             : $advertisingSettings;
+        return $this;
+    }
+
+    /**
+     * Get the autoplacement
+     * @return \Urbania\AppleNews\Format\AutoPlacement
+     */
+    public function getAutoplacement()
+    {
+        return $this->autoplacement;
+    }
+
+    /**
+     * Set the autoplacement
+     * @param \Urbania\AppleNews\Format\AutoPlacement|array $autoplacement
+     * @return $this
+     */
+    public function setAutoplacement($autoplacement)
+    {
+        if (is_null($autoplacement)) {
+            $this->autoplacement = null;
+            return $this;
+        }
+
+        Assert::isSdkObject($autoplacement, AutoPlacement::class);
+
+        $this->autoplacement = is_array($autoplacement)
+            ? new AutoPlacement($autoplacement)
+            : $autoplacement;
         return $this;
     }
 
@@ -592,24 +631,6 @@ class ArticleDocument extends BaseSdkObject
     public function toArray()
     {
         $data = [];
-        if (isset($this->version)) {
-            $data['version'] = $this->version;
-        }
-        if (isset($this->identifier)) {
-            $data['identifier'] = $this->identifier;
-        }
-        if (isset($this->title)) {
-            $data['title'] = $this->title;
-        }
-        if (isset($this->language)) {
-            $data['language'] = $this->language;
-        }
-        if (isset($this->layout)) {
-            $data['layout'] =
-                $this->layout instanceof Arrayable
-                    ? $this->layout->toArray()
-                    : $this->layout;
-        }
         if (isset($this->components)) {
             $data['components'] = !is_null($this->components)
                 ? array_reduce(
@@ -631,32 +652,35 @@ class ArticleDocument extends BaseSdkObject
                     ? $this->componentTextStyles->toArray()
                     : $this->componentTextStyles;
         }
+        if (isset($this->identifier)) {
+            $data['identifier'] = $this->identifier;
+        }
+        if (isset($this->language)) {
+            $data['language'] = $this->language;
+        }
+        if (isset($this->layout)) {
+            $data['layout'] =
+                $this->layout instanceof Arrayable
+                    ? $this->layout->toArray()
+                    : $this->layout;
+        }
+        if (isset($this->title)) {
+            $data['title'] = $this->title;
+        }
+        if (isset($this->version)) {
+            $data['version'] = $this->version;
+        }
         if (isset($this->advertisingSettings)) {
             $data['advertisingSettings'] =
                 $this->advertisingSettings instanceof Arrayable
                     ? $this->advertisingSettings->toArray()
                     : $this->advertisingSettings;
         }
-        if (isset($this->subtitle)) {
-            $data['subtitle'] = $this->subtitle;
-        }
-        if (isset($this->metadata)) {
-            $data['metadata'] =
-                $this->metadata instanceof Arrayable
-                    ? $this->metadata->toArray()
-                    : $this->metadata;
-        }
-        if (isset($this->documentStyle)) {
-            $data['documentStyle'] =
-                $this->documentStyle instanceof Arrayable
-                    ? $this->documentStyle->toArray()
-                    : $this->documentStyle;
-        }
-        if (isset($this->textStyles)) {
-            $data['textStyles'] =
-                $this->textStyles instanceof Arrayable
-                    ? $this->textStyles->toArray()
-                    : $this->textStyles;
+        if (isset($this->autoplacement)) {
+            $data['autoplacement'] =
+                $this->autoplacement instanceof Arrayable
+                    ? $this->autoplacement->toArray()
+                    : $this->autoplacement;
         }
         if (isset($this->componentLayouts)) {
             $data['componentLayouts'] =
@@ -669,6 +693,27 @@ class ArticleDocument extends BaseSdkObject
                 $this->componentStyles instanceof Arrayable
                     ? $this->componentStyles->toArray()
                     : $this->componentStyles;
+        }
+        if (isset($this->documentStyle)) {
+            $data['documentStyle'] =
+                $this->documentStyle instanceof Arrayable
+                    ? $this->documentStyle->toArray()
+                    : $this->documentStyle;
+        }
+        if (isset($this->metadata)) {
+            $data['metadata'] =
+                $this->metadata instanceof Arrayable
+                    ? $this->metadata->toArray()
+                    : $this->metadata;
+        }
+        if (isset($this->subtitle)) {
+            $data['subtitle'] = $this->subtitle;
+        }
+        if (isset($this->textStyles)) {
+            $data['textStyles'] =
+                $this->textStyles instanceof Arrayable
+                    ? $this->textStyles->toArray()
+                    : $this->textStyles;
         }
         return $data;
     }

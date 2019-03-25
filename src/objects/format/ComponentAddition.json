@@ -12,7 +12,6 @@
             "type": "string",
             "required": true,
             "description": "The type of componentAddition. For example ComponentLink.",
-            "version": "1.7",
             "typed": false
         }
     ]

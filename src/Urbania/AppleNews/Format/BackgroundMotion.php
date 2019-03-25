@@ -15,7 +15,7 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class BackgroundMotion extends Behavior
 {
     /**
-     * This behavior’s type is always background_motion.
+     * Always background_motion for this behavior.
      * @var string
      */
     protected $type = 'background_motion';

@@ -17,7 +17,7 @@ class Padding extends BaseSdkObject
      * The amount of padding between the bottom of the cell and the content,
      * as an integer in points or using the available units for components.
      * See Specifying Measurements for Components.
-     * @var string|integer
+     * @var integer|string
      */
     protected $bottom;
 
@@ -25,23 +25,23 @@ class Padding extends BaseSdkObject
      * The amount of padding between the left side of the cell and the
      * content, as an integer in points or using the available units for
      * components.See Specifying Measurements for Components.
-     * @var string|integer
+     * @var integer|string
      */
     protected $left;
 
     /**
      * The amount of padding between the right side of the cell and the
      * content, as an integer in points or using the available units for
-     * components.See Specifying Measurements for Components.
-     * @var string|integer
+     * components. See Specifying Measurements for Components.
+     * @var integer|string
      */
     protected $right;
 
     /**
      * The amount of padding between the top of the cell and the content, as
-     * an integer in points or using the available units for components.See
-     * Specifying Measurements for Components.
-     * @var string|integer
+     * an integer in points or using the available units for components. See
+     * Specifying Measurements for Components
+     * @var integer|string
      */
     protected $top;
 
@@ -66,7 +66,7 @@ class Padding extends BaseSdkObject
 
     /**
      * Get the bottom
-     * @return string|integer
+     * @return integer|string
      */
     public function getBottom()
     {
@@ -75,7 +75,7 @@ class Padding extends BaseSdkObject
 
     /**
      * Set the bottom
-     * @param string|integer $bottom
+     * @param integer|string $bottom
      * @return $this
      */
     public function setBottom($bottom)
@@ -93,7 +93,7 @@ class Padding extends BaseSdkObject
 
     /**
      * Get the left
-     * @return string|integer
+     * @return integer|string
      */
     public function getLeft()
     {
@@ -102,7 +102,7 @@ class Padding extends BaseSdkObject
 
     /**
      * Set the left
-     * @param string|integer $left
+     * @param integer|string $left
      * @return $this
      */
     public function setLeft($left)
@@ -120,7 +120,7 @@ class Padding extends BaseSdkObject
 
     /**
      * Get the right
-     * @return string|integer
+     * @return integer|string
      */
     public function getRight()
     {
@@ -129,7 +129,7 @@ class Padding extends BaseSdkObject
 
     /**
      * Set the right
-     * @param string|integer $right
+     * @param integer|string $right
      * @return $this
      */
     public function setRight($right)
@@ -147,7 +147,7 @@ class Padding extends BaseSdkObject
 
     /**
      * Get the top
-     * @return string|integer
+     * @return integer|string
      */
     public function getTop()
     {
@@ -156,7 +156,7 @@ class Padding extends BaseSdkObject
 
     /**
      * Set the top
-     * @param string|integer $top
+     * @param integer|string $top
      * @return $this
      */
     public function setTop($top)

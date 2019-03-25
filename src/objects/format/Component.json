@@ -7,20 +7,25 @@
     "typed": {
         "property": "role",
         "types": {
-            "audio": "Audio",
-            "music": "Music",
-            "author": "Author",
-            "illustrator": "Illustrator",
-            "photographer": "Photographer",
+            "map": "Map",
+            "divider": "Divider",
+            "banner_advertisement": "BannerAdvertisement",
+            "medium_rectangle_advertisement": "MediumRectangleAdvertisement",
+            "container": "Container",
+            "video": "Video",
             "embedwebvideo": "EmbedWebVideo",
             "embedvideo": "EmbedWebVideo",
+            "audio": "Audio",
+            "music": "Music",
             "aside": "Aside",
-            "header": "Header",
             "section": "Section",
+            "header": "Header",
+            "spacer": "FlexibleSpacer",
             "chapter": "Chapter",
-            "container": "Container",
-            "divider": "Divider",
+            "article_link": "ArticleLink",
             "body": "Body",
+            "article_title": "ArticleTitle",
+            "pullquote": "PullQuote",
             "title": "Title",
             "heading": "Heading",
             "heading1": "Heading",
@@ -35,52 +40,74 @@
             "figure": "Figure",
             "portrait": "Portrait",
             "logo": "Logo",
+            "image": "Image",
             "gallery": "Gallery",
             "mosaic": "Mosaic",
+            "author": "Author",
+            "byline": "Byline",
+            "illustrator": "Illustrator",
+            "photographer": "Photographer",
             "quote": "Quote",
-            "pullquote": "PullQuote",
+            "article_thumbnail": "ArticleThumbnail",
             "datatable": "DataTable",
-            "map": "Map",
+            "htmltable": "HTMLTable",
             "place": "Place",
+            "tweet": "Tweet",
             "instagram": "Instagram",
             "facebook_post": "FacebookPost",
-            "tweet": "Tweet",
-            "htmltable": "HTMLTable",
-            "banner_advertisement": "BannerAdvertisement",
-            "medium_rectangle_advertisement": "MediumRectangleAdvertisement"
+            "arkit": "ARKit"
         }
     },
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/component",
     "properties": [
         {
+            "name": "role",
+            "type": "string",
+            "required": true,
+            "description": "The role of a component (for example, title, body, or pullquote) conveys the semantic value of the content or its function within the article.",
+            "typed": false
+        },
+        {
             "name": "anchor",
             "type": "Format\\Anchor",
             "required": false,
-            "description": "An Anchor object that aligns this component vertically with another component.",
-            "version": "1.0",
+            "description": "An object that defines vertical alignment with another component.",
             "typed": false
         },
         {
             "name": "animation",
             "type": "Format\\ComponentAnimation",
             "required": false,
-            "description": "An object that applies an animation effect, such as a FadeInAnimation, to this component.",
-            "version": "1.0",
+            "description": "An object that defines an animation to be applied to the component.",
             "typed": true
         },
         {
             "name": "behavior",
             "type": "Format\\Behavior",
             "required": false,
-            "description": "A behavior object that applies a motion effect or other physics effect, such as Parallax or Springy.",
-            "version": "1.0",
+            "description": "An object that defines behavior for a component, like Parallax or Springy.",
             "typed": true
+        },
+        {
+            "name": "conditional",
+            "type": "array:Format\\ConditionalComponent",
+            "required": false,
+            "description": "An array of component properties that can be applied conditionally, and the conditions that cause them to be applied.",
+            "typed": false
+        },
+        {
+            "name": "hidden",
+            "type": "boolean",
+            "required": false,
+            "description": "A Boolean value that determines whether the component is hidden.",
+            "default": "false",
+            "typed": false
         },
         {
             "name": "identifier",
             "type": "string",
             "required": false,
-            "description": "A unique identifier for this component. If used, identifier must be unique across the entire document. An identifier is required if you want to anchor other components to this component. See Anchor.",
+            "description": "A unique identifier for this component. If used, identifier must be unique across the entire document. An identifier is required if you want to anchor other components to this component.",
             "typed": false
         },
         {
@@ -90,16 +117,7 @@
                 "string"
             ],
             "required": false,
-            "description": "Either an inline ComponentLayout object that contains layout information, or a string reference to a component layout that is defined in Article Document.Component Layouts.",
-            "version": "1.0",
-            "typed": false
-        },
-        {
-            "name": "role",
-            "type": "string",
-            "required": true,
-            "description": "The role of a component (for example, title, body, or pullquote) conveys the semantic value of the content or its function within the article.",
-            "version": "1.0",
+            "description": "An inline ComponentLayout object that contains layout information, or a string reference to a ComponentLayout that is defined at the top level of the document.",
             "typed": false
         },
         {
@@ -109,8 +127,7 @@
                 "string"
             ],
             "required": false,
-            "description": "Either an inline ComponentStyle object that defines the appearance of this component, or a string reference to a component style that is defined in in Article Document.Component Styles.",
-            "version": "1.0",
+            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle that is defined at the top level of the document.",
             "typed": false
         }
     ]

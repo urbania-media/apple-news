@@ -12,7 +12,6 @@
             "type": "string",
             "required": true,
             "description": "The identifier property of one of the table\u2019s data descriptors. See DataDescriptor.",
-            "version": "1.5",
             "typed": false
         },
         {
@@ -20,7 +19,6 @@
             "type": "enum:string",
             "required": true,
             "description": "The data sorting direction.",
-            "version": "1.5",
             "enum_values": [
                 "ascending",
                 "descending"

@@ -11,29 +11,6 @@ use Urbania\AppleNews\Tests\TestCase;
 class LinkedArticleTest extends TestCase
 {
     /**
-     * Test the property URL
-     * @test
-     * @dataProvider URLProvider
-     * @covers ::getURL
-     * @covers ::setURL
-     */
-    public function testPropertyURL($value)
-    {
-        $object = new LinkedArticle();
-        $object->setURL($value);
-
-        $this->assertEquals($value, $object->getURL());
-    }
-
-    /**
-     * Data provider for property URL
-     */
-    public function URLProvider()
-    {
-        return [["http://example.com"], ["https://example.com"]];
-    }
-
-    /**
      * Test the property relationship
      * @test
      * @dataProvider relationshipProvider
@@ -54,5 +31,28 @@ class LinkedArticleTest extends TestCase
     public function relationshipProvider()
     {
         return [["related"], ["promoted"]];
+    }
+
+    /**
+     * Test the property URL
+     * @test
+     * @dataProvider URLProvider
+     * @covers ::getURL
+     * @covers ::setURL
+     */
+    public function testPropertyURL($value)
+    {
+        $object = new LinkedArticle();
+        $object->setURL($value);
+
+        $this->assertEquals($value, $object->getURL());
+    }
+
+    /**
+     * Data provider for property URL
+     */
+    public function URLProvider()
+    {
+        return [["http://example.com"], ["https://example.com"]];
     }
 }

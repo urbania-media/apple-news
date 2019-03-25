@@ -11,6 +11,29 @@ use Urbania\AppleNews\Tests\TestCase;
 class ConditionalTableColumnStyleTest extends TestCase
 {
     /**
+     * Test the property selectors
+     * @test
+     * @dataProvider selectorsProvider
+     * @covers ::getSelectors
+     * @covers ::setSelectors
+     */
+    public function testPropertySelectors($value)
+    {
+        $object = new ConditionalTableColumnStyle();
+        $object->setSelectors($value);
+
+        $this->assertEquals($value, $object->getSelectors());
+    }
+
+    /**
+     * Data provider for property selectors
+     */
+    public function selectorsProvider()
+    {
+        return [[[new \Urbania\AppleNews\Format\TableColumnSelector()]]];
+    }
+
+    /**
      * Test the property backgroundColor
      * @test
      * @dataProvider backgroundColorProvider
@@ -77,29 +100,6 @@ class ConditionalTableColumnStyleTest extends TestCase
     public function minimumWidthProvider()
     {
         return [["1vh"], [1], ["1vmin"]];
-    }
-
-    /**
-     * Test the property selectors
-     * @test
-     * @dataProvider selectorsProvider
-     * @covers ::getSelectors
-     * @covers ::setSelectors
-     */
-    public function testPropertySelectors($value)
-    {
-        $object = new ConditionalTableColumnStyle();
-        $object->setSelectors($value);
-
-        $this->assertEquals($value, $object->getSelectors());
-    }
-
-    /**
-     * Data provider for property selectors
-     */
-    public function selectorsProvider()
-    {
-        return [[[new \Urbania\AppleNews\Format\TableColumnSelector()]]];
     }
 
     /**

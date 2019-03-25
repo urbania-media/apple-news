@@ -11,6 +11,27 @@ use Urbania\AppleNews\Tests\TestCase;
 class ComponentLinkTest extends TestCase
 {
     /**
+     * Test the property type
+     * @test
+     * @dataProvider typeProvider
+     * @covers ::getType
+     */
+    public function testPropertyType($value)
+    {
+        $object = new ComponentLink();
+
+        $this->assertEquals($value, $object->getType());
+    }
+
+    /**
+     * Data provider for property type
+     */
+    public function typeProvider()
+    {
+        return [["link"]];
+    }
+
+    /**
      * Test the property URL
      * @test
      * @dataProvider URLProvider
@@ -30,27 +51,6 @@ class ComponentLinkTest extends TestCase
      */
     public function URLProvider()
     {
-        return [["a string"]];
-    }
-
-    /**
-     * Test the property type
-     * @test
-     * @dataProvider typeProvider
-     * @covers ::getType
-     */
-    public function testPropertyType($value)
-    {
-        $object = new ComponentLink();
-
-        $this->assertEquals($value, $object->getType());
-    }
-
-    /**
-     * Data provider for property type
-     */
-    public function typeProvider()
-    {
-        return [["link"]];
+        return [["http://example.com"], ["https://example.com"]];
     }
 }

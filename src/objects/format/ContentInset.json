@@ -1,7 +1,7 @@
 {
     "name": "Format\\ContentInset",
-    "description": "The object for defining the space around the component content on one or more sides.",
-    "version": "1.7+",
+    "description": "The object for defining the space around the component content on one or more sides.DeprecatedUse the padding property in ComponentLayout instead.",
+    "version": "1.7",
     "from_class": null,
     "extends": null,
     "typed": null,
@@ -11,8 +11,7 @@
             "name": "bottom",
             "type": "boolean",
             "required": false,
-            "description": "Applies an inset to the bottom of the component.",
-            "version": "1.0",
+            "description": "A Boolean value that applies an inset to the bottom of the component.",
             "default": "false",
             "typed": false
         },
@@ -20,8 +19,7 @@
             "name": "left",
             "type": "boolean",
             "required": false,
-            "description": "Applies an inset to the left side of the component.",
-            "version": "1.0",
+            "description": "A Boolean value that applies an inset to the left side of the component.",
             "default": "false",
             "typed": false
         },
@@ -29,8 +27,7 @@
             "name": "right",
             "type": "boolean",
             "required": false,
-            "description": "Applies an inset to the right side of the component.",
-            "version": "1.0",
+            "description": "A Boolean value that applies an inset to the right side of the component.",
             "default": "false",
             "typed": false
         },
@@ -38,8 +35,7 @@
             "name": "top",
             "type": "boolean",
             "required": false,
-            "description": "Applies an inset to the top of the component.",
-            "version": "1.0",
+            "description": "A Boolean value that applies an inset to the top of the component.",
             "default": "false",
             "typed": false
         }

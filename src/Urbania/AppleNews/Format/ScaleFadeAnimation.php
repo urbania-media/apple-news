@@ -14,9 +14,15 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class ScaleFadeAnimation extends ComponentAnimation
 {
     /**
+     * Always scale_fade for this animation type.
+     * @var string
+     */
+    protected $type = 'scale_fade';
+
+    /**
      * The initial transparency of the component. Set initialAlpha to a value
      * between 0 (completely transparent) and 1 (completely opaque).
-     * @var integer|float
+     * @var float|integer
      */
     protected $initialAlpha;
 
@@ -24,19 +30,13 @@ class ScaleFadeAnimation extends ComponentAnimation
      * The initial scale of the component. Set initialScale to a value
      * between 0 (completely scaled down) and 1 (the component’s original
      * size).
-     * @var integer|float
+     * @var float|integer
      */
     protected $initialScale;
 
     /**
-     * This animation’s type is always scale_fade.
-     * @var string
-     */
-    protected $type = 'scale_fade';
-
-    /**
-     * Indicates whether the animation occurs in response to user action
-     * (true) or happens automatically (false).
+     * A Boolean value that indicates whether the animation occurs in
+     * response to user action (true) or happens automatically (false).
      * @var boolean
      */
     protected $userControllable;
@@ -60,7 +60,7 @@ class ScaleFadeAnimation extends ComponentAnimation
 
     /**
      * Get the initialAlpha
-     * @return integer|float
+     * @return float|integer
      */
     public function getInitialAlpha()
     {
@@ -69,7 +69,7 @@ class ScaleFadeAnimation extends ComponentAnimation
 
     /**
      * Set the initialAlpha
-     * @param integer|float $initialAlpha
+     * @param float|integer $initialAlpha
      * @return $this
      */
     public function setInitialAlpha($initialAlpha)
@@ -87,7 +87,7 @@ class ScaleFadeAnimation extends ComponentAnimation
 
     /**
      * Get the initialScale
-     * @return integer|float
+     * @return float|integer
      */
     public function getInitialScale()
     {
@@ -96,7 +96,7 @@ class ScaleFadeAnimation extends ComponentAnimation
 
     /**
      * Set the initialScale
-     * @param integer|float $initialScale
+     * @param float|integer $initialScale
      * @return $this
      */
     public function setInitialScale($initialScale)
@@ -155,14 +155,14 @@ class ScaleFadeAnimation extends ComponentAnimation
     public function toArray()
     {
         $data = parent::toArray();
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
         if (isset($this->initialAlpha)) {
             $data['initialAlpha'] = $this->initialAlpha;
         }
         if (isset($this->initialScale)) {
             $data['initialScale'] = $this->initialScale;
-        }
-        if (isset($this->type)) {
-            $data['type'] = $this->type;
         }
         if (isset($this->userControllable)) {
             $data['userControllable'] = $this->userControllable;

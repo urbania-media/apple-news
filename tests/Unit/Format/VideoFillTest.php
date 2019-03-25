@@ -11,6 +11,50 @@ use Urbania\AppleNews\Tests\TestCase;
 class VideoFillTest extends TestCase
 {
     /**
+     * Test the property stillURL
+     * @test
+     * @dataProvider stillURLProvider
+     * @covers ::getStillURL
+     * @covers ::setStillURL
+     */
+    public function testPropertyStillURL($value)
+    {
+        $object = new VideoFill();
+        $object->setStillURL($value);
+
+        $this->assertEquals($value, $object->getStillURL());
+    }
+
+    /**
+     * Data provider for property stillURL
+     */
+    public function stillURLProvider()
+    {
+        return [["http://example.com"], ["https://example.com"]];
+    }
+
+    /**
+     * Test the property type
+     * @test
+     * @dataProvider typeProvider
+     * @covers ::getType
+     */
+    public function testPropertyType($value)
+    {
+        $object = new VideoFill();
+
+        $this->assertEquals($value, $object->getType());
+    }
+
+    /**
+     * Data provider for property type
+     */
+    public function typeProvider()
+    {
+        return [["video"]];
+    }
+
+    /**
      * Test the property URL
      * @test
      * @dataProvider URLProvider
@@ -31,6 +75,29 @@ class VideoFillTest extends TestCase
     public function URLProvider()
     {
         return [["http://example.com"], ["https://example.com"]];
+    }
+
+    /**
+     * Test the property attachment
+     * @test
+     * @dataProvider attachmentProvider
+     * @covers ::getAttachment
+     * @covers ::setAttachment
+     */
+    public function testPropertyAttachment($value)
+    {
+        $object = new VideoFill();
+        $object->setAttachment($value);
+
+        $this->assertEquals($value, $object->getAttachment());
+    }
+
+    /**
+     * Data provider for property attachment
+     */
+    public function attachmentProvider()
+    {
+        return [["fixed"], ["scroll"]];
     }
 
     /**
@@ -100,52 +167,6 @@ class VideoFillTest extends TestCase
     public function loopProvider()
     {
         return [[true], [false]];
-    }
-
-    /**
-     * Test the property stillURL
-     * @test
-     * @dataProvider stillURLProvider
-     * @covers ::getStillURL
-     * @covers ::setStillURL
-     */
-    public function testPropertyStillURL($value)
-    {
-        $object = new VideoFill();
-        $object->setStillURL($value);
-
-        $this->assertEquals($value, $object->getStillURL());
-    }
-
-    /**
-     * Data provider for property stillURL
-     */
-    public function stillURLProvider()
-    {
-        return [["a string"]];
-    }
-
-    /**
-     * Test the property type
-     * @test
-     * @dataProvider typeProvider
-     * @covers ::getType
-     * @covers ::setType
-     */
-    public function testPropertyType($value)
-    {
-        $object = new VideoFill();
-        $object->setType($value);
-
-        $this->assertEquals($value, $object->getType());
-    }
-
-    /**
-     * Data provider for property type
-     */
-    public function typeProvider()
-    {
-        return [["a string"]];
     }
 
     /**

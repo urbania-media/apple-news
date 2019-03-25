@@ -15,20 +15,28 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class ComponentTextStyle extends TextStyle
 {
     /**
-     * The background color for text lines.
+     * The background color for text lines. The value defaults to
+     * transparent.
      * @var string
      */
     protected $backgroundColor;
 
     /**
-     * Defines the style of drop cap to apply to the first paragraph of the
+     * An array of component text style properties that can be applied
+     * conditionally, and the conditions that cause them to be applied.
+     * @var Format\ConditionalComponentTextStyle[]
+     */
+    protected $conditional;
+
+    /**
+     * The style of drop cap to apply to the first paragraph of the
      * component.
      * @var \Urbania\AppleNews\Format\DropCapStyle
      */
     protected $dropCapStyle;
 
     /**
-     * Defines the indent of the first line of each paragraph in points.
+     * The indent of the first line of each paragraph in points.
      * @var integer
      */
     protected $firstLineIndent;
@@ -44,7 +52,7 @@ class ComponentTextStyle extends TextStyle
     protected $fontFamily;
 
     /**
-     * Use fontName to refer to an explicit font variant’s Postscript name,
+     * The fontName to refer to an explicit font variant’s Postscript name,
      * such as GillSans-Bold. Alternatively, you can use a combination of
      * fontFamily, fontWeight, fontWidth and/or fontStyle to have News
      * automatically select the appropriate variant depending on the text
@@ -64,7 +72,7 @@ class ComponentTextStyle extends TextStyle
     protected $fontSize;
 
     /**
-     * The font style to apply. Available options are:
+     * The font style to apply.
      * @var string
      */
     protected $fontStyle;
@@ -81,61 +89,62 @@ class ComponentTextStyle extends TextStyle
      * The font width to apply for font selection (known in CSS as
      * font-stretch) defines the width characteristics of a font variant
      * between normal, condensed and expanded. Some font families have
-     * separate families assigned for different widths (for example, "Avenir
-     * Next" and "Avenir Next Condensed"), so make sure that the fontFamily
-     * you select supports the specified fontWidth. Available options are:
+     * separate families assigned for different widths (for example, Avenir
+     * Next and Avenir Next Condensed), so make sure that the fontFamily you
+     * select supports the specified fontWidth.
      * @var string
      */
     protected $fontWidth;
 
     /**
-     * Defines whether punctuation should be positioned outside the margins
-     * of the text.
+     * A Boolean value that defines whether punctuation should be positioned
+     * outside the margins of the text.
      * @var boolean
      */
     protected $hangingPunctuation;
 
     /**
-     * Indicates whether text should be hyphenated when necessary. By
-     * default, only components with a role of body or intro have hyphenation
-     * enabled. All other components default to false.
+     * A Boolean value that indicates whether text should be hyphenated when
+     * necessary. By default, only components with a role of body or intro
+     * have hyphenation enabled. All other components default to false.
      * @var boolean
      */
     protected $hyphenation;
 
     /**
-     * The default line height, in points. The lineHeight will be
-     * recalculated as necessary, relative to the fontSize. For example, when
-     * the font is automatically resized to fit a smaller screen, the line
-     * height will also be adjusted accordingly.
+     * A number that provides the default line height, in points. The
+     * lineHeight is recalculated as necessary, relative to the fontSize. For
+     * example, when the font is automatically resized to fit a smaller
+     * screen, the line height will also be adjusted accordingly.
      * @var integer
      */
     protected $lineHeight;
 
     /**
-     * Text styling for all links within a text component.
+     * An object that provides text styling for all links within a text
+     * component.
      * @var \Urbania\AppleNews\Format\TextStyle
      */
     protected $linkStyle;
 
     /**
-     * For use with text components with HTML markup. You can create text
-     * styles containing an orderedListItems definition to configure how list
-     * items inside <ol> tags should be displayed.
+     * An object for use with text components with HTML markup. You can
+     * create text styles containing an orderedListItems definition to
+     * configure how list items inside <ol> tags should be displayed.
      * @var \Urbania\AppleNews\Format\ListItemStyle
      */
     protected $orderedListItems;
 
     /**
-     * Defines the spacing after each paragraph in points relative to the
-     * lineHeight.
+     * A number that defines the spacing after each paragraph in points
+     * relative to the lineHeight.
      * @var integer
      */
     protected $paragraphSpacingAfter;
 
     /**
-     * Defines the spacing before each paragraph in points relative to the
-     * lineHeight.
+     * A number that defines the spacing before each paragraph in points
+     * relative to the lineHeight.
      * @var integer
      */
     protected $paragraphSpacingBefore;
@@ -174,10 +183,16 @@ class ComponentTextStyle extends TextStyle
     protected $textShadow;
 
     /**
+     * The transform to apply to the text.
+     * @var string
+     */
+    protected $textTransform;
+
+    /**
      * The amount of tracking (spacing between characters) in text, as a
      * percentage of the fontSize. The actual spacing between letters is
      * determined by combining information from the font and font size.
-     * @var integer|float
+     * @var float|integer
      */
     protected $tracking;
 
@@ -190,9 +205,9 @@ class ComponentTextStyle extends TextStyle
     protected $underline;
 
     /**
-     * For use with text components with HTML marku. You can create text
-     * styles containing an unorderedListItems definition to configure how
-     * list items inside <ul> tags should be displayed.
+     * The object for use with text components with HTML markup. You can
+     * create text styles containing an unorderedListItems definition to
+     * configure how list items inside <ul> tags should be displayed.
      * @var \Urbania\AppleNews\Format\ListItemStyle
      */
     protected $unorderedListItems;
@@ -210,6 +225,10 @@ class ComponentTextStyle extends TextStyle
 
         if (isset($data['backgroundColor'])) {
             $this->setBackgroundColor($data['backgroundColor']);
+        }
+
+        if (isset($data['conditional'])) {
+            $this->setConditional($data['conditional']);
         }
 
         if (isset($data['dropCapStyle'])) {
@@ -292,6 +311,10 @@ class ComponentTextStyle extends TextStyle
             $this->setTextShadow($data['textShadow']);
         }
 
+        if (isset($data['textTransform'])) {
+            $this->setTextTransform($data['textTransform']);
+        }
+
         if (isset($data['tracking'])) {
             $this->setTracking($data['tracking']);
         }
@@ -333,6 +356,61 @@ class ComponentTextStyle extends TextStyle
         Assert::isColor($backgroundColor);
 
         $this->backgroundColor = $backgroundColor;
+        return $this;
+    }
+
+    /**
+     * Add an item to conditional
+     * @param \Urbania\AppleNews\Format\ConditionalComponentTextStyle|array $item
+     * @return $this
+     */
+    public function addConditional($item)
+    {
+        return $this->setConditional(
+            !is_null($this->conditional)
+                ? array_merge($this->conditional, [$item])
+                : [$item]
+        );
+    }
+
+    /**
+     * Get the conditional
+     * @return Format\ConditionalComponentTextStyle[]
+     */
+    public function getConditional()
+    {
+        return $this->conditional;
+    }
+
+    /**
+     * Set the conditional
+     * @param Format\ConditionalComponentTextStyle[] $conditional
+     * @return $this
+     */
+    public function setConditional($conditional)
+    {
+        if (is_null($conditional)) {
+            $this->conditional = null;
+            return $this;
+        }
+
+        Assert::isArray($conditional);
+        Assert::allIsSdkObject(
+            $conditional,
+            ConditionalComponentTextStyle::class
+        );
+
+        $this->conditional = array_reduce(
+            array_keys($conditional),
+            function ($array, $key) use ($conditional) {
+                $item = $conditional[$key];
+                $array[$key] = is_array($item)
+                    ? new ConditionalComponentTextStyle($item)
+                    : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 
@@ -811,9 +889,9 @@ class ComponentTextStyle extends TextStyle
             return $this;
         }
 
-        if (is_object($strikethrough)) {
+        if (is_object($strikethrough) || is_array($strikethrough)) {
             Assert::isSdkObject($strikethrough, TextDecoration::class);
-        } elseif (!is_array($strikethrough)) {
+        } else {
             Assert::boolean($strikethrough);
         }
 
@@ -942,8 +1020,40 @@ class ComponentTextStyle extends TextStyle
     }
 
     /**
+     * Get the textTransform
+     * @return string
+     */
+    public function getTextTransform()
+    {
+        return $this->textTransform;
+    }
+
+    /**
+     * Set the textTransform
+     * @param string $textTransform
+     * @return $this
+     */
+    public function setTextTransform($textTransform)
+    {
+        if (is_null($textTransform)) {
+            $this->textTransform = null;
+            return $this;
+        }
+
+        Assert::oneOf($textTransform, [
+            "uppercase",
+            "lowercase",
+            "capitalize",
+            "none"
+        ]);
+
+        $this->textTransform = $textTransform;
+        return $this;
+    }
+
+    /**
      * Get the tracking
-     * @return integer|float
+     * @return float|integer
      */
     public function getTracking()
     {
@@ -952,7 +1062,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Set the tracking
-     * @param integer|float $tracking
+     * @param float|integer $tracking
      * @return $this
      */
     public function setTracking($tracking)
@@ -989,9 +1099,9 @@ class ComponentTextStyle extends TextStyle
             return $this;
         }
 
-        if (is_object($underline)) {
+        if (is_object($underline) || is_array($underline)) {
             Assert::isSdkObject($underline, TextDecoration::class);
-        } elseif (!is_array($underline)) {
+        } else {
             Assert::boolean($underline);
         }
 
@@ -1051,7 +1161,11 @@ class ComponentTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::string($verticalAlignment);
+        Assert::oneOf($verticalAlignment, [
+            "superscript",
+            "subscript",
+            "baseline"
+        ]);
 
         $this->verticalAlignment = $verticalAlignment;
         return $this;
@@ -1069,6 +1183,21 @@ class ComponentTextStyle extends TextStyle
                 $this->backgroundColor instanceof Arrayable
                     ? $this->backgroundColor->toArray()
                     : $this->backgroundColor;
+        }
+        if (isset($this->conditional)) {
+            $data['conditional'] = !is_null($this->conditional)
+                ? array_reduce(
+                    array_keys($this->conditional),
+                    function ($items, $key) {
+                        $items[$key] =
+                            $this->conditional[$key] instanceof Arrayable
+                                ? $this->conditional[$key]->toArray()
+                                : $this->conditional[$key];
+                        return $items;
+                    },
+                    []
+                )
+                : $this->conditional;
         }
         if (isset($this->dropCapStyle)) {
             $data['dropCapStyle'] =
@@ -1150,6 +1279,9 @@ class ComponentTextStyle extends TextStyle
                 $this->textShadow instanceof Arrayable
                     ? $this->textShadow->toArray()
                     : $this->textShadow;
+        }
+        if (isset($this->textTransform)) {
+            $data['textTransform'] = $this->textTransform;
         }
         if (isset($this->tracking)) {
             $data['tracking'] = $this->tracking;

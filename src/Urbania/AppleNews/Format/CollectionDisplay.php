@@ -15,65 +15,66 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class CollectionDisplay extends BaseSdkObject
 {
     /**
-     * Defines how components are aligned within their rows. This is
-     * especially visible when distribution is set to narrow.
-     * @var string
-     */
-    protected $alignment;
-
-    /**
-     * Describes how components should be distributed horizontally in a row.
-     * @var string
-     */
-    protected $distribution;
-
-    /**
-     * Either a number in points or a string referring to a supported unit of
-     * measure defining the vertical gutter between components.
-     * @var string|integer
-     */
-    protected $gutter;
-
-    /**
-     * Either a number in points or a string referring to a supported unit of
-     * measure defining the maximum width of each child component inside the
-     * collection.
-     * @var string|integer
-     */
-    protected $maximumWidth;
-
-    /**
-     * Either a number in points or a string referring to a supported unit of
-     * measure defining the minimum width of each child component inside the
-     * collection.
-     * @var string|integer
-     */
-    protected $minimumWidth;
-
-    /**
-     * Either a number in points or a string referring to a supported unit of
-     * measure defining the horizontal spacing between rows. See Specifying
-     * Measurements for Components.
-     * @var string|integer
-     */
-    protected $rowSpacing;
-
-    /**
-     * Should be set to collection.
+     * Always collection for this object.
      * @var string
      */
     protected $type = 'collection';
 
     /**
-     * Defines whether the components’ area is allowed to be sized
-     * differently per row.
+     * A string that defines how components are aligned within their rows.
+     * This is especially visible when distribution is set to narrow.
+     * @var string
+     */
+    protected $alignment;
+
+    /**
+     * A string that defines how components should be distributed
+     * horizontally in a row.
+     * @var string
+     */
+    protected $distribution;
+
+    /**
+     * A number in points or a string referring to a supported unit of
+     * measure defining the vertical gutter between components.
+     * @var integer|string
+     */
+    protected $gutter;
+
+    /**
+     * A number in points or a string referring to a supported unit of
+     * measure defining the maximum width of each child component inside the
+     * collection.
+     * @var integer|string
+     */
+    protected $maximumWidth;
+
+    /**
+     * A number in points or a string referring to a supported unit of
+     * measure defining the minimum width of each child component inside the
+     * collection.
+     * @var integer|string
+     */
+    protected $minimumWidth;
+
+    /**
+     * A number in points or a string referring to a supported unit of
+     * measure defining the horizontal spacing between rows. See Specifying
+     * Measurements for Components.
+     * @var integer|string
+     */
+    protected $rowSpacing;
+
+    /**
+     * A Boolean value that defines whether the components’ area is allowed
+     * to be sized differently per row.
      * @var boolean
      */
     protected $variableSizing;
 
     /**
-     * Defines the approach to prevent the collection from having component
-     * widows.
+     * A string that defines the approach to prevent the collection from
+     * having component widows.
      * @var string
      */
     protected $widows;
@@ -169,7 +170,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Get the gutter
-     * @return string|integer
+     * @return integer|string
      */
     public function getGutter()
     {
@@ -178,7 +179,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Set the gutter
-     * @param string|integer $gutter
+     * @param integer|string $gutter
      * @return $this
      */
     public function setGutter($gutter)
@@ -196,7 +197,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Get the maximumWidth
-     * @return string|integer
+     * @return integer|string
      */
     public function getMaximumWidth()
     {
@@ -205,7 +206,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Set the maximumWidth
-     * @param string|integer $maximumWidth
+     * @param integer|string $maximumWidth
      * @return $this
      */
     public function setMaximumWidth($maximumWidth)
@@ -223,7 +224,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Get the minimumWidth
-     * @return string|integer
+     * @return integer|string
      */
     public function getMinimumWidth()
     {
@@ -232,7 +233,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Set the minimumWidth
-     * @param string|integer $minimumWidth
+     * @param integer|string $minimumWidth
      * @return $this
      */
     public function setMinimumWidth($minimumWidth)
@@ -250,7 +251,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Get the rowSpacing
-     * @return string|integer
+     * @return integer|string
      */
     public function getRowSpacing()
     {
@@ -259,7 +260,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Set the rowSpacing
-     * @param string|integer $rowSpacing
+     * @param integer|string $rowSpacing
      * @return $this
      */
     public function setRowSpacing($rowSpacing)
@@ -345,6 +346,9 @@ class CollectionDisplay extends BaseSdkObject
     public function toArray()
     {
         $data = [];
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
         if (isset($this->alignment)) {
             $data['alignment'] = $this->alignment;
         }
@@ -374,9 +378,6 @@ class CollectionDisplay extends BaseSdkObject
                 $this->rowSpacing instanceof Arrayable
                     ? $this->rowSpacing->toArray()
                     : $this->rowSpacing;
-        }
-        if (isset($this->type)) {
-            $data['type'] = $this->type;
         }
         if (isset($this->variableSizing)) {
             $data['variableSizing'] = $this->variableSizing;

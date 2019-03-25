@@ -15,6 +15,12 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class ComponentLink extends ComponentAddition
 {
     /**
+     * Always link for a ComponentLink object.
+     * @var string
+     */
+    protected $type = 'link';
+
+    /**
      * The URL that should be opened when a user interacts with the
      * component. Use a valid Apple News URL beginning with
      * https://apple.news/, or a URL that is associated with an Apple News
@@ -23,12 +29,6 @@ class ComponentLink extends ComponentAddition
      * @var string
      */
     protected $URL;
-
-    /**
-     * The type of addition should be link for a ComponentLink object.
-     * @var string
-     */
-    protected $type = 'link';
 
     public function __construct(array $data = [])
     {
@@ -64,7 +64,7 @@ class ComponentLink extends ComponentAddition
      */
     public function setURL($URL)
     {
-        Assert::string($URL);
+        Assert::uri($URL);
 
         $this->URL = $URL;
         return $this;
@@ -77,11 +77,11 @@ class ComponentLink extends ComponentAddition
     public function toArray()
     {
         $data = parent::toArray();
-        if (isset($this->URL)) {
-            $data['URL'] = $this->URL;
-        }
         if (isset($this->type)) {
             $data['type'] = $this->type;
+        }
+        if (isset($this->URL)) {
+            $data['URL'] = $this->URL;
         }
         return $data;
     }

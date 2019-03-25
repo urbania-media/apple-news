@@ -65,33 +65,117 @@ class ObjectSetMethodBuilder
     {
         $type = $property['type'];
         if (is_array($type)) {
-            $type = $type[0] !== 'SupportedUnits' ? 'multiple' : $type[0];
+            return $this->buildMultipleAssertionBody(
+                $type,
+                $property,
+                $baseNamespace
+            );
         }
+        return $this->buildSingleAssertionBody(
+            $type,
+            $property,
+            $baseNamespace
+        );
+    }
+
+    protected function buildMultipleAssertionBody(
+        $type,
+        $property,
+        $baseNamespace
+    ) {
+        if (sizeof($type) === 1) {
+            return $this->buildSingleAssertionBody(
+                $type,
+                $property,
+                $baseNamespace
+            );
+        } elseif (sizeof($type) === 2) {
+            $firstIsObject = preg_match('/^[A-Z]/', $type[0]) === 1;
+            $secondIsPrimitive = preg_match('/^[a-z]/', $type[1]) === 1;
+            if ($type[0] === 'SupportedUnits' && $secondIsPrimitive) {
+                return $this->buildSingleAssertionBody(
+                    'SupportedUnits',
+                    $property,
+                    $baseNamespace
+                );
+            } elseif ($firstIsObject && $secondIsPrimitive) {
+                return sprintf(
+                    'if(is_object($%1$s) || is_array($%1$s)) { %2$s } else { %3$s }',
+                    $property['name'],
+                    $this->buildSingleAssertionBody(
+                        $type[0],
+                        $property,
+                        $baseNamespace
+                    ),
+                    $this->buildSingleAssertionBody(
+                        $type[1],
+                        $property,
+                        $baseNamespace
+                    )
+                );
+            } else {
+                $relativeClassPaths = array_map(function ($type) use ($baseNamespace) {
+                    $fullClassPath = $this->getFullClassPath($type);
+                    return $this->removeNamespaceFromClassPath(
+                        $baseNamespace,
+                        $fullClassPath
+                    ) . '::class';
+                }, $type);
+
+                return sprintf(
+                    'Assert::isSdkObjects($%s, [%s]);',
+                    $property['name'],
+                    implode(',', $relativeClassPaths)
+                );
+            }
+        } elseif (in_array('SupportedUnits', $type)) {
+            $objectType = array_reduce(
+                $type,
+                function ($objectType, $type) {
+                    if (
+                        $type !== 'SupportedUnits' &&
+                        preg_match('/^[A-Z]/', $type) === 1
+                    ) {
+                        return $type;
+                    }
+                    return $objectType;
+                },
+                null
+            );
+            return !is_null($objectType)
+                ? sprintf(
+                    'if(is_object($%1$s) || is_array($%1$s)) { %2$s } else { %3$s }',
+                    $property['name'],
+                    $this->buildSingleAssertionBody(
+                        $objectType,
+                        $property,
+                        $baseNamespace
+                    ),
+                    $this->buildSingleAssertionBody(
+                        'SupportedUnits',
+                        $property,
+                        $baseNamespace
+                    )
+                )
+                : $this->buildSingleAssertionBody(
+                    'SupportedUnits',
+                    $property,
+                    $baseNamespace
+                );
+        }
+        return '';
+    }
+
+    protected function buildSingleAssertionBody(
+        $type,
+        $property,
+        $baseNamespace
+    ) {
         $typeParts = explode(':', $type);
         $mainType = $typeParts[0];
         $variableName = '$' . $property['name'];
         $lines = [];
         switch ($mainType) {
-            case 'multiple':
-                $mainType = $property['type'][0];
-                $secondType = $property['type'][1];
-                $fullClassPath = $this->getFullClassPath($mainType);
-                $relativeClassPath = $this->removeNamespaceFromClassPath(
-                    $baseNamespace,
-                    $fullClassPath
-                );
-                $lines[] = sprintf(
-                    'if (is_object(%s)) {' .
-                        'Assert::isSdkObject(%1$s, %s::class);' .
-                        '} elseif (!is_array(%1$s)) {' .
-                        'Assert::%s(%1$s);' .
-                        '}',
-                    $variableName,
-                    $relativeClassPath,
-                    $secondType
-                );
-                break;
-
             case 'date-time':
                 $lines[] = sprintf('Assert::isDate(%s);', $variableName);
                 break;
@@ -135,7 +219,10 @@ class ObjectSetMethodBuilder
             case 'array':
                 $itemType = $typeParts[1] ?? null;
                 if ($mainType === 'map') {
-                    $lines[] = sprintf('if(is_array(%1$s) && sizeof(%1$s) > 0) { Assert::isMap(%1$s); }', $variableName);
+                    $lines[] = sprintf(
+                        'if(is_array(%1$s) && sizeof(%1$s) > 0) { Assert::isMap(%1$s); }',
+                        $variableName
+                    );
                 } else {
                     $lines[] = sprintf('Assert::isArray(%s);', $variableName);
                 }
@@ -165,7 +252,7 @@ class ObjectSetMethodBuilder
                     if ($mainType === 'Format\\Component') {
                         $lines[] = sprintf(
                             'Assert::isComponent(%s);',
-                            $variableName,
+                            $variableName
                         );
                     } else {
                         $fullClassPath = $this->getFullClassPath($mainType);
@@ -205,7 +292,7 @@ class ObjectSetMethodBuilder
             case 'date-time':
                 $lines[] = sprintf(
                     '$this->%s = is_string($%1$s) ? Carbon::parse($%1$s) : $%1$s;',
-                    $property['name'],
+                    $property['name']
                 );
                 break;
             case 'map':
@@ -213,12 +300,17 @@ class ObjectSetMethodBuilder
                 $itemType = $typeParts[1] ?? null;
                 if (!is_null($itemType) && preg_match('/^[A-Z]/', $itemType)) {
                     $lines[] = sprintf(
-                        '$this->%1$s = array_reduce(array_keys($%1$s), function ($array, $key) use ($%1$s) {'.
-                            '$item = $%1$s[$key];'.
-                            $this->buildSetObjectPropertyBody($property, $itemType, $baseNamespace, true).
-                            'return $array;'.
+                        '$this->%1$s = array_reduce(array_keys($%1$s), function ($array, $key) use ($%1$s) {' .
+                            '$item = $%1$s[$key];' .
+                            $this->buildSetObjectPropertyBody(
+                                $property,
+                                $itemType,
+                                $baseNamespace,
+                                true
+                            ) .
+                            'return $array;' .
                             '}, []);',
-                        $property['name'],
+                        $property['name']
                     );
                 } else {
                     $lines[] = $this->buildSetPropertyBody($property);
@@ -231,8 +323,21 @@ class ObjectSetMethodBuilder
                 $lines[] = $this->buildSetPropertyBody($property);
                 break;
             default:
-                if (preg_match('/^[A-Z]/', $mainType)) {
-                    $lines[] = $this->buildSetObjectPropertyBody($property, $mainType, $baseNamespace);
+                if (is_array($property['type']) &&
+                    sizeof($property['type']) === 2 &&
+                    preg_match('/^Format\\\(.*?)Display$/', $property['type'][0]) === 1 &&
+                    preg_match('/^Format\\\(.*?)Display$/', $property['type'][1]) === 1
+                ) {
+                    $lines[] = $this->buildSetDisplayObjectPropertyBody(
+                        $property,
+                        $baseNamespace
+                    );
+                } elseif (preg_match('/^[A-Z]/', $mainType)) {
+                    $lines[] = $this->buildSetObjectPropertyBody(
+                        $property,
+                        $mainType,
+                        $baseNamespace
+                    );
                 } else {
                     $lines[] = $this->buildSetPropertyBody($property);
                 }
@@ -241,8 +346,42 @@ class ObjectSetMethodBuilder
         return implode(PHP_EOL, $lines);
     }
 
-    protected function buildSetObjectPropertyBody($property, $type, $baseNamespace, $isArray = false)
+    protected function buildSetDisplayObjectPropertyBody($property, $baseNamespace)
     {
+        $firstType = $property['type'][0];
+        $secondType = $property['type'][1];
+        preg_match('/^Format\\\(.*?)Display$/', $firstType, $matches);
+        $firstTypeValue = preg_replace('/\s+/u', '', ucwords($matches[1]));
+        $firstTypeValue = mb_strtolower(preg_replace('/(.)(?=[A-Z])/u', '$1_', $firstTypeValue), 'utf-8');
+        $firstFullClassPath = $this->getFullClassPath($firstType);
+        $firstRelativeClassPath = $this->removeNamespaceFromClassPath(
+            $baseNamespace,
+            $firstFullClassPath
+        );
+        $secondFullClassPath = $this->getFullClassPath($secondType);
+        $secondRelativeClassPath = $this->removeNamespaceFromClassPath(
+            $baseNamespace,
+            $secondFullClassPath
+        );
+        return sprintf(
+            'if(is_array($%1$s)) {'.
+                '$this->%1$s = !isset($%1$s[\'type\']) || $%1$s[\'type\'] === \'%2$s\' ? new %3$s($%1$s) : new %4$s($%1$s);'.
+            '} else {'.
+                '$this->%1$s = $%1$s;'.
+            '}',
+            $property['name'],
+            $firstTypeValue,
+            $firstRelativeClassPath,
+            $secondRelativeClassPath
+        );
+    }
+
+    protected function buildSetObjectPropertyBody(
+        $property,
+        $type,
+        $baseNamespace,
+        $isArray = false
+    ) {
         if ($type === 'Format\\Component') {
             return $this->buildSetComponentPropertyBody($property, $isArray);
         }
@@ -263,16 +402,18 @@ class ObjectSetMethodBuilder
         );
     }
 
-    protected function buildSetComponentPropertyBody($property, $isArray = false)
-    {
+    protected function buildSetComponentPropertyBody(
+        $property,
+        $isArray = false
+    ) {
         return sprintf(
-            'if(%1$s instanceof Componentable) {'.
-                '%2$s = %1$s->toComponent();'.
-            '} else if (is_array(%1$s)) {'.
-                '%2$s = Component::createTyped(%1$s);'.
-            '} else {'.
-                '%2$s = %1$s;'.
-            '}',
+            'if(%1$s instanceof Componentable) {' .
+                '%2$s = %1$s->toComponent();' .
+                '} else if (is_array(%1$s)) {' .
+                '%2$s = Component::createTyped(%1$s);' .
+                '} else {' .
+                '%2$s = %1$s;' .
+                '}',
             $isArray ? '$item' : sprintf('$%s', $property['name']),
             $isArray ? '$array[$key]' : sprintf('$this->%s', $property['name'])
         );
@@ -280,9 +421,6 @@ class ObjectSetMethodBuilder
 
     protected function buildSetPropertyBody($property)
     {
-        return sprintf(
-            '$this->%s = $%1$s;',
-            $property['name']
-        );
+        return sprintf('$this->%s = $%1$s;', $property['name']);
     }
 }

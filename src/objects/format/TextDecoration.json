@@ -11,8 +11,7 @@
             "name": "color",
             "type": "Color",
             "required": false,
-            "description": "Color of the stroke. If omitted, the content\u2019s stroke color will be used (from text color in case the stroke is for underline or strikethrough).",
-            "version": "1.0",
+            "description": "The color of the stroke. If omitted, the content\u2019s stroke color will be used (from text color in case the stroke is for underline or strikethrough).",
             "typed": false
         }
     ]

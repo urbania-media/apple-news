@@ -8,23 +8,21 @@
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/floatdataformat",
     "properties": [
         {
+            "name": "type",
+            "type": "string",
+            "required": true,
+            "description": "Always float for a FloatDataFormat object.",
+            "value": "float",
+            "read_only": true,
+            "typed": false
+        },
+        {
             "name": "decimals",
             "type": "integer",
             "required": false,
             "description": "The number of digits that can appear after the decimal point. The number will be rounded to this number of digits after the decimal.",
-            "version": "1.5",
             "default": 2,
             "minimum": 0,
-            "typed": false
-        },
-        {
-            "name": "type",
-            "type": "string",
-            "required": true,
-            "description": "The type of data format for this object. This must be float for a FloatDataFormat object.",
-            "value": "float",
-            "read_only": true,
-            "version": "1.5",
             "typed": false
         }
     ]

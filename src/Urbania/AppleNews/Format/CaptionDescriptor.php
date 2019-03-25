@@ -15,6 +15,13 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class CaptionDescriptor extends BaseSdkObject
 {
     /**
+     * The text to display in the caption, including any formatting tags or
+     * markup, depending on the format property.
+     * @var string
+     */
+    protected $text;
+
+    /**
      * An array of Link objects that provide additional information for
      * ranges of the caption text in the text property.
      * @var Format\Addition[]
@@ -28,29 +35,26 @@ class CaptionDescriptor extends BaseSdkObject
     protected $format;
 
     /**
-     * Array of InlineTextStyle objects to be applied to ranges of the
+     * An array of InlineTextStyle objects to be applied to ranges of the
      * caption’s text.
      * @var Format\InlineTextStyle[]
      */
     protected $inlineTextStyles;
 
     /**
-     * The text to display in the caption, including any formatting tags or
-     * markup, depending on the format property.
-     * @var string
-     */
-    protected $text;
-
-    /**
-     * Either an inline ComponentTextStyle object that contains styling
-     * information, or a string reference to a component text style object
-     * that is defined in Article Document.componentText Styles.
+     * An inline ComponentTextStyle object that contains styling information,
+     * or a string reference to a component text style object that is defined
+     * at the top level of the document.
      * @var \Urbania\AppleNews\Format\ComponentTextStyle|string
      */
     protected $textStyle;
 
     public function __construct(array $data = [])
     {
+        if (isset($data['text'])) {
+            $this->setText($data['text']);
+        }
+
         if (isset($data['additions'])) {
             $this->setAdditions($data['additions']);
         }
@@ -61,10 +65,6 @@ class CaptionDescriptor extends BaseSdkObject
 
         if (isset($data['inlineTextStyles'])) {
             $this->setInlineTextStyles($data['inlineTextStyles']);
-        }
-
-        if (isset($data['text'])) {
-            $this->setText($data['text']);
         }
 
         if (isset($data['textStyle'])) {
@@ -274,9 +274,9 @@ class CaptionDescriptor extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($textStyle)) {
+        if (is_object($textStyle) || is_array($textStyle)) {
             Assert::isSdkObject($textStyle, ComponentTextStyle::class);
-        } elseif (!is_array($textStyle)) {
+        } else {
             Assert::string($textStyle);
         }
 
@@ -293,6 +293,9 @@ class CaptionDescriptor extends BaseSdkObject
     public function toArray()
     {
         $data = [];
+        if (isset($this->text)) {
+            $data['text'] = $this->text;
+        }
         if (isset($this->additions)) {
             $data['additions'] = !is_null($this->additions)
                 ? array_reduce(
@@ -325,9 +328,6 @@ class CaptionDescriptor extends BaseSdkObject
                     []
                 )
                 : $this->inlineTextStyles;
-        }
-        if (isset($this->text)) {
-            $data['text'] = $this->text;
         }
         if (isset($this->textStyle)) {
             $data['textStyle'] =

@@ -15,6 +15,16 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class DropCapStyle extends BaseSdkObject
 {
     /**
+     * The approximate number of text lines this drop cap should span. For
+     * example, if numberOfLines is set to 3, and the top of the drop cap is
+     * aligned with the top of the first line, the bottom of the drop cap
+     * will drop to the bottom of the third line, although the actual drop
+     * amount can vary depending on the device and its orientation.
+     * @var integer
+     */
+    protected $numberOfLines;
+
+    /**
      * The background color of the drop cap. By default, no background color
      * is applied, making the background effectively transparent.
      * @var string
@@ -29,46 +39,41 @@ class DropCapStyle extends BaseSdkObject
     protected $fontName;
 
     /**
-     * Indicates the number of characters to render in the drop cap style.
+     * A number that indicates the characters to render in the drop cap
+     * style.
      * @var integer
      */
     protected $numberOfCharacters;
 
     /**
-     * Indicates the approximate number of text lines this drop cap should
-     * span. For example, if numberOfLines is set to 3, and the top of the
-     * drop cap is aligned with the top of the first line, the bottom of the
-     * drop cap will drop to the bottom of the third line, although the
-     * actual drop amount can vary depending on the device and its
-     * orientation.
-     * @var integer
-     */
-    protected $numberOfLines;
-
-    /**
-     * Describes the number of text lines this drop cap should raise. For
-     * example: When numberOfRaisedLines is 3, and numberOfLines is 5, the
-     * top of the drop cap is raised above the first line by 3 lines and and
-     * the bottom of the drop cap drops to the bottom of the second line.
+     * The number of text lines this drop cap should raise. For example: When
+     * numberOfRaisedLines is 3, and numberOfLines is 5, the top of the drop
+     * cap is raised above the first line by 3 lines and and the bottom of
+     * the drop cap drops to the bottom of the second line.
      * @var integer
      */
     protected $numberOfRaisedLines;
 
     /**
-     * Sets the padding of the drop cap in points. When padding is applied,
-     * the drop cap is smaller than the box that surrounds it.
+     * A number thay sets the padding of the drop cap in points. When padding
+     * is applied, the drop cap is smaller than the box that surrounds it.
      * @var integer
      */
     protected $padding;
 
     /**
-     * The color of the drop cap.
+     * The color of the drop cap. The color defaults to the color of the
+     * associated text.
      * @var string
      */
     protected $textColor;
 
     public function __construct(array $data = [])
     {
+        if (isset($data['numberOfLines'])) {
+            $this->setNumberOfLines($data['numberOfLines']);
+        }
+
         if (isset($data['backgroundColor'])) {
             $this->setBackgroundColor($data['backgroundColor']);
         }
@@ -79,10 +84,6 @@ class DropCapStyle extends BaseSdkObject
 
         if (isset($data['numberOfCharacters'])) {
             $this->setNumberOfCharacters($data['numberOfCharacters']);
-        }
-
-        if (isset($data['numberOfLines'])) {
-            $this->setNumberOfLines($data['numberOfLines']);
         }
 
         if (isset($data['numberOfRaisedLines'])) {
@@ -289,6 +290,9 @@ class DropCapStyle extends BaseSdkObject
     public function toArray()
     {
         $data = [];
+        if (isset($this->numberOfLines)) {
+            $data['numberOfLines'] = $this->numberOfLines;
+        }
         if (isset($this->backgroundColor)) {
             $data['backgroundColor'] =
                 $this->backgroundColor instanceof Arrayable
@@ -300,9 +304,6 @@ class DropCapStyle extends BaseSdkObject
         }
         if (isset($this->numberOfCharacters)) {
             $data['numberOfCharacters'] = $this->numberOfCharacters;
-        }
-        if (isset($this->numberOfLines)) {
-            $data['numberOfLines'] = $this->numberOfLines;
         }
         if (isset($this->numberOfRaisedLines)) {
             $data['numberOfRaisedLines'] = $this->numberOfRaisedLines;

@@ -30,7 +30,7 @@ class GalleryItemTest extends TestCase
      */
     public function URLProvider()
     {
-        return [["a string"]];
+        return [["http://example.com"], ["https://example.com"]];
     }
 
     /**

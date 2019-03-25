@@ -15,7 +15,7 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class BackgroundParallax extends Behavior
 {
     /**
-     * This behavior’s type is always background_parallax.
+     * Always background_parallax for this behavior.
      * @var string
      */
     protected $type = 'background_parallax';

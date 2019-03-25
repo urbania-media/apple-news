@@ -11,16 +11,14 @@
             "name": "all",
             "type": "Format\\StrokeStyle",
             "required": false,
-            "description": "Defines the stroke properties of the border. Stroke properties cannot be set for each side; the border can only be disabled or enabled for each side.",
-            "version": "1.0",
+            "description": "The object that defines the stroke properties of the border. Stroke properties cannot be set for each side; the border can only be disabled or enabled for each side.",
             "typed": false
         },
         {
             "name": "bottom",
             "type": "boolean",
             "required": false,
-            "description": "Indicates whether the border should be applied to the bottom.",
-            "version": "1.0",
+            "description": "A Boolean that indicates whether the border should be applied to the bottom.",
             "default": "true",
             "typed": false
         },
@@ -28,8 +26,7 @@
             "name": "left",
             "type": "boolean",
             "required": false,
-            "description": "Indicates whether the border should be applied to the left side.",
-            "version": "1.0",
+            "description": "A Boolean that indicates whether the border should be applied to the left side.",
             "default": "true",
             "typed": false
         },
@@ -37,8 +34,7 @@
             "name": "right",
             "type": "boolean",
             "required": false,
-            "description": "Indicates whether the border should be applied to the right side.",
-            "version": "1.0",
+            "description": "A Boolean that indicates whether the border should be applied to the right side.",
             "default": "true",
             "typed": false
         },
@@ -46,8 +42,7 @@
             "name": "top",
             "type": "boolean",
             "required": false,
-            "description": "Indicates whether the border should be applied to the top.",
-            "version": "1.0",
+            "description": "A Boolean that indicates whether the border should be applied to the top.",
             "default": "true",
             "typed": false
         }

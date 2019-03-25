@@ -12,7 +12,6 @@
             "type": "Color",
             "required": false,
             "description": "The background color for the cell.",
-            "version": "1.5",
             "typed": false
         },
         {
@@ -20,7 +19,6 @@
             "type": "Format\\TableBorder",
             "required": false,
             "description": "The border for the cell. Because the border is drawn inside the cell, it affects the size of the content within the cell. The bigger the border, the less available space for content.",
-            "version": "1.5",
             "typed": false
         },
         {
@@ -28,7 +26,6 @@
             "type": "array:Format\\ConditionalTableCellStyle",
             "required": false,
             "description": "An array of styles to be applied only to cells that meet specified conditions. This can be used to change the appearance of specific table cells.",
-            "version": "1.5",
             "typed": false
         },
         {
@@ -38,16 +35,14 @@
                 "integer"
             ],
             "required": false,
-            "description": "The height of the cell and its row, as an integer in points, or using one of the units of measure for components.See Specifying Measurements for Components.",
-            "version": "1.5",
+            "description": "The height of the cell and its row, as an integer in points, or using one of the units of measure for components. See Specifying Measurements for Components.",
             "typed": false
         },
         {
             "name": "horizontalAlignment",
             "type": "enum:string",
             "required": false,
-            "description": "Defines the horizontal alignment of content inside cells.",
-            "version": "1.5",
+            "description": "A string that defines the horizontal alignment of content inside cells.",
             "default": "left",
             "enum_values": [
                 "left",
@@ -64,7 +59,6 @@
             ],
             "required": false,
             "description": "The minimum width of the cell and its column, as an integer in points or in one of the available units of measure for components. See Specifying Measurements for Components.",
-            "version": "1.5",
             "typed": false
         },
         {
@@ -76,7 +70,6 @@
             ],
             "required": false,
             "description": "The space around the content in a table cell in points, supported units, or a Padding object that specifies padding for each side separately.",
-            "version": "1.5",
             "typed": false
         },
         {
@@ -87,15 +80,13 @@
             ],
             "required": false,
             "description": "The name string of one of your styles in the Article ArticleDocument.componentTextStyles object.",
-            "version": "1.5",
             "typed": false
         },
         {
             "name": "verticalAlignment",
             "type": "enum:string",
             "required": false,
-            "description": "Defines the vertical alignment of content inside cells.",
-            "version": "1.5",
+            "description": "A string that defines the vertical alignment of content inside cells.",
             "default": "center",
             "enum_values": [
                 "top",
@@ -109,7 +100,6 @@
             "type": "integer",
             "required": false,
             "description": "The column width, as a percentage only. This property only indicates proportionate width and cannot be used to control exact width. See minimumWidth.",
-            "version": "1.5",
             "typed": false
         }
     ]

@@ -14,33 +14,37 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class Border extends BaseSdkObject
 {
     /**
-     * Defines the stroke properties of the border. Stroke properties cannot
-     * be set for each side; the border can only be disabled or enabled for
-     * each side.
+     * The object that defines the stroke properties of the border. Stroke
+     * properties cannot be set for each side; the border can only be
+     * disabled or enabled for each side.
      * @var \Urbania\AppleNews\Format\StrokeStyle
      */
     protected $all;
 
     /**
-     * Indicates whether the border should be applied to the bottom.
+     * A Boolean that indicates whether the border should be applied to the
+     * bottom.
      * @var boolean
      */
     protected $bottom;
 
     /**
-     * Indicates whether the border should be applied to the left side.
+     * A Boolean that indicates whether the border should be applied to the
+     * left side.
      * @var boolean
      */
     protected $left;
 
     /**
-     * Indicates whether the border should be applied to the right side.
+     * A Boolean that indicates whether the border should be applied to the
+     * right side.
      * @var boolean
      */
     protected $right;
 
     /**
-     * Indicates whether the border should be applied to the top.
+     * A Boolean that indicates whether the border should be applied to the
+     * top.
      * @var boolean
      */
     protected $top;

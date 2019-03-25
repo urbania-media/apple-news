@@ -15,21 +15,21 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class MoveInAnimation extends ComponentAnimation
 {
     /**
-     * Indicates which side of the screen should be the starting point of the
-     * animation. Valid values:
-     * @var string
-     */
-    protected $preferredStartingPosition;
-
-    /**
-     * This animation’s type is always move_in.
+     * Always move_in for this animation type.
      * @var string
      */
     protected $type = 'move_in';
 
     /**
-     * Indicates whether the animation occurs in response to user action
-     * (true) or happens automatically (false).
+     * A string that indicates which side of the screen should be the
+     * starting point of the animation.
+     * @var string
+     */
+    protected $preferredStartingPosition;
+
+    /**
+     * A Boolean value that indicates whether the animation occurs in
+     * response to user action (true) or happens automatically (false).
      * @var boolean
      */
     protected $userControllable;
@@ -119,12 +119,12 @@ class MoveInAnimation extends ComponentAnimation
     public function toArray()
     {
         $data = parent::toArray();
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
         if (isset($this->preferredStartingPosition)) {
             $data['preferredStartingPosition'] =
                 $this->preferredStartingPosition;
-        }
-        if (isset($this->type)) {
-            $data['type'] = $this->type;
         }
         if (isset($this->userControllable)) {
             $data['userControllable'] = $this->userControllable;

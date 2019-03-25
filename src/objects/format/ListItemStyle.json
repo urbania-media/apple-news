@@ -8,20 +8,10 @@
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/listitemstyle",
     "properties": [
         {
-            "name": "character",
-            "type": "string",
-            "required": false,
-            "description": "If type is set to character, provide the character to use as the list item indicator. Only a single character is supported.",
-            "version": "1.4",
-            "maximum": 1,
-            "typed": false
-        },
-        {
             "name": "type",
             "type": "enum:string",
             "required": true,
-            "description": "The type of list item indicator to use. Allowed options are:",
-            "version": "1.4",
+            "description": "The type of list item indicator to use.",
             "enum_values": [
                 "bullet",
                 "decimal",
@@ -32,6 +22,14 @@
                 "character",
                 "none"
             ],
+            "typed": false
+        },
+        {
+            "name": "character",
+            "type": "string",
+            "required": false,
+            "description": "A string, when type is set to character, provides the character to use as the list item indicator. Only a single character is supported.",
+            "maximum": 1,
             "typed": false
         }
     ]

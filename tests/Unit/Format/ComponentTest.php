@@ -11,6 +11,29 @@ use Urbania\AppleNews\Tests\TestCase;
 class ComponentTest extends TestCase
 {
     /**
+     * Test the property role
+     * @test
+     * @dataProvider roleProvider
+     * @covers ::getRole
+     * @covers ::setRole
+     */
+    public function testPropertyRole($value)
+    {
+        $object = new Component();
+        $object->setRole($value);
+
+        $this->assertEquals($value, $object->getRole());
+    }
+
+    /**
+     * Data provider for property role
+     */
+    public function roleProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property anchor
      * @test
      * @dataProvider anchorProvider
@@ -80,6 +103,52 @@ class ComponentTest extends TestCase
     }
 
     /**
+     * Test the property conditional
+     * @test
+     * @dataProvider conditionalProvider
+     * @covers ::getConditional
+     * @covers ::setConditional
+     */
+    public function testPropertyConditional($value)
+    {
+        $object = new Component();
+        $object->setConditional($value);
+
+        $this->assertEquals($value, $object->getConditional());
+    }
+
+    /**
+     * Data provider for property conditional
+     */
+    public function conditionalProvider()
+    {
+        return [[[new \Urbania\AppleNews\Format\ConditionalComponent()]]];
+    }
+
+    /**
+     * Test the property hidden
+     * @test
+     * @dataProvider hiddenProvider
+     * @covers ::getHidden
+     * @covers ::setHidden
+     */
+    public function testPropertyHidden($value)
+    {
+        $object = new Component();
+        $object->setHidden($value);
+
+        $this->assertEquals($value, $object->getHidden());
+    }
+
+    /**
+     * Data provider for property hidden
+     */
+    public function hiddenProvider()
+    {
+        return [[true], [false]];
+    }
+
+    /**
      * Test the property identifier
      * @test
      * @dataProvider identifierProvider
@@ -123,29 +192,6 @@ class ComponentTest extends TestCase
     public function layoutProvider()
     {
         return [[new \Urbania\AppleNews\Format\ComponentLayout()]];
-    }
-
-    /**
-     * Test the property role
-     * @test
-     * @dataProvider roleProvider
-     * @covers ::getRole
-     * @covers ::setRole
-     */
-    public function testPropertyRole($value)
-    {
-        $object = new Component();
-        $object->setRole($value);
-
-        $this->assertEquals($value, $object->getRole());
-    }
-
-    /**
-     * Data provider for property role
-     */
-    public function roleProvider()
-    {
-        return [["a string"]];
     }
 
     /**

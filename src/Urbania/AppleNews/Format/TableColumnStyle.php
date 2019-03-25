@@ -37,7 +37,7 @@ class TableColumnStyle extends BaseSdkObject
      * The minimum width of the columns, as an integer in points or using the
      * available units of measure for components. See Specifying Measurements
      * for Components.
-     * @var string|integer
+     * @var integer|string
      */
     protected $minimumWidth;
 
@@ -185,7 +185,7 @@ class TableColumnStyle extends BaseSdkObject
 
     /**
      * Get the minimumWidth
-     * @return string|integer
+     * @return integer|string
      */
     public function getMinimumWidth()
     {
@@ -194,7 +194,7 @@ class TableColumnStyle extends BaseSdkObject
 
     /**
      * Set the minimumWidth
-     * @param string|integer $minimumWidth
+     * @param integer|string $minimumWidth
      * @return $this
      */
     public function setMinimumWidth($minimumWidth)

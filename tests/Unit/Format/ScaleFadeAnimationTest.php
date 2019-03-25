@@ -11,6 +11,27 @@ use Urbania\AppleNews\Tests\TestCase;
 class ScaleFadeAnimationTest extends TestCase
 {
     /**
+     * Test the property type
+     * @test
+     * @dataProvider typeProvider
+     * @covers ::getType
+     */
+    public function testPropertyType($value)
+    {
+        $object = new ScaleFadeAnimation();
+
+        $this->assertEquals($value, $object->getType());
+    }
+
+    /**
+     * Data provider for property type
+     */
+    public function typeProvider()
+    {
+        return [["scale_fade"]];
+    }
+
+    /**
      * Test the property initialAlpha
      * @test
      * @dataProvider initialAlphaProvider
@@ -54,27 +75,6 @@ class ScaleFadeAnimationTest extends TestCase
     public function initialScaleProvider()
     {
         return [[1.1], [1]];
-    }
-
-    /**
-     * Test the property type
-     * @test
-     * @dataProvider typeProvider
-     * @covers ::getType
-     */
-    public function testPropertyType($value)
-    {
-        $object = new ScaleFadeAnimation();
-
-        $this->assertEquals($value, $object->getType());
-    }
-
-    /**
-     * Data provider for property type
-     */
-    public function typeProvider()
-    {
-        return [["scale_fade"]];
     }
 
     /**

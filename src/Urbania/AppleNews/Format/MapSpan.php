@@ -16,13 +16,13 @@ class MapSpan extends BaseSdkObject
 {
     /**
      * A float value between 0.0 and 90.0.
-     * @var integer|float
+     * @var float|integer
      */
     protected $latitudeDelta;
 
     /**
      * A float value between 0.0 and 180.0.
-     * @var integer|float
+     * @var float|integer
      */
     protected $longitudeDelta;
 
@@ -39,7 +39,7 @@ class MapSpan extends BaseSdkObject
 
     /**
      * Get the latitudeDelta
-     * @return integer|float
+     * @return float|integer
      */
     public function getLatitudeDelta()
     {
@@ -48,7 +48,7 @@ class MapSpan extends BaseSdkObject
 
     /**
      * Set the latitudeDelta
-     * @param integer|float $latitudeDelta
+     * @param float|integer $latitudeDelta
      * @return $this
      */
     public function setLatitudeDelta($latitudeDelta)
@@ -61,7 +61,7 @@ class MapSpan extends BaseSdkObject
 
     /**
      * Get the longitudeDelta
-     * @return integer|float
+     * @return float|integer
      */
     public function getLongitudeDelta()
     {
@@ -70,7 +70,7 @@ class MapSpan extends BaseSdkObject
 
     /**
      * Set the longitudeDelta
-     * @param integer|float $longitudeDelta
+     * @param float|integer $longitudeDelta
      * @return $this
      */
     public function setLongitudeDelta($longitudeDelta)

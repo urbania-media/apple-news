@@ -15,26 +15,26 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class ListItemStyle extends BaseSdkObject
 {
     /**
-     * If type is set to character, provide the character to use as the list
-     * item indicator. Only a single character is supported.
-     * @var string
-     */
-    protected $character;
-
-    /**
-     * The type of list item indicator to use. Allowed options are:
+     * The type of list item indicator to use.
      * @var string
      */
     protected $type;
 
+    /**
+     * A string, when type is set to character, provides the character to use
+     * as the list item indicator. Only a single character is supported.
+     * @var string
+     */
+    protected $character;
+
     public function __construct(array $data = [])
     {
-        if (isset($data['character'])) {
-            $this->setCharacter($data['character']);
-        }
-
         if (isset($data['type'])) {
             $this->setType($data['type']);
+        }
+
+        if (isset($data['character'])) {
+            $this->setCharacter($data['character']);
         }
     }
 
@@ -103,11 +103,11 @@ class ListItemStyle extends BaseSdkObject
     public function toArray()
     {
         $data = [];
-        if (isset($this->character)) {
-            $data['character'] = $this->character;
-        }
         if (isset($this->type)) {
             $data['type'] = $this->type;
+        }
+        if (isset($this->character)) {
+            $data['character'] = $this->character;
         }
         return $data;
     }

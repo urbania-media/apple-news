@@ -15,6 +15,13 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class ConditionalTableColumnStyle extends TableColumnStyle
 {
     /**
+     * An array of one or more selectors, each of which specifies one or more
+     * conditions.
+     * @var Format\TableColumnSelector[]
+     */
+    protected $selectors;
+
+    /**
      * The background color for the column.
      * @var string
      */
@@ -30,16 +37,9 @@ class ConditionalTableColumnStyle extends TableColumnStyle
      * The minimum width of the column as an integer in points  or in one of
      * the available units of measure for components. See Specifying
      * Measurements for Components.
-     * @var string|integer
+     * @var integer|string
      */
     protected $minimumWidth;
-
-    /**
-     * An array of one or more selectors, each of which specifies one or more
-     * conditions.
-     * @var Format\TableColumnSelector[]
-     */
-    protected $selectors;
 
     /**
      * The relative column width. This value influences the distribution of
@@ -53,6 +53,10 @@ class ConditionalTableColumnStyle extends TableColumnStyle
     {
         parent::__construct($data);
 
+        if (isset($data['selectors'])) {
+            $this->setSelectors($data['selectors']);
+        }
+
         if (isset($data['backgroundColor'])) {
             $this->setBackgroundColor($data['backgroundColor']);
         }
@@ -63,10 +67,6 @@ class ConditionalTableColumnStyle extends TableColumnStyle
 
         if (isset($data['minimumWidth'])) {
             $this->setMinimumWidth($data['minimumWidth']);
-        }
-
-        if (isset($data['selectors'])) {
-            $this->setSelectors($data['selectors']);
         }
 
         if (isset($data['width'])) {
@@ -132,7 +132,7 @@ class ConditionalTableColumnStyle extends TableColumnStyle
 
     /**
      * Get the minimumWidth
-     * @return string|integer
+     * @return integer|string
      */
     public function getMinimumWidth()
     {
@@ -141,7 +141,7 @@ class ConditionalTableColumnStyle extends TableColumnStyle
 
     /**
      * Set the minimumWidth
-     * @param string|integer $minimumWidth
+     * @param integer|string $minimumWidth
      * @return $this
      */
     public function setMinimumWidth($minimumWidth)
@@ -253,6 +253,21 @@ class ConditionalTableColumnStyle extends TableColumnStyle
     public function toArray()
     {
         $data = parent::toArray();
+        if (isset($this->selectors)) {
+            $data['selectors'] = !is_null($this->selectors)
+                ? array_reduce(
+                    array_keys($this->selectors),
+                    function ($items, $key) {
+                        $items[$key] =
+                            $this->selectors[$key] instanceof Arrayable
+                                ? $this->selectors[$key]->toArray()
+                                : $this->selectors[$key];
+                        return $items;
+                    },
+                    []
+                )
+                : $this->selectors;
+        }
         if (isset($this->backgroundColor)) {
             $data['backgroundColor'] =
                 $this->backgroundColor instanceof Arrayable
@@ -270,21 +285,6 @@ class ConditionalTableColumnStyle extends TableColumnStyle
                 $this->minimumWidth instanceof Arrayable
                     ? $this->minimumWidth->toArray()
                     : $this->minimumWidth;
-        }
-        if (isset($this->selectors)) {
-            $data['selectors'] = !is_null($this->selectors)
-                ? array_reduce(
-                    array_keys($this->selectors),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->selectors[$key] instanceof Arrayable
-                                ? $this->selectors[$key]->toArray()
-                                : $this->selectors[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->selectors;
         }
         if (isset($this->width)) {
             $data['width'] = $this->width;

@@ -15,8 +15,8 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class TextDecoration extends BaseSdkObject
 {
     /**
-     * Color of the stroke. If omitted, the content’s stroke color will be
-     * used (from text color in case the stroke is for underline or
+     * The color of the stroke. If omitted, the content’s stroke color will
+     * be used (from text color in case the stroke is for underline or
      * strikethrough).
      * @var string
      */

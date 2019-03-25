@@ -8,19 +8,45 @@
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/videofill",
     "properties": [
         {
+            "name": "stillURL",
+            "type": "uri",
+            "required": true,
+            "description": "The URL of the image file to use as a still image when the video is not playing.",
+            "typed": false
+        },
+        {
+            "name": "type",
+            "type": "string",
+            "required": true,
+            "description": "Always video for this object.",
+            "value": "video",
+            "read_only": true,
+            "typed": false
+        },
+        {
             "name": "URL",
             "type": "uri",
             "required": true,
             "description": "The URL of a video file that can be played using AV Player. HTTP Live Streaming (HLS) is highly recommended (.M3U8). For more information on HLS, refer to the iOS developer documentation on HTTP Live Streaming, especially the following sections of the HTTP Live Streaming Overview:",
-            "version": "1.0",
+            "typed": false
+        },
+        {
+            "name": "attachment",
+            "type": "enum:string",
+            "required": false,
+            "description": "A string that indicates how the fill should behave when a user scrolls.",
+            "default": "scroll",
+            "enum_values": [
+                "fixed",
+                "scroll"
+            ],
             "typed": false
         },
         {
             "name": "fillMode",
             "type": "enum:string",
             "required": false,
-            "description": "Indicates how the video fill should be displayed. Valid values:",
-            "version": "1.0",
+            "description": "A string that indicates how the video fill should be displayed.",
             "default": "cover",
             "enum_values": [
                 "fit",
@@ -32,8 +58,7 @@
             "name": "horizontalAlignment",
             "type": "enum:string",
             "required": false,
-            "description": "Sets the horizontal alignment of the video fill within its component.",
-            "version": "1.0",
+            "description": "A string that sets the horizontal alignment of the video fill within its component.",
             "default": "center",
             "enum_values": [
                 "left",
@@ -46,33 +71,15 @@
             "name": "loop",
             "type": "boolean",
             "required": false,
-            "description": "When true, it specifies that the video will start over again when it reaches the end.",
-            "version": "1.1",
+            "description": "A Boolean value when set to true, specifies that the video will start over again when it reaches the end.",
             "default": "true",
-            "typed": false
-        },
-        {
-            "name": "stillURL",
-            "type": "string",
-            "required": true,
-            "description": "The URL of the image file to use as a still image when the video is not playing.",
-            "version": "1.0",
-            "typed": false
-        },
-        {
-            "name": "type",
-            "type": "string",
-            "required": true,
-            "description": "Describes the type of fill. Must be video for a video fill.",
-            "version": "1.0",
             "typed": false
         },
         {
             "name": "verticalAlignment",
             "type": "enum:string",
             "required": false,
-            "description": "Sets the vertical alignment of the video fill within its component. Valid values:",
-            "version": "1.0",
+            "description": "A string value that sets the vertical alignment of the video fill within its component.",
             "default": "center",
             "enum_values": [
                 "top",

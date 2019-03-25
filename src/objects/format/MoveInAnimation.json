@@ -8,11 +8,19 @@
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/moveinanimation",
     "properties": [
         {
+            "name": "type",
+            "type": "string",
+            "required": true,
+            "description": "Always move_in for this animation type.",
+            "value": "move_in",
+            "read_only": true,
+            "typed": false
+        },
+        {
             "name": "preferredStartingPosition",
             "type": "enum:string",
             "required": false,
-            "description": "Indicates which side of the screen should be the starting point of the animation. Valid values:",
-            "version": "1.0",
+            "description": "A string that indicates which side of the screen should be the starting point of the animation.",
             "enum_values": [
                 "left",
                 "right"
@@ -20,21 +28,10 @@
             "typed": false
         },
         {
-            "name": "type",
-            "type": "string",
-            "required": true,
-            "description": "This animation\u2019s type is always move_in.",
-            "value": "move_in",
-            "read_only": true,
-            "version": "1.0",
-            "typed": false
-        },
-        {
             "name": "userControllable",
             "type": "boolean",
             "required": false,
-            "description": "Indicates whether the animation occurs in response to user action (true) or happens automatically (false).",
-            "version": "1.0",
+            "description": "A Boolean value that indicates whether the animation occurs in response to user action (true) or happens automatically (false).",
             "default": "false",
             "typed": false
         }

@@ -15,7 +15,7 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class Motion extends Behavior
 {
     /**
-     * his behavior’s type is always motion.
+     * Always motion for this behavior.
      * @var string
      */
     protected $type = 'motion';

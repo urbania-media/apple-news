@@ -8,32 +8,35 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for defining the space around the component content on one
- * or more sides.
+ * or more sides.DeprecatedUse the padding property in ComponentLayout
+ * instead.
  *
  * @see https://developer.apple.com/documentation/apple_news/contentinset
  */
 class ContentInset extends BaseSdkObject
 {
     /**
-     * Applies an inset to the bottom of the component.
+     * A Boolean value that applies an inset to the bottom of the component.
      * @var boolean
      */
     protected $bottom;
 
     /**
-     * Applies an inset to the left side of the component.
+     * A Boolean value that applies an inset to the left side of the
+     * component.
      * @var boolean
      */
     protected $left;
 
     /**
-     * Applies an inset to the right side of the component.
+     * A Boolean value that applies an inset to the right side of the
+     * component.
      * @var boolean
      */
     protected $right;
 
     /**
-     * Applies an inset to the top of the component.
+     * A Boolean value that applies an inset to the top of the component.
      * @var boolean
      */
     protected $top;

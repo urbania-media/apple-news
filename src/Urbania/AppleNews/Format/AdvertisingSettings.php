@@ -9,7 +9,8 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 /**
  * The object for defining properties that affect the frequency and
  * placement with which banner advertisements and medium rectangle
- * advertisements are automatically placed in your article.
+ * advertisements are automatically placed in your article.DeprecatedUse
+ * AdvertisementAutoPlacement instead.
  *
  * @see https://developer.apple.com/documentation/apple_news/advertisingsettings
  */
@@ -22,11 +23,11 @@ class AdvertisingSettings extends BaseSdkObject
     protected $bannerType;
 
     /**
-     * Either a number in points or a string referring to a supported unit of
+     * A number in points or a string referring to a supported unit of
      * measure that describes the minimum required distance between
      * automatically inserted advertisement components and media, such as
      * video, images, and embeds.
-     * @var string|integer
+     * @var integer|string
      */
     protected $distanceFromMedia;
 
@@ -38,11 +39,11 @@ class AdvertisingSettings extends BaseSdkObject
     protected $frequency;
 
     /**
-     * Layout object that currently supports margin only. An automatically
-     * inserted advertising component uses the surrounding margins to make
-     * sure it positions itself nicely in between components. If needed, the
-     * margins that will be created around these advertisements can be
-     * defined using this layout property.
+     * The Layout object that currently supports margin only. An
+     * automatically inserted advertising component uses the surrounding
+     * margins to make sure it positions itself nicely in between components.
+     * If needed, the margins that is created around these advertisements can
+     * be defined using this layout property.
      * @var \Urbania\AppleNews\Format\AdvertisingLayout
      */
     protected $layout;
@@ -100,7 +101,7 @@ class AdvertisingSettings extends BaseSdkObject
 
     /**
      * Get the distanceFromMedia
-     * @return string|integer
+     * @return integer|string
      */
     public function getDistanceFromMedia()
     {
@@ -109,7 +110,7 @@ class AdvertisingSettings extends BaseSdkObject
 
     /**
      * Set the distanceFromMedia
-     * @param string|integer $distanceFromMedia
+     * @param integer|string $distanceFromMedia
      * @return $this
      */
     public function setDistanceFromMedia($distanceFromMedia)

@@ -8,15 +8,16 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
  * The object for defining the margin above and below advertising
- * components.
+ * components.DeprecatedUse AutoPlacementLayout instead.
  *
  * @see https://developer.apple.com/documentation/apple_news/advertisinglayout
  */
 class AdvertisingLayout extends BaseSdkObject
 {
     /**
-     * Describes margins on top and bottom as a single integer or as an
-     * object containing separate properties for top and bottom margins.
+     * A value that describes margins on top and bottom as a single integer
+     * or as an object containing separate properties for top and bottom
+     * margins.
      * @var \Urbania\AppleNews\Format\Margin|integer
      */
     protected $margin;
@@ -44,9 +45,9 @@ class AdvertisingLayout extends BaseSdkObject
      */
     public function setMargin($margin)
     {
-        if (is_object($margin)) {
+        if (is_object($margin) || is_array($margin)) {
             Assert::isSdkObject($margin, Margin::class);
-        } elseif (!is_array($margin)) {
+        } else {
             Assert::integer($margin);
         }
 

@@ -34,6 +34,29 @@ class ShadowTest extends TestCase
     }
 
     /**
+     * Test the property radius
+     * @test
+     * @dataProvider radiusProvider
+     * @covers ::getRadius
+     * @covers ::setRadius
+     */
+    public function testPropertyRadius($value)
+    {
+        $object = new Shadow();
+        $object->setRadius($value);
+
+        $this->assertEquals($value, $object->getRadius());
+    }
+
+    /**
+     * Data provider for property radius
+     */
+    public function radiusProvider()
+    {
+        return [[1.1], [1]];
+    }
+
+    /**
      * Test the property offset
      * @test
      * @dataProvider offsetProvider
@@ -75,29 +98,6 @@ class ShadowTest extends TestCase
      * Data provider for property opacity
      */
     public function opacityProvider()
-    {
-        return [[1.1], [1]];
-    }
-
-    /**
-     * Test the property radius
-     * @test
-     * @dataProvider radiusProvider
-     * @covers ::getRadius
-     * @covers ::setRadius
-     */
-    public function testPropertyRadius($value)
-    {
-        $object = new Shadow();
-        $object->setRadius($value);
-
-        $this->assertEquals($value, $object->getRadius());
-    }
-
-    /**
-     * Data provider for property radius
-     */
-    public function radiusProvider()
     {
         return [[1.1], [1]];
     }

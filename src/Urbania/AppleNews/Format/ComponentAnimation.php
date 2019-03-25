@@ -71,7 +71,7 @@ class ComponentAnimation extends BaseSdkObject
      */
     public function setType($type)
     {
-        Assert::string($type);
+        Assert::oneOf($type, ["appear", "fade_in", "move_in", "scale_fade"]);
 
         $this->type = $type;
         return $this;

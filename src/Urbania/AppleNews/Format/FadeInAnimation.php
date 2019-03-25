@@ -14,21 +14,21 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class FadeInAnimation extends ComponentAnimation
 {
     /**
-     * The initial transparency of the component. Set initialAlpha to a value
-     * between 0 (completely transparent) and 1 (completely opaque).
-     * @var integer|float
-     */
-    protected $initialAlpha;
-
-    /**
-     * This animation’s type is always fade_in.
+     * Always fade_in for this animation type.
      * @var string
      */
     protected $type = 'fade_in';
 
     /**
-     * Indicates whether the animation occurs in response to user action
-     * (true) or happens automatically (false).
+     * The initial transparency of the component. Set initialAlpha to a value
+     * between 0 (completely transparent) and 1 (completely opaque).
+     * @var float|integer
+     */
+    protected $initialAlpha;
+
+    /**
+     * A Boolean value that indicates whether the animation occurs in
+     * response to user action (true) or happens automatically (false).
      * @var boolean
      */
     protected $userControllable;
@@ -48,7 +48,7 @@ class FadeInAnimation extends ComponentAnimation
 
     /**
      * Get the initialAlpha
-     * @return integer|float
+     * @return float|integer
      */
     public function getInitialAlpha()
     {
@@ -57,7 +57,7 @@ class FadeInAnimation extends ComponentAnimation
 
     /**
      * Set the initialAlpha
-     * @param integer|float $initialAlpha
+     * @param float|integer $initialAlpha
      * @return $this
      */
     public function setInitialAlpha($initialAlpha)
@@ -116,11 +116,11 @@ class FadeInAnimation extends ComponentAnimation
     public function toArray()
     {
         $data = parent::toArray();
-        if (isset($this->initialAlpha)) {
-            $data['initialAlpha'] = $this->initialAlpha;
-        }
         if (isset($this->type)) {
             $data['type'] = $this->type;
+        }
+        if (isset($this->initialAlpha)) {
+            $data['initialAlpha'] = $this->initialAlpha;
         }
         if (isset($this->userControllable)) {
             $data['userControllable'] = $this->userControllable;

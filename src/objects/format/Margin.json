@@ -15,7 +15,6 @@
             ],
             "required": false,
             "description": "The bottom margin in points, or with any of the units of measure for components. See Specifying Measurements for Components.",
-            "version": "1.0",
             "typed": false
         },
         {
@@ -26,7 +25,6 @@
             ],
             "required": false,
             "description": "The top margin in points, or with any of the units of measure for components. See Specifying Measurements for Components.",
-            "version": "1.0",
             "typed": false
         }
     ]

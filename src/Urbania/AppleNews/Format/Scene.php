@@ -7,8 +7,8 @@ use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 
 /**
- * A combination of animations and behaviors to use in section and
- * chapter that have headers.
+ * A combination of animations and behaviors to use in sections and
+ * chapters that have headers.
  *
  * @see https://developer.apple.com/documentation/apple_news/scene
  */
@@ -71,7 +71,7 @@ class Scene extends BaseSdkObject
      */
     public function setType($type)
     {
-        Assert::string($type);
+        Assert::oneOf($type, ["fading_sticky_header", "parallax_scale"]);
 
         $this->type = $type;
         return $this;

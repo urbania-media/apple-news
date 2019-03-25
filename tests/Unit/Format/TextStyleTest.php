@@ -34,6 +34,29 @@ class TextStyleTest extends TestCase
     }
 
     /**
+     * Test the property conditional
+     * @test
+     * @dataProvider conditionalProvider
+     * @covers ::getConditional
+     * @covers ::setConditional
+     */
+    public function testPropertyConditional($value)
+    {
+        $object = new TextStyle();
+        $object->setConditional($value);
+
+        $this->assertEquals($value, $object->getConditional());
+    }
+
+    /**
+     * Data provider for property conditional
+     */
+    public function conditionalProvider()
+    {
+        return [[[new \Urbania\AppleNews\Format\ConditionalTextStyle()]]];
+    }
+
+    /**
      * Test the property fontFamily
      * @test
      * @dataProvider fontFamilyProvider
@@ -330,6 +353,29 @@ class TextStyleTest extends TestCase
     }
 
     /**
+     * Test the property textTransform
+     * @test
+     * @dataProvider textTransformProvider
+     * @covers ::getTextTransform
+     * @covers ::setTextTransform
+     */
+    public function testPropertyTextTransform($value)
+    {
+        $object = new TextStyle();
+        $object->setTextTransform($value);
+
+        $this->assertEquals($value, $object->getTextTransform());
+    }
+
+    /**
+     * Data provider for property textTransform
+     */
+    public function textTransformProvider()
+    {
+        return [["uppercase"], ["lowercase"], ["capitalize"], ["none"]];
+    }
+
+    /**
      * Test the property tracking
      * @test
      * @dataProvider trackingProvider
@@ -418,29 +464,6 @@ class TextStyleTest extends TestCase
      */
     public function verticalAlignmentProvider()
     {
-        return [["a string"]];
-    }
-
-    /**
-     * Test the property textTransform
-     * @test
-     * @dataProvider textTransformProvider
-     * @covers ::getTextTransform
-     * @covers ::setTextTransform
-     */
-    public function testPropertyTextTransform($value)
-    {
-        $object = new TextStyle();
-        $object->setTextTransform($value);
-
-        $this->assertEquals($value, $object->getTextTransform());
-    }
-
-    /**
-     * Data provider for property textTransform
-     */
-    public function textTransformProvider()
-    {
-        return [["a string"]];
+        return [["superscript"], ["subscript"], ["baseline"]];
     }
 }

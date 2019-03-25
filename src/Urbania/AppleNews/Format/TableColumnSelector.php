@@ -15,27 +15,27 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class TableColumnSelector extends BaseSdkObject
 {
     /**
-     * Specifies a column index. The leftmost column of data has an index of
-     * 0. The specified column will be selected.
+     * A number that specifies a column index. The leftmost column of data
+     * has an index of 0. The specified column is selected.
      * @var integer
      */
     protected $columnIndex;
 
     /**
-     * Specifies the identifier of a specific data descriptor. All columns
-     * for this data descriptor will be selected. See DataDescriptor.
+     * A number that specifies the identifier of a specific data descriptor.
+     * All columns for this data descriptor are selected. See DataDescriptor.
      * @var string
      */
     protected $descriptor;
 
     /**
-     * When true, selects the odd columns.
+     * A Boolean value when true, selects the odd columns.
      * @var boolean
      */
     protected $odd;
 
     /**
-     * When true, selects the even columns.
+     * A Boolean value when true, selects the even columns.
      * @var boolean
      */
     protected $even;

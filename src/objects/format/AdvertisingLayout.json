@@ -1,7 +1,7 @@
 {
     "name": "Format\\AdvertisingLayout",
-    "description": "The object for defining the margin above and below advertising components.",
-    "version": "1.7+",
+    "description": "The object for defining the margin above and below advertising components.DeprecatedUse AutoPlacementLayout instead.",
+    "version": "1.7",
     "from_class": null,
     "extends": null,
     "typed": null,
@@ -14,8 +14,7 @@
                 "integer"
             ],
             "required": true,
-            "description": "Describes margins on top and bottom as a single integer or as an object containing separate properties for top and bottom margins.",
-            "version": "1.1",
+            "description": "A value that describes margins on top and bottom as a single integer or as an object containing separate properties for top and bottom margins.",
             "typed": false
         }
     ]

@@ -15,39 +15,38 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class ImageDataFormat extends DataFormat
 {
     /**
+     * Always image for an ImageDataFormat object.
+     * @var string
+     */
+    protected $type = 'image';
+
+    /**
      * The maximum height of an image in a cell as an integer in points or as
      * one of the available units for components.
-     * @var string|integer
+     * @var integer|string
      */
     protected $maximumHeight;
 
     /**
      * The maximum width of an image in a cell as an integer in points or as
      * one of the available units for components.
-     * @var string|integer
+     * @var integer|string
      */
     protected $maximumWidth;
 
     /**
      * The minimum height of an image in a cell as an integer in points or as
      * one of the available units for components.
-     * @var string|integer
+     * @var integer|string
      */
     protected $minimumHeight;
 
     /**
      * The minimum width of an image in a cell as an integer in points or as
      * one of the available units for components.
-     * @var string|integer
+     * @var integer|string
      */
     protected $minimumWidth;
-
-    /**
-     * The type of data format for this object. This must be image for an
-     * ImageDataFormat object.
-     * @var string
-     */
-    protected $type = 'image';
 
     public function __construct(array $data = [])
     {
@@ -72,7 +71,7 @@ class ImageDataFormat extends DataFormat
 
     /**
      * Get the maximumHeight
-     * @return string|integer
+     * @return integer|string
      */
     public function getMaximumHeight()
     {
@@ -81,7 +80,7 @@ class ImageDataFormat extends DataFormat
 
     /**
      * Set the maximumHeight
-     * @param string|integer $maximumHeight
+     * @param integer|string $maximumHeight
      * @return $this
      */
     public function setMaximumHeight($maximumHeight)
@@ -99,7 +98,7 @@ class ImageDataFormat extends DataFormat
 
     /**
      * Get the maximumWidth
-     * @return string|integer
+     * @return integer|string
      */
     public function getMaximumWidth()
     {
@@ -108,7 +107,7 @@ class ImageDataFormat extends DataFormat
 
     /**
      * Set the maximumWidth
-     * @param string|integer $maximumWidth
+     * @param integer|string $maximumWidth
      * @return $this
      */
     public function setMaximumWidth($maximumWidth)
@@ -126,7 +125,7 @@ class ImageDataFormat extends DataFormat
 
     /**
      * Get the minimumHeight
-     * @return string|integer
+     * @return integer|string
      */
     public function getMinimumHeight()
     {
@@ -135,7 +134,7 @@ class ImageDataFormat extends DataFormat
 
     /**
      * Set the minimumHeight
-     * @param string|integer $minimumHeight
+     * @param integer|string $minimumHeight
      * @return $this
      */
     public function setMinimumHeight($minimumHeight)
@@ -153,7 +152,7 @@ class ImageDataFormat extends DataFormat
 
     /**
      * Get the minimumWidth
-     * @return string|integer
+     * @return integer|string
      */
     public function getMinimumWidth()
     {
@@ -162,7 +161,7 @@ class ImageDataFormat extends DataFormat
 
     /**
      * Set the minimumWidth
-     * @param string|integer $minimumWidth
+     * @param integer|string $minimumWidth
      * @return $this
      */
     public function setMinimumWidth($minimumWidth)
@@ -194,6 +193,9 @@ class ImageDataFormat extends DataFormat
     public function toArray()
     {
         $data = parent::toArray();
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
         if (isset($this->maximumHeight)) {
             $data['maximumHeight'] =
                 $this->maximumHeight instanceof Arrayable
@@ -217,9 +219,6 @@ class ImageDataFormat extends DataFormat
                 $this->minimumWidth instanceof Arrayable
                     ? $this->minimumWidth->toArray()
                     : $this->minimumWidth;
-        }
-        if (isset($this->type)) {
-            $data['type'] = $this->type;
         }
         return $data;
     }

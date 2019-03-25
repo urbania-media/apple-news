@@ -11,26 +11,26 @@ use Urbania\AppleNews\Tests\TestCase;
 class LinearGradientFillTest extends TestCase
 {
     /**
-     * Test the property angle
+     * Test the property colorStops
      * @test
-     * @dataProvider angleProvider
-     * @covers ::getAngle
-     * @covers ::setAngle
+     * @dataProvider colorStopsProvider
+     * @covers ::getColorStops
+     * @covers ::setColorStops
      */
-    public function testPropertyAngle($value)
+    public function testPropertyColorStops($value)
     {
         $object = new LinearGradientFill();
-        $object->setAngle($value);
+        $object->setColorStops($value);
 
-        $this->assertEquals($value, $object->getAngle());
+        $this->assertEquals($value, $object->getColorStops());
     }
 
     /**
-     * Data provider for property angle
+     * Data provider for property colorStops
      */
-    public function angleProvider()
+    public function colorStopsProvider()
     {
-        return [[1.1], [1]];
+        return [[[new \Urbania\AppleNews\Format\ColorStop()]]];
     }
 
     /**
@@ -52,5 +52,28 @@ class LinearGradientFillTest extends TestCase
     public function typeProvider()
     {
         return [["linear_gradient"]];
+    }
+
+    /**
+     * Test the property angle
+     * @test
+     * @dataProvider angleProvider
+     * @covers ::getAngle
+     * @covers ::setAngle
+     */
+    public function testPropertyAngle($value)
+    {
+        $object = new LinearGradientFill();
+        $object->setAngle($value);
+
+        $this->assertEquals($value, $object->getAngle());
+    }
+
+    /**
+     * Data provider for property angle
+     */
+    public function angleProvider()
+    {
+        return [[1.1], [1]];
     }
 }

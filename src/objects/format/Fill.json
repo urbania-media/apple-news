@@ -7,31 +7,37 @@
     "typed": {
         "property": "type",
         "types": {
+            "video": "VideoFill",
             "image": "ImageFill",
-            "linear_gradient": "LinearGradientFill"
+            "linear_gradient": "LinearGradientFill",
+            "repeatable_image": "RepeatableImageFill"
         }
     },
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/fill",
     "properties": [
         {
+            "name": "type",
+            "type": "enum:string",
+            "required": true,
+            "description": "The type of fill to apply.",
+            "enum_values": [
+                "linear_gradient",
+                "image",
+                "repeatable_image",
+                "video"
+            ],
+            "typed": false
+        },
+        {
             "name": "attachment",
             "type": "enum:string",
             "required": false,
-            "description": "Indicates how the fill should behave when a user scrolls. Valid values:",
-            "version": "1.0",
+            "description": "A string that indicates how the fill should behave when a user scrolls.",
             "default": "scroll",
             "enum_values": [
                 "fixed",
                 "scroll"
             ],
-            "typed": false
-        },
-        {
-            "name": "type",
-            "type": "string",
-            "required": true,
-            "description": "The type of fill to apply.",
-            "version": "1.0",
             "typed": false
         }
     ]

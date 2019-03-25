@@ -16,20 +16,25 @@ class Component extends BaseSdkObject
     protected static $typeProperty = 'role';
 
     protected static $types = [
-        'audio' => 'Audio',
-        'music' => 'Music',
-        'author' => 'Author',
-        'illustrator' => 'Illustrator',
-        'photographer' => 'Photographer',
+        'map' => 'Map',
+        'divider' => 'Divider',
+        'banner_advertisement' => 'BannerAdvertisement',
+        'medium_rectangle_advertisement' => 'MediumRectangleAdvertisement',
+        'container' => 'Container',
+        'video' => 'Video',
         'embedwebvideo' => 'EmbedWebVideo',
         'embedvideo' => 'EmbedWebVideo',
+        'audio' => 'Audio',
+        'music' => 'Music',
         'aside' => 'Aside',
-        'header' => 'Header',
         'section' => 'Section',
+        'header' => 'Header',
+        'spacer' => 'FlexibleSpacer',
         'chapter' => 'Chapter',
-        'container' => 'Container',
-        'divider' => 'Divider',
+        'article_link' => 'ArticleLink',
         'body' => 'Body',
+        'article_title' => 'ArticleTitle',
+        'pullquote' => 'PullQuote',
         'title' => 'Title',
         'heading' => 'Heading',
         'heading1' => 'Heading',
@@ -44,57 +49,23 @@ class Component extends BaseSdkObject
         'figure' => 'Figure',
         'portrait' => 'Portrait',
         'logo' => 'Logo',
+        'image' => 'Image',
         'gallery' => 'Gallery',
         'mosaic' => 'Mosaic',
+        'author' => 'Author',
+        'byline' => 'Byline',
+        'illustrator' => 'Illustrator',
+        'photographer' => 'Photographer',
         'quote' => 'Quote',
-        'pullquote' => 'PullQuote',
+        'article_thumbnail' => 'ArticleThumbnail',
         'datatable' => 'DataTable',
-        'map' => 'Map',
+        'htmltable' => 'HTMLTable',
         'place' => 'Place',
+        'tweet' => 'Tweet',
         'instagram' => 'Instagram',
         'facebook_post' => 'FacebookPost',
-        'tweet' => 'Tweet',
-        'htmltable' => 'HTMLTable',
-        'banner_advertisement' => 'BannerAdvertisement',
-        'medium_rectangle_advertisement' => 'MediumRectangleAdvertisement'
+        'arkit' => 'ARKit'
     ];
-
-    /**
-     * An Anchor object that aligns this component vertically with another
-     * component.
-     * @var \Urbania\AppleNews\Format\Anchor
-     */
-    protected $anchor;
-
-    /**
-     * An object that applies an animation effect, such as a FadeInAnimation,
-     * to this component.
-     * @var \Urbania\AppleNews\Format\ComponentAnimation
-     */
-    protected $animation;
-
-    /**
-     * A behavior object that applies a motion effect or other physics
-     * effect, such as Parallax or Springy.
-     * @var \Urbania\AppleNews\Format\Behavior
-     */
-    protected $behavior;
-
-    /**
-     * A unique identifier for this component. If used, identifier must be
-     * unique across the entire document. An identifier is required if you
-     * want to anchor other components to this component. See Anchor.
-     * @var string
-     */
-    protected $identifier;
-
-    /**
-     * Either an inline ComponentLayout object that contains layout
-     * information, or a string reference to a component layout that is
-     * defined in Article Document.Component Layouts.
-     * @var \Urbania\AppleNews\Format\ComponentLayout|string
-     */
-    protected $layout;
 
     /**
      * The role of a component (for example, title, body, or pullquote)
@@ -105,15 +76,67 @@ class Component extends BaseSdkObject
     protected $role;
 
     /**
-     * Either an inline ComponentStyle object that defines the appearance of
-     * this component, or a string reference to a component style that is
-     * defined in in Article Document.Component Styles.
+     * An object that defines vertical alignment with another component.
+     * @var \Urbania\AppleNews\Format\Anchor
+     */
+    protected $anchor;
+
+    /**
+     * An object that defines an animation to be applied to the component.
+     * @var \Urbania\AppleNews\Format\ComponentAnimation
+     */
+    protected $animation;
+
+    /**
+     * An object that defines behavior for a component, like Parallax or
+     * Springy.
+     * @var \Urbania\AppleNews\Format\Behavior
+     */
+    protected $behavior;
+
+    /**
+     * An array of component properties that can be applied conditionally,
+     * and the conditions that cause them to be applied.
+     * @var Format\ConditionalComponent[]
+     */
+    protected $conditional;
+
+    /**
+     * A Boolean value that determines whether the component is hidden.
+     * @var boolean
+     */
+    protected $hidden;
+
+    /**
+     * A unique identifier for this component. If used, identifier must be
+     * unique across the entire document. An identifier is required if you
+     * want to anchor other components to this component.
+     * @var string
+     */
+    protected $identifier;
+
+    /**
+     * An inline ComponentLayout object that contains layout information, or
+     * a string reference to a ComponentLayout that is defined at the top
+     * level of the document.
+     * @var \Urbania\AppleNews\Format\ComponentLayout|string
+     */
+    protected $layout;
+
+    /**
+     * An inline ComponentStyle object that defines the appearance of this
+     * component, or a string reference to a ComponentStyle that is defined
+     * at the top level of the document.
      * @var \Urbania\AppleNews\Format\ComponentStyle|string
      */
     protected $style;
 
     public function __construct(array $data = [])
     {
+        if (isset($data['role'])) {
+            $this->setRole($data['role']);
+        }
+
         if (isset($data['anchor'])) {
             $this->setAnchor($data['anchor']);
         }
@@ -126,16 +149,20 @@ class Component extends BaseSdkObject
             $this->setBehavior($data['behavior']);
         }
 
+        if (isset($data['conditional'])) {
+            $this->setConditional($data['conditional']);
+        }
+
+        if (isset($data['hidden'])) {
+            $this->setHidden($data['hidden']);
+        }
+
         if (isset($data['identifier'])) {
             $this->setIdentifier($data['identifier']);
         }
 
         if (isset($data['layout'])) {
             $this->setLayout($data['layout']);
-        }
-
-        if (isset($data['role'])) {
-            $this->setRole($data['role']);
         }
 
         if (isset($data['style'])) {
@@ -249,6 +276,85 @@ class Component extends BaseSdkObject
     }
 
     /**
+     * Add an item to conditional
+     * @param \Urbania\AppleNews\Format\ConditionalComponent|array $item
+     * @return $this
+     */
+    public function addConditional($item)
+    {
+        return $this->setConditional(
+            !is_null($this->conditional)
+                ? array_merge($this->conditional, [$item])
+                : [$item]
+        );
+    }
+
+    /**
+     * Get the conditional
+     * @return Format\ConditionalComponent[]
+     */
+    public function getConditional()
+    {
+        return $this->conditional;
+    }
+
+    /**
+     * Set the conditional
+     * @param Format\ConditionalComponent[] $conditional
+     * @return $this
+     */
+    public function setConditional($conditional)
+    {
+        if (is_null($conditional)) {
+            $this->conditional = null;
+            return $this;
+        }
+
+        Assert::isArray($conditional);
+        Assert::allIsSdkObject($conditional, ConditionalComponent::class);
+
+        $this->conditional = array_reduce(
+            array_keys($conditional),
+            function ($array, $key) use ($conditional) {
+                $item = $conditional[$key];
+                $array[$key] = is_array($item)
+                    ? new ConditionalComponent($item)
+                    : $item;
+                return $array;
+            },
+            []
+        );
+        return $this;
+    }
+
+    /**
+     * Get the hidden
+     * @return boolean
+     */
+    public function getHidden()
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * Set the hidden
+     * @param boolean $hidden
+     * @return $this
+     */
+    public function setHidden($hidden)
+    {
+        if (is_null($hidden)) {
+            $this->hidden = null;
+            return $this;
+        }
+
+        Assert::boolean($hidden);
+
+        $this->hidden = $hidden;
+        return $this;
+    }
+
+    /**
      * Get the identifier
      * @return string
      */
@@ -296,9 +402,9 @@ class Component extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($layout)) {
+        if (is_object($layout) || is_array($layout)) {
             Assert::isSdkObject($layout, ComponentLayout::class);
-        } elseif (!is_array($layout)) {
+        } else {
             Assert::string($layout);
         }
 
@@ -351,9 +457,9 @@ class Component extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($style)) {
+        if (is_object($style) || is_array($style)) {
             Assert::isSdkObject($style, ComponentStyle::class);
-        } elseif (!is_array($style)) {
+        } else {
             Assert::string($style);
         }
 
@@ -368,6 +474,9 @@ class Component extends BaseSdkObject
     public function toArray()
     {
         $data = [];
+        if (isset($this->role)) {
+            $data['role'] = $this->role;
+        }
         if (isset($this->anchor)) {
             $data['anchor'] =
                 $this->anchor instanceof Arrayable
@@ -386,6 +495,24 @@ class Component extends BaseSdkObject
                     ? $this->behavior->toArray()
                     : $this->behavior;
         }
+        if (isset($this->conditional)) {
+            $data['conditional'] = !is_null($this->conditional)
+                ? array_reduce(
+                    array_keys($this->conditional),
+                    function ($items, $key) {
+                        $items[$key] =
+                            $this->conditional[$key] instanceof Arrayable
+                                ? $this->conditional[$key]->toArray()
+                                : $this->conditional[$key];
+                        return $items;
+                    },
+                    []
+                )
+                : $this->conditional;
+        }
+        if (isset($this->hidden)) {
+            $data['hidden'] = $this->hidden;
+        }
         if (isset($this->identifier)) {
             $data['identifier'] = $this->identifier;
         }
@@ -394,9 +521,6 @@ class Component extends BaseSdkObject
                 $this->layout instanceof Arrayable
                     ? $this->layout->toArray()
                     : $this->layout;
-        }
-        if (isset($this->role)) {
-            $data['role'] = $this->role;
         }
         if (isset($this->style)) {
             $data['style'] =

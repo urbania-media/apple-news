@@ -30,6 +30,6 @@ class SceneTest extends TestCase
      */
     public function typeProvider()
     {
-        return [["a string"]];
+        return [["fading_sticky_header"], ["parallax_scale"]];
     }
 }

@@ -80,29 +80,6 @@ class MetadataTest extends TestCase
     }
 
     /**
-     * Test the property coverArt
-     * @test
-     * @dataProvider coverArtProvider
-     * @covers ::getCoverArt
-     * @covers ::setCoverArt
-     */
-    public function testPropertyCoverArt($value)
-    {
-        $object = new Metadata();
-        $object->setCoverArt($value);
-
-        $this->assertEquals($value, $object->getCoverArt());
-    }
-
-    /**
-     * Data provider for property coverArt
-     */
-    public function coverArtProvider()
-    {
-        return [[[new \Urbania\AppleNews\Format\CoverArt()]]];
-    }
-
-    /**
      * Test the property dateCreated
      * @test
      * @dataProvider dateCreatedProvider

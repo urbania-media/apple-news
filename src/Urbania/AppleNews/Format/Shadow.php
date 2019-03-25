@@ -20,27 +20,31 @@ class Shadow extends BaseSdkObject
     protected $color;
 
     /**
+     * The shadow’s radius as a value between 0 and 100 in points.
+     * @var float|integer
+     */
+    protected $radius;
+
+    /**
      * The shadow’s offset.
      * @var \Urbania\AppleNews\Format\Offset
      */
     protected $offset;
 
     /**
-     * Opacity of the shadow as a value between 0 and 1.
-     * @var integer|float
+     * The opacity of the shadow as a value between 0 and 1.
+     * @var float|integer
      */
     protected $opacity;
-
-    /**
-     * The shadow’s radius as a value between 0 and 100 in points.
-     * @var integer|float
-     */
-    protected $radius;
 
     public function __construct(array $data = [])
     {
         if (isset($data['color'])) {
             $this->setColor($data['color']);
+        }
+
+        if (isset($data['radius'])) {
+            $this->setRadius($data['radius']);
         }
 
         if (isset($data['offset'])) {
@@ -49,10 +53,6 @@ class Shadow extends BaseSdkObject
 
         if (isset($data['opacity'])) {
             $this->setOpacity($data['opacity']);
-        }
-
-        if (isset($data['radius'])) {
-            $this->setRadius($data['radius']);
         }
     }
 
@@ -107,7 +107,7 @@ class Shadow extends BaseSdkObject
 
     /**
      * Get the opacity
-     * @return integer|float
+     * @return float|integer
      */
     public function getOpacity()
     {
@@ -116,7 +116,7 @@ class Shadow extends BaseSdkObject
 
     /**
      * Set the opacity
-     * @param integer|float $opacity
+     * @param float|integer $opacity
      * @return $this
      */
     public function setOpacity($opacity)
@@ -134,7 +134,7 @@ class Shadow extends BaseSdkObject
 
     /**
      * Get the radius
-     * @return integer|float
+     * @return float|integer
      */
     public function getRadius()
     {
@@ -143,7 +143,7 @@ class Shadow extends BaseSdkObject
 
     /**
      * Set the radius
-     * @param integer|float $radius
+     * @param float|integer $radius
      * @return $this
      */
     public function setRadius($radius)
@@ -167,6 +167,9 @@ class Shadow extends BaseSdkObject
                     ? $this->color->toArray()
                     : $this->color;
         }
+        if (isset($this->radius)) {
+            $data['radius'] = $this->radius;
+        }
         if (isset($this->offset)) {
             $data['offset'] =
                 $this->offset instanceof Arrayable
@@ -175,9 +178,6 @@ class Shadow extends BaseSdkObject
         }
         if (isset($this->opacity)) {
             $data['opacity'] = $this->opacity;
-        }
-        if (isset($this->radius)) {
-            $data['radius'] = $this->radius;
         }
         return $data;
     }

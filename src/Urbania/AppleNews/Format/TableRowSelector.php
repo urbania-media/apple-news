@@ -15,27 +15,28 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class TableRowSelector extends BaseSdkObject
 {
     /**
-     * Specifies the identifier of a specific data descriptor. All rows for
-     * this data descriptor will be selected. See DataDescriptor.
+     * A string that specifies the identifier of a specific data descriptor.
+     * All rows for this data descriptor will be selected. See
+     * DataDescriptor.
      * @var string
      */
     protected $descriptor;
 
     /**
-     * Specifies a row index. The topmost row of data has an index of 0. The
-     * specified column will be selected.
+     * A number that specifies a row index. The topmost row of data has an
+     * index of 0. The specified column is selected.
      * @var integer
      */
     protected $rowIndex;
 
     /**
-     * When true, selects the odd rows.
+     * A Boolean value when true, selects the odd rows.
      * @var boolean
      */
     protected $odd;
 
     /**
-     * When true, selects the even rows.
+     * A Boolean value when true, selects the even rows.
      * @var boolean
      */
     protected $even;

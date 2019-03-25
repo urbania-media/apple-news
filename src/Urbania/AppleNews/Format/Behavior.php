@@ -73,7 +73,13 @@ class Behavior extends BaseSdkObject
      */
     public function setType($type)
     {
-        Assert::string($type);
+        Assert::oneOf($type, [
+            "background_motion",
+            "background_parallax",
+            "motion",
+            "parallax",
+            "springy"
+        ]);
 
         $this->type = $type;
         return $this;

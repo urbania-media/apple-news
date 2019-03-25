@@ -15,10 +15,18 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class TextStyle extends BaseSdkObject
 {
     /**
-     * The background color for text lines.
+     * The background color for text lines. The value defaults to
+     * transparent.
      * @var string
      */
     protected $backgroundColor;
+
+    /**
+     * An array of text style properties that can be applied conditionally,
+     * and the conditions that cause them to be applied.
+     * @var Format\ConditionalTextStyle[]
+     */
+    protected $conditional;
 
     /**
      * The font family to use for text rendering, for example Gill Sans.
@@ -31,7 +39,7 @@ class TextStyle extends BaseSdkObject
     protected $fontFamily;
 
     /**
-     * Use fontName to refer to an explicit font variant’s PostScript name,
+     * The fontName to refer to an explicit font variant’s PostScript name,
      * such as GillSans-Bold. Alternatively, you can use a combination of
      * fontFamily, fontWeight, fontWidth and/or fontStyle to have News
      * automatically select the appropriate variant depending on the text
@@ -45,13 +53,13 @@ class TextStyle extends BaseSdkObject
      * inherited from a parent component or a default style. As a best
      * practice, try not to go below 16 points for body text. The fontSize
      * may be automatically resized for different device sizes or for iOS
-     * devices with Larger Accessibility Sizes enabled
+     * devices with Larger Accessibility Sizes enabled.
      * @var integer
      */
     protected $fontSize;
 
     /**
-     * The font style to apply for the selected font. Available options are:
+     * The font style to apply for the selected font.
      * @var string
      */
     protected $fontStyle;
@@ -68,9 +76,9 @@ class TextStyle extends BaseSdkObject
      * The font width for font selection (known in CSS as font-stretch).
      * Defines the width characteristics of a font variant between normal,
      * condensed and expanded. Some font families have separate families
-     * assigned for different widths (for example, "Avenir Next" and "Avenir
-     * Next Condensed"), so make sure that the fontFamily you select supports
-     * the specified fontWidth. Available options are:
+     * assigned for different widths (for example, Avenir Next and Avenir
+     * Next Condensed), so make sure that the fontFamily you select supports
+     * the specified fontWidth.
      * @var string
      */
     protected $fontWidth;
@@ -87,6 +95,7 @@ class TextStyle extends BaseSdkObject
      * The text strikethrough. Set strikethrough to true to use the text
      * color inherited from the textColor property as the strikethrough
      * color, or provide a text decoration definition with a different color.
+     * By default strikethrough is omitted (false).
      * @var \Urbania\AppleNews\Format\TextDecoration|boolean
      */
     protected $strikethrough;
@@ -111,17 +120,24 @@ class TextStyle extends BaseSdkObject
     protected $textShadow;
 
     /**
+     * The transform to apply to the text.
+     * @var string
+     */
+    protected $textTransform;
+
+    /**
      * The amount of tracking (spacing between characters) in text, as a
      * percentage of the fontSize. The actual spacing between letters is
      * determined by combining information from the font and font size.
-     * @var integer|float
+     * @var float|integer
      */
     protected $tracking;
 
     /**
      * The text underlining. This style can be used for links. Set underline
      * to true to use the text color as the underline color, or provide a
-     * text decoration with a different color.
+     * text decoration with a different color. By default underline is
+     * omitted (false).
      * @var \Urbania\AppleNews\Format\TextDecoration|boolean
      */
     protected $underline;
@@ -136,21 +152,19 @@ class TextStyle extends BaseSdkObject
 
     /**
      * The vertical alignment of the text. You can use this property for
-     * superscripts and subscripts. Valid values:
+     * superscripts and subscripts.
      * @var string
      */
     protected $verticalAlignment;
-
-    /**
-     * The transform to apply to the text.
-     * @var string
-     */
-    protected $textTransform;
 
     public function __construct(array $data = [])
     {
         if (isset($data['backgroundColor'])) {
             $this->setBackgroundColor($data['backgroundColor']);
+        }
+
+        if (isset($data['conditional'])) {
+            $this->setConditional($data['conditional']);
         }
 
         if (isset($data['fontFamily'])) {
@@ -197,6 +211,10 @@ class TextStyle extends BaseSdkObject
             $this->setTextShadow($data['textShadow']);
         }
 
+        if (isset($data['textTransform'])) {
+            $this->setTextTransform($data['textTransform']);
+        }
+
         if (isset($data['tracking'])) {
             $this->setTracking($data['tracking']);
         }
@@ -211,10 +229,6 @@ class TextStyle extends BaseSdkObject
 
         if (isset($data['verticalAlignment'])) {
             $this->setVerticalAlignment($data['verticalAlignment']);
-        }
-
-        if (isset($data['textTransform'])) {
-            $this->setTextTransform($data['textTransform']);
         }
     }
 
@@ -242,6 +256,58 @@ class TextStyle extends BaseSdkObject
         Assert::isColor($backgroundColor);
 
         $this->backgroundColor = $backgroundColor;
+        return $this;
+    }
+
+    /**
+     * Add an item to conditional
+     * @param \Urbania\AppleNews\Format\ConditionalTextStyle|array $item
+     * @return $this
+     */
+    public function addConditional($item)
+    {
+        return $this->setConditional(
+            !is_null($this->conditional)
+                ? array_merge($this->conditional, [$item])
+                : [$item]
+        );
+    }
+
+    /**
+     * Get the conditional
+     * @return Format\ConditionalTextStyle[]
+     */
+    public function getConditional()
+    {
+        return $this->conditional;
+    }
+
+    /**
+     * Set the conditional
+     * @param Format\ConditionalTextStyle[] $conditional
+     * @return $this
+     */
+    public function setConditional($conditional)
+    {
+        if (is_null($conditional)) {
+            $this->conditional = null;
+            return $this;
+        }
+
+        Assert::isArray($conditional);
+        Assert::allIsSdkObject($conditional, ConditionalTextStyle::class);
+
+        $this->conditional = array_reduce(
+            array_keys($conditional),
+            function ($array, $key) use ($conditional) {
+                $item = $conditional[$key];
+                $array[$key] = is_array($item)
+                    ? new ConditionalTextStyle($item)
+                    : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 
@@ -500,9 +566,9 @@ class TextStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($strikethrough)) {
+        if (is_object($strikethrough) || is_array($strikethrough)) {
             Assert::isSdkObject($strikethrough, TextDecoration::class);
-        } elseif (!is_array($strikethrough)) {
+        } else {
             Assert::boolean($strikethrough);
         }
 
@@ -618,7 +684,12 @@ class TextStyle extends BaseSdkObject
             return $this;
         }
 
-        Assert::string($textTransform);
+        Assert::oneOf($textTransform, [
+            "uppercase",
+            "lowercase",
+            "capitalize",
+            "none"
+        ]);
 
         $this->textTransform = $textTransform;
         return $this;
@@ -626,7 +697,7 @@ class TextStyle extends BaseSdkObject
 
     /**
      * Get the tracking
-     * @return integer|float
+     * @return float|integer
      */
     public function getTracking()
     {
@@ -635,7 +706,7 @@ class TextStyle extends BaseSdkObject
 
     /**
      * Set the tracking
-     * @param integer|float $tracking
+     * @param float|integer $tracking
      * @return $this
      */
     public function setTracking($tracking)
@@ -672,9 +743,9 @@ class TextStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($underline)) {
+        if (is_object($underline) || is_array($underline)) {
             Assert::isSdkObject($underline, TextDecoration::class);
-        } elseif (!is_array($underline)) {
+        } else {
             Assert::boolean($underline);
         }
 
@@ -734,7 +805,11 @@ class TextStyle extends BaseSdkObject
             return $this;
         }
 
-        Assert::string($verticalAlignment);
+        Assert::oneOf($verticalAlignment, [
+            "superscript",
+            "subscript",
+            "baseline"
+        ]);
 
         $this->verticalAlignment = $verticalAlignment;
         return $this;
@@ -752,6 +827,21 @@ class TextStyle extends BaseSdkObject
                 $this->backgroundColor instanceof Arrayable
                     ? $this->backgroundColor->toArray()
                     : $this->backgroundColor;
+        }
+        if (isset($this->conditional)) {
+            $data['conditional'] = !is_null($this->conditional)
+                ? array_reduce(
+                    array_keys($this->conditional),
+                    function ($items, $key) {
+                        $items[$key] =
+                            $this->conditional[$key] instanceof Arrayable
+                                ? $this->conditional[$key]->toArray()
+                                : $this->conditional[$key];
+                        return $items;
+                    },
+                    []
+                )
+                : $this->conditional;
         }
         if (isset($this->fontFamily)) {
             $data['fontFamily'] = $this->fontFamily;
@@ -801,6 +891,9 @@ class TextStyle extends BaseSdkObject
                     ? $this->textShadow->toArray()
                     : $this->textShadow;
         }
+        if (isset($this->textTransform)) {
+            $data['textTransform'] = $this->textTransform;
+        }
         if (isset($this->tracking)) {
             $data['tracking'] = $this->tracking;
         }
@@ -818,9 +911,6 @@ class TextStyle extends BaseSdkObject
         }
         if (isset($this->verticalAlignment)) {
             $data['verticalAlignment'] = $this->verticalAlignment;
-        }
-        if (isset($this->textTransform)) {
-            $data['textTransform'] = $this->textTransform;
         }
         return $data;
     }

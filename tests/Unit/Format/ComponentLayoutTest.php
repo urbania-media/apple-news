@@ -57,6 +57,29 @@ class ComponentLayoutTest extends TestCase
     }
 
     /**
+     * Test the property conditional
+     * @test
+     * @dataProvider conditionalProvider
+     * @covers ::getConditional
+     * @covers ::setConditional
+     */
+    public function testPropertyConditional($value)
+    {
+        $object = new ComponentLayout();
+        $object->setConditional($value);
+
+        $this->assertEquals($value, $object->getConditional());
+    }
+
+    /**
+     * Data provider for property conditional
+     */
+    public function conditionalProvider()
+    {
+        return [[[new \Urbania\AppleNews\Format\ConditionalComponentLayout()]]];
+    }
+
+    /**
      * Test the property contentInset
      * @test
      * @dataProvider contentInsetProvider
@@ -122,7 +145,7 @@ class ComponentLayoutTest extends TestCase
      */
     public function ignoreDocumentGutterProvider()
     {
-        return [[true], [false], ["none"], ["left"], ["right"], ["both"]];
+        return [["none"], ["left"], ["right"], ["both"], [true], [false]];
     }
 
     /**
@@ -145,7 +168,7 @@ class ComponentLayoutTest extends TestCase
      */
     public function ignoreDocumentMarginProvider()
     {
-        return [[true], [false], ["none"], ["left"], ["right"], ["both"]];
+        return [["none"], ["left"], ["right"], ["both"], [true], [false]];
     }
 
     /**
@@ -215,5 +238,74 @@ class ComponentLayoutTest extends TestCase
     public function minimumHeightProvider()
     {
         return [["1vh"], [1], ["1vmin"]];
+    }
+
+    /**
+     * Test the property minimumWidth
+     * @test
+     * @dataProvider minimumWidthProvider
+     * @covers ::getMinimumWidth
+     * @covers ::setMinimumWidth
+     */
+    public function testPropertyMinimumWidth($value)
+    {
+        $object = new ComponentLayout();
+        $object->setMinimumWidth($value);
+
+        $this->assertEquals($value, $object->getMinimumWidth());
+    }
+
+    /**
+     * Data provider for property minimumWidth
+     */
+    public function minimumWidthProvider()
+    {
+        return [["1vh"], [1], ["1vmin"]];
+    }
+
+    /**
+     * Test the property maximumWidth
+     * @test
+     * @dataProvider maximumWidthProvider
+     * @covers ::getMaximumWidth
+     * @covers ::setMaximumWidth
+     */
+    public function testPropertyMaximumWidth($value)
+    {
+        $object = new ComponentLayout();
+        $object->setMaximumWidth($value);
+
+        $this->assertEquals($value, $object->getMaximumWidth());
+    }
+
+    /**
+     * Data provider for property maximumWidth
+     */
+    public function maximumWidthProvider()
+    {
+        return [["1vh"], [1], ["1vmin"]];
+    }
+
+    /**
+     * Test the property padding
+     * @test
+     * @dataProvider paddingProvider
+     * @covers ::getPadding
+     * @covers ::setPadding
+     */
+    public function testPropertyPadding($value)
+    {
+        $object = new ComponentLayout();
+        $object->setPadding($value);
+
+        $this->assertEquals($value, $object->getPadding());
+    }
+
+    /**
+     * Data provider for property padding
+     */
+    public function paddingProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\Padding()]];
     }
 }

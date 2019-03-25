@@ -11,56 +11,49 @@
             "name": "columnIndex",
             "type": "integer",
             "required": false,
-            "description": "Specifies a column index. The leftmost column of data has an index of 0.",
-            "version": "1.5",
+            "description": "The number that specifies a column index. The leftmost column of data has an index of 0.",
             "typed": false
         },
         {
             "name": "descriptor",
             "type": "string",
             "required": false,
-            "description": "Specifies the identifier of a specific data descriptor. All cells for this data descriptor will be selected. See DataDescriptor.",
-            "version": "1.5",
+            "description": "A string that specifies the identifier of a specific data descriptor. All cells for this data descriptor will be selected. See DataDescriptor.",
             "typed": false
         },
         {
             "name": "evenColumns",
             "type": "boolean",
             "required": false,
-            "description": "When true, selects the cells in even columns.",
-            "version": "1.5",
+            "description": "A Boolean value when true, selects the cells in even columns.",
             "typed": false
         },
         {
             "name": "evenRows",
             "type": "boolean",
             "required": false,
-            "description": "When true, selects the cells in even rows.",
-            "version": "1.5",
+            "description": "A Boolean value when true, selects the cells in even rows.",
             "typed": false
         },
         {
             "name": "oddColumns",
             "type": "boolean",
             "required": false,
-            "description": "When true, selects the cells in odd columns.",
-            "version": "1.5",
+            "description": "A Boolean value when true, selects the cells in odd columns.",
             "typed": false
         },
         {
             "name": "oddRows",
             "type": "boolean",
             "required": false,
-            "description": "When true, selects the cells in odd rows.",
-            "version": "1.5",
+            "description": "A Boolean value when true, selects the cells in odd rows.",
             "typed": false
         },
         {
             "name": "rowIndex",
             "type": "integer",
             "required": false,
-            "description": "Specifies a row index. The topmost row of data has an index of 0.",
-            "version": "1.5",
+            "description": "A number that specifies a row index. The topmost row of data has an index of 0.",
             "typed": false
         }
     ]

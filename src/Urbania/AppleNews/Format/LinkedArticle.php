@@ -14,8 +14,14 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class LinkedArticle extends BaseSdkObject
 {
     /**
-     * The URL for the link. Can be either an Apple News link, like
-     * https://apple.news/[article_id], or a link to an article on your
+     * The type of relationship between the article and the linked document.
+     * @var string
+     */
+    protected $relationship;
+
+    /**
+     * The URL for the link. This link can  either be an Apple News link,
+     * like https://apple.news/[article_id], or a link to an article on your
      * website, as long as the website link matches the canonicalURL metadata
      * property of the linked article. For more information about
      * canonicalURL, see Metadata.
@@ -23,21 +29,14 @@ class LinkedArticle extends BaseSdkObject
      */
     protected $URL;
 
-    /**
-     * The type of relationship between the article and the linked document.
-     * Valid values:
-     * @var string
-     */
-    protected $relationship;
-
     public function __construct(array $data = [])
     {
-        if (isset($data['URL'])) {
-            $this->setURL($data['URL']);
-        }
-
         if (isset($data['relationship'])) {
             $this->setRelationship($data['relationship']);
+        }
+
+        if (isset($data['URL'])) {
+            $this->setURL($data['URL']);
         }
     }
 
@@ -92,11 +91,11 @@ class LinkedArticle extends BaseSdkObject
     public function toArray()
     {
         $data = [];
-        if (isset($this->URL)) {
-            $data['URL'] = $this->URL;
-        }
         if (isset($this->relationship)) {
             $data['relationship'] = $this->relationship;
+        }
+        if (isset($this->URL)) {
+            $data['URL'] = $this->URL;
         }
         return $data;
     }

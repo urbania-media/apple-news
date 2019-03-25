@@ -12,7 +12,6 @@
             "type": "map:Format\\TextStyle",
             "required": false,
             "description": "A text style, with a name you define that can be referred to by components within this document.",
-            "version": "1.0",
             "typed": false
         }
     ]

@@ -11,6 +11,27 @@ use Urbania\AppleNews\Tests\TestCase;
 class ImageFillTest extends TestCase
 {
     /**
+     * Test the property type
+     * @test
+     * @dataProvider typeProvider
+     * @covers ::getType
+     */
+    public function testPropertyType($value)
+    {
+        $object = new ImageFill();
+
+        $this->assertEquals($value, $object->getType());
+    }
+
+    /**
+     * Data provider for property type
+     */
+    public function typeProvider()
+    {
+        return [["image"]];
+    }
+
+    /**
      * Test the property URL
      * @test
      * @dataProvider URLProvider
@@ -30,7 +51,30 @@ class ImageFillTest extends TestCase
      */
     public function URLProvider()
     {
-        return [["a string"]];
+        return [["http://example.com"], ["https://example.com"]];
+    }
+
+    /**
+     * Test the property attachment
+     * @test
+     * @dataProvider attachmentProvider
+     * @covers ::getAttachment
+     * @covers ::setAttachment
+     */
+    public function testPropertyAttachment($value)
+    {
+        $object = new ImageFill();
+        $object->setAttachment($value);
+
+        $this->assertEquals($value, $object->getAttachment());
+    }
+
+    /**
+     * Data provider for property attachment
+     */
+    public function attachmentProvider()
+    {
+        return [["fixed"], ["scroll"]];
     }
 
     /**
@@ -77,27 +121,6 @@ class ImageFillTest extends TestCase
     public function horizontalAlignmentProvider()
     {
         return [["left"], ["center"], ["right"]];
-    }
-
-    /**
-     * Test the property type
-     * @test
-     * @dataProvider typeProvider
-     * @covers ::getType
-     */
-    public function testPropertyType($value)
-    {
-        $object = new ImageFill();
-
-        $this->assertEquals($value, $object->getType());
-    }
-
-    /**
-     * Data provider for property type
-     */
-    public function typeProvider()
-    {
-        return [["image"]];
     }
 
     /**

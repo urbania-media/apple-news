@@ -15,6 +15,15 @@
             "typed": false
         },
         {
+            "name": "radius",
+            "type": "number",
+            "required": true,
+            "description": "The shadow\u2019s radius as a value between 0 and 100 in points.",
+            "minimum": 0,
+            "maximum": 100,
+            "typed": false
+        },
+        {
             "name": "offset",
             "type": "Format\\Offset",
             "required": false,
@@ -25,19 +34,10 @@
             "name": "opacity",
             "type": "number",
             "required": false,
-            "description": "Opacity of the shadow as a value between 0 and 1.",
+            "description": "The opacity of the shadow as a value between 0 and 1.",
             "default": 1,
             "minimum": 0,
             "maximum": 1,
-            "typed": false
-        },
-        {
-            "name": "radius",
-            "type": "number",
-            "required": true,
-            "description": "The shadow\u2019s radius as a value between 0 and 100 in points.",
-            "minimum": 0,
-            "maximum": 100,
             "typed": false
         }
     ]

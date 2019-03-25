@@ -11,29 +11,6 @@ use Urbania\AppleNews\Tests\TestCase;
 class ListItemStyleTest extends TestCase
 {
     /**
-     * Test the property character
-     * @test
-     * @dataProvider characterProvider
-     * @covers ::getCharacter
-     * @covers ::setCharacter
-     */
-    public function testPropertyCharacter($value)
-    {
-        $object = new ListItemStyle();
-        $object->setCharacter($value);
-
-        $this->assertEquals($value, $object->getCharacter());
-    }
-
-    /**
-     * Data provider for property character
-     */
-    public function characterProvider()
-    {
-        return [["a string"]];
-    }
-
-    /**
      * Test the property type
      * @test
      * @dataProvider typeProvider
@@ -63,5 +40,28 @@ class ListItemStyleTest extends TestCase
             ["character"],
             ["none"]
         ];
+    }
+
+    /**
+     * Test the property character
+     * @test
+     * @dataProvider characterProvider
+     * @covers ::getCharacter
+     * @covers ::setCharacter
+     */
+    public function testPropertyCharacter($value)
+    {
+        $object = new ListItemStyle();
+        $object->setCharacter($value);
+
+        $this->assertEquals($value, $object->getCharacter());
+    }
+
+    /**
+     * Data provider for property character
+     */
+    public function characterProvider()
+    {
+        return [["a string"]];
     }
 }

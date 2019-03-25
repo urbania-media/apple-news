@@ -34,6 +34,31 @@ class ComponentTextStyleTest extends TestCase
     }
 
     /**
+     * Test the property conditional
+     * @test
+     * @dataProvider conditionalProvider
+     * @covers ::getConditional
+     * @covers ::setConditional
+     */
+    public function testPropertyConditional($value)
+    {
+        $object = new ComponentTextStyle();
+        $object->setConditional($value);
+
+        $this->assertEquals($value, $object->getConditional());
+    }
+
+    /**
+     * Data provider for property conditional
+     */
+    public function conditionalProvider()
+    {
+        return [
+            [[new \Urbania\AppleNews\Format\ConditionalComponentTextStyle()]]
+        ];
+    }
+
+    /**
      * Test the property dropCapStyle
      * @test
      * @dataProvider dropCapStyleProvider
@@ -537,6 +562,29 @@ class ComponentTextStyleTest extends TestCase
     }
 
     /**
+     * Test the property textTransform
+     * @test
+     * @dataProvider textTransformProvider
+     * @covers ::getTextTransform
+     * @covers ::setTextTransform
+     */
+    public function testPropertyTextTransform($value)
+    {
+        $object = new ComponentTextStyle();
+        $object->setTextTransform($value);
+
+        $this->assertEquals($value, $object->getTextTransform());
+    }
+
+    /**
+     * Data provider for property textTransform
+     */
+    public function textTransformProvider()
+    {
+        return [["uppercase"], ["lowercase"], ["capitalize"], ["none"]];
+    }
+
+    /**
      * Test the property tracking
      * @test
      * @dataProvider trackingProvider
@@ -625,6 +673,6 @@ class ComponentTextStyleTest extends TestCase
      */
     public function verticalAlignmentProvider()
     {
-        return [["a string"]];
+        return [["superscript"], ["subscript"], ["baseline"]];
     }
 }

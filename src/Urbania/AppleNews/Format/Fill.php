@@ -17,16 +17,11 @@ class Fill extends BaseSdkObject
     protected static $typeProperty = 'type';
 
     protected static $types = [
+        'video' => 'VideoFill',
         'image' => 'ImageFill',
-        'linear_gradient' => 'LinearGradientFill'
+        'linear_gradient' => 'LinearGradientFill',
+        'repeatable_image' => 'RepeatableImageFill'
     ];
-
-    /**
-     * Indicates how the fill should behave when a user scrolls. Valid
-     * values:
-     * @var string
-     */
-    protected $attachment;
 
     /**
      * The type of fill to apply.
@@ -34,14 +29,21 @@ class Fill extends BaseSdkObject
      */
     protected $type;
 
+    /**
+     * A string that indicates how the fill should behave when a user
+     * scrolls.
+     * @var string
+     */
+    protected $attachment;
+
     public function __construct(array $data = [])
     {
-        if (isset($data['attachment'])) {
-            $this->setAttachment($data['attachment']);
-        }
-
         if (isset($data['type'])) {
             $this->setType($data['type']);
+        }
+
+        if (isset($data['attachment'])) {
+            $this->setAttachment($data['attachment']);
         }
     }
 
@@ -108,7 +110,12 @@ class Fill extends BaseSdkObject
      */
     public function setType($type)
     {
-        Assert::string($type);
+        Assert::oneOf($type, [
+            "linear_gradient",
+            "image",
+            "repeatable_image",
+            "video"
+        ]);
 
         $this->type = $type;
         return $this;
@@ -121,11 +128,11 @@ class Fill extends BaseSdkObject
     public function toArray()
     {
         $data = [];
-        if (isset($this->attachment)) {
-            $data['attachment'] = $this->attachment;
-        }
         if (isset($this->type)) {
             $data['type'] = $this->type;
+        }
+        if (isset($this->attachment)) {
+            $data['attachment'] = $this->attachment;
         }
         return $data;
     }

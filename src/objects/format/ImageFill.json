@@ -8,19 +8,38 @@
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/imagefill",
     "properties": [
         {
-            "name": "URL",
+            "name": "type",
             "type": "string",
             "required": true,
+            "description": "Always image for this object.",
+            "value": "image",
+            "read_only": true,
+            "typed": false
+        },
+        {
+            "name": "URL",
+            "type": "uri",
+            "required": true,
             "description": "The URL of the image file to use for filling the component.",
-            "version": "1.0",
+            "typed": false
+        },
+        {
+            "name": "attachment",
+            "type": "enum:string",
+            "required": false,
+            "description": "A string that indicates how the fill should behave when a user scrolls.",
+            "default": "scroll",
+            "enum_values": [
+                "fixed",
+                "scroll"
+            ],
             "typed": false
         },
         {
             "name": "fillMode",
             "type": "enum:string",
             "required": false,
-            "description": "Indicates how the image fill should be displayed. Valid values:",
-            "version": "1.0",
+            "description": "A string that indicates how the image fill should be displayed.",
             "default": "cover",
             "enum_values": [
                 "fit",
@@ -32,8 +51,7 @@
             "name": "horizontalAlignment",
             "type": "enum:string",
             "required": false,
-            "description": "Sets the horizontal alignment of the image fill within its component. Valid values:",
-            "version": "1.0",
+            "description": "A string that sets the horizontal alignment of the image fill within its component. Valid values:",
             "default": "center",
             "enum_values": [
                 "left",
@@ -43,21 +61,10 @@
             "typed": false
         },
         {
-            "name": "type",
-            "type": "string",
-            "required": true,
-            "description": "The type of fill to apply. This property should always be set to image.",
-            "value": "image",
-            "read_only": true,
-            "version": "1.0",
-            "typed": false
-        },
-        {
             "name": "verticalAlignment",
             "type": "enum:string",
             "required": false,
-            "description": "Sets the vertical alignment of the image fill within its component. Valid values:",
-            "version": "1.0",
+            "description": "A string that sets the vertical alignment of the image fill within its component. Valid values:",
             "default": "center",
             "enum_values": [
                 "top",

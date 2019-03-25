@@ -55,4 +55,27 @@ class GradientFillTest extends TestCase
     {
         return [["a string"]];
     }
+
+    /**
+     * Test the property attachment
+     * @test
+     * @dataProvider attachmentProvider
+     * @covers ::getAttachment
+     * @covers ::setAttachment
+     */
+    public function testPropertyAttachment($value)
+    {
+        $object = new GradientFill();
+        $object->setAttachment($value);
+
+        $this->assertEquals($value, $object->getAttachment());
+    }
+
+    /**
+     * Data provider for property attachment
+     */
+    public function attachmentProvider()
+    {
+        return [["fixed"], ["scroll"]];
+    }
 }

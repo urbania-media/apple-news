@@ -11,6 +11,29 @@ use Urbania\AppleNews\Tests\TestCase;
 class CaptionDescriptorTest extends TestCase
 {
     /**
+     * Test the property text
+     * @test
+     * @dataProvider textProvider
+     * @covers ::getText
+     * @covers ::setText
+     */
+    public function testPropertyText($value)
+    {
+        $object = new CaptionDescriptor();
+        $object->setText($value);
+
+        $this->assertEquals($value, $object->getText());
+    }
+
+    /**
+     * Data provider for property text
+     */
+    public function textProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property additions
      * @test
      * @dataProvider additionsProvider
@@ -77,29 +100,6 @@ class CaptionDescriptorTest extends TestCase
     public function inlineTextStylesProvider()
     {
         return [[[new \Urbania\AppleNews\Format\InlineTextStyle()]]];
-    }
-
-    /**
-     * Test the property text
-     * @test
-     * @dataProvider textProvider
-     * @covers ::getText
-     * @covers ::setText
-     */
-    public function testPropertyText($value)
-    {
-        $object = new CaptionDescriptor();
-        $object->setText($value);
-
-        $this->assertEquals($value, $object->getText());
-    }
-
-    /**
-     * Data provider for property text
-     */
-    public function textProvider()
-    {
-        return [["a string"]];
     }
 
     /**

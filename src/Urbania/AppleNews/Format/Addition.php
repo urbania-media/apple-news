@@ -14,6 +14,12 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class Addition extends BaseSdkObject
 {
     /**
+     * The type of addition. For example, Link.
+     * @var string
+     */
+    protected $type;
+
+    /**
      * The length of the range of text the component should be anchored to.
      * @var integer
      */
@@ -27,24 +33,18 @@ class Addition extends BaseSdkObject
      */
     protected $rangeStart;
 
-    /**
-     * The type of addition. For example, Link.
-     * @var string
-     */
-    protected $type;
-
     public function __construct(array $data = [])
     {
+        if (isset($data['type'])) {
+            $this->setType($data['type']);
+        }
+
         if (isset($data['rangeLength'])) {
             $this->setRangeLength($data['rangeLength']);
         }
 
         if (isset($data['rangeStart'])) {
             $this->setRangeStart($data['rangeStart']);
-        }
-
-        if (isset($data['type'])) {
-            $this->setType($data['type']);
         }
     }
 
@@ -64,6 +64,11 @@ class Addition extends BaseSdkObject
      */
     public function setRangeLength($rangeLength)
     {
+        if (is_null($rangeLength)) {
+            $this->rangeLength = null;
+            return $this;
+        }
+
         Assert::integer($rangeLength);
 
         $this->rangeLength = $rangeLength;
@@ -86,6 +91,11 @@ class Addition extends BaseSdkObject
      */
     public function setRangeStart($rangeStart)
     {
+        if (is_null($rangeStart)) {
+            $this->rangeStart = null;
+            return $this;
+        }
+
         Assert::integer($rangeStart);
 
         $this->rangeStart = $rangeStart;
@@ -121,14 +131,14 @@ class Addition extends BaseSdkObject
     public function toArray()
     {
         $data = [];
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
+        }
         if (isset($this->rangeLength)) {
             $data['rangeLength'] = $this->rangeLength;
         }
         if (isset($this->rangeStart)) {
             $data['rangeStart'] = $this->rangeStart;
-        }
-        if (isset($this->type)) {
-            $data['type'] = $this->type;
         }
         return $data;
     }

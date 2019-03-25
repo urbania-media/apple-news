@@ -15,36 +15,36 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class MapItem extends BaseSdkObject
 {
     /**
-     * The caption for the map item. This caption will be displayed when a
-     * user taps on a map pin.
-     * @var string
-     */
-    protected $caption;
-
-    /**
      * The latitude of the map item.
-     * @var integer|float
+     * @var float|integer
      */
     protected $latitude;
 
     /**
      * The longitude of the map item.
-     * @var integer|float
+     * @var float|integer
      */
     protected $longitude;
 
+    /**
+     * The caption for the map item. This caption is displayed when a user
+     * taps on a map pin.
+     * @var string
+     */
+    protected $caption;
+
     public function __construct(array $data = [])
     {
-        if (isset($data['caption'])) {
-            $this->setCaption($data['caption']);
-        }
-
         if (isset($data['latitude'])) {
             $this->setLatitude($data['latitude']);
         }
 
         if (isset($data['longitude'])) {
             $this->setLongitude($data['longitude']);
+        }
+
+        if (isset($data['caption'])) {
+            $this->setCaption($data['caption']);
         }
     }
 
@@ -77,7 +77,7 @@ class MapItem extends BaseSdkObject
 
     /**
      * Get the latitude
-     * @return integer|float
+     * @return float|integer
      */
     public function getLatitude()
     {
@@ -86,7 +86,7 @@ class MapItem extends BaseSdkObject
 
     /**
      * Set the latitude
-     * @param integer|float $latitude
+     * @param float|integer $latitude
      * @return $this
      */
     public function setLatitude($latitude)
@@ -99,7 +99,7 @@ class MapItem extends BaseSdkObject
 
     /**
      * Get the longitude
-     * @return integer|float
+     * @return float|integer
      */
     public function getLongitude()
     {
@@ -108,7 +108,7 @@ class MapItem extends BaseSdkObject
 
     /**
      * Set the longitude
-     * @param integer|float $longitude
+     * @param float|integer $longitude
      * @return $this
      */
     public function setLongitude($longitude)
@@ -126,14 +126,14 @@ class MapItem extends BaseSdkObject
     public function toArray()
     {
         $data = [];
-        if (isset($this->caption)) {
-            $data['caption'] = $this->caption;
-        }
         if (isset($this->latitude)) {
             $data['latitude'] = $this->latitude;
         }
         if (isset($this->longitude)) {
             $data['longitude'] = $this->longitude;
+        }
+        if (isset($this->caption)) {
+            $data['caption'] = $this->caption;
         }
         return $data;
     }

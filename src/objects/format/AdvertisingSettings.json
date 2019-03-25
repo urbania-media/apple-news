@@ -1,7 +1,7 @@
 {
     "name": "Format\\AdvertisingSettings",
-    "description": "The object for defining properties that affect the frequency and placement with which banner advertisements and medium rectangle advertisements are automatically placed in your article.",
-    "version": "1.7+",
+    "description": "The object for defining properties that affect the frequency and placement with which banner advertisements and medium rectangle advertisements are automatically placed in your article.DeprecatedUse AdvertisementAutoPlacement instead.",
+    "version": "1.7",
     "from_class": null,
     "extends": null,
     "typed": null,
@@ -12,7 +12,6 @@
             "type": "enum:string",
             "required": false,
             "description": "The banner type that should be shown.",
-            "version": "1.1",
             "default": "any",
             "enum_values": [
                 "any",
@@ -29,8 +28,7 @@
                 "integer"
             ],
             "required": false,
-            "description": "Either a number in points or a string referring to a supported unit of measure that describes the minimum required distance between automatically inserted advertisement components and media, such as video, images, and embeds.",
-            "version": "1.1",
+            "description": "A number in points or a string referring to a supported unit of measure that describes the minimum required distance between automatically inserted advertisement components and media, such as video, images, and embeds.",
             "default": 0,
             "typed": false
         },
@@ -39,7 +37,6 @@
             "type": "integer",
             "required": false,
             "description": "A number between 0 and 10 defining the frequency for automatically inserting advertising components into articles.",
-            "version": "1.1",
             "default": 0,
             "minimum": 0,
             "maximum": 10,
@@ -49,8 +46,7 @@
             "name": "layout",
             "type": "Format\\AdvertisingLayout",
             "required": false,
-            "description": "Layout object that currently supports margin only. An automatically inserted advertising component uses the surrounding margins to make sure it positions itself nicely in between components. If needed, the margins that will be created around these advertisements can be defined using this layout property.",
-            "version": "1.1",
+            "description": "The Layout object that currently supports margin only. An automatically inserted advertising component uses the surrounding margins to make sure it positions itself nicely in between components. If needed, the margins that is created around these advertisements can be defined using this layout property.",
             "typed": false
         }
     ]

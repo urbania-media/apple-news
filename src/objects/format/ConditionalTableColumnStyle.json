@@ -8,11 +8,17 @@
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/conditionaltablecolumnstyle",
     "properties": [
         {
+            "name": "selectors",
+            "type": "array:Format\\TableColumnSelector",
+            "required": true,
+            "description": "An array of one or more selectors, each of which specifies one or more conditions.",
+            "typed": false
+        },
+        {
             "name": "backgroundColor",
             "type": "Color",
             "required": false,
             "description": "The background color for the column.",
-            "version": "1.5",
             "typed": false
         },
         {
@@ -20,7 +26,6 @@
             "type": "Format\\TableStrokeStyle",
             "required": false,
             "description": "The stroke style for the divider line to the right of the column.",
-            "version": "1.5",
             "typed": false
         },
         {
@@ -31,15 +36,6 @@
             ],
             "required": false,
             "description": "The minimum width of the column as an integer in points  or in one of the available units of measure for components. See Specifying Measurements for Components.",
-            "version": "1.5",
-            "typed": false
-        },
-        {
-            "name": "selectors",
-            "type": "array:Format\\TableColumnSelector",
-            "required": true,
-            "description": "An array of one or more selectors, each of which specifies one or more conditions.",
-            "version": "1.5",
             "typed": false
         },
         {
@@ -47,7 +43,6 @@
             "type": "integer",
             "required": false,
             "description": "The relative column width. This value influences the distribution of column width but does not dictate any exact values. To set an exact minimum width, use minimumWidth instead.",
-            "version": "1.5",
             "typed": false
         }
     ]

@@ -14,14 +14,16 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class RecordStore extends BaseSdkObject
 {
     /**
-     * Provides information about the data that can be in each data record.
+     * An object that provides information about the data that can be in each
+     * data record.
      * @var Format\DataDescriptor[]
      */
     protected $descriptors;
 
     /**
-     * Provides data records that fit within the structure defined by
-     * descriptors. Each descriptor can be used only once per record.
+     * An object that provides data records that fit within the structure
+     * defined by descriptors. Each descriptor can be used only once per
+     * record.
      * @var Format\Records[]
      */
     protected $records;

@@ -21,25 +21,26 @@ class GalleryItem extends BaseSdkObject
     protected $URL;
 
     /**
-     * A caption that describes the image. Note that this property differs
-     * from caption: although the caption can be displayed to users,
-     * accessibilityCaption is used by VoiceOver for iOS only. If
-     * accessibilityCaption is omitted, the caption value is used.
+     * A caption that describes the image. The text is used for VoiceOver for
+     * iOS and VoiceOver for macOS. If accessibilityCaption is not provided,
+     * the caption value is used for VoiceOver for iOS and VoiceOver for
+     * macOS.
      * @var string
      */
     protected $accessibilityCaption;
 
     /**
-     * A caption that describes the image. This text can be used by VoiceOver
-     * for iOS if if accessibilityCaption is not provided. The gallery
-     * component does not display the caption to the user except when the
-     * gallery is clicked to display it full screen.
+     * A caption that describes the image. The text is seen when the image is
+     * in full screen. This text is also used by VoiceOver for iOS and
+     * VoiceOver for macOS, if accessibilityCaption text is not provided. The
+     * caption text does not appear in the main article view. To display a
+     * caption in the main article view, use the Caption component.
      * @var \Urbania\AppleNews\Format\CaptionDescriptor|string
      */
     protected $caption;
 
     /**
-     * Indicates that the image may contain explicit content.
+     * A Boolean value that indicates the image may contain explicit content.
      * @var boolean
      */
     protected $explicitContent;
@@ -111,9 +112,9 @@ class GalleryItem extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($caption)) {
+        if (is_object($caption) || is_array($caption)) {
             Assert::isSdkObject($caption, CaptionDescriptor::class);
-        } elseif (!is_array($caption)) {
+        } else {
             Assert::string($caption);
         }
 
@@ -166,7 +167,7 @@ class GalleryItem extends BaseSdkObject
      */
     public function setURL($URL)
     {
-        Assert::string($URL);
+        Assert::uri($URL);
 
         $this->URL = $URL;
         return $this;

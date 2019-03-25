@@ -11,29 +11,6 @@ use Urbania\AppleNews\Tests\TestCase;
 class MapItemTest extends TestCase
 {
     /**
-     * Test the property caption
-     * @test
-     * @dataProvider captionProvider
-     * @covers ::getCaption
-     * @covers ::setCaption
-     */
-    public function testPropertyCaption($value)
-    {
-        $object = new MapItem();
-        $object->setCaption($value);
-
-        $this->assertEquals($value, $object->getCaption());
-    }
-
-    /**
-     * Data provider for property caption
-     */
-    public function captionProvider()
-    {
-        return [["a string"]];
-    }
-
-    /**
      * Test the property latitude
      * @test
      * @dataProvider latitudeProvider
@@ -77,5 +54,28 @@ class MapItemTest extends TestCase
     public function longitudeProvider()
     {
         return [[1.1], [1]];
+    }
+
+    /**
+     * Test the property caption
+     * @test
+     * @dataProvider captionProvider
+     * @covers ::getCaption
+     * @covers ::setCaption
+     */
+    public function testPropertyCaption($value)
+    {
+        $object = new MapItem();
+        $object->setCaption($value);
+
+        $this->assertEquals($value, $object->getCaption());
+    }
+
+    /**
+     * Data provider for property caption
+     */
+    public function captionProvider()
+    {
+        return [["a string"]];
     }
 }
