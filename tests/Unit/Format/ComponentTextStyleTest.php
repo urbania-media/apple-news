@@ -466,7 +466,11 @@ class ComponentTextStyleTest extends TestCase
      */
     public function strikethroughProvider()
     {
-        return [[new \Urbania\AppleNews\Format\TextDecoration()]];
+        return [
+            [new \Urbania\AppleNews\Format\TextDecoration()],
+            [true],
+            [false]
+        ];
     }
 
     /**
@@ -627,7 +631,11 @@ class ComponentTextStyleTest extends TestCase
      */
     public function underlineProvider()
     {
-        return [[new \Urbania\AppleNews\Format\TextDecoration()]];
+        return [
+            [new \Urbania\AppleNews\Format\TextDecoration()],
+            [true],
+            [false]
+        ];
     }
 
     /**

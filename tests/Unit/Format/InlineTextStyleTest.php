@@ -76,6 +76,6 @@ class InlineTextStyleTest extends TestCase
      */
     public function textStyleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\TextStyle()]];
+        return [[new \Urbania\AppleNews\Format\TextStyle()], ["a string"]];
     }
 }

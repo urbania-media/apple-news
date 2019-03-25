@@ -101,7 +101,7 @@ class TableColumnStyleTest extends TestCase
      */
     public function minimumWidthProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 
     /**

@@ -30,6 +30,6 @@ class AutoPlacementLayoutTest extends TestCase
      */
     public function marginProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Margin()]];
+        return [[new \Urbania\AppleNews\Format\Margin()], [1]];
     }
 }

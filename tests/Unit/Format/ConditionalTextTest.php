@@ -168,7 +168,10 @@ class ConditionalTextTest extends TestCase
      */
     public function layoutProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentLayout()]];
+        return [
+            [new \Urbania\AppleNews\Format\ComponentLayout()],
+            ["a string"]
+        ];
     }
 
     /**
@@ -191,7 +194,7 @@ class ConditionalTextTest extends TestCase
      */
     public function styleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentStyle()]];
+        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
     }
 
     /**
@@ -214,6 +217,9 @@ class ConditionalTextTest extends TestCase
      */
     public function textStyleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentTextStyle()]];
+        return [
+            [new \Urbania\AppleNews\Format\ComponentTextStyle()],
+            ["a string"]
+        ];
     }
 }

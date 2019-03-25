@@ -53,7 +53,7 @@ class AdvertisingSettingsTest extends TestCase
      */
     public function distanceFromMediaProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 
     /**

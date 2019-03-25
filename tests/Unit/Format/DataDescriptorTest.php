@@ -129,6 +129,6 @@ class DataDescriptorTest extends TestCase
      */
     public function labelProvider()
     {
-        return [[new \Urbania\AppleNews\Format\FormattedText()]];
+        return [[new \Urbania\AppleNews\Format\FormattedText()], ["a string"]];
     }
 }

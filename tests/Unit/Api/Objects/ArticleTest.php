@@ -76,7 +76,10 @@ class ArticleTest extends TestCase
      */
     public function documentProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ArticleDocument()]];
+        return [
+            [new \Urbania\AppleNews\Format\ArticleDocument()],
+            ["a string"]
+        ];
     }
 
     /**
@@ -99,7 +102,7 @@ class ArticleTest extends TestCase
      */
     public function idProvider()
     {
-        return [["98e933a6-4f4b-11e9-918b-f45c899bcb9d"]];
+        return [["4bb13d30-4f4c-11e9-bd6e-f45c899bcb9d"]];
     }
 
     /**

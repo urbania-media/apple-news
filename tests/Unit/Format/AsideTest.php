@@ -189,7 +189,10 @@ class AsideTest extends TestCase
      */
     public function contentDisplayProvider()
     {
-        return [[new \Urbania\AppleNews\Format\CollectionDisplay()]];
+        return [
+            [new \Urbania\AppleNews\Format\CollectionDisplay()],
+            [new \Urbania\AppleNews\Format\HorizontalStackDisplay()]
+        ];
     }
 
     /**
@@ -258,7 +261,10 @@ class AsideTest extends TestCase
      */
     public function layoutProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentLayout()]];
+        return [
+            [new \Urbania\AppleNews\Format\ComponentLayout()],
+            ["a string"]
+        ];
     }
 
     /**
@@ -281,6 +287,6 @@ class AsideTest extends TestCase
      */
     public function styleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentStyle()]];
+        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
     }
 }

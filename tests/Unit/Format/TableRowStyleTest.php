@@ -99,6 +99,6 @@ class TableRowStyleTest extends TestCase
      */
     public function heightProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 }

@@ -76,7 +76,10 @@ class GalleryItemTest extends TestCase
      */
     public function captionProvider()
     {
-        return [[new \Urbania\AppleNews\Format\CaptionDescriptor()]];
+        return [
+            [new \Urbania\AppleNews\Format\CaptionDescriptor()],
+            ["a string"]
+        ];
     }
 
     /**

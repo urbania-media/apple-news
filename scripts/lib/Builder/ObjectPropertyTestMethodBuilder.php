@@ -58,7 +58,11 @@ class ObjectPropertyTestMethodBuilder
 
     protected function buildProviderBody(array $property, array $object)
     {
-        $values = (array)$this->getValuesFromProperty($property);
+        $types = (array)$property['type'];
+        $values = array_reduce($types, function ($values, $type) use ($property) {
+            $newValues = (array)$this->getValuesFromType($type, $property);
+            return array_merge($values, $newValues);
+        }, []);
         $values = array_map(function ($value) {
             return sprintf(
                 '[%s]',
@@ -103,14 +107,13 @@ class ObjectPropertyTestMethodBuilder
         );
     }
 
-    public function getValuesFromProperty($property)
+    public function getValuesFromType($type, $property)
     {
         $readOnly = $property['read_only'] ?? false;
         if ($readOnly && isset($property['value'])) {
             return $this->getSafeValue($property['value']);
         }
-        $type = $property['type'];
-        $mainType = is_array($type) ? $type[0] : current(explode(':', $type));
+        $mainType = current(explode(':', $type));
         switch ($mainType) {
             case 'SupportedUnits':
                 return $this->getSafeValues(['1vh', 1.0, '1vmin']);

@@ -122,6 +122,9 @@ class CaptionDescriptorTest extends TestCase
      */
     public function textStyleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentTextStyle()]];
+        return [
+            [new \Urbania\AppleNews\Format\ComponentTextStyle()],
+            ["a string"]
+        ];
     }
 }

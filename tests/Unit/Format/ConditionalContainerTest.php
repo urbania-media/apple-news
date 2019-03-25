@@ -145,7 +145,10 @@ class ConditionalContainerTest extends TestCase
      */
     public function layoutProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentLayout()]];
+        return [
+            [new \Urbania\AppleNews\Format\ComponentLayout()],
+            ["a string"]
+        ];
     }
 
     /**
@@ -168,6 +171,6 @@ class ConditionalContainerTest extends TestCase
      */
     public function styleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentStyle()]];
+        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
     }
 }

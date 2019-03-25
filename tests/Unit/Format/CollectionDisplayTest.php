@@ -97,7 +97,7 @@ class CollectionDisplayTest extends TestCase
      */
     public function gutterProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 
     /**
@@ -120,7 +120,7 @@ class CollectionDisplayTest extends TestCase
      */
     public function maximumWidthProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 
     /**
@@ -143,7 +143,7 @@ class CollectionDisplayTest extends TestCase
      */
     public function minimumWidthProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 
     /**
@@ -166,7 +166,7 @@ class CollectionDisplayTest extends TestCase
      */
     public function rowSpacingProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 
     /**

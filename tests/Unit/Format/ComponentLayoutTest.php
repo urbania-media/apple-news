@@ -99,7 +99,11 @@ class ComponentLayoutTest extends TestCase
      */
     public function contentInsetProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ContentInset()]];
+        return [
+            [new \Urbania\AppleNews\Format\ContentInset()],
+            [true],
+            [false]
+        ];
     }
 
     /**
@@ -191,7 +195,7 @@ class ComponentLayoutTest extends TestCase
      */
     public function marginProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Margin()]];
+        return [[new \Urbania\AppleNews\Format\Margin()], [1]];
     }
 
     /**
@@ -214,7 +218,7 @@ class ComponentLayoutTest extends TestCase
      */
     public function maximumContentWidthProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 
     /**
@@ -237,7 +241,7 @@ class ComponentLayoutTest extends TestCase
      */
     public function minimumHeightProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 
     /**
@@ -260,7 +264,7 @@ class ComponentLayoutTest extends TestCase
      */
     public function minimumWidthProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 
     /**
@@ -283,7 +287,7 @@ class ComponentLayoutTest extends TestCase
      */
     public function maximumWidthProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 
     /**
@@ -306,6 +310,12 @@ class ComponentLayoutTest extends TestCase
      */
     public function paddingProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Padding()]];
+        return [
+            [new \Urbania\AppleNews\Format\Padding()],
+            ["1vh"],
+            [1],
+            ["1vmin"],
+            [1]
+        ];
     }
 }

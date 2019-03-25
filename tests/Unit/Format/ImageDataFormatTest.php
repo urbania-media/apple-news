@@ -51,7 +51,7 @@ class ImageDataFormatTest extends TestCase
      */
     public function maximumHeightProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 
     /**
@@ -74,7 +74,7 @@ class ImageDataFormatTest extends TestCase
      */
     public function maximumWidthProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 
     /**
@@ -97,7 +97,7 @@ class ImageDataFormatTest extends TestCase
      */
     public function minimumHeightProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 
     /**
@@ -120,6 +120,6 @@ class ImageDataFormatTest extends TestCase
      */
     public function minimumWidthProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 }

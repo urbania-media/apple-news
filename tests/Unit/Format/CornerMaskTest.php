@@ -76,7 +76,7 @@ class CornerMaskTest extends TestCase
      */
     public function radiusProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 
     /**

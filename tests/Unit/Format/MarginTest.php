@@ -30,7 +30,7 @@ class MarginTest extends TestCase
      */
     public function bottomProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 
     /**
@@ -53,6 +53,6 @@ class MarginTest extends TestCase
      */
     public function topProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 }

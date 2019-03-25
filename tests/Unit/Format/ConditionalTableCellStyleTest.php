@@ -99,7 +99,7 @@ class ConditionalTableCellStyleTest extends TestCase
      */
     public function heightProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 
     /**
@@ -145,7 +145,7 @@ class ConditionalTableCellStyleTest extends TestCase
      */
     public function minimumWidthProvider()
     {
-        return [["1vh"], [1], ["1vmin"]];
+        return [["1vh"], [1], ["1vmin"], [1]];
     }
 
     /**
@@ -168,7 +168,13 @@ class ConditionalTableCellStyleTest extends TestCase
      */
     public function paddingProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Padding()]];
+        return [
+            [new \Urbania\AppleNews\Format\Padding()],
+            ["1vh"],
+            [1],
+            ["1vmin"],
+            [1]
+        ];
     }
 
     /**
@@ -191,7 +197,10 @@ class ConditionalTableCellStyleTest extends TestCase
      */
     public function textStyleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentTextStyle()]];
+        return [
+            [new \Urbania\AppleNews\Format\ComponentTextStyle()],
+            ["a string"]
+        ];
     }
 
     /**
