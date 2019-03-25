@@ -27,8 +27,6 @@ abstract class JsonParser extends Parser
         }
     }
 
-    abstract public function parse($post, $article = null);
-
     public function fetchJson($url, $method = 'GET', $opts = [])
     {
         try {
