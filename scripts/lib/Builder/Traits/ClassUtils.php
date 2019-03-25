@@ -93,6 +93,14 @@ trait ClassUtils
         return '\\'.$this->getUnitTestsBaseNamespace().'\\'.$name;
     }
 
+    protected function getRelativeClassPathFromObjectName($objectName, $baseNamespace)
+    {
+        return $this->removeNamespaceFromClassPath(
+            $baseNamespace,
+            $this->getFullClassPath($objectName)
+        );
+    }
+
     protected function getTypeHint($type, $method = 'get')
     {
         $typeHints = [];

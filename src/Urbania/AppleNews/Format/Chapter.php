@@ -462,17 +462,27 @@ class Chapter extends Container
             return $this;
         }
 
-        Assert::isSdkObjects($contentDisplay, [
+        Assert::isAnySdkObject($contentDisplay, [
             CollectionDisplay::class,
             HorizontalStackDisplay::class
         ]);
 
         if (is_array($contentDisplay)) {
-            $this->contentDisplay =
-                !isset($contentDisplay['type']) ||
-                $contentDisplay['type'] === 'collection'
-                    ? new CollectionDisplay($contentDisplay)
-                    : new HorizontalStackDisplay($contentDisplay);
+            $typeObjects = [
+                'collection' => CollectionDisplay::class,
+                'horizontal_stack' => HorizontalStackDisplay::class
+            ];
+            $this->contentDisplay = array_reduce(
+                array_keys($typeObjects),
+                function ($ret, $k) use ($typeObjects, $contentDisplay) {
+                    $classPath = $typeObjects[$k];
+                    return isset($contentDisplay['type']) &&
+                        $contentDisplay['type'] === $k
+                        ? new $classPath($contentDisplay)
+                        : $ret;
+                },
+                null
+            );
         } else {
             $this->contentDisplay = $contentDisplay;
         }

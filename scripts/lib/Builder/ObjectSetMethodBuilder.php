@@ -115,15 +115,14 @@ class ObjectSetMethodBuilder
                 );
             } else {
                 $relativeClassPaths = array_map(function ($type) use ($baseNamespace) {
-                    $fullClassPath = $this->getFullClassPath($type);
-                    return $this->removeNamespaceFromClassPath(
-                        $baseNamespace,
-                        $fullClassPath
+                    return $this->getRelativeClassPathFromObjectName(
+                        $type,
+                        $baseNamespace
                     ) . '::class';
                 }, $type);
 
                 return sprintf(
-                    'Assert::isSdkObjects($%s, [%s]);',
+                    'Assert::isAnySdkObject($%s, [%s]);',
                     $property['name'],
                     implode(',', $relativeClassPaths)
                 );
@@ -132,8 +131,7 @@ class ObjectSetMethodBuilder
             $objectType = array_reduce(
                 $type,
                 function ($objectType, $type) {
-                    if (
-                        $type !== 'SupportedUnits' &&
+                    if ($type !== 'SupportedUnits' &&
                         preg_match('/^[A-Z]/', $type) === 1
                     ) {
                         return $type;
@@ -227,10 +225,9 @@ class ObjectSetMethodBuilder
                     $lines[] = sprintf('Assert::isArray(%s);', $variableName);
                 }
                 if (!is_null($itemType) && preg_match('/^[A-Z]/', $itemType)) {
-                    $fullClassPath = $this->getFullClassPath($itemType);
-                    $relativeClassPath = $this->removeNamespaceFromClassPath(
-                        $baseNamespace,
-                        $fullClassPath
+                    $relativeClassPath = $this->getRelativeClassPathFromObjectName(
+                        $itemType,
+                        $baseNamespace
                     );
                     $lines[] = sprintf(
                         $itemType === 'Format\\Component'
@@ -255,10 +252,9 @@ class ObjectSetMethodBuilder
                             $variableName
                         );
                     } else {
-                        $fullClassPath = $this->getFullClassPath($mainType);
-                        $relativeClassPath = $this->removeNamespaceFromClassPath(
-                            $baseNamespace,
-                            $fullClassPath
+                        $relativeClassPath = $this->getRelativeClassPathFromObjectName(
+                            $mainType,
+                            $baseNamespace
                         );
                         $lines[] = sprintf(
                             'Assert::isSdkObject(%s, %s::class);',
@@ -323,11 +319,7 @@ class ObjectSetMethodBuilder
                 $lines[] = $this->buildSetPropertyBody($property);
                 break;
             default:
-                if (is_array($property['type']) &&
-                    sizeof($property['type']) === 2 &&
-                    preg_match('/^Format\\\(.*?)Display$/', $property['type'][0]) === 1 &&
-                    preg_match('/^Format\\\(.*?)Display$/', $property['type'][1]) === 1
-                ) {
+                if (is_array($property['type']) && $this->typesAreDisplayObjects($property['type'])) {
                     $lines[] = $this->buildSetDisplayObjectPropertyBody(
                         $property,
                         $baseNamespace
@@ -346,34 +338,44 @@ class ObjectSetMethodBuilder
         return implode(PHP_EOL, $lines);
     }
 
+    protected function typesAreDisplayObjects($types)
+    {
+        return array_reduce($types, function ($displayObjects, $type) {
+            return $displayObjects && preg_match('/^Format\\\(.*?)Display$/', $type) === 1;
+        }, true);
+    }
+
     protected function buildSetDisplayObjectPropertyBody($property, $baseNamespace)
     {
-        $firstType = $property['type'][0];
-        $secondType = $property['type'][1];
-        preg_match('/^Format\\\(.*?)Display$/', $firstType, $matches);
-        $firstTypeValue = preg_replace('/\s+/u', '', ucwords($matches[1]));
-        $firstTypeValue = mb_strtolower(preg_replace('/(.)(?=[A-Z])/u', '$1_', $firstTypeValue), 'utf-8');
-        $firstFullClassPath = $this->getFullClassPath($firstType);
-        $firstRelativeClassPath = $this->removeNamespaceFromClassPath(
-            $baseNamespace,
-            $firstFullClassPath
-        );
-        $secondFullClassPath = $this->getFullClassPath($secondType);
-        $secondRelativeClassPath = $this->removeNamespaceFromClassPath(
-            $baseNamespace,
-            $secondFullClassPath
-        );
-        return sprintf(
+        $types = array_reduce($property['type'], function ($types, $type) use ($baseNamespace) {
+            preg_match('/^Format\\\(.*?)Display$/', $type, $matches);
+            $typeKey = Utils::snakeCase($matches[1]);
+            $types[] = [
+                'key' => $typeKey,
+                'classPath' => $this->getRelativeClassPathFromObjectName(
+                    $type,
+                    $baseNamespace,
+                )
+            ];
+            return $types;
+        });
+        $typeKeys = array_map(function ($type) {
+            return sprintf('\'%s\' => %s::class', $type['key'], $type['classPath']);
+        }, $types);
+        $value = sprintf(
             'if(is_array($%1$s)) {'.
-                '$this->%1$s = !isset($%1$s[\'type\']) || $%1$s[\'type\'] === \'%2$s\' ? new %3$s($%1$s) : new %4$s($%1$s);'.
+                '$typeObjects = [%2$s];'.
+                '$this->%1$s = array_reduce(array_keys($typeObjects), function ($ret, $k) use ($typeObjects, $%1$s) {'.
+                    '$classPath = $typeObjects[$k];'.
+                    'return isset($%1$s[\'type\']) && $%1$s[\'type\'] === $k ? new $classPath($%1$s): $ret;'.
+                '}, null);'.
             '} else {'.
                 '$this->%1$s = $%1$s;'.
             '}',
             $property['name'],
-            $firstTypeValue,
-            $firstRelativeClassPath,
-            $secondRelativeClassPath
+            implode(', ', $typeKeys)
         );
+        return $value;
     }
 
     protected function buildSetObjectPropertyBody(
@@ -387,10 +389,9 @@ class ObjectSetMethodBuilder
         }
 
         $isTyped = $property['typed'] ?? false;
-        $fullClassPath = $this->getFullClassPath($type);
-        $relativeClassPath = $this->removeNamespaceFromClassPath(
-            $baseNamespace,
-            $fullClassPath
+        $relativeClassPath = $this->getRelativeClassPathFromObjectName(
+            $type,
+            $baseNamespace
         );
         return sprintf(
             $isTyped

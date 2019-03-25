@@ -84,7 +84,7 @@ class Assert extends BaseAssert
         }
     }
 
-    public static function isSdkObjects($value, $classes, $message = '')
+    public static function isAnySdkObject($value, $classes, $message = '')
     {
         if (is_array($value)) {
             return;
