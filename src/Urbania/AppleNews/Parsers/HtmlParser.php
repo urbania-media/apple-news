@@ -43,7 +43,7 @@ class HtmlParser extends Parser
     {
         $document = new Document($html);
         $bodyElements = $document->find('body');
-        $titleElements = $document->find('body');
+        $titleElements = $document->find('title');
         $body = sizeof($bodyElements) ? $bodyElements[0] : null;
         $title = sizeof($titleElements) ? $titleElements[0] : null;
         if (!is_null($body)) {
