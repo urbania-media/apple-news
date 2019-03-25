@@ -85,11 +85,15 @@ class Mosaic extends Component
         Assert::isArray($items);
         Assert::allIsSdkObject($items, GalleryItem::class);
 
-        $items = [];
-        foreach ($items as $key => $item) {
-            $items[$key] = is_array($item) ? new GalleryItem($item) : $item;
-        }
-        $this->items = $items;
+        $this->items = array_reduce(
+            array_keys($items),
+            function ($array, $key) use ($items) {
+                $item = $items[$key];
+                $array[$key] = is_array($item) ? new GalleryItem($item) : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

@@ -13,12 +13,12 @@ class DataTableSortingTest extends TestCase
     /**
      * Test the property descriptor
      * @test
+     * @dataProvider descriptorProvider
      * @covers ::getDescriptor
      * @covers ::setDescriptor
      */
-    public function testProperyDescriptor()
+    public function testPropertyDescriptor($value)
     {
-        $value = "a string";
         $object = new DataTableSorting();
         $object->setDescriptor($value);
 
@@ -26,17 +26,33 @@ class DataTableSortingTest extends TestCase
     }
 
     /**
+     * Data provider for property descriptor
+     */
+    public function descriptorProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property direction
      * @test
+     * @dataProvider directionProvider
      * @covers ::getDirection
      * @covers ::setDirection
      */
-    public function testProperyDirection()
+    public function testPropertyDirection($value)
     {
-        $value = "ascending";
         $object = new DataTableSorting();
         $object->setDirection($value);
 
         $this->assertEquals($value, $object->getDirection());
+    }
+
+    /**
+     * Data provider for property direction
+     */
+    public function directionProvider()
+    {
+        return [["ascending"], ["descending"]];
     }
 }

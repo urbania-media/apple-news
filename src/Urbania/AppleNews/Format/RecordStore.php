@@ -85,11 +85,17 @@ class RecordStore extends BaseSdkObject
         Assert::isArray($descriptors);
         Assert::allIsSdkObject($descriptors, DataDescriptor::class);
 
-        $items = [];
-        foreach ($descriptors as $key => $item) {
-            $items[$key] = is_array($item) ? new DataDescriptor($item) : $item;
-        }
-        $this->descriptors = $items;
+        $this->descriptors = array_reduce(
+            array_keys($descriptors),
+            function ($array, $key) use ($descriptors) {
+                $item = $descriptors[$key];
+                $array[$key] = is_array($item)
+                    ? new DataDescriptor($item)
+                    : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 
@@ -141,11 +147,15 @@ class RecordStore extends BaseSdkObject
         Assert::isArray($records);
         Assert::allIsSdkObject($records, Records::class);
 
-        $items = [];
-        foreach ($records as $key => $item) {
-            $items[$key] = is_array($item) ? new Records($item) : $item;
-        }
-        $this->records = $items;
+        $this->records = array_reduce(
+            array_keys($records),
+            function ($array, $key) use ($records) {
+                $item = $records[$key];
+                $array[$key] = is_array($item) ? new Records($item) : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

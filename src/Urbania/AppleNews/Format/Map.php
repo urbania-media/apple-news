@@ -213,11 +213,15 @@ class Map extends Component
         Assert::isArray($items);
         Assert::allIsSdkObject($items, MapItem::class);
 
-        $items = [];
-        foreach ($items as $key => $item) {
-            $items[$key] = is_array($item) ? new MapItem($item) : $item;
-        }
-        $this->items = $items;
+        $this->items = array_reduce(
+            array_keys($items),
+            function ($array, $key) use ($items) {
+                $item = $items[$key];
+                $array[$key] = is_array($item) ? new MapItem($item) : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

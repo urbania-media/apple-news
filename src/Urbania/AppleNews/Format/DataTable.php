@@ -204,13 +204,17 @@ class DataTable extends Component
         Assert::isArray($sortBy);
         Assert::allIsSdkObject($sortBy, DataTableSorting::class);
 
-        $items = [];
-        foreach ($sortBy as $key => $item) {
-            $items[$key] = is_array($item)
-                ? new DataTableSorting($item)
-                : $item;
-        }
-        $this->sortBy = $items;
+        $this->sortBy = array_reduce(
+            array_keys($sortBy),
+            function ($array, $key) use ($sortBy) {
+                $item = $sortBy[$key];
+                $array[$key] = is_array($item)
+                    ? new DataTableSorting($item)
+                    : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

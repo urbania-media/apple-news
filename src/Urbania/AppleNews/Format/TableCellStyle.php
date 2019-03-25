@@ -221,13 +221,17 @@ class TableCellStyle extends BaseSdkObject
         Assert::isArray($conditional);
         Assert::allIsSdkObject($conditional, ConditionalTableCellStyle::class);
 
-        $items = [];
-        foreach ($conditional as $key => $item) {
-            $items[$key] = is_array($item)
-                ? new ConditionalTableCellStyle($item)
-                : $item;
-        }
-        $this->conditional = $items;
+        $this->conditional = array_reduce(
+            array_keys($conditional),
+            function ($array, $key) use ($conditional) {
+                $item = $conditional[$key];
+                $array[$key] = is_array($item)
+                    ? new ConditionalTableCellStyle($item)
+                    : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

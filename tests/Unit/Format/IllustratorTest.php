@@ -13,13 +13,21 @@ class IllustratorTest extends TestCase
     /**
      * Test the property role
      * @test
+     * @dataProvider roleProvider
      * @covers ::getRole
      */
-    public function testProperyRole()
+    public function testPropertyRole($value)
     {
-        $value = "illustrator";
         $object = new Illustrator();
 
         $this->assertEquals($value, $object->getRole());
+    }
+
+    /**
+     * Data provider for property role
+     */
+    public function roleProvider()
+    {
+        return [["illustrator"]];
     }
 }

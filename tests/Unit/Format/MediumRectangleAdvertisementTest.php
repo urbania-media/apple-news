@@ -13,13 +13,21 @@ class MediumRectangleAdvertisementTest extends TestCase
     /**
      * Test the property role
      * @test
+     * @dataProvider roleProvider
      * @covers ::getRole
      */
-    public function testProperyRole()
+    public function testPropertyRole($value)
     {
-        $value = "medium_rectangle_advertisement";
         $object = new MediumRectangleAdvertisement();
 
         $this->assertEquals($value, $object->getRole());
+    }
+
+    /**
+     * Data provider for property role
+     */
+    public function roleProvider()
+    {
+        return [["medium_rectangle_advertisement"]];
     }
 }

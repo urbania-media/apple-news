@@ -39,8 +39,9 @@ class ObjectTestClassBuilder
     protected function buildPropertiesTest(array $object)
     {
         $properties = $object['properties'] ?? [];
-        return array_map(function ($property) use ($object) {
-            return $this->propertyTestMethodBuilder->build($property, $object);
-        }, $properties);
+        return array_reduce($properties, function ($methods, $property) use ($object) {
+            $propertyMethods = $this->propertyTestMethodBuilder->build($property, $object);
+            return array_merge($methods, $propertyMethods);
+        }, []);
     }
 }

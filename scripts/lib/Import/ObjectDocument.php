@@ -73,6 +73,14 @@ class ObjectDocument extends Document
             $property['typed'] = $this->isPropertyCreatesTyped($property);
             $properties[] = $property;
         }
+
+        if ($fromClass === 'Records' && sizeof($properties) === 0) {
+            $properties[] = [
+                'name' => 'data',
+                'type' => 'map'
+            ];
+        }
+
         return $properties;
     }
 
@@ -137,8 +145,7 @@ class ObjectDocument extends Document
                     $property['description'] = $text;
                     if ($readOnlyValue = $this->getReadOnlyValueFromDescription(
                         $text
-                    )
-                    ) {
+                    )) {
                         $property['value'] = $readOnlyValue;
                         $property['read_only'] = true;
                     }
@@ -169,8 +176,11 @@ class ObjectDocument extends Document
         } elseif (preg_match('/The type must be ([a-zA-Z0-9_-]+)./', $text, $matches)
         ) {
             return $matches[1];
-        } elseif (preg_match('/should always be set to ([a-zA-Z0-9_-]+)./', $text, $matches)
-        ) {
+        } elseif (preg_match(
+            '/should always be set to ([a-zA-Z0-9_-]+)./',
+            $text,
+            $matches
+        )) {
             return $matches[1];
         }
         return preg_match(
@@ -186,7 +196,8 @@ class ObjectDocument extends Document
     {
         $property = array_merge($property, []);
         $text = $this->trim($node->text());
-        if (preg_match('/^(Default|Minimum|Maximum)\: (.*)$/', $text, $matches)) {
+        if (preg_match('/^(Default|Minimum|Maximum)\: (.*)$/', $text, $matches)
+        ) {
             if (is_numeric($matches[2])) {
                 if ($property['type'] === 'integer') {
                     $property[strtolower($matches[1])] = (int) $matches[2];
@@ -264,11 +275,16 @@ class ObjectDocument extends Document
         $typedClasses = array_map(function ($class) {
             return preg_quote($class, '/');
         }, array_keys($this->typedClasses));
-        $typedPattern ='/^(.*?\b)?('.implode('|', $typedClasses).')(\b.*)?$/';
+        $typedPattern =
+            '/^(.*?\b)?(' . implode('|', $typedClasses) . ')(\b.*)?$/';
         if (is_array($type)) {
-            return array_reduce($type, function ($isTyped, $type) use ($typedPattern) {
-                return $isTyped || preg_match($typedPattern, $type) !== 0;
-            }, false);
+            return array_reduce(
+                $type,
+                function ($isTyped, $type) use ($typedPattern) {
+                    return $isTyped || preg_match($typedPattern, $type) !== 0;
+                },
+                false
+            );
         }
         return preg_match($typedPattern, $type) !== 0;
     }
@@ -279,10 +295,11 @@ class ObjectDocument extends Document
             return 'array:' . $this->getType($matches[1]);
         } elseif (preg_match('/\.([a-z].*)$/', $type, $matches)) {
             return $this->getType(ucfirst($matches[1]));
-        } elseif (preg_match('/^(Color|SupportedUnits|Code)$/', $type)) {
+        } elseif (preg_match('/^(Color|SupportedUnits|Code|Status)$/', $type)) {
             return $type;
-        } elseif (preg_match('/^([A-Z][^\.]+)\.([A-Z][^\.]+)$/', $type, $matches)) {
-            return $this->getType($matches[1].$matches[2]);
+        } elseif (preg_match('/^([A-Z][^\.]+)\.([A-Z][^\.]+)$/', $type, $matches)
+        ) {
+            return $this->getType($matches[1] . $matches[2]);
         } elseif (preg_match('/^[A-Z]/', $type)) {
             return $this->namespace . '\\' . $type;
         }
@@ -296,9 +313,10 @@ class ObjectDocument extends Document
             '/^(.*?)\.[a-z][a-zA-Z]+(Layouts|Styles)$/',
             $name,
             $matches
-        )
-        ) {
+        )) {
             return $matches[2];
+        } elseif (preg_match('/^(.*?)\.(campaignData|records)$/', $name)) {
+            return 'Records';
         }
         return null;
     }
@@ -323,7 +341,9 @@ class ObjectDocument extends Document
     public function getExtends()
     {
         $ihnerits = $this->getInherits();
-        return !is_null($ihnerits) && sizeof($ihnerits) ? $this->getType($ihnerits[0]) : null;
+        return !is_null($ihnerits) && sizeof($ihnerits)
+            ? $this->getType($ihnerits[0])
+            : null;
     }
 
     public function getDescription()
@@ -396,10 +416,12 @@ class ObjectDocument extends Document
             'version' => $this->getVersion(),
             'from_class' => $this->getFromClass(),
             'extends' => $this->getExtends(),
-            'typed' => $this->isTyped() ? [
-                'property' => $this->getTypedProperty(),
-                'types' => $this->getTypedClassesMap(),
-            ] : null,
+            'typed' => $this->isTyped()
+                ? [
+                    'property' => $this->getTypedProperty(),
+                    'types' => $this->getTypedClassesMap()
+                ]
+                : null,
             'url' => $this->url,
             'properties' => $this->getProperties()
         ];

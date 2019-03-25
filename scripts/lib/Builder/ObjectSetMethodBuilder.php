@@ -111,6 +111,10 @@ class ObjectSetMethodBuilder
                 $lines[] = sprintf('Assert::string(%s);', $variableName);
                 break;
 
+            case 'Status':
+                $lines[] = sprintf('Assert::integer(%s);', $variableName);
+                break;
+
             case 'uuid':
                 $lines[] = sprintf('Assert::uuid(%s);', $variableName);
                 break;
@@ -148,7 +152,7 @@ class ObjectSetMethodBuilder
                         $variableName,
                         $relativeClassPath
                     );
-                } else {
+                } elseif (!is_null($itemType)) {
                     $lines[] = sprintf(
                         'Assert::all%s(%s);',
                         Utils::studlyCase($itemType),
@@ -209,11 +213,11 @@ class ObjectSetMethodBuilder
                 $itemType = $typeParts[1] ?? null;
                 if (!is_null($itemType) && preg_match('/^[A-Z]/', $itemType)) {
                     $lines[] = sprintf(
-                        '$items = [];' .
-                            'foreach ($%1$s as $key => $item) {' .
+                        '$this->%1$s = array_reduce(array_keys($%1$s), function ($array, $key) use ($%1$s) {'.
+                            '$item = $%1$s[$key];'.
                             $this->buildSetObjectPropertyBody($property, $itemType, $baseNamespace, true).
-                            '}' .
-                            '$this->%1$s = $items;',
+                            'return $array;'.
+                            '}, []);',
                         $property['name'],
                     );
                 } else {
@@ -223,6 +227,7 @@ class ObjectSetMethodBuilder
             case 'SupportedUnits':
             case 'Color':
             case 'Code':
+            case 'Status':
                 $lines[] = $this->buildSetPropertyBody($property);
                 break;
             default:
@@ -252,7 +257,7 @@ class ObjectSetMethodBuilder
             $isTyped
                 ? '%1$s = is_array(%2$s) ? %3$s::createTyped(%2$s) : %2$s;'
                 : '%1$s = is_array(%2$s) ? new %3$s(%2$s) : %2$s;',
-            $isArray ? '$items[$key]' : sprintf('$this->%s', $property['name']),
+            $isArray ? '$array[$key]' : sprintf('$this->%s', $property['name']),
             $isArray ? '$item' : sprintf('$%s', $property['name']),
             $relativeClassPath
         );
@@ -269,7 +274,7 @@ class ObjectSetMethodBuilder
                 '%2$s = %1$s;'.
             '}',
             $isArray ? '$item' : sprintf('$%s', $property['name']),
-            $isArray ? '$items[$key]' : sprintf('$this->%s', $property['name'])
+            $isArray ? '$array[$key]' : sprintf('$this->%s', $property['name'])
         );
     }
 

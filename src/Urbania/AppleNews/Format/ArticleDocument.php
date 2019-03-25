@@ -343,17 +343,21 @@ class ArticleDocument extends BaseSdkObject
         Assert::isArray($components);
         Assert::allIsComponent($components);
 
-        $items = [];
-        foreach ($components as $key => $item) {
-            if ($item instanceof Componentable) {
-                $items[$key] = $item->toComponent();
-            } elseif (is_array($item)) {
-                $items[$key] = Component::createTyped($item);
-            } else {
-                $items[$key] = $item;
-            }
-        }
-        $this->components = $items;
+        $this->components = array_reduce(
+            array_keys($components),
+            function ($array, $key) use ($components) {
+                $item = $components[$key];
+                if ($item instanceof Componentable) {
+                    $array[$key] = $item->toComponent();
+                } elseif (is_array($item)) {
+                    $array[$key] = Component::createTyped($item);
+                } else {
+                    $array[$key] = $item;
+                }
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

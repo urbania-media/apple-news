@@ -13,12 +13,12 @@ class MusicTest extends TestCase
     /**
      * Test the property URL
      * @test
+     * @dataProvider URLProvider
      * @covers ::getURL
      * @covers ::setURL
      */
-    public function testProperyURL()
+    public function testPropertyURL($value)
     {
-        $value = "http://example.com";
         $object = new Music();
         $object->setURL($value);
 
@@ -26,14 +26,22 @@ class MusicTest extends TestCase
     }
 
     /**
+     * Data provider for property URL
+     */
+    public function URLProvider()
+    {
+        return [["http://example.com"], ["https://example.com"]];
+    }
+
+    /**
      * Test the property accessibilityCaption
      * @test
+     * @dataProvider accessibilityCaptionProvider
      * @covers ::getAccessibilityCaption
      * @covers ::setAccessibilityCaption
      */
-    public function testProperyAccessibilityCaption()
+    public function testPropertyAccessibilityCaption($value)
     {
-        $value = "a string";
         $object = new Music();
         $object->setAccessibilityCaption($value);
 
@@ -41,14 +49,22 @@ class MusicTest extends TestCase
     }
 
     /**
+     * Data provider for property accessibilityCaption
+     */
+    public function accessibilityCaptionProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property caption
      * @test
+     * @dataProvider captionProvider
      * @covers ::getCaption
      * @covers ::setCaption
      */
-    public function testProperyCaption()
+    public function testPropertyCaption($value)
     {
-        $value = "a string";
         $object = new Music();
         $object->setCaption($value);
 
@@ -56,14 +72,22 @@ class MusicTest extends TestCase
     }
 
     /**
+     * Data provider for property caption
+     */
+    public function captionProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property explicitContent
      * @test
+     * @dataProvider explicitContentProvider
      * @covers ::getExplicitContent
      * @covers ::setExplicitContent
      */
-    public function testProperyExplicitContent()
+    public function testPropertyExplicitContent($value)
     {
-        $value = null;
         $object = new Music();
         $object->setExplicitContent($value);
 
@@ -71,14 +95,22 @@ class MusicTest extends TestCase
     }
 
     /**
+     * Data provider for property explicitContent
+     */
+    public function explicitContentProvider()
+    {
+        return [[true], [false]];
+    }
+
+    /**
      * Test the property imageURL
      * @test
+     * @dataProvider imageURLProvider
      * @covers ::getImageURL
      * @covers ::setImageURL
      */
-    public function testProperyImageURL()
+    public function testPropertyImageURL($value)
     {
-        $value = "a string";
         $object = new Music();
         $object->setImageURL($value);
 
@@ -86,15 +118,31 @@ class MusicTest extends TestCase
     }
 
     /**
+     * Data provider for property imageURL
+     */
+    public function imageURLProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property role
      * @test
+     * @dataProvider roleProvider
      * @covers ::getRole
      */
-    public function testProperyRole()
+    public function testPropertyRole($value)
     {
-        $value = "music";
         $object = new Music();
 
         $this->assertEquals($value, $object->getRole());
+    }
+
+    /**
+     * Data provider for property role
+     */
+    public function roleProvider()
+    {
+        return [["music"]];
     }
 }

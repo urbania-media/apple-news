@@ -13,12 +13,12 @@ class AsideTest extends TestCase
     /**
      * Test the property additions
      * @test
+     * @dataProvider additionsProvider
      * @covers ::getAdditions
      * @covers ::setAdditions
      */
-    public function testProperyAdditions()
+    public function testPropertyAdditions($value)
     {
-        $value = [];
         $object = new Aside();
         $object->setAdditions($value);
 
@@ -26,14 +26,22 @@ class AsideTest extends TestCase
     }
 
     /**
+     * Data provider for property additions
+     */
+    public function additionsProvider()
+    {
+        return [[[new \Urbania\AppleNews\Format\ComponentLink()]]];
+    }
+
+    /**
      * Test the property components
      * @test
+     * @dataProvider componentsProvider
      * @covers ::getComponents
      * @covers ::setComponents
      */
-    public function testProperyComponents()
+    public function testPropertyComponents($value)
     {
-        $value = [];
         $object = new Aside();
         $object->setComponents($value);
 
@@ -41,14 +49,22 @@ class AsideTest extends TestCase
     }
 
     /**
+     * Data provider for property components
+     */
+    public function componentsProvider()
+    {
+        return [[[new \Urbania\AppleNews\Format\Component()]]];
+    }
+
+    /**
      * Test the property contentDisplay
      * @test
+     * @dataProvider contentDisplayProvider
      * @covers ::getContentDisplay
      * @covers ::setContentDisplay
      */
-    public function testProperyContentDisplay()
+    public function testPropertyContentDisplay($value)
     {
-        $value = new \Urbania\AppleNews\Format\CollectionDisplay();
         $object = new Aside();
         $object->setContentDisplay($value);
 
@@ -56,15 +72,31 @@ class AsideTest extends TestCase
     }
 
     /**
+     * Data provider for property contentDisplay
+     */
+    public function contentDisplayProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\CollectionDisplay()]];
+    }
+
+    /**
      * Test the property role
      * @test
+     * @dataProvider roleProvider
      * @covers ::getRole
      */
-    public function testProperyRole()
+    public function testPropertyRole($value)
     {
-        $value = "aside";
         $object = new Aside();
 
         $this->assertEquals($value, $object->getRole());
+    }
+
+    /**
+     * Data provider for property role
+     */
+    public function roleProvider()
+    {
+        return [["aside"]];
     }
 }

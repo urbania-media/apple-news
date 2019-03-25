@@ -13,12 +13,12 @@ class TableBorderTest extends TestCase
     /**
      * Test the property all
      * @test
+     * @dataProvider allProvider
      * @covers ::getAll
      * @covers ::setAll
      */
-    public function testProperyAll()
+    public function testPropertyAll($value)
     {
-        $value = new \Urbania\AppleNews\Format\TableStrokeStyle();
         $object = new TableBorder();
         $object->setAll($value);
 
@@ -26,14 +26,22 @@ class TableBorderTest extends TestCase
     }
 
     /**
+     * Data provider for property all
+     */
+    public function allProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\TableStrokeStyle()]];
+    }
+
+    /**
      * Test the property bottom
      * @test
+     * @dataProvider bottomProvider
      * @covers ::getBottom
      * @covers ::setBottom
      */
-    public function testProperyBottom()
+    public function testPropertyBottom($value)
     {
-        $value = null;
         $object = new TableBorder();
         $object->setBottom($value);
 
@@ -41,14 +49,22 @@ class TableBorderTest extends TestCase
     }
 
     /**
+     * Data provider for property bottom
+     */
+    public function bottomProvider()
+    {
+        return [[true], [false]];
+    }
+
+    /**
      * Test the property left
      * @test
+     * @dataProvider leftProvider
      * @covers ::getLeft
      * @covers ::setLeft
      */
-    public function testProperyLeft()
+    public function testPropertyLeft($value)
     {
-        $value = null;
         $object = new TableBorder();
         $object->setLeft($value);
 
@@ -56,14 +72,22 @@ class TableBorderTest extends TestCase
     }
 
     /**
+     * Data provider for property left
+     */
+    public function leftProvider()
+    {
+        return [[true], [false]];
+    }
+
+    /**
      * Test the property right
      * @test
+     * @dataProvider rightProvider
      * @covers ::getRight
      * @covers ::setRight
      */
-    public function testProperyRight()
+    public function testPropertyRight($value)
     {
-        $value = null;
         $object = new TableBorder();
         $object->setRight($value);
 
@@ -71,17 +95,33 @@ class TableBorderTest extends TestCase
     }
 
     /**
+     * Data provider for property right
+     */
+    public function rightProvider()
+    {
+        return [[true], [false]];
+    }
+
+    /**
      * Test the property top
      * @test
+     * @dataProvider topProvider
      * @covers ::getTop
      * @covers ::setTop
      */
-    public function testProperyTop()
+    public function testPropertyTop($value)
     {
-        $value = null;
         $object = new TableBorder();
         $object->setTop($value);
 
         $this->assertEquals($value, $object->getTop());
+    }
+
+    /**
+     * Data provider for property top
+     */
+    public function topProvider()
+    {
+        return [[true], [false]];
     }
 }

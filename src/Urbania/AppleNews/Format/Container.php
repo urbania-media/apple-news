@@ -118,11 +118,17 @@ class Container extends Component
         Assert::isArray($additions);
         Assert::allIsSdkObject($additions, ComponentLink::class);
 
-        $items = [];
-        foreach ($additions as $key => $item) {
-            $items[$key] = is_array($item) ? new ComponentLink($item) : $item;
-        }
-        $this->additions = $items;
+        $this->additions = array_reduce(
+            array_keys($additions),
+            function ($array, $key) use ($additions) {
+                $item = $additions[$key];
+                $array[$key] = is_array($item)
+                    ? new ComponentLink($item)
+                    : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 
@@ -179,17 +185,21 @@ class Container extends Component
         Assert::isArray($components);
         Assert::allIsComponent($components);
 
-        $items = [];
-        foreach ($components as $key => $item) {
-            if ($item instanceof Componentable) {
-                $items[$key] = $item->toComponent();
-            } elseif (is_array($item)) {
-                $items[$key] = Component::createTyped($item);
-            } else {
-                $items[$key] = $item;
-            }
-        }
-        $this->components = $items;
+        $this->components = array_reduce(
+            array_keys($components),
+            function ($array, $key) use ($components) {
+                $item = $components[$key];
+                if ($item instanceof Componentable) {
+                    $array[$key] = $item->toComponent();
+                } elseif (is_array($item)) {
+                    $array[$key] = Component::createTyped($item);
+                } else {
+                    $array[$key] = $item;
+                }
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

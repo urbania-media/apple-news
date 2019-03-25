@@ -13,12 +13,12 @@ class ARKitTest extends TestCase
     /**
      * Test the property URL
      * @test
+     * @dataProvider URLProvider
      * @covers ::getURL
      * @covers ::setURL
      */
-    public function testProperyURL()
+    public function testPropertyURL($value)
     {
-        $value = "a string";
         $object = new ARKit();
         $object->setURL($value);
 
@@ -26,14 +26,22 @@ class ARKitTest extends TestCase
     }
 
     /**
+     * Data provider for property URL
+     */
+    public function URLProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property accessibilityCaption
      * @test
+     * @dataProvider accessibilityCaptionProvider
      * @covers ::getAccessibilityCaption
      * @covers ::setAccessibilityCaption
      */
-    public function testProperyAccessibilityCaption()
+    public function testPropertyAccessibilityCaption($value)
     {
-        $value = "a string";
         $object = new ARKit();
         $object->setAccessibilityCaption($value);
 
@@ -41,14 +49,22 @@ class ARKitTest extends TestCase
     }
 
     /**
+     * Data provider for property accessibilityCaption
+     */
+    public function accessibilityCaptionProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property caption
      * @test
+     * @dataProvider captionProvider
      * @covers ::getCaption
      * @covers ::setCaption
      */
-    public function testProperyCaption()
+    public function testPropertyCaption($value)
     {
-        $value = "a string";
         $object = new ARKit();
         $object->setCaption($value);
 
@@ -56,14 +72,22 @@ class ARKitTest extends TestCase
     }
 
     /**
+     * Data provider for property caption
+     */
+    public function captionProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property explicitContent
      * @test
+     * @dataProvider explicitContentProvider
      * @covers ::getExplicitContent
      * @covers ::setExplicitContent
      */
-    public function testProperyExplicitContent()
+    public function testPropertyExplicitContent($value)
     {
-        $value = null;
         $object = new ARKit();
         $object->setExplicitContent($value);
 
@@ -71,17 +95,33 @@ class ARKitTest extends TestCase
     }
 
     /**
+     * Data provider for property explicitContent
+     */
+    public function explicitContentProvider()
+    {
+        return [[true], [false]];
+    }
+
+    /**
      * Test the property role
      * @test
+     * @dataProvider roleProvider
      * @covers ::getRole
      * @covers ::setRole
      */
-    public function testProperyRole()
+    public function testPropertyRole($value)
     {
-        $value = "a string";
         $object = new ARKit();
         $object->setRole($value);
 
         $this->assertEquals($value, $object->getRole());
+    }
+
+    /**
+     * Data provider for property role
+     */
+    public function roleProvider()
+    {
+        return [["a string"]];
     }
 }

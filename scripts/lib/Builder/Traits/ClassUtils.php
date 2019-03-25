@@ -125,6 +125,7 @@ trait ClassUtils
                 case 'SupportedUnits':
                 case 'Color':
                 case 'Code':
+                case 'Status':
                 case 'uuid':
                 case 'uri':
                     $typeHints[] = 'string';

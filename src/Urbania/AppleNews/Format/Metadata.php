@@ -357,11 +357,15 @@ class Metadata extends BaseSdkObject
         Assert::isArray($coverArt);
         Assert::allIsSdkObject($coverArt, CoverArt::class);
 
-        $items = [];
-        foreach ($coverArt as $key => $item) {
-            $items[$key] = is_array($item) ? new CoverArt($item) : $item;
-        }
-        $this->coverArt = $items;
+        $this->coverArt = array_reduce(
+            array_keys($coverArt),
+            function ($array, $key) use ($coverArt) {
+                $item = $coverArt[$key];
+                $array[$key] = is_array($item) ? new CoverArt($item) : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 
@@ -668,11 +672,17 @@ class Metadata extends BaseSdkObject
         Assert::isArray($links);
         Assert::allIsSdkObject($links, LinkedArticle::class);
 
-        $items = [];
-        foreach ($links as $key => $item) {
-            $items[$key] = is_array($item) ? new LinkedArticle($item) : $item;
-        }
-        $this->links = $items;
+        $this->links = array_reduce(
+            array_keys($links),
+            function ($array, $key) use ($links) {
+                $item = $links[$key];
+                $array[$key] = is_array($item)
+                    ? new LinkedArticle($item)
+                    : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

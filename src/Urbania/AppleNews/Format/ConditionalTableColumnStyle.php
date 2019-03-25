@@ -205,13 +205,17 @@ class ConditionalTableColumnStyle extends TableColumnStyle
         Assert::isArray($selectors);
         Assert::allIsSdkObject($selectors, TableColumnSelector::class);
 
-        $items = [];
-        foreach ($selectors as $key => $item) {
-            $items[$key] = is_array($item)
-                ? new TableColumnSelector($item)
-                : $item;
-        }
-        $this->selectors = $items;
+        $this->selectors = array_reduce(
+            array_keys($selectors),
+            function ($array, $key) use ($selectors) {
+                $item = $selectors[$key];
+                $array[$key] = is_array($item)
+                    ? new TableColumnSelector($item)
+                    : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

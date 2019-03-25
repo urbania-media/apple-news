@@ -13,15 +13,23 @@ class BehaviorTest extends TestCase
     /**
      * Test the property type
      * @test
+     * @dataProvider typeProvider
      * @covers ::getType
      * @covers ::setType
      */
-    public function testProperyType()
+    public function testPropertyType($value)
     {
-        $value = "a string";
         $object = new Behavior();
         $object->setType($value);
 
         $this->assertEquals($value, $object->getType());
+    }
+
+    /**
+     * Data provider for property type
+     */
+    public function typeProvider()
+    {
+        return [["a string"]];
     }
 }

@@ -13,15 +13,23 @@ class ComponentStylesTest extends TestCase
     /**
      * Test the property styles
      * @test
+     * @dataProvider stylesProvider
      * @covers ::getStyles
      * @covers ::setStyles
      */
-    public function testProperyStyles()
+    public function testPropertyStyles($value)
     {
-        $value = ["test" => new \Urbania\AppleNews\Format\ComponentStyle()];
         $object = new ComponentStyles();
         $object->setStyles($value);
 
         $this->assertEquals($value, $object->getStyles());
+    }
+
+    /**
+     * Data provider for property styles
+     */
+    public function stylesProvider()
+    {
+        return [[["test" => new \Urbania\AppleNews\Format\ComponentStyle()]]];
     }
 }

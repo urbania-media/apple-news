@@ -13,12 +13,12 @@ class HeaderTest extends TestCase
     /**
      * Test the property components
      * @test
+     * @dataProvider componentsProvider
      * @covers ::getComponents
      * @covers ::setComponents
      */
-    public function testProperyComponents()
+    public function testPropertyComponents($value)
     {
-        $value = [];
         $object = new Header();
         $object->setComponents($value);
 
@@ -26,14 +26,22 @@ class HeaderTest extends TestCase
     }
 
     /**
+     * Data provider for property components
+     */
+    public function componentsProvider()
+    {
+        return [[[new \Urbania\AppleNews\Format\Component()]]];
+    }
+
+    /**
      * Test the property contentDisplay
      * @test
+     * @dataProvider contentDisplayProvider
      * @covers ::getContentDisplay
      * @covers ::setContentDisplay
      */
-    public function testProperyContentDisplay()
+    public function testPropertyContentDisplay($value)
     {
-        $value = new \Urbania\AppleNews\Format\CollectionDisplay();
         $object = new Header();
         $object->setContentDisplay($value);
 
@@ -41,15 +49,31 @@ class HeaderTest extends TestCase
     }
 
     /**
+     * Data provider for property contentDisplay
+     */
+    public function contentDisplayProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\CollectionDisplay()]];
+    }
+
+    /**
      * Test the property role
      * @test
+     * @dataProvider roleProvider
      * @covers ::getRole
      */
-    public function testProperyRole()
+    public function testPropertyRole($value)
     {
-        $value = "header";
         $object = new Header();
 
         $this->assertEquals($value, $object->getRole());
+    }
+
+    /**
+     * Data provider for property role
+     */
+    public function roleProvider()
+    {
+        return [["header"]];
     }
 }

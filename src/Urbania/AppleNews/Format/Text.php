@@ -143,11 +143,15 @@ class Text extends Component
         Assert::isArray($additions);
         Assert::allIsSdkObject($additions, Addition::class);
 
-        $items = [];
-        foreach ($additions as $key => $item) {
-            $items[$key] = is_array($item) ? new Addition($item) : $item;
-        }
-        $this->additions = $items;
+        $this->additions = array_reduce(
+            array_keys($additions),
+            function ($array, $key) use ($additions) {
+                $item = $additions[$key];
+                $array[$key] = is_array($item) ? new Addition($item) : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 
@@ -231,11 +235,17 @@ class Text extends Component
         Assert::isArray($inlineTextStyles);
         Assert::allIsSdkObject($inlineTextStyles, InlineTextStyle::class);
 
-        $items = [];
-        foreach ($inlineTextStyles as $key => $item) {
-            $items[$key] = is_array($item) ? new InlineTextStyle($item) : $item;
-        }
-        $this->inlineTextStyles = $items;
+        $this->inlineTextStyles = array_reduce(
+            array_keys($inlineTextStyles),
+            function ($array, $key) use ($inlineTextStyles) {
+                $item = $inlineTextStyles[$key];
+                $array[$key] = is_array($item)
+                    ? new InlineTextStyle($item)
+                    : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

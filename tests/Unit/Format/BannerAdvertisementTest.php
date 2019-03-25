@@ -13,12 +13,12 @@ class BannerAdvertisementTest extends TestCase
     /**
      * Test the property bannerType
      * @test
+     * @dataProvider bannerTypeProvider
      * @covers ::getBannerType
      * @covers ::setBannerType
      */
-    public function testProperyBannerType()
+    public function testPropertyBannerType($value)
     {
-        $value = "standard";
         $object = new BannerAdvertisement();
         $object->setBannerType($value);
 
@@ -26,15 +26,31 @@ class BannerAdvertisementTest extends TestCase
     }
 
     /**
+     * Data provider for property bannerType
+     */
+    public function bannerTypeProvider()
+    {
+        return [["any"], ["standard"], ["double_height"], ["large"]];
+    }
+
+    /**
      * Test the property role
      * @test
+     * @dataProvider roleProvider
      * @covers ::getRole
      */
-    public function testProperyRole()
+    public function testPropertyRole($value)
     {
-        $value = "banner_advertisement";
         $object = new BannerAdvertisement();
 
         $this->assertEquals($value, $object->getRole());
+    }
+
+    /**
+     * Data provider for property role
+     */
+    public function roleProvider()
+    {
+        return [["banner_advertisement"]];
     }
 }

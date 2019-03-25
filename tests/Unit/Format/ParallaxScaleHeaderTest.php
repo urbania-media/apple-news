@@ -13,13 +13,21 @@ class ParallaxScaleHeaderTest extends TestCase
     /**
      * Test the property type
      * @test
+     * @dataProvider typeProvider
      * @covers ::getType
      */
-    public function testProperyType()
+    public function testPropertyType($value)
     {
-        $value = "parallax_scale";
         $object = new ParallaxScaleHeader();
 
         $this->assertEquals($value, $object->getType());
+    }
+
+    /**
+     * Data provider for property type
+     */
+    public function typeProvider()
+    {
+        return [["parallax_scale"]];
     }
 }

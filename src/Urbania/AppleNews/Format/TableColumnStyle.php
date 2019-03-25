@@ -140,13 +140,17 @@ class TableColumnStyle extends BaseSdkObject
             ConditionalTableColumnStyle::class
         );
 
-        $items = [];
-        foreach ($conditional as $key => $item) {
-            $items[$key] = is_array($item)
-                ? new ConditionalTableColumnStyle($item)
-                : $item;
-        }
-        $this->conditional = $items;
+        $this->conditional = array_reduce(
+            array_keys($conditional),
+            function ($array, $key) use ($conditional) {
+                $item = $conditional[$key];
+                $array[$key] = is_array($item)
+                    ? new ConditionalTableColumnStyle($item)
+                    : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

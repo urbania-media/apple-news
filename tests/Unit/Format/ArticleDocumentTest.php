@@ -13,12 +13,12 @@ class ArticleDocumentTest extends TestCase
     /**
      * Test the property version
      * @test
+     * @dataProvider versionProvider
      * @covers ::getVersion
      * @covers ::setVersion
      */
-    public function testProperyVersion()
+    public function testPropertyVersion($value)
     {
-        $value = "a string";
         $object = new ArticleDocument();
         $object->setVersion($value);
 
@@ -26,14 +26,22 @@ class ArticleDocumentTest extends TestCase
     }
 
     /**
+     * Data provider for property version
+     */
+    public function versionProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property identifier
      * @test
+     * @dataProvider identifierProvider
      * @covers ::getIdentifier
      * @covers ::setIdentifier
      */
-    public function testProperyIdentifier()
+    public function testPropertyIdentifier($value)
     {
-        $value = "a string";
         $object = new ArticleDocument();
         $object->setIdentifier($value);
 
@@ -41,14 +49,22 @@ class ArticleDocumentTest extends TestCase
     }
 
     /**
+     * Data provider for property identifier
+     */
+    public function identifierProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property title
      * @test
+     * @dataProvider titleProvider
      * @covers ::getTitle
      * @covers ::setTitle
      */
-    public function testProperyTitle()
+    public function testPropertyTitle($value)
     {
-        $value = "a string";
         $object = new ArticleDocument();
         $object->setTitle($value);
 
@@ -56,14 +72,22 @@ class ArticleDocumentTest extends TestCase
     }
 
     /**
+     * Data provider for property title
+     */
+    public function titleProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property language
      * @test
+     * @dataProvider languageProvider
      * @covers ::getLanguage
      * @covers ::setLanguage
      */
-    public function testProperyLanguage()
+    public function testPropertyLanguage($value)
     {
-        $value = "a string";
         $object = new ArticleDocument();
         $object->setLanguage($value);
 
@@ -71,14 +95,22 @@ class ArticleDocumentTest extends TestCase
     }
 
     /**
+     * Data provider for property language
+     */
+    public function languageProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property layout
      * @test
+     * @dataProvider layoutProvider
      * @covers ::getLayout
      * @covers ::setLayout
      */
-    public function testProperyLayout()
+    public function testPropertyLayout($value)
     {
-        $value = new \Urbania\AppleNews\Format\Layout();
         $object = new ArticleDocument();
         $object->setLayout($value);
 
@@ -86,14 +118,22 @@ class ArticleDocumentTest extends TestCase
     }
 
     /**
+     * Data provider for property layout
+     */
+    public function layoutProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\Layout()]];
+    }
+
+    /**
      * Test the property components
      * @test
+     * @dataProvider componentsProvider
      * @covers ::getComponents
      * @covers ::setComponents
      */
-    public function testProperyComponents()
+    public function testPropertyComponents($value)
     {
-        $value = [];
         $object = new ArticleDocument();
         $object->setComponents($value);
 
@@ -101,14 +141,22 @@ class ArticleDocumentTest extends TestCase
     }
 
     /**
+     * Data provider for property components
+     */
+    public function componentsProvider()
+    {
+        return [[[new \Urbania\AppleNews\Format\Component()]]];
+    }
+
+    /**
      * Test the property componentTextStyles
      * @test
+     * @dataProvider componentTextStylesProvider
      * @covers ::getComponentTextStyles
      * @covers ::setComponentTextStyles
      */
-    public function testProperyComponentTextStyles()
+    public function testPropertyComponentTextStyles($value)
     {
-        $value = new \Urbania\AppleNews\Format\ComponentTextStyles();
         $object = new ArticleDocument();
         $object->setComponentTextStyles($value);
 
@@ -116,14 +164,22 @@ class ArticleDocumentTest extends TestCase
     }
 
     /**
+     * Data provider for property componentTextStyles
+     */
+    public function componentTextStylesProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\ComponentTextStyles()]];
+    }
+
+    /**
      * Test the property advertisingSettings
      * @test
+     * @dataProvider advertisingSettingsProvider
      * @covers ::getAdvertisingSettings
      * @covers ::setAdvertisingSettings
      */
-    public function testProperyAdvertisingSettings()
+    public function testPropertyAdvertisingSettings($value)
     {
-        $value = new \Urbania\AppleNews\Format\AdvertisingSettings();
         $object = new ArticleDocument();
         $object->setAdvertisingSettings($value);
 
@@ -131,14 +187,22 @@ class ArticleDocumentTest extends TestCase
     }
 
     /**
+     * Data provider for property advertisingSettings
+     */
+    public function advertisingSettingsProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\AdvertisingSettings()]];
+    }
+
+    /**
      * Test the property subtitle
      * @test
+     * @dataProvider subtitleProvider
      * @covers ::getSubtitle
      * @covers ::setSubtitle
      */
-    public function testProperySubtitle()
+    public function testPropertySubtitle($value)
     {
-        $value = "a string";
         $object = new ArticleDocument();
         $object->setSubtitle($value);
 
@@ -146,14 +210,22 @@ class ArticleDocumentTest extends TestCase
     }
 
     /**
+     * Data provider for property subtitle
+     */
+    public function subtitleProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property metadata
      * @test
+     * @dataProvider metadataProvider
      * @covers ::getMetadata
      * @covers ::setMetadata
      */
-    public function testProperyMetadata()
+    public function testPropertyMetadata($value)
     {
-        $value = new \Urbania\AppleNews\Format\Metadata();
         $object = new ArticleDocument();
         $object->setMetadata($value);
 
@@ -161,14 +233,22 @@ class ArticleDocumentTest extends TestCase
     }
 
     /**
+     * Data provider for property metadata
+     */
+    public function metadataProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\Metadata()]];
+    }
+
+    /**
      * Test the property documentStyle
      * @test
+     * @dataProvider documentStyleProvider
      * @covers ::getDocumentStyle
      * @covers ::setDocumentStyle
      */
-    public function testProperyDocumentStyle()
+    public function testPropertyDocumentStyle($value)
     {
-        $value = new \Urbania\AppleNews\Format\DocumentStyle();
         $object = new ArticleDocument();
         $object->setDocumentStyle($value);
 
@@ -176,14 +256,22 @@ class ArticleDocumentTest extends TestCase
     }
 
     /**
+     * Data provider for property documentStyle
+     */
+    public function documentStyleProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\DocumentStyle()]];
+    }
+
+    /**
      * Test the property textStyles
      * @test
+     * @dataProvider textStylesProvider
      * @covers ::getTextStyles
      * @covers ::setTextStyles
      */
-    public function testProperyTextStyles()
+    public function testPropertyTextStyles($value)
     {
-        $value = new \Urbania\AppleNews\Format\TextStyles();
         $object = new ArticleDocument();
         $object->setTextStyles($value);
 
@@ -191,14 +279,22 @@ class ArticleDocumentTest extends TestCase
     }
 
     /**
+     * Data provider for property textStyles
+     */
+    public function textStylesProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\TextStyles()]];
+    }
+
+    /**
      * Test the property componentLayouts
      * @test
+     * @dataProvider componentLayoutsProvider
      * @covers ::getComponentLayouts
      * @covers ::setComponentLayouts
      */
-    public function testProperyComponentLayouts()
+    public function testPropertyComponentLayouts($value)
     {
-        $value = new \Urbania\AppleNews\Format\ComponentLayouts();
         $object = new ArticleDocument();
         $object->setComponentLayouts($value);
 
@@ -206,17 +302,33 @@ class ArticleDocumentTest extends TestCase
     }
 
     /**
+     * Data provider for property componentLayouts
+     */
+    public function componentLayoutsProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\ComponentLayouts()]];
+    }
+
+    /**
      * Test the property componentStyles
      * @test
+     * @dataProvider componentStylesProvider
      * @covers ::getComponentStyles
      * @covers ::setComponentStyles
      */
-    public function testProperyComponentStyles()
+    public function testPropertyComponentStyles($value)
     {
-        $value = new \Urbania\AppleNews\Format\ComponentStyles();
         $object = new ArticleDocument();
         $object->setComponentStyles($value);
 
         $this->assertEquals($value, $object->getComponentStyles());
+    }
+
+    /**
+     * Data provider for property componentStyles
+     */
+    public function componentStylesProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\ComponentStyles()]];
     }
 }

@@ -13,12 +13,12 @@ class TableCellStyleTest extends TestCase
     /**
      * Test the property backgroundColor
      * @test
+     * @dataProvider backgroundColorProvider
      * @covers ::getBackgroundColor
      * @covers ::setBackgroundColor
      */
-    public function testProperyBackgroundColor()
+    public function testPropertyBackgroundColor($value)
     {
-        $value = "#fff";
         $object = new TableCellStyle();
         $object->setBackgroundColor($value);
 
@@ -26,14 +26,22 @@ class TableCellStyleTest extends TestCase
     }
 
     /**
+     * Data provider for property backgroundColor
+     */
+    public function backgroundColorProvider()
+    {
+        return [["#fff"], ["#000"]];
+    }
+
+    /**
      * Test the property border
      * @test
+     * @dataProvider borderProvider
      * @covers ::getBorder
      * @covers ::setBorder
      */
-    public function testProperyBorder()
+    public function testPropertyBorder($value)
     {
-        $value = new \Urbania\AppleNews\Format\TableBorder();
         $object = new TableCellStyle();
         $object->setBorder($value);
 
@@ -41,14 +49,22 @@ class TableCellStyleTest extends TestCase
     }
 
     /**
+     * Data provider for property border
+     */
+    public function borderProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\TableBorder()]];
+    }
+
+    /**
      * Test the property conditional
      * @test
+     * @dataProvider conditionalProvider
      * @covers ::getConditional
      * @covers ::setConditional
      */
-    public function testProperyConditional()
+    public function testPropertyConditional($value)
     {
-        $value = [];
         $object = new TableCellStyle();
         $object->setConditional($value);
 
@@ -56,14 +72,22 @@ class TableCellStyleTest extends TestCase
     }
 
     /**
+     * Data provider for property conditional
+     */
+    public function conditionalProvider()
+    {
+        return [[[new \Urbania\AppleNews\Format\ConditionalTableCellStyle()]]];
+    }
+
+    /**
      * Test the property height
      * @test
+     * @dataProvider heightProvider
      * @covers ::getHeight
      * @covers ::setHeight
      */
-    public function testProperyHeight()
+    public function testPropertyHeight($value)
     {
-        $value = "1vh";
         $object = new TableCellStyle();
         $object->setHeight($value);
 
@@ -71,14 +95,22 @@ class TableCellStyleTest extends TestCase
     }
 
     /**
+     * Data provider for property height
+     */
+    public function heightProvider()
+    {
+        return [["1vh"], [1], ["1vmin"]];
+    }
+
+    /**
      * Test the property horizontalAlignment
      * @test
+     * @dataProvider horizontalAlignmentProvider
      * @covers ::getHorizontalAlignment
      * @covers ::setHorizontalAlignment
      */
-    public function testProperyHorizontalAlignment()
+    public function testPropertyHorizontalAlignment($value)
     {
-        $value = "right";
         $object = new TableCellStyle();
         $object->setHorizontalAlignment($value);
 
@@ -86,14 +118,22 @@ class TableCellStyleTest extends TestCase
     }
 
     /**
+     * Data provider for property horizontalAlignment
+     */
+    public function horizontalAlignmentProvider()
+    {
+        return [["left"], ["center"], ["right"]];
+    }
+
+    /**
      * Test the property minimumWidth
      * @test
+     * @dataProvider minimumWidthProvider
      * @covers ::getMinimumWidth
      * @covers ::setMinimumWidth
      */
-    public function testProperyMinimumWidth()
+    public function testPropertyMinimumWidth($value)
     {
-        $value = "1vh";
         $object = new TableCellStyle();
         $object->setMinimumWidth($value);
 
@@ -101,14 +141,22 @@ class TableCellStyleTest extends TestCase
     }
 
     /**
+     * Data provider for property minimumWidth
+     */
+    public function minimumWidthProvider()
+    {
+        return [["1vh"], [1], ["1vmin"]];
+    }
+
+    /**
      * Test the property padding
      * @test
+     * @dataProvider paddingProvider
      * @covers ::getPadding
      * @covers ::setPadding
      */
-    public function testProperyPadding()
+    public function testPropertyPadding($value)
     {
-        $value = new \Urbania\AppleNews\Format\Padding();
         $object = new TableCellStyle();
         $object->setPadding($value);
 
@@ -116,14 +164,22 @@ class TableCellStyleTest extends TestCase
     }
 
     /**
+     * Data provider for property padding
+     */
+    public function paddingProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\Padding()]];
+    }
+
+    /**
      * Test the property textStyle
      * @test
+     * @dataProvider textStyleProvider
      * @covers ::getTextStyle
      * @covers ::setTextStyle
      */
-    public function testProperyTextStyle()
+    public function testPropertyTextStyle($value)
     {
-        $value = new \Urbania\AppleNews\Format\ComponentTextStyle();
         $object = new TableCellStyle();
         $object->setTextStyle($value);
 
@@ -131,14 +187,22 @@ class TableCellStyleTest extends TestCase
     }
 
     /**
+     * Data provider for property textStyle
+     */
+    public function textStyleProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\ComponentTextStyle()]];
+    }
+
+    /**
      * Test the property verticalAlignment
      * @test
+     * @dataProvider verticalAlignmentProvider
      * @covers ::getVerticalAlignment
      * @covers ::setVerticalAlignment
      */
-    public function testProperyVerticalAlignment()
+    public function testPropertyVerticalAlignment($value)
     {
-        $value = "bottom";
         $object = new TableCellStyle();
         $object->setVerticalAlignment($value);
 
@@ -146,17 +210,33 @@ class TableCellStyleTest extends TestCase
     }
 
     /**
+     * Data provider for property verticalAlignment
+     */
+    public function verticalAlignmentProvider()
+    {
+        return [["top"], ["center"], ["bottom"]];
+    }
+
+    /**
      * Test the property width
      * @test
+     * @dataProvider widthProvider
      * @covers ::getWidth
      * @covers ::setWidth
      */
-    public function testProperyWidth()
+    public function testPropertyWidth($value)
     {
-        $value = 1;
         $object = new TableCellStyle();
         $object->setWidth($value);
 
         $this->assertEquals($value, $object->getWidth());
+    }
+
+    /**
+     * Data provider for property width
+     */
+    public function widthProvider()
+    {
+        return [[1]];
     }
 }

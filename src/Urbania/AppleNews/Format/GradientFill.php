@@ -87,11 +87,15 @@ class GradientFill extends Fill
         Assert::isArray($colorStops);
         Assert::allIsSdkObject($colorStops, ColorStop::class);
 
-        $items = [];
-        foreach ($colorStops as $key => $item) {
-            $items[$key] = is_array($item) ? new ColorStop($item) : $item;
-        }
-        $this->colorStops = $items;
+        $this->colorStops = array_reduce(
+            array_keys($colorStops),
+            function ($array, $key) use ($colorStops) {
+                $item = $colorStops[$key];
+                $array[$key] = is_array($item) ? new ColorStop($item) : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

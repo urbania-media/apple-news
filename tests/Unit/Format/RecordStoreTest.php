@@ -13,12 +13,12 @@ class RecordStoreTest extends TestCase
     /**
      * Test the property descriptors
      * @test
+     * @dataProvider descriptorsProvider
      * @covers ::getDescriptors
      * @covers ::setDescriptors
      */
-    public function testProperyDescriptors()
+    public function testPropertyDescriptors($value)
     {
-        $value = [];
         $object = new RecordStore();
         $object->setDescriptors($value);
 
@@ -26,17 +26,33 @@ class RecordStoreTest extends TestCase
     }
 
     /**
+     * Data provider for property descriptors
+     */
+    public function descriptorsProvider()
+    {
+        return [[[new \Urbania\AppleNews\Format\DataDescriptor()]]];
+    }
+
+    /**
      * Test the property records
      * @test
+     * @dataProvider recordsProvider
      * @covers ::getRecords
      * @covers ::setRecords
      */
-    public function testProperyRecords()
+    public function testPropertyRecords($value)
     {
-        $value = [];
         $object = new RecordStore();
         $object->setRecords($value);
 
         $this->assertEquals($value, $object->getRecords());
+    }
+
+    /**
+     * Data provider for property records
+     */
+    public function recordsProvider()
+    {
+        return [[[new \Urbania\AppleNews\Format\Records()]]];
     }
 }

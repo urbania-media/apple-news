@@ -52,11 +52,17 @@ class ComponentLayouts extends BaseSdkObject
         }
         Assert::allIsSdkObject($layouts, ComponentLayout::class);
 
-        $items = [];
-        foreach ($layouts as $key => $item) {
-            $items[$key] = is_array($item) ? new ComponentLayout($item) : $item;
-        }
-        $this->layouts = $items;
+        $this->layouts = array_reduce(
+            array_keys($layouts),
+            function ($array, $key) use ($layouts) {
+                $item = $layouts[$key];
+                $array[$key] = is_array($item)
+                    ? new ComponentLayout($item)
+                    : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

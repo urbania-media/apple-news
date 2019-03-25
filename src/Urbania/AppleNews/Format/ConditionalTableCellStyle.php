@@ -343,13 +343,17 @@ class ConditionalTableCellStyle extends TableCellStyle
         Assert::isArray($selectors);
         Assert::allIsSdkObject($selectors, TableCellSelector::class);
 
-        $items = [];
-        foreach ($selectors as $key => $item) {
-            $items[$key] = is_array($item)
-                ? new TableCellSelector($item)
-                : $item;
-        }
-        $this->selectors = $items;
+        $this->selectors = array_reduce(
+            array_keys($selectors),
+            function ($array, $key) use ($selectors) {
+                $item = $selectors[$key];
+                $array[$key] = is_array($item)
+                    ? new TableCellSelector($item)
+                    : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

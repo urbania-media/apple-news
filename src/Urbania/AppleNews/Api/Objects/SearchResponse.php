@@ -103,11 +103,15 @@ class SearchResponse extends BaseSdkObject
         Assert::isArray($articles);
         Assert::allIsSdkObject($articles, Article::class);
 
-        $items = [];
-        foreach ($articles as $key => $item) {
-            $items[$key] = is_array($item) ? new Article($item) : $item;
-        }
-        $this->articles = $items;
+        $this->articles = array_reduce(
+            array_keys($articles),
+            function ($array, $key) use ($articles) {
+                $item = $articles[$key];
+                $array[$key] = is_array($item) ? new Article($item) : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

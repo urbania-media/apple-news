@@ -124,13 +124,17 @@ class TableRowStyle extends BaseSdkObject
         Assert::isArray($conditional);
         Assert::allIsSdkObject($conditional, ConditionalTableRowStyle::class);
 
-        $items = [];
-        foreach ($conditional as $key => $item) {
-            $items[$key] = is_array($item)
-                ? new ConditionalTableRowStyle($item)
-                : $item;
-        }
-        $this->conditional = $items;
+        $this->conditional = array_reduce(
+            array_keys($conditional),
+            function ($array, $key) use ($conditional) {
+                $item = $conditional[$key];
+                $array[$key] = is_array($item)
+                    ? new ConditionalTableRowStyle($item)
+                    : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

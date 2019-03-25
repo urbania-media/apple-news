@@ -52,11 +52,15 @@ class TextStyles extends BaseSdkObject
         }
         Assert::allIsSdkObject($styles, TextStyle::class);
 
-        $items = [];
-        foreach ($styles as $key => $item) {
-            $items[$key] = is_array($item) ? new TextStyle($item) : $item;
-        }
-        $this->styles = $items;
+        $this->styles = array_reduce(
+            array_keys($styles),
+            function ($array, $key) use ($styles) {
+                $item = $styles[$key];
+                $array[$key] = is_array($item) ? new TextStyle($item) : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

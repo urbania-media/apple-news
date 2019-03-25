@@ -13,12 +13,12 @@ class AnchorTest extends TestCase
     /**
      * Test the property originAnchorPosition
      * @test
+     * @dataProvider originAnchorPositionProvider
      * @covers ::getOriginAnchorPosition
      * @covers ::setOriginAnchorPosition
      */
-    public function testProperyOriginAnchorPosition()
+    public function testPropertyOriginAnchorPosition($value)
     {
-        $value = "center";
         $object = new Anchor();
         $object->setOriginAnchorPosition($value);
 
@@ -26,14 +26,22 @@ class AnchorTest extends TestCase
     }
 
     /**
+     * Data provider for property originAnchorPosition
+     */
+    public function originAnchorPositionProvider()
+    {
+        return [["top"], ["center"], ["bottom"]];
+    }
+
+    /**
      * Test the property rangeLength
      * @test
+     * @dataProvider rangeLengthProvider
      * @covers ::getRangeLength
      * @covers ::setRangeLength
      */
-    public function testProperyRangeLength()
+    public function testPropertyRangeLength($value)
     {
-        $value = 1;
         $object = new Anchor();
         $object->setRangeLength($value);
 
@@ -41,14 +49,22 @@ class AnchorTest extends TestCase
     }
 
     /**
+     * Data provider for property rangeLength
+     */
+    public function rangeLengthProvider()
+    {
+        return [[1]];
+    }
+
+    /**
      * Test the property rangeStart
      * @test
+     * @dataProvider rangeStartProvider
      * @covers ::getRangeStart
      * @covers ::setRangeStart
      */
-    public function testProperyRangeStart()
+    public function testPropertyRangeStart($value)
     {
-        $value = 1;
         $object = new Anchor();
         $object->setRangeStart($value);
 
@@ -56,14 +72,22 @@ class AnchorTest extends TestCase
     }
 
     /**
+     * Data provider for property rangeStart
+     */
+    public function rangeStartProvider()
+    {
+        return [[1]];
+    }
+
+    /**
      * Test the property target
      * @test
+     * @dataProvider targetProvider
      * @covers ::getTarget
      * @covers ::setTarget
      */
-    public function testProperyTarget()
+    public function testPropertyTarget($value)
     {
-        $value = "a string";
         $object = new Anchor();
         $object->setTarget($value);
 
@@ -71,14 +95,22 @@ class AnchorTest extends TestCase
     }
 
     /**
+     * Data provider for property target
+     */
+    public function targetProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property targetAnchorPosition
      * @test
+     * @dataProvider targetAnchorPositionProvider
      * @covers ::getTargetAnchorPosition
      * @covers ::setTargetAnchorPosition
      */
-    public function testProperyTargetAnchorPosition()
+    public function testPropertyTargetAnchorPosition($value)
     {
-        $value = "top";
         $object = new Anchor();
         $object->setTargetAnchorPosition($value);
 
@@ -86,17 +118,33 @@ class AnchorTest extends TestCase
     }
 
     /**
+     * Data provider for property targetAnchorPosition
+     */
+    public function targetAnchorPositionProvider()
+    {
+        return [["top"], ["center"], ["bottom"]];
+    }
+
+    /**
      * Test the property targetComponentIdentifier
      * @test
+     * @dataProvider targetComponentIdentifierProvider
      * @covers ::getTargetComponentIdentifier
      * @covers ::setTargetComponentIdentifier
      */
-    public function testProperyTargetComponentIdentifier()
+    public function testPropertyTargetComponentIdentifier($value)
     {
-        $value = "a string";
         $object = new Anchor();
         $object->setTargetComponentIdentifier($value);
 
         $this->assertEquals($value, $object->getTargetComponentIdentifier());
+    }
+
+    /**
+     * Data provider for property targetComponentIdentifier
+     */
+    public function targetComponentIdentifierProvider()
+    {
+        return [["a string"]];
     }
 }

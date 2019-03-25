@@ -35,7 +35,7 @@ class Error extends BaseSdkObject
 
     /**
      * A code issued by the server in response to a request.
-     * @var \Urbania\AppleNews\Api\Objects\Status
+     * @var string
      */
     protected $status;
 
@@ -167,7 +167,7 @@ class Error extends BaseSdkObject
 
     /**
      * Get the status
-     * @return \Urbania\AppleNews\Api\Objects\Status
+     * @return string
      */
     public function getStatus()
     {
@@ -176,7 +176,7 @@ class Error extends BaseSdkObject
 
     /**
      * Set the status
-     * @param \Urbania\AppleNews\Api\Objects\Status|array $status
+     * @param string $status
      * @return $this
      */
     public function setStatus($status)
@@ -186,9 +186,9 @@ class Error extends BaseSdkObject
             return $this;
         }
 
-        Assert::isSdkObject($status, Status::class);
+        Assert::integer($status);
 
-        $this->status = is_array($status) ? new Status($status) : $status;
+        $this->status = $status;
         return $this;
     }
 

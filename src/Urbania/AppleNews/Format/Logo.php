@@ -162,11 +162,17 @@ class Logo extends Component
         Assert::isArray($additions);
         Assert::allIsSdkObject($additions, ComponentLink::class);
 
-        $items = [];
-        foreach ($additions as $key => $item) {
-            $items[$key] = is_array($item) ? new ComponentLink($item) : $item;
-        }
-        $this->additions = $items;
+        $this->additions = array_reduce(
+            array_keys($additions),
+            function ($array, $key) use ($additions) {
+                $item = $additions[$key];
+                $array[$key] = is_array($item)
+                    ? new ComponentLink($item)
+                    : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

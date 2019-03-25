@@ -13,12 +13,12 @@ class ImageFillTest extends TestCase
     /**
      * Test the property URL
      * @test
+     * @dataProvider URLProvider
      * @covers ::getURL
      * @covers ::setURL
      */
-    public function testProperyURL()
+    public function testPropertyURL($value)
     {
-        $value = "a string";
         $object = new ImageFill();
         $object->setURL($value);
 
@@ -26,14 +26,22 @@ class ImageFillTest extends TestCase
     }
 
     /**
+     * Data provider for property URL
+     */
+    public function URLProvider()
+    {
+        return [["a string"]];
+    }
+
+    /**
      * Test the property fillMode
      * @test
+     * @dataProvider fillModeProvider
      * @covers ::getFillMode
      * @covers ::setFillMode
      */
-    public function testProperyFillMode()
+    public function testPropertyFillMode($value)
     {
-        $value = "fit";
         $object = new ImageFill();
         $object->setFillMode($value);
 
@@ -41,14 +49,22 @@ class ImageFillTest extends TestCase
     }
 
     /**
+     * Data provider for property fillMode
+     */
+    public function fillModeProvider()
+    {
+        return [["fit"], ["cover"]];
+    }
+
+    /**
      * Test the property horizontalAlignment
      * @test
+     * @dataProvider horizontalAlignmentProvider
      * @covers ::getHorizontalAlignment
      * @covers ::setHorizontalAlignment
      */
-    public function testProperyHorizontalAlignment()
+    public function testPropertyHorizontalAlignment($value)
     {
-        $value = "right";
         $object = new ImageFill();
         $object->setHorizontalAlignment($value);
 
@@ -56,30 +72,54 @@ class ImageFillTest extends TestCase
     }
 
     /**
+     * Data provider for property horizontalAlignment
+     */
+    public function horizontalAlignmentProvider()
+    {
+        return [["left"], ["center"], ["right"]];
+    }
+
+    /**
      * Test the property type
      * @test
+     * @dataProvider typeProvider
      * @covers ::getType
      */
-    public function testProperyType()
+    public function testPropertyType($value)
     {
-        $value = "image";
         $object = new ImageFill();
 
         $this->assertEquals($value, $object->getType());
     }
 
     /**
+     * Data provider for property type
+     */
+    public function typeProvider()
+    {
+        return [["image"]];
+    }
+
+    /**
      * Test the property verticalAlignment
      * @test
+     * @dataProvider verticalAlignmentProvider
      * @covers ::getVerticalAlignment
      * @covers ::setVerticalAlignment
      */
-    public function testProperyVerticalAlignment()
+    public function testPropertyVerticalAlignment($value)
     {
-        $value = "top";
         $object = new ImageFill();
         $object->setVerticalAlignment($value);
 
         $this->assertEquals($value, $object->getVerticalAlignment());
+    }
+
+    /**
+     * Data provider for property verticalAlignment
+     */
+    public function verticalAlignmentProvider()
+    {
+        return [["top"], ["center"], ["bottom"]];
     }
 }

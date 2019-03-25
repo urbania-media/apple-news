@@ -631,11 +631,15 @@ class Article extends BaseSdkObject
         Assert::isArray($warnings);
         Assert::allIsSdkObject($warnings, Warning::class);
 
-        $items = [];
-        foreach ($warnings as $key => $item) {
-            $items[$key] = is_array($item) ? new Warning($item) : $item;
-        }
-        $this->warnings = $items;
+        $this->warnings = array_reduce(
+            array_keys($warnings),
+            function ($array, $key) use ($warnings) {
+                $item = $warnings[$key];
+                $array[$key] = is_array($item) ? new Warning($item) : $item;
+                return $array;
+            },
+            []
+        );
         return $this;
     }
 

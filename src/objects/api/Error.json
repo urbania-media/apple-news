@@ -30,7 +30,7 @@
         },
         {
             "name": "status",
-            "type": "Api\\Objects\\Status",
+            "type": "Status",
             "required": false,
             "description": "A code issued by the server in response to a request.",
             "typed": false
