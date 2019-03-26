@@ -2,6 +2,7 @@
     "name": "Format\\ConditionalContainer",
     "description": "The object for defining conditional properties for a container component, and when the conditional properties are in effect.",
     "version": "1.9+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

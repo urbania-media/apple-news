@@ -5,6 +5,7 @@ namespace Urbania\AppleNews\Scripts;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use GuzzleHttp\Client as HttpClient;
+use Symfony\Component\Finder\Finder;
 use Urbania\AppleNews\Scripts\Import\AppleDocumentationParser;
 use Urbania\AppleNews\Scripts\Import\Document;
 use Urbania\AppleNews\Scripts\Import\ObjectDocument;
@@ -30,6 +31,14 @@ class ObjectsImporter
     {
         $state = $this->importDocument($startUrl);
         $objects = $state->objects;
+
+        $this->output->writeln(
+            '<comment>Cleaning:</comment> Existing files...'
+        );
+        $cleanedFiles = $this->cleanFiles($outputPath);
+        $this->output->writeln(
+            '<info>Cleaned:</info> '.sizeof($cleanedFiles).' files...'
+        );
 
         $extends = $this->getExtends($objects);
         foreach ($objects as $object) {
@@ -142,6 +151,18 @@ class ObjectsImporter
         } catch (Exception $e) {
             return null;
         }
+    }
+
+    protected function cleanFiles($path)
+    {
+        $finder = new Finder();
+        $finder->files()->name('*.json')->in($path);
+        $files = [];
+        foreach ($finder as $file) {
+            $files[] = $file->getRealPath();
+        }
+        $this->filesystem->remove($files);
+        return $files;
     }
 
     protected function writeObject($object, $outputPath)

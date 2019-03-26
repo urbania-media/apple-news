@@ -2,6 +2,7 @@
     "name": "Format\\MediumRectangleAdvertisement",
     "description": "The component for adding a medium, fixed-size rectangle ad.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Component",
     "typed": null,

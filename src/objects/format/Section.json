@@ -2,6 +2,7 @@
     "name": "Format\\Section",
     "description": "The component for organizing an article into sections.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Container",
     "typed": null,

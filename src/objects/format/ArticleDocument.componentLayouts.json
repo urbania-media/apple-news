@@ -2,6 +2,7 @@
     "name": "Format\\ComponentLayouts",
     "description": "An object containing component layout objects that components in the article can refer to.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": "Layouts",
     "extends": null,
     "typed": null,

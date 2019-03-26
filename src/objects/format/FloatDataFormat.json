@@ -2,6 +2,7 @@
     "name": "Format\\FloatDataFormat",
     "description": "The object that allows you to specify the number of digits after the decimal point for numeric values in data table cells.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\DataFormat",
     "typed": null,

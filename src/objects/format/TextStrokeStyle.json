@@ -2,6 +2,7 @@
     "name": "Format\\TextStrokeStyle",
     "description": "The object for defining the stroke to use for an outline on text.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

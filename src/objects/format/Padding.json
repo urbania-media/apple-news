@@ -2,6 +2,7 @@
     "name": "Format\\Padding",
     "description": "The object for defining space around the content in a table cell.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

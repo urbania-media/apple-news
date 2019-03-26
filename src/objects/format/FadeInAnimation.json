@@ -2,6 +2,7 @@
     "name": "Format\\FadeInAnimation",
     "description": "The animation whereby a component fades into view.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\ComponentAnimation",
     "typed": null,

@@ -2,6 +2,7 @@
     "name": "Format\\Caption",
     "description": "The component for adding caption text.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Text",
     "typed": null,

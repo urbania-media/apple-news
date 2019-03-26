@@ -2,6 +2,7 @@
     "name": "Format\\ParallaxScaleHeader",
     "description": "The scene that gives the impression of a parallax effect by zooming out and scrolling slightly more slowly than the user\u2019s action.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Scene",
     "typed": null,

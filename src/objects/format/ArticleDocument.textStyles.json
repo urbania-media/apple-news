@@ -2,6 +2,7 @@
     "name": "Format\\TextStyles",
     "description": "An object containing text style objects that can be referred to inline in text.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": "Styles",
     "extends": null,
     "typed": null,

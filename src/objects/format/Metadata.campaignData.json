@@ -2,6 +2,7 @@
     "name": "Format\\CampaignData",
     "description": "Custom key-value pairs for use in advertisement campaigns.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": "Records",
     "extends": null,
     "typed": null,

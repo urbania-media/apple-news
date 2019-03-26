@@ -2,6 +2,7 @@
     "name": "Format\\Motion",
     "description": "The behavior whereby a component reacts to the motion of the user\u2019s device.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Behavior",
     "typed": null,

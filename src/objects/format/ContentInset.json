@@ -2,6 +2,7 @@
     "name": "Format\\ContentInset",
     "description": "The object for defining the space around the component content on one or more sides.DeprecatedUse the padding property in ComponentLayout instead.",
     "version": "1.7",
+    "deprecated": true,
     "from_class": null,
     "extends": null,
     "typed": null,

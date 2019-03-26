@@ -2,6 +2,7 @@
     "name": "Format\\FormattedText",
     "description": "The object for specifying formatted text content and styling for captions in table cells.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

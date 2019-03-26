@@ -2,6 +2,7 @@
     "name": "Format\\Place",
     "description": "The component for adding a map with a specific point of interest.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Component",
     "typed": null,

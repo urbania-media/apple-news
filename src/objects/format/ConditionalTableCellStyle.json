@@ -2,6 +2,7 @@
     "name": "Format\\ConditionalTableCellStyle",
     "description": "The object for applying a style to table cells that meet certain conditions.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\TableCellStyle",
     "typed": null,

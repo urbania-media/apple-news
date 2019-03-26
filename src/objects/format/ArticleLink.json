@@ -2,6 +2,7 @@
     "name": "Format\\ArticleLink",
     "description": "The container component for creating a link to an article.",
     "version": "1.9+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Container",
     "typed": null,

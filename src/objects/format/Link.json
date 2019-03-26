@@ -2,6 +2,7 @@
     "name": "Format\\Link",
     "description": "The addition object for defining links in text components that don\u2019t use HTML or Markdown formatting.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Addition",
     "typed": null,

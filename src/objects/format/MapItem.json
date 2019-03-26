@@ -2,6 +2,7 @@
     "name": "Format\\MapItem",
     "description": "An object used in a map component for specifying the location of a map pin.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

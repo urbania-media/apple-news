@@ -2,6 +2,7 @@
     "name": "Format\\Behavior",
     "description": "Properties shared by all the behaviors you can use to affect how components react to device motion and scrolling.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": {

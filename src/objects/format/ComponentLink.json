@@ -2,6 +2,7 @@
     "name": "Format\\ComponentLink",
     "description": "The component addition object for making a component interactable and making it open a link to elsewhere in News.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\ComponentAddition",
     "typed": null,

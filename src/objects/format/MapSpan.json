@@ -2,6 +2,7 @@
     "name": "Format\\MapSpan",
     "description": "An object used in a map or place component for defining the visible area of the map.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

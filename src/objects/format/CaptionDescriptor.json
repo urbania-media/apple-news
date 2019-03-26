@@ -2,6 +2,7 @@
     "name": "Format\\CaptionDescriptor",
     "description": "The object used in image components for displaying captions when the image is full-screen.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

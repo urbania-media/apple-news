@@ -2,6 +2,7 @@
     "name": "Format\\Title",
     "description": "The component for adding an article title.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Text",
     "typed": null,

@@ -2,6 +2,7 @@
     "name": "Format\\ColorStop",
     "description": "The object for specifying the color and location for a color stop in a gradient.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

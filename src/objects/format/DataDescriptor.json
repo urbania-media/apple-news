@@ -2,6 +2,7 @@
     "name": "Format\\DataDescriptor",
     "description": "The object for providing the data type, data formatting, and label for a field in a table.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

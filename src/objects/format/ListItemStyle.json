@@ -2,6 +2,7 @@
     "name": "Format\\ListItemStyle",
     "description": "The object for defining the style for bulleted or numbered lists in an article.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

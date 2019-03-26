@@ -2,6 +2,7 @@
     "name": "Format\\AppearAnimation",
     "description": "The animation whereby a component appears on the screen.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\ComponentAnimation",
     "typed": null,

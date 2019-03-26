@@ -2,6 +2,7 @@
     "name": "Format\\InlineTextStyle",
     "description": "The object for applying text styling when not using HTML or Markdown formatting.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

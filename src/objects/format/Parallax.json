@@ -2,6 +2,7 @@
     "name": "Format\\Parallax",
     "description": "The behavior whereby a component moves at a speed different from the scroll speed.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Behavior",
     "typed": null,

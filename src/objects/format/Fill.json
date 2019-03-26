@@ -2,6 +2,7 @@
     "name": "Format\\Fill",
     "description": "The object for setting a fill type and attachment for a component\u2019s background fill.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": {

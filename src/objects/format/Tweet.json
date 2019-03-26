@@ -2,6 +2,7 @@
     "name": "Format\\Tweet",
     "description": "The component for adding a Tweet that was posted to Twitter.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Component",
     "typed": null,

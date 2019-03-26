@@ -2,6 +2,7 @@
     "name": "Format\\ComponentAddition",
     "description": "Properties shared by all types of component additions.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

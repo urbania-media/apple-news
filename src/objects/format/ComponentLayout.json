@@ -2,6 +2,7 @@
     "name": "Format\\ComponentLayout",
     "description": "The object for defining the positioning for a specific component within the article\u2019s column system.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

@@ -2,6 +2,7 @@
     "name": "Format\\TableColumnSelector",
     "description": "The object for defining conditions that will cause a conditional style to be applied to a column.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

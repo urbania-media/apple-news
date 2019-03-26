@@ -2,6 +2,7 @@
     "name": "Format\\Anchor",
     "description": "The object for anchoring one component to another component in your article\u2019s layout.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

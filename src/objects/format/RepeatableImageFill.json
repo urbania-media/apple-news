@@ -2,6 +2,7 @@
     "name": "Format\\RepeatableImageFill",
     "description": "The object for adding a background image that can be repeated.",
     "version": "1.9+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Fill",
     "typed": null,

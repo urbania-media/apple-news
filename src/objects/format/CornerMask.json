@@ -2,6 +2,7 @@
     "name": "Format\\CornerMask",
     "description": "The object for creating rounded corners.",
     "version": "1.9+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

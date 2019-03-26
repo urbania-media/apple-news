@@ -2,6 +2,7 @@
     "name": "Format\\Layout",
     "description": "The object for defining columns, gutters, and margins for your article\u2019s designed width.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

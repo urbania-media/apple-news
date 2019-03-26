@@ -6,7 +6,7 @@ use DiDom\Document as DomDocument;
 
 class ObjectDocument extends Document
 {
-    protected $versionPattern = '/Apple News Format ([0-9]+\.[0-9]+\+?)/';
+    protected $versionPattern = '/Apple News Format ([0-9.+-]+)/';
     protected $namespace = 'Format';
 
     protected $typedClasses = [
@@ -417,6 +417,11 @@ class ObjectDocument extends Document
         return '1.0+';
     }
 
+    public function getDeprecated()
+    {
+        return $this->document->has('#main .topic-summary .sdk .violator-deprecated');
+    }
+
     public function isTyped()
     {
         return isset($this->typedClasses[$this->getClassName()]);
@@ -470,6 +475,7 @@ class ObjectDocument extends Document
             'name' => $this->getType($this->getName()),
             'description' => $this->getDescription(),
             'version' => $this->getVersion(),
+            'deprecated' => $this->getDeprecated(),
             'from_class' => $this->getFromClass(),
             'extends' => $this->getExtends(),
             'typed' => $this->isTyped()

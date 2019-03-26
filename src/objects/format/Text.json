@@ -2,6 +2,7 @@
     "name": "Format\\Text",
     "description": "Properties shared by all text component types.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Component",
     "typed": null,

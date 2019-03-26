@@ -2,6 +2,7 @@
     "name": "Format\\Divider",
     "description": "The component for defining a horizontal line to visually divide parts of your article.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Component",
     "typed": null,

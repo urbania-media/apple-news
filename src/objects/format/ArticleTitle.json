@@ -2,6 +2,7 @@
     "name": "Format\\ArticleTitle",
     "description": "The component for displaying an article title in the ArticleLink component.",
     "version": "1.9+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Text",
     "typed": null,

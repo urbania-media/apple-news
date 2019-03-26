@@ -2,6 +2,7 @@
     "name": "Format\\Offset",
     "description": "The object for setting an offset value to use with a text shadow.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

@@ -2,6 +2,7 @@
     "name": "Format\\CollectionDisplay",
     "description": "An object used in any container component type to define how the collection of child components is presented.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

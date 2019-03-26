@@ -2,6 +2,7 @@
     "name": "Format\\AdvertisingSettings",
     "description": "The object for defining properties that affect the frequency and placement with which banner advertisements and medium rectangle advertisements are automatically placed in your article.DeprecatedUse AdvertisementAutoPlacement instead.",
     "version": "1.7",
+    "deprecated": true,
     "from_class": null,
     "extends": null,
     "typed": null,

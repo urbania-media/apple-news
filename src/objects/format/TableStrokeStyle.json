@@ -2,6 +2,7 @@
     "name": "Format\\TableStrokeStyle",
     "description": "The object for defining the color, width, and style of a stroke in a table.",
     "version": "1.8+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

@@ -2,6 +2,7 @@
     "name": "Format\\Mosaic",
     "description": "The component for displaying a set of images as tiles in no particular order.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Component",
     "typed": null,

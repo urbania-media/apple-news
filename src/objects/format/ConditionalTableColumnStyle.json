@@ -2,6 +2,7 @@
     "name": "Format\\ConditionalTableColumnStyle",
     "description": "The object for applying styles to table columns that meet certain conditions.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\TableColumnStyle",
     "typed": null,

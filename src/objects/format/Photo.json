@@ -2,6 +2,7 @@
     "name": "Format\\Photo",
     "description": "The component for including a photograph.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Component",
     "typed": null,

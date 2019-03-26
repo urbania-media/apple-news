@@ -2,6 +2,7 @@
     "name": "Format\\BackgroundMotion",
     "description": "The behavior whereby the background of a component moves in the opposite direction from the motion of the device.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Behavior",
     "typed": null,

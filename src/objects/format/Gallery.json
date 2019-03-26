@@ -2,6 +2,7 @@
     "name": "Format\\Gallery",
     "description": "The component for displaying a sequence of images in a specific order as a horizontal strip.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Format\\Component",
     "typed": null,

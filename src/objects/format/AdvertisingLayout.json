@@ -2,6 +2,7 @@
     "name": "Format\\AdvertisingLayout",
     "description": "The object for defining the margin above and below advertising components.DeprecatedUse AutoPlacementLayout instead.",
     "version": "1.7",
+    "deprecated": true,
     "from_class": null,
     "extends": null,
     "typed": null,

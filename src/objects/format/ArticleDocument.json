@@ -2,6 +2,7 @@
     "name": "Format\\ArticleDocument",
     "description": "The root object of an Apple News article, containing required properties, metadata, content, layout, and styles.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

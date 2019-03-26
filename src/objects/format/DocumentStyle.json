@@ -2,6 +2,7 @@
     "name": "Format\\DocumentStyle",
     "description": "The object for setting the background color for your article.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

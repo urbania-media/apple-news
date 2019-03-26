@@ -2,6 +2,7 @@
     "name": "Format\\TextDecoration",
     "description": "The object for defining color and width for text underline or strikethrough.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

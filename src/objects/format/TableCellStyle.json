@@ -2,6 +2,7 @@
     "name": "Format\\TableCellStyle",
     "description": "The object for applying styles to cells in a table.",
     "version": "1.7+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,
