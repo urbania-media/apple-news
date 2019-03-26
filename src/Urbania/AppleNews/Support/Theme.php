@@ -4,6 +4,7 @@ namespace Urbania\AppleNews\Support;
 
 use Urbania\AppleNews\Contracts\Theme as ThemeContract;
 use Urbania\AppleNews\Article;
+use Closure;
 
 class Theme implements ThemeContract
 {
@@ -69,13 +70,21 @@ class Theme implements ThemeContract
             $selector = $rule['selector'];
             $foundComponents = $finder->find($selector, $components);
             foreach ($foundComponents as $component) {
-                $this->applyRulesToComponent($component, $rule['rules']);
+                $this->applyRulesToComponent($component, $rule);
+            }
+            if (isset($rule['transform'])) {
+                $transform = $rule['transform'];
+                $transform($foundComponents, $rule);
             }
         }
     }
 
-    protected function applyRulesToComponent($component, $rules)
+    protected function applyRulesToComponent($component, $rule)
     {
+        $rules = $rule['rules'];
+        if ($rules instanceof Closure) {
+            $rules = $rules($component, $rule);
+        }
         $component->merge($rules);
     }
 }
