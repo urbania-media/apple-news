@@ -40,41 +40,53 @@ class ComponentsFinder
         $selector,
         $applyFilter = true
     ) {
+        // If the selector is a nested combined selector, we need to change the
+        // current components and selector
+        if ($selector instanceof CombinedSelectorNode && $selector->getSelector() instanceof CombinedSelectorNode) {
+            $firstSelector = $selector->getSelector();
+            $combinator = $selector->getCombinator();
+            $components = $combinator === '+'
+                ? $this->matchComponents($components, $firstSelector->getSelector())
+                : $this->matchComponents($components, $firstSelector);
+            $selector = $combinator === '+'
+                ? new CombinedSelectorNode($firstSelector->getSubSelector(), $combinator, $selector->getSubSelector())
+                : $selector->getSubSelector();
+        }
+
         $matchingComponents = array_reduce(
-            $components,
-            function ($matchingComponents, $component) use ($selector) {
+            array_keys($components),
+            function ($matchingComponents, $index) use ($components, $selector) {
+                $component = $components[$index];
+
+                // If it's a combined selector, handle with a method
                 if ($selector instanceof CombinedSelectorNode) {
-                    if (!isset($component->components)) {
-                        return $matchingComponents;
-                    }
-                    $parentSelector = $selector->getSelector();
-                    $subSelector = $selector->getSubSelector();
-                    $parentMatch = $this->matchComponent(
-                        $component,
-                        $parentSelector
+                    return array_merge(
+                        $matchingComponents,
+                        $this->matchComponentsWithCombinedSelector(
+                            $selector,
+                            $component,
+                            $components
+                        )
                     );
+                }
+
+                // Check if the selector match the current component
+                if ($this->matchComponent($component, $selector)) {
+                    $matchingComponents[] = $component;
+                }
+
+                // Check if it match any children
+                if (isset($component->components)) {
                     $matchingComponents = array_merge(
                         $matchingComponents,
                         $this->matchComponents(
                             $component->components,
-                            $parentMatch ? $subSelector : $selector
+                            $selector,
+                            false
                         )
                     );
-                } else {
-                    if ($this->matchComponent($component, $selector)) {
-                        $matchingComponents[] = $component;
-                    }
-                    if (isset($component->components)) {
-                        $matchingComponents = array_merge(
-                            $matchingComponents,
-                            $this->matchComponents(
-                                $component->components,
-                                $selector,
-                                false
-                            )
-                        );
-                    }
                 }
+
                 return $matchingComponents;
             },
             []
@@ -88,6 +100,42 @@ class ComponentsFinder
         }
 
         return $matchingComponents;
+    }
+
+    protected function matchComponentsWithCombinedSelector($selector, $component, $siblings)
+    {
+        $parentSelector = $selector->getSelector();
+        $subSelector = $selector->getSubSelector();
+        $combinator = $selector->getCombinator();
+
+        $parentMatch = $this->matchComponent(
+            $component,
+            $parentSelector
+        );
+
+        if ($combinator === '+') {
+            $childrenComponents = isset($component->components) ? $this->matchComponents(
+                $component->components,
+                $selector
+            ) : [];
+            if ($parentMatch) {
+                $index = array_search($component, $siblings, true);
+                return array_merge(
+                    $this->matchComponents(array_slice($siblings, $index + 1), $subSelector),
+                    $childrenComponents
+                );
+            }
+            return $childrenComponents;
+        }
+
+        if (isset($component->components)) {
+            return $this->matchComponents(
+                $component->components,
+                $parentMatch ? $subSelector : $selector
+            );
+        }
+
+        return [];
     }
 
     protected function filterComponents($components, $selector)
