@@ -22,7 +22,7 @@ class ScaleFadeAnimation extends ComponentAnimation
     /**
      * The initial transparency of the component. Set initialAlpha to a value
      * between 0 (completely transparent) and 1 (completely opaque).
-     * @var float|integer
+     * @var integer|float
      */
     protected $initialAlpha;
 
@@ -30,7 +30,7 @@ class ScaleFadeAnimation extends ComponentAnimation
      * The initial scale of the component. Set initialScale to a value
      * between 0 (completely scaled down) and 1 (the component’s original
      * size).
-     * @var float|integer
+     * @var integer|float
      */
     protected $initialScale;
 
@@ -60,7 +60,7 @@ class ScaleFadeAnimation extends ComponentAnimation
 
     /**
      * Get the initialAlpha
-     * @return float|integer
+     * @return integer|float
      */
     public function getInitialAlpha()
     {
@@ -69,7 +69,7 @@ class ScaleFadeAnimation extends ComponentAnimation
 
     /**
      * Set the initialAlpha
-     * @param float|integer $initialAlpha
+     * @param integer|float $initialAlpha
      * @return $this
      */
     public function setInitialAlpha($initialAlpha)
@@ -87,7 +87,7 @@ class ScaleFadeAnimation extends ComponentAnimation
 
     /**
      * Get the initialScale
-     * @return float|integer
+     * @return integer|float
      */
     public function getInitialScale()
     {
@@ -96,7 +96,7 @@ class ScaleFadeAnimation extends ComponentAnimation
 
     /**
      * Set the initialScale
-     * @param float|integer $initialScale
+     * @param integer|float $initialScale
      * @return $this
      */
     public function setInitialScale($initialScale)

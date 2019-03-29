@@ -21,7 +21,7 @@ class Shadow extends BaseSdkObject
 
     /**
      * The shadow’s radius as a value between 0 and 100 in points.
-     * @var float|integer
+     * @var integer|float
      */
     protected $radius;
 
@@ -33,7 +33,7 @@ class Shadow extends BaseSdkObject
 
     /**
      * The opacity of the shadow as a value between 0 and 1.
-     * @var float|integer
+     * @var integer|float
      */
     protected $opacity;
 
@@ -107,7 +107,7 @@ class Shadow extends BaseSdkObject
 
     /**
      * Get the opacity
-     * @return float|integer
+     * @return integer|float
      */
     public function getOpacity()
     {
@@ -116,7 +116,7 @@ class Shadow extends BaseSdkObject
 
     /**
      * Set the opacity
-     * @param float|integer $opacity
+     * @param integer|float $opacity
      * @return $this
      */
     public function setOpacity($opacity)
@@ -134,7 +134,7 @@ class Shadow extends BaseSdkObject
 
     /**
      * Get the radius
-     * @return float|integer
+     * @return integer|float
      */
     public function getRadius()
     {
@@ -143,7 +143,7 @@ class Shadow extends BaseSdkObject
 
     /**
      * Set the radius
-     * @param float|integer $radius
+     * @param integer|float $radius
      * @return $this
      */
     public function setRadius($radius)

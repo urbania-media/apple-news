@@ -3,6 +3,7 @@
 namespace Urbania\AppleNews\Scripts\Import;
 
 use DiDom\Document as DomDocument;
+use Urbania\AppleNews\Scripts\Utils;
 
 class ObjectDocument extends Document
 {
@@ -65,27 +66,13 @@ class ObjectDocument extends Document
             if (!is_null($fromClass) && ($property['name'] === '*' || $property['name'] === 'Any Key')) {
                 $property['name'] = strtolower($fromClass);
                 $property['type'] = 'map:' . $property['type'];
+            } elseif ($objectName === 'Heading' && $property['name'] === 'role' && !isset($property['value'])) {
+                $property['value'] = $property['enum_values'][0];
+            } elseif ($objectName === 'Error' && $property['name'] === 'keyPath') {
+                $property['type'] = 'array';
             }
             if (is_array($property['type'])) {
-                usort($property['type'], function ($a, $b) {
-                    $aIsClass = preg_match('/^[A-Z]/', $a) === 1;
-                    $aIsObject = $aIsClass && preg_match('/\\\[A-Z]/', $a) === 1;
-                    $bIsClass = preg_match('/^[A-Z]/', $b) === 1;
-                    $bIsObject = $bIsClass && preg_match('/\\\[A-Z]/', $b) === 1;
-                    if ($aIsObject && $bIsObject) {
-                        return strcmp($a, $b);
-                    } elseif ($bIsObject && !$aIsObject) {
-                        return 1;
-                    } elseif ($aIsObject || $aIsClass) {
-                        return -1;
-                    } elseif (!$aIsObject && !$bIsClass) {
-                        return strcmp($aIsObject, $bIsClass);
-                    }
-                    return 1;
-                });
-            }
-            if ($objectName === 'Heading' && $property['name'] === 'role' && !isset($property['value'])) {
-                $property['value'] = $property['enum_values'][0];
+                $property['type'] = Utils::sortTypes($property['type']);
             }
             $property['typed'] = $this->isPropertyCreatesTyped($property);
             $properties[] = $property;

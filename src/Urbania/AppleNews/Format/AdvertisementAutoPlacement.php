@@ -34,7 +34,7 @@ class AdvertisementAutoPlacement extends AutoPlacement
      * maintain a minimum distance of half a screen height from your media
      * content, use a value of around 50vh. For more information, see
      * Specifying Measurements for Components.
-     * @var integer|string
+     * @var string|integer
      */
     protected $distanceFromMedia;
 
@@ -172,7 +172,7 @@ class AdvertisementAutoPlacement extends AutoPlacement
 
     /**
      * Get the distanceFromMedia
-     * @return integer|string
+     * @return string|integer
      */
     public function getDistanceFromMedia()
     {
@@ -181,7 +181,7 @@ class AdvertisementAutoPlacement extends AutoPlacement
 
     /**
      * Set the distanceFromMedia
-     * @param integer|string $distanceFromMedia
+     * @param string|integer $distanceFromMedia
      * @return $this
      */
     public function setDistanceFromMedia($distanceFromMedia)

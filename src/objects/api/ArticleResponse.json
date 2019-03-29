@@ -2,6 +2,7 @@
     "name": "Api\\Objects\\ArticleResponse",
     "description": "See which objects make up the publish article, read article, and update article responses.",
     "version": "1.0.0+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Api\\Objects\\Article",
     "typed": null,

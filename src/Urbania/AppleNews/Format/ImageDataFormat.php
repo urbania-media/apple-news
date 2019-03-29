@@ -23,28 +23,28 @@ class ImageDataFormat extends DataFormat
     /**
      * The maximum height of an image in a cell as an integer in points or as
      * one of the available units for components.
-     * @var integer|string
+     * @var string|integer
      */
     protected $maximumHeight;
 
     /**
      * The maximum width of an image in a cell as an integer in points or as
      * one of the available units for components.
-     * @var integer|string
+     * @var string|integer
      */
     protected $maximumWidth;
 
     /**
      * The minimum height of an image in a cell as an integer in points or as
      * one of the available units for components.
-     * @var integer|string
+     * @var string|integer
      */
     protected $minimumHeight;
 
     /**
      * The minimum width of an image in a cell as an integer in points or as
      * one of the available units for components.
-     * @var integer|string
+     * @var string|integer
      */
     protected $minimumWidth;
 
@@ -71,7 +71,7 @@ class ImageDataFormat extends DataFormat
 
     /**
      * Get the maximumHeight
-     * @return integer|string
+     * @return string|integer
      */
     public function getMaximumHeight()
     {
@@ -80,7 +80,7 @@ class ImageDataFormat extends DataFormat
 
     /**
      * Set the maximumHeight
-     * @param integer|string $maximumHeight
+     * @param string|integer $maximumHeight
      * @return $this
      */
     public function setMaximumHeight($maximumHeight)
@@ -98,7 +98,7 @@ class ImageDataFormat extends DataFormat
 
     /**
      * Get the maximumWidth
-     * @return integer|string
+     * @return string|integer
      */
     public function getMaximumWidth()
     {
@@ -107,7 +107,7 @@ class ImageDataFormat extends DataFormat
 
     /**
      * Set the maximumWidth
-     * @param integer|string $maximumWidth
+     * @param string|integer $maximumWidth
      * @return $this
      */
     public function setMaximumWidth($maximumWidth)
@@ -125,7 +125,7 @@ class ImageDataFormat extends DataFormat
 
     /**
      * Get the minimumHeight
-     * @return integer|string
+     * @return string|integer
      */
     public function getMinimumHeight()
     {
@@ -134,7 +134,7 @@ class ImageDataFormat extends DataFormat
 
     /**
      * Set the minimumHeight
-     * @param integer|string $minimumHeight
+     * @param string|integer $minimumHeight
      * @return $this
      */
     public function setMinimumHeight($minimumHeight)
@@ -152,7 +152,7 @@ class ImageDataFormat extends DataFormat
 
     /**
      * Get the minimumWidth
-     * @return integer|string
+     * @return string|integer
      */
     public function getMinimumWidth()
     {
@@ -161,7 +161,7 @@ class ImageDataFormat extends DataFormat
 
     /**
      * Set the minimumWidth
-     * @param integer|string $minimumWidth
+     * @param string|integer $minimumWidth
      * @return $this
      */
     public function setMinimumWidth($minimumWidth)

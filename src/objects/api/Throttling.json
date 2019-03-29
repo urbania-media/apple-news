@@ -2,6 +2,7 @@
     "name": "Api\\Objects\\Throttling",
     "description": "See the object that wraps the throttling information that's returned for the create article and update article endpoints.",
     "version": "1.0.0+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,
@@ -18,7 +19,7 @@
             "name": "isThrottled",
             "type": "boolean",
             "required": false,
-            "description": "A boolean value that indicates whether requests to this channel are currently being throttled. If true, this request is added to the queue to be processed later rather than immediately.",
+            "description": "A Boolean value that indicates whether requests to this channel are currently being throttled. If true, this request is added to the queue to be processed later rather than immediately.",
             "default": "false",
             "typed": false
         },
@@ -34,7 +35,7 @@
             "name": "quotaAvailable",
             "type": "integer",
             "required": false,
-            "description": "Number of additional article publish or update requests which could be submitted now before the system will begin throttling.",
+            "description": "Number of additional article publish or update requests that can be submitted now, before the system begins throttling.",
             "typed": false
         }
     ]

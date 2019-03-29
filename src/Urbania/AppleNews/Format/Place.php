@@ -15,13 +15,13 @@ class Place extends Component
 {
     /**
      * The latitude of the place’s location.
-     * @var float|integer
+     * @var integer|float
      */
     protected $latitude;
 
     /**
      * The longitude of the place’s location.
-     * @var float|integer
+     * @var integer|float
      */
     protected $longitude;
 
@@ -429,7 +429,7 @@ class Place extends Component
 
     /**
      * Get the latitude
-     * @return float|integer
+     * @return integer|float
      */
     public function getLatitude()
     {
@@ -438,7 +438,7 @@ class Place extends Component
 
     /**
      * Set the latitude
-     * @param float|integer $latitude
+     * @param integer|float $latitude
      * @return $this
      */
     public function setLatitude($latitude)
@@ -484,7 +484,7 @@ class Place extends Component
 
     /**
      * Get the longitude
-     * @return float|integer
+     * @return integer|float
      */
     public function getLongitude()
     {
@@ -493,7 +493,7 @@ class Place extends Component
 
     /**
      * Set the longitude
-     * @param float|integer $longitude
+     * @param integer|float $longitude
      * @return $this
      */
     public function setLongitude($longitude)

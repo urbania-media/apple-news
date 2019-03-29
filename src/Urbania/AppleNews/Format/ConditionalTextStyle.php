@@ -129,7 +129,7 @@ class ConditionalTextStyle extends TextStyle
      * The amount of tracking (spacing between characters) in text, as a
      * percentage of the font size. The actual spacing between letters is
      * determined by combining information from the font and font size.
-     * @var float|integer
+     * @var integer|float
      */
     protected $tracking;
 
@@ -707,7 +707,7 @@ class ConditionalTextStyle extends TextStyle
 
     /**
      * Get the tracking
-     * @return float|integer
+     * @return integer|float
      */
     public function getTracking()
     {
@@ -716,7 +716,7 @@ class ConditionalTextStyle extends TextStyle
 
     /**
      * Set the tracking
-     * @param float|integer $tracking
+     * @param integer|float $tracking
      * @return $this
      */
     public function setTracking($tracking)

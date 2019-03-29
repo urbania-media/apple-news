@@ -2,6 +2,7 @@
     "name": "Api\\Objects\\Section",
     "description": "See the fields returned by the section endpoints.",
     "version": "1.0.0+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

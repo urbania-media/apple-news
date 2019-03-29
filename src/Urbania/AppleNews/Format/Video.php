@@ -52,7 +52,7 @@ class Video extends Component
     /**
      * The aspect ratio of the video: width divided by height. The aspect
      * ratio determines the height of the video player.
-     * @var float|integer
+     * @var integer|float
      */
     protected $aspectRatio;
 
@@ -270,7 +270,7 @@ class Video extends Component
 
     /**
      * Get the aspectRatio
-     * @return float|integer
+     * @return integer|float
      */
     public function getAspectRatio()
     {
@@ -279,7 +279,7 @@ class Video extends Component
 
     /**
      * Set the aspectRatio
-     * @param float|integer $aspectRatio
+     * @param integer|float $aspectRatio
      * @return $this
      */
     public function setAspectRatio($aspectRatio)

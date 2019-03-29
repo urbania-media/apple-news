@@ -37,7 +37,7 @@ class CollectionDisplay extends BaseSdkObject
     /**
      * A number in points or a string referring to a supported unit of
      * measure defining the vertical gutter between components.
-     * @var integer|string
+     * @var string|integer
      */
     protected $gutter;
 
@@ -45,7 +45,7 @@ class CollectionDisplay extends BaseSdkObject
      * A number in points or a string referring to a supported unit of
      * measure defining the maximum width of each child component inside the
      * collection.
-     * @var integer|string
+     * @var string|integer
      */
     protected $maximumWidth;
 
@@ -53,7 +53,7 @@ class CollectionDisplay extends BaseSdkObject
      * A number in points or a string referring to a supported unit of
      * measure defining the minimum width of each child component inside the
      * collection.
-     * @var integer|string
+     * @var string|integer
      */
     protected $minimumWidth;
 
@@ -61,7 +61,7 @@ class CollectionDisplay extends BaseSdkObject
      * A number in points or a string referring to a supported unit of
      * measure defining the horizontal spacing between rows. See Specifying
      * Measurements for Components.
-     * @var integer|string
+     * @var string|integer
      */
     protected $rowSpacing;
 
@@ -170,7 +170,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Get the gutter
-     * @return integer|string
+     * @return string|integer
      */
     public function getGutter()
     {
@@ -179,7 +179,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Set the gutter
-     * @param integer|string $gutter
+     * @param string|integer $gutter
      * @return $this
      */
     public function setGutter($gutter)
@@ -197,7 +197,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Get the maximumWidth
-     * @return integer|string
+     * @return string|integer
      */
     public function getMaximumWidth()
     {
@@ -206,7 +206,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Set the maximumWidth
-     * @param integer|string $maximumWidth
+     * @param string|integer $maximumWidth
      * @return $this
      */
     public function setMaximumWidth($maximumWidth)
@@ -224,7 +224,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Get the minimumWidth
-     * @return integer|string
+     * @return string|integer
      */
     public function getMinimumWidth()
     {
@@ -233,7 +233,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Set the minimumWidth
-     * @param integer|string $minimumWidth
+     * @param string|integer $minimumWidth
      * @return $this
      */
     public function setMinimumWidth($minimumWidth)
@@ -251,7 +251,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Get the rowSpacing
-     * @return integer|string
+     * @return string|integer
      */
     public function getRowSpacing()
     {
@@ -260,7 +260,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Set the rowSpacing
-     * @param integer|string $rowSpacing
+     * @param string|integer $rowSpacing
      * @return $this
      */
     public function setRowSpacing($rowSpacing)

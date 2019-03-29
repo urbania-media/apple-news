@@ -22,7 +22,7 @@ class FadeInAnimation extends ComponentAnimation
     /**
      * The initial transparency of the component. Set initialAlpha to a value
      * between 0 (completely transparent) and 1 (completely opaque).
-     * @var float|integer
+     * @var integer|float
      */
     protected $initialAlpha;
 
@@ -48,7 +48,7 @@ class FadeInAnimation extends ComponentAnimation
 
     /**
      * Get the initialAlpha
-     * @return float|integer
+     * @return integer|float
      */
     public function getInitialAlpha()
     {
@@ -57,7 +57,7 @@ class FadeInAnimation extends ComponentAnimation
 
     /**
      * Set the initialAlpha
-     * @param float|integer $initialAlpha
+     * @param integer|float $initialAlpha
      * @return $this
      */
     public function setInitialAlpha($initialAlpha)

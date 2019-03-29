@@ -54,7 +54,7 @@ class ComponentStyle extends BaseSdkObject
      * (completely transparent) and 1 (completely opaque). The effects of the
      * component’s opacity are inherited by any child components. See
      * Nesting Components in an Article.
-     * @var float|integer
+     * @var integer|float
      */
     protected $opacity;
 
@@ -258,7 +258,7 @@ class ComponentStyle extends BaseSdkObject
 
     /**
      * Get the opacity
-     * @return float|integer
+     * @return integer|float
      */
     public function getOpacity()
     {
@@ -267,7 +267,7 @@ class ComponentStyle extends BaseSdkObject
 
     /**
      * Set the opacity
-     * @param float|integer $opacity
+     * @param integer|float $opacity
      * @return $this
      */
     public function setOpacity($opacity)

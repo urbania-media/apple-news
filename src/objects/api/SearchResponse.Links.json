@@ -2,6 +2,7 @@
     "name": "Api\\Objects\\SearchResponseLinks",
     "description": "See the links returned by the search article endpoints.",
     "version": "1.0.0+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,

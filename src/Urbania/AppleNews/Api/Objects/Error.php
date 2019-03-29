@@ -14,7 +14,7 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class Error extends BaseSdkObject
 {
     /**
-     * An error code that, in combination with the keyPath, uniquely
+     * An error code that, in combination with the key path, uniquely
      * identifies the error for the specified endpoint.
      * @var string
      */
@@ -23,12 +23,12 @@ class Error extends BaseSdkObject
     /**
      * An array of field names that uniquely identifies a field in the JSON
      * input of the request. See Understanding the keyPath Array.
-     * @var string[]
+     * @var array
      */
     protected $keyPath;
 
     /**
-     * A user friendly detailed explanation of the error code.
+     * A user-friendly, detailed explanation of the error code.
      * @var string
      */
     protected $message;
@@ -98,7 +98,7 @@ class Error extends BaseSdkObject
 
     /**
      * Add an item to keyPath
-     * @param string $item
+     * @param array $item
      * @return $this
      */
     public function addKeyPath($item)
@@ -112,7 +112,7 @@ class Error extends BaseSdkObject
 
     /**
      * Get the keyPath
-     * @return string[]
+     * @return array
      */
     public function getKeyPath()
     {
@@ -121,7 +121,7 @@ class Error extends BaseSdkObject
 
     /**
      * Set the keyPath
-     * @param string[] $keyPath
+     * @param array $keyPath
      * @return $this
      */
     public function setKeyPath($keyPath)
@@ -132,7 +132,6 @@ class Error extends BaseSdkObject
         }
 
         Assert::isArray($keyPath);
-        Assert::allString($keyPath);
 
         $this->keyPath = $keyPath;
         return $this;

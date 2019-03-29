@@ -39,7 +39,7 @@ class TableCellStyle extends BaseSdkObject
      * The height of the cell and its row, as an integer in points, or using
      * one of the units of measure for components. See Specifying
      * Measurements for Components.
-     * @var integer|string
+     * @var string|integer
      */
     protected $height;
 
@@ -54,7 +54,7 @@ class TableCellStyle extends BaseSdkObject
      * The minimum width of the cell and its column, as an integer in points
      * or in one of the available units of measure for components. See
      * Specifying Measurements for Components.
-     * @var integer|string
+     * @var string|integer
      */
     protected $minimumWidth;
 
@@ -62,7 +62,7 @@ class TableCellStyle extends BaseSdkObject
      * The space around the content in a table cell in points, supported
      * units, or a Padding object that specifies padding for each side
      * separately.
-     * @var \Urbania\AppleNews\Format\Padding|integer|string
+     * @var \Urbania\AppleNews\Format\Padding|string|integer
      */
     protected $padding;
 
@@ -238,7 +238,7 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * Get the height
-     * @return integer|string
+     * @return string|integer
      */
     public function getHeight()
     {
@@ -247,7 +247,7 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * Set the height
-     * @param integer|string $height
+     * @param string|integer $height
      * @return $this
      */
     public function setHeight($height)
@@ -292,7 +292,7 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * Get the minimumWidth
-     * @return integer|string
+     * @return string|integer
      */
     public function getMinimumWidth()
     {
@@ -301,7 +301,7 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * Set the minimumWidth
-     * @param integer|string $minimumWidth
+     * @param string|integer $minimumWidth
      * @return $this
      */
     public function setMinimumWidth($minimumWidth)
@@ -319,7 +319,7 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * Get the padding
-     * @return \Urbania\AppleNews\Format\Padding|integer|string
+     * @return \Urbania\AppleNews\Format\Padding|string|integer
      */
     public function getPadding()
     {
@@ -328,7 +328,7 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * Set the padding
-     * @param \Urbania\AppleNews\Format\Padding|array|integer|string $padding
+     * @param \Urbania\AppleNews\Format\Padding|array|string|integer $padding
      * @return $this
      */
     public function setPadding($padding)

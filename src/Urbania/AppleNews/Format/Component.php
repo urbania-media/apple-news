@@ -16,7 +16,7 @@ class Component extends BaseSdkObject
     protected static $typeProperty = 'role';
 
     protected static $types = [
-        'map' => 'Map',
+        'audio' => 'Audio',
         'divider' => 'Divider',
         'banner_advertisement' => 'BannerAdvertisement',
         'medium_rectangle_advertisement' => 'MediumRectangleAdvertisement',
@@ -24,7 +24,6 @@ class Component extends BaseSdkObject
         'video' => 'Video',
         'embedwebvideo' => 'EmbedWebVideo',
         'embedvideo' => 'EmbedWebVideo',
-        'audio' => 'Audio',
         'music' => 'Music',
         'aside' => 'Aside',
         'section' => 'Section',
@@ -60,6 +59,7 @@ class Component extends BaseSdkObject
         'article_thumbnail' => 'ArticleThumbnail',
         'datatable' => 'DataTable',
         'htmltable' => 'HTMLTable',
+        'map' => 'Map',
         'place' => 'Place',
         'tweet' => 'Tweet',
         'instagram' => 'Instagram',

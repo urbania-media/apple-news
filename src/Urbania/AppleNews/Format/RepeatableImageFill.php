@@ -36,7 +36,7 @@ class RepeatableImageFill extends Fill
      * The height of the image as it is repeated. When height is omitted, the
      * width property is used to determine the size based on the aspect ratio
      * of the provided image.
-     * @var integer|string
+     * @var string|integer
      */
     protected $height;
 
@@ -65,7 +65,7 @@ class RepeatableImageFill extends Fill
      * The width of the image as it is repeated. When width is omitted, the
      * height property is used to determine the size based on the aspect
      * ratio of the provided image.
-     * @var integer|string
+     * @var string|integer
      */
     protected $width;
 
@@ -131,7 +131,7 @@ class RepeatableImageFill extends Fill
 
     /**
      * Get the height
-     * @return integer|string
+     * @return string|integer
      */
     public function getHeight()
     {
@@ -140,7 +140,7 @@ class RepeatableImageFill extends Fill
 
     /**
      * Set the height
-     * @param integer|string $height
+     * @param string|integer $height
      * @return $this
      */
     public function setHeight($height)
@@ -270,7 +270,7 @@ class RepeatableImageFill extends Fill
 
     /**
      * Get the width
-     * @return integer|string
+     * @return string|integer
      */
     public function getWidth()
     {
@@ -279,7 +279,7 @@ class RepeatableImageFill extends Fill
 
     /**
      * Set the width
-     * @param integer|string $width
+     * @param string|integer $width
      * @return $this
      */
     public function setWidth($width)

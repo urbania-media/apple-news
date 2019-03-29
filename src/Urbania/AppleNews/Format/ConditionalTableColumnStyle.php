@@ -37,7 +37,7 @@ class ConditionalTableColumnStyle extends TableColumnStyle
      * The minimum width of the column as an integer in points  or in one of
      * the available units of measure for components. See Specifying
      * Measurements for Components.
-     * @var integer|string
+     * @var string|integer
      */
     protected $minimumWidth;
 
@@ -132,7 +132,7 @@ class ConditionalTableColumnStyle extends TableColumnStyle
 
     /**
      * Get the minimumWidth
-     * @return integer|string
+     * @return string|integer
      */
     public function getMinimumWidth()
     {
@@ -141,7 +141,7 @@ class ConditionalTableColumnStyle extends TableColumnStyle
 
     /**
      * Set the minimumWidth
-     * @param integer|string $minimumWidth
+     * @param string|integer $minimumWidth
      * @return $this
      */
     public function setMinimumWidth($minimumWidth)

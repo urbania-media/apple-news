@@ -16,13 +16,13 @@ class MapItem extends BaseSdkObject
 {
     /**
      * The latitude of the map item.
-     * @var float|integer
+     * @var integer|float
      */
     protected $latitude;
 
     /**
      * The longitude of the map item.
-     * @var float|integer
+     * @var integer|float
      */
     protected $longitude;
 
@@ -77,7 +77,7 @@ class MapItem extends BaseSdkObject
 
     /**
      * Get the latitude
-     * @return float|integer
+     * @return integer|float
      */
     public function getLatitude()
     {
@@ -86,7 +86,7 @@ class MapItem extends BaseSdkObject
 
     /**
      * Set the latitude
-     * @param float|integer $latitude
+     * @param integer|float $latitude
      * @return $this
      */
     public function setLatitude($latitude)
@@ -99,7 +99,7 @@ class MapItem extends BaseSdkObject
 
     /**
      * Get the longitude
-     * @return float|integer
+     * @return integer|float
      */
     public function getLongitude()
     {
@@ -108,7 +108,7 @@ class MapItem extends BaseSdkObject
 
     /**
      * Set the longitude
-     * @param float|integer $longitude
+     * @param integer|float $longitude
      * @return $this
      */
     public function setLongitude($longitude)

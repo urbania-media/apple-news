@@ -2,6 +2,7 @@
     "name": "Api\\Objects\\ChannelResponse",
     "description": "See which objects make up the channel response.",
     "version": "1.0.0+",
+    "deprecated": false,
     "from_class": null,
     "extends": "Api\\Objects\\Channel",
     "typed": null,

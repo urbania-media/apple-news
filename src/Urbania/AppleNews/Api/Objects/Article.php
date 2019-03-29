@@ -40,34 +40,41 @@ class Article extends BaseSdkObject
     protected $id;
 
     /**
-     * Indicates whether or not this article should be considered for
-     * featuring in News. See Creating Articles for Featured Stories.
+     * A Boolean value that indicates whether or not this article should be
+     * considered for featuring in News.
      * @var boolean
      */
     protected $isCandidateToBeFeatured;
 
     /**
-     * Indicates whether this article should be public (live) or should be a
-     * preview that is only visible to members of your channel. Set isPreview
-     * to false to publish the article right away and make it visible to all
-     * News users.
+     * A Boolean value that indicates whether this article should be public
+     * (live) or should be a preview that is only visible to members of your
+     * channel. Set isPreview to false to publish the article immediately and
+     * make it visible to all News users.
      * @var boolean
      */
     protected $isPreview;
 
     /**
-     * Indicates whether this article consists of sponsored content for
-     * promotional purposes. Sponsored content must be marked as such;
-     * channels that do not follow this policy may be suspended.
+     * A Boolean value that indicates whether this article consists of
+     * sponsored content for promotional purposes. Sponsored content must be
+     * marked as such; channels that do not follow this policy may be
+     * suspended.
      * @var boolean
      */
     protected $isSponsored;
 
     /**
-     * Indicates the viewing audience for the content. The types of audiences
-     * or ratings are KIDS, MATURE, and GENERAL or null if unspecified. Note
-     * that a MATURE rating indicates explicit content that is only
-     * appropriate for a specific audience.
+     * The URL of the channel in which the article appears.
+     * @var \Urbania\AppleNews\Api\Objects\ArticleLinks
+     */
+    protected $links;
+
+    /**
+     * A Boolean value that indicates the viewing audience for the content.
+     * The types of audiences or ratings are KIDS, MATURE, and GENERAL, or
+     * null if unspecified. A MATURE rating indicates explicit content that
+     * is only appropriate for a specific audience.
      * @var string
      */
     protected $maturityRating;
@@ -92,7 +99,7 @@ class Article extends BaseSdkObject
     protected $shareUrl;
 
     /**
-     * The current state of the article which can be one of the following:
+     * The current state of the article, which can be one of the following:
      * @var string
      */
     protected $state;
@@ -111,8 +118,8 @@ class Article extends BaseSdkObject
     protected $type;
 
     /**
-     * A list of warning messages indicating problems with the article that
-     * are not fatal.
+     * A list of warning messages indicating nonfatal problems with the
+     * article.
      * @var Api\Objects\Warning[]
      */
     protected $warnings;
@@ -145,6 +152,10 @@ class Article extends BaseSdkObject
 
         if (isset($data['isSponsored'])) {
             $this->setIsSponsored($data['isSponsored']);
+        }
+
+        if (isset($data['links'])) {
+            $this->setLinks($data['links']);
         }
 
         if (isset($data['maturityRating'])) {
@@ -377,6 +388,33 @@ class Article extends BaseSdkObject
         Assert::boolean($isSponsored);
 
         $this->isSponsored = $isSponsored;
+        return $this;
+    }
+
+    /**
+     * Get the links
+     * @return \Urbania\AppleNews\Api\Objects\ArticleLinks
+     */
+    public function getLinks()
+    {
+        return $this->links;
+    }
+
+    /**
+     * Set the links
+     * @param \Urbania\AppleNews\Api\Objects\ArticleLinks|array $links
+     * @return $this
+     */
+    public function setLinks($links)
+    {
+        if (is_null($links)) {
+            $this->links = null;
+            return $this;
+        }
+
+        Assert::isSdkObject($links, ArticleLinks::class);
+
+        $this->links = is_array($links) ? new ArticleLinks($links) : $links;
         return $this;
     }
 
@@ -675,6 +713,12 @@ class Article extends BaseSdkObject
         }
         if (isset($this->isSponsored)) {
             $data['isSponsored'] = $this->isSponsored;
+        }
+        if (isset($this->links)) {
+            $data['links'] =
+                $this->links instanceof Arrayable
+                    ? $this->links->toArray()
+                    : $this->links;
         }
         if (isset($this->maturityRating)) {
             $data['maturityRating'] = $this->maturityRating;

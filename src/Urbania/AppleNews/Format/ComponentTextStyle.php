@@ -192,7 +192,7 @@ class ComponentTextStyle extends TextStyle
      * The amount of tracking (spacing between characters) in text, as a
      * percentage of the fontSize. The actual spacing between letters is
      * determined by combining information from the font and font size.
-     * @var float|integer
+     * @var integer|float
      */
     protected $tracking;
 
@@ -1053,7 +1053,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Get the tracking
-     * @return float|integer
+     * @return integer|float
      */
     public function getTracking()
     {
@@ -1062,7 +1062,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Set the tracking
-     * @param float|integer $tracking
+     * @param integer|float $tracking
      * @return $this
      */
     public function setTracking($tracking)

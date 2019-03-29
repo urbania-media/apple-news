@@ -84,7 +84,7 @@ class ComponentLayout extends BaseSdkObject
      * component. Specify this value as an integer in points or using one of
      * the available units of measure for components. See Specifying
      * Measurements for Components.
-     * @var integer|string
+     * @var string|integer
      */
     protected $maximumContentWidth;
 
@@ -94,7 +94,7 @@ class ComponentLayout extends BaseSdkObject
      * component to be taller. The minimum height can be defined as an
      * integer in points or using one of the available units of measure for
      * components. See Specifying Measurements for Components.
-     * @var integer|string
+     * @var string|integer
      */
     protected $minimumHeight;
 
@@ -104,7 +104,7 @@ class ComponentLayout extends BaseSdkObject
      * contentDisplay type. The minimum width can be defined as an integer in
      * points or using one of the available units of measure for components.
      * See Specifying Measurements for Components.
-     * @var integer|string
+     * @var string|integer
      */
     protected $minimumWidth;
 
@@ -114,7 +114,7 @@ class ComponentLayout extends BaseSdkObject
      * contentDisplay type. The maximum width can be defined as an integer in
      * points or using one of the available units of measure for components.
      * See Specifying Measurements for Components.
-     * @var integer|string
+     * @var string|integer
      */
     protected $maximumWidth;
 
@@ -123,7 +123,7 @@ class ComponentLayout extends BaseSdkObject
      * and the edges of the component. Padding can be defined as an integer
      * in points or using one of the available units of measure for
      * components. See Specifying Measurements for Components.
-     * @var \Urbania\AppleNews\Format\Padding|integer|string
+     * @var \Urbania\AppleNews\Format\Padding|string|integer
      */
     protected $padding;
 
@@ -451,7 +451,7 @@ class ComponentLayout extends BaseSdkObject
 
     /**
      * Get the maximumContentWidth
-     * @return integer|string
+     * @return string|integer
      */
     public function getMaximumContentWidth()
     {
@@ -460,7 +460,7 @@ class ComponentLayout extends BaseSdkObject
 
     /**
      * Set the maximumContentWidth
-     * @param integer|string $maximumContentWidth
+     * @param string|integer $maximumContentWidth
      * @return $this
      */
     public function setMaximumContentWidth($maximumContentWidth)
@@ -478,7 +478,7 @@ class ComponentLayout extends BaseSdkObject
 
     /**
      * Get the maximumWidth
-     * @return integer|string
+     * @return string|integer
      */
     public function getMaximumWidth()
     {
@@ -487,7 +487,7 @@ class ComponentLayout extends BaseSdkObject
 
     /**
      * Set the maximumWidth
-     * @param integer|string $maximumWidth
+     * @param string|integer $maximumWidth
      * @return $this
      */
     public function setMaximumWidth($maximumWidth)
@@ -505,7 +505,7 @@ class ComponentLayout extends BaseSdkObject
 
     /**
      * Get the minimumHeight
-     * @return integer|string
+     * @return string|integer
      */
     public function getMinimumHeight()
     {
@@ -514,7 +514,7 @@ class ComponentLayout extends BaseSdkObject
 
     /**
      * Set the minimumHeight
-     * @param integer|string $minimumHeight
+     * @param string|integer $minimumHeight
      * @return $this
      */
     public function setMinimumHeight($minimumHeight)
@@ -532,7 +532,7 @@ class ComponentLayout extends BaseSdkObject
 
     /**
      * Get the minimumWidth
-     * @return integer|string
+     * @return string|integer
      */
     public function getMinimumWidth()
     {
@@ -541,7 +541,7 @@ class ComponentLayout extends BaseSdkObject
 
     /**
      * Set the minimumWidth
-     * @param integer|string $minimumWidth
+     * @param string|integer $minimumWidth
      * @return $this
      */
     public function setMinimumWidth($minimumWidth)
@@ -559,7 +559,7 @@ class ComponentLayout extends BaseSdkObject
 
     /**
      * Get the padding
-     * @return \Urbania\AppleNews\Format\Padding|integer|string
+     * @return \Urbania\AppleNews\Format\Padding|string|integer
      */
     public function getPadding()
     {
@@ -568,7 +568,7 @@ class ComponentLayout extends BaseSdkObject
 
     /**
      * Set the padding
-     * @param \Urbania\AppleNews\Format\Padding|array|integer|string $padding
+     * @param \Urbania\AppleNews\Format\Padding|array|string|integer $padding
      * @return $this
      */
     public function setPadding($padding)

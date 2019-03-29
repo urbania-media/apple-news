@@ -24,7 +24,7 @@ class Parallax extends Behavior
      * The speed of the component, as a factor of the scroll speed.The value
      * of factor must be between 0.5 and 2.0. Values outside this range will
      * be reset to the minimum or maximum value.
-     * @var float|integer
+     * @var integer|float
      */
     protected $factor;
 
@@ -39,7 +39,7 @@ class Parallax extends Behavior
 
     /**
      * Get the factor
-     * @return float|integer
+     * @return integer|float
      */
     public function getFactor()
     {
@@ -48,7 +48,7 @@ class Parallax extends Behavior
 
     /**
      * Set the factor
-     * @param float|integer $factor
+     * @param integer|float $factor
      * @return $this
      */
     public function setFactor($factor)

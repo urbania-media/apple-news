@@ -473,7 +473,7 @@ class ArticleLink extends Container
 
     /**
      * Set the contentDisplay
-     * @param \Urbania\AppleNews\Format\CollectionDisplay|\Urbania\AppleNews\Format\HorizontalStackDisplay|array $contentDisplay
+     * @param \Urbania\AppleNews\Format\CollectionDisplay|array|\Urbania\AppleNews\Format\HorizontalStackDisplay $contentDisplay
      * @return $this
      */
     public function setContentDisplay($contentDisplay)

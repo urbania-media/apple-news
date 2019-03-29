@@ -16,14 +16,14 @@ class Offset extends BaseSdkObject
     /**
      * The x offset, as a value between -50.0 and 50.0. Implementation is
      * device dependent.
-     * @var float|integer
+     * @var integer|float
      */
     protected $x;
 
     /**
      * The y offset, as a value between -50.0 and 50.0. Implementation is
      * device dependent.
-     * @var float|integer
+     * @var integer|float
      */
     protected $y;
 
@@ -40,7 +40,7 @@ class Offset extends BaseSdkObject
 
     /**
      * Get the x
-     * @return float|integer
+     * @return integer|float
      */
     public function getX()
     {
@@ -49,7 +49,7 @@ class Offset extends BaseSdkObject
 
     /**
      * Set the x
-     * @param float|integer $x
+     * @param integer|float $x
      * @return $this
      */
     public function setX($x)
@@ -62,7 +62,7 @@ class Offset extends BaseSdkObject
 
     /**
      * Get the y
-     * @return float|integer
+     * @return integer|float
      */
     public function getY()
     {
@@ -71,7 +71,7 @@ class Offset extends BaseSdkObject
 
     /**
      * Set the y
-     * @param float|integer $y
+     * @param integer|float $y
      * @return $this
      */
     public function setY($y)

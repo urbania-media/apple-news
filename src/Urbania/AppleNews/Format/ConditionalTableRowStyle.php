@@ -37,7 +37,7 @@ class ConditionalTableRowStyle extends TableRowStyle
      * The height of the row, as an integer in points, or using one of the
      * available units of measure for components. See Specifying Measurements
      * for Components.
-     * @var integer|string
+     * @var string|integer
      */
     protected $height;
 
@@ -120,7 +120,7 @@ class ConditionalTableRowStyle extends TableRowStyle
 
     /**
      * Get the height
-     * @return integer|string
+     * @return string|integer
      */
     public function getHeight()
     {
@@ -129,7 +129,7 @@ class ConditionalTableRowStyle extends TableRowStyle
 
     /**
      * Set the height
-     * @param integer|string $height
+     * @param string|integer $height
      * @return $this
      */
     public function setHeight($height)

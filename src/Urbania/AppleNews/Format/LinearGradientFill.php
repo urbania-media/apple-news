@@ -30,7 +30,7 @@ class LinearGradientFill extends GradientFill
      * direction of the gradient. For example, a value of 180 defines a
      * gradient that changes color from top to bottom. An angle of 90 defines
      * a gradient that changes color from left to right.
-     * @var float|integer
+     * @var integer|float
      */
     protected $angle;
 
@@ -49,7 +49,7 @@ class LinearGradientFill extends GradientFill
 
     /**
      * Get the angle
-     * @return float|integer
+     * @return integer|float
      */
     public function getAngle()
     {
@@ -58,7 +58,7 @@ class LinearGradientFill extends GradientFill
 
     /**
      * Set the angle
-     * @param float|integer $angle
+     * @param integer|float $angle
      * @return $this
      */
     public function setAngle($angle)

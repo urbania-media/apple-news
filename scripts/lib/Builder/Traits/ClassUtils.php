@@ -2,6 +2,8 @@
 
 namespace Urbania\AppleNews\Scripts\Builder\Traits;
 
+use Urbania\AppleNews\Scripts\Utils;
+
 trait ClassUtils
 {
     protected function getBaseNamespace()
@@ -121,7 +123,7 @@ trait ClassUtils
                     $typeHints[] = $typeParts[1] ?? 'mixed';
                     break;
                 case 'array':
-                    $typeHints[] = $typeParts[1].'[]';
+                    $typeHints[] = isset($typeParts[1]) ? $typeParts[1].'[]' : 'array';
                     break;
                 case 'map':
                     $typeHints[] = 'array';
@@ -151,22 +153,7 @@ trait ClassUtils
             }
         }
 
-        $typeHints = array_unique($typeHints);
-        usort($typeHints, function ($a, $b) {
-            $aIsClass = preg_match('/^[A-Z]/', $a) === 1;
-            $aIsObject = $aIsClass && preg_match('/\\\[A-Z]/', $a) === 1;
-            $bIsClass = preg_match('/^[A-Z]/', $b) === 1;
-            $bIsObject = $bIsClass && preg_match('/\\\[A-Z]/', $b) === 1;
-            if ($aIsObject && !$bIsObject) {
-                return -1;
-            } elseif ($aIsClass && !$bIsClass) {
-                return -1;
-            } elseif ($aIsObject === $bIsObject || $aIsClass === $bIsClass) {
-                return strcmp($a, $b);
-            }
-            return 1;
-        });
-
+        $typeHints = Utils::sortTypes(array_unique($typeHints));
         return implode('|', $typeHints);
     }
 

@@ -27,7 +27,7 @@ class AdvertisingSettings extends BaseSdkObject
      * measure that describes the minimum required distance between
      * automatically inserted advertisement components and media, such as
      * video, images, and embeds.
-     * @var integer|string
+     * @var string|integer
      */
     protected $distanceFromMedia;
 
@@ -101,7 +101,7 @@ class AdvertisingSettings extends BaseSdkObject
 
     /**
      * Get the distanceFromMedia
-     * @return integer|string
+     * @return string|integer
      */
     public function getDistanceFromMedia()
     {
@@ -110,7 +110,7 @@ class AdvertisingSettings extends BaseSdkObject
 
     /**
      * Set the distanceFromMedia
-     * @param integer|string $distanceFromMedia
+     * @param string|integer $distanceFromMedia
      * @return $this
      */
     public function setDistanceFromMedia($distanceFromMedia)

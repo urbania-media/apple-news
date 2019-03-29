@@ -83,14 +83,14 @@ class ConditionalComponentLayout extends ComponentLayout
      * The maximum width of the content within the component. Specify this
      * value as an integer in points, or use one of the available units of
      * measure for components. See Specifying Measurements for Components.
-     * @var integer|string
+     * @var string|integer
      */
     protected $maximumContentWidth;
 
     /**
      * The maximum width of the layout when used within a Container with
      * HorizontalStackDisplay as the specified contentDisplay type.
-     * @var integer|string
+     * @var string|integer
      */
     protected $maximumWidth;
 
@@ -99,21 +99,21 @@ class ConditionalComponentLayout extends ComponentLayout
      * defined minimumHeight when the contents require it. Specify this value
      * as an integer in points, or use one of the available units of measure
      * for components. See Specifying Measurements for Components.
-     * @var integer|string
+     * @var string|integer
      */
     protected $minimumHeight;
 
     /**
      * The minimum width of the layout when used within a container with
      * HorizontalStackDisplay as the specified contentDisplay type.
-     * @var integer|string
+     * @var string|integer
      */
     protected $minimumWidth;
 
     /**
      * The padding between the content of the component and the edges of the
      * component.
-     * @var \Urbania\AppleNews\Format\Padding|integer|string
+     * @var \Urbania\AppleNews\Format\Padding|string|integer
      */
     protected $padding;
 
@@ -451,7 +451,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Get the maximumContentWidth
-     * @return integer|string
+     * @return string|integer
      */
     public function getMaximumContentWidth()
     {
@@ -460,7 +460,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Set the maximumContentWidth
-     * @param integer|string $maximumContentWidth
+     * @param string|integer $maximumContentWidth
      * @return $this
      */
     public function setMaximumContentWidth($maximumContentWidth)
@@ -478,7 +478,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Get the maximumWidth
-     * @return integer|string
+     * @return string|integer
      */
     public function getMaximumWidth()
     {
@@ -487,7 +487,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Set the maximumWidth
-     * @param integer|string $maximumWidth
+     * @param string|integer $maximumWidth
      * @return $this
      */
     public function setMaximumWidth($maximumWidth)
@@ -505,7 +505,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Get the minimumHeight
-     * @return integer|string
+     * @return string|integer
      */
     public function getMinimumHeight()
     {
@@ -514,7 +514,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Set the minimumHeight
-     * @param integer|string $minimumHeight
+     * @param string|integer $minimumHeight
      * @return $this
      */
     public function setMinimumHeight($minimumHeight)
@@ -532,7 +532,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Get the minimumWidth
-     * @return integer|string
+     * @return string|integer
      */
     public function getMinimumWidth()
     {
@@ -541,7 +541,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Set the minimumWidth
-     * @param integer|string $minimumWidth
+     * @param string|integer $minimumWidth
      * @return $this
      */
     public function setMinimumWidth($minimumWidth)
@@ -559,7 +559,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Get the padding
-     * @return \Urbania\AppleNews\Format\Padding|integer|string
+     * @return \Urbania\AppleNews\Format\Padding|string|integer
      */
     public function getPadding()
     {
@@ -568,7 +568,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Set the padding
-     * @param \Urbania\AppleNews\Format\Padding|array|integer|string $padding
+     * @param \Urbania\AppleNews\Format\Padding|array|string|integer $padding
      * @return $this
      */
     public function setPadding($padding)

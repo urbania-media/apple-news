@@ -2,6 +2,7 @@
     "name": "Api\\Objects\\CreateArticleMetadataFields",
     "description": "See the optional metadata fields for the create article request.",
     "version": "1.0.0+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,
@@ -20,7 +21,7 @@
             "name": "isCandidateToBeFeatured",
             "type": "boolean",
             "required": false,
-            "description": "Indicates whether or not this article should be considered for featuring in News. See Creating Articles for Featured Stories.",
+            "description": "A boolean that indicates whether this article should be considered for featuring in News.",
             "default": "false",
             "typed": false
         },
@@ -28,7 +29,7 @@
             "name": "isHidden",
             "type": "boolean",
             "required": false,
-            "description": "Indicates whether or not the article should be temporarily hidden from display in the News feed.",
+            "description": "A boolean that indicates whether the article should be temporarily hidden from display in the News feed.",
             "default": "false",
             "typed": false
         },
@@ -36,7 +37,7 @@
             "name": "isPreview",
             "type": "boolean",
             "required": false,
-            "description": "Indicates whether this article should be public (live) or should be a preview that is only visible to members of your channel. Set isPreview to false to publish the article right away and make it visible to all News users. \nIf your channel has not yet been approved to publish articles in Apple News Format, setting isPreview to false will result in an ONLY_PREVIEW_ALLOWED error.",
+            "description": "A boolean that indicates whether this article should be public (live) or should be a preview that is only visible to members of your channel. Set isPreview to false to publish the article immediately and make it visible to all News users. \nIf your channel has not yet been approved to publish articles in Apple News Format, setting isPreview to false results in an ONLY_PREVIEW_ALLOWED error.",
             "default": "false",
             "typed": false
         },
@@ -44,7 +45,7 @@
             "name": "isSponsored",
             "type": "boolean",
             "required": false,
-            "description": "Indicates whether this article consists of sponsored content for promotional purposes. Sponsored content must be marked as such; channels that do not follow this policy may be suspended.",
+            "description": "A boolean that indicates whether this article consists of sponsored content for promotional purposes. Sponsored content must be marked as such; channels that do not follow this policy may be suspended.",
             "default": "false",
             "typed": false
         },
@@ -52,7 +53,7 @@
             "name": "maturityRating",
             "type": "enum:string",
             "required": false,
-            "description": "Indicates the viewing audience for the content. Note that a MATURE rating indicates explicit content that is only appropriate for a specific audience.",
+            "description": "A boolean that indicates the viewing audience for the content. A MATURE rating indicates explicit content that is only appropriate for a specific audience.",
             "default": "null",
             "enum_values": [
                 "KIDS",

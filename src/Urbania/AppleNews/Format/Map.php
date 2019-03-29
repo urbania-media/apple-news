@@ -16,14 +16,14 @@ class Map extends Component
     /**
      * The latitude of the map’s center. Provide both a latitude and
      * longitude, or an array of items.
-     * @var float|integer
+     * @var integer|float
      */
     protected $latitude;
 
     /**
      * The longitude of the map’s center. Provide both a latitude and
      * longitude, or an array of items.
-     * @var float|integer
+     * @var integer|float
      */
     protected $longitude;
 
@@ -505,7 +505,7 @@ class Map extends Component
 
     /**
      * Get the latitude
-     * @return float|integer
+     * @return integer|float
      */
     public function getLatitude()
     {
@@ -514,7 +514,7 @@ class Map extends Component
 
     /**
      * Set the latitude
-     * @param float|integer $latitude
+     * @param integer|float $latitude
      * @return $this
      */
     public function setLatitude($latitude)
@@ -560,7 +560,7 @@ class Map extends Component
 
     /**
      * Get the longitude
-     * @return float|integer
+     * @return integer|float
      */
     public function getLongitude()
     {
@@ -569,7 +569,7 @@ class Map extends Component
 
     /**
      * Set the longitude
-     * @param float|integer $longitude
+     * @param integer|float $longitude
      * @return $this
      */
     public function setLongitude($longitude)

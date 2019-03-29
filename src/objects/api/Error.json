@@ -2,6 +2,7 @@
     "name": "Api\\Objects\\Error",
     "description": "See the properties of an error returned by the Apple News API.",
     "version": "1.0.0+",
+    "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,
@@ -11,12 +12,12 @@
             "name": "code",
             "type": "Code",
             "required": false,
-            "description": "An error code that, in combination with the keyPath, uniquely identifies the error for the specified endpoint.",
+            "description": "An error code that, in combination with the key path, uniquely identifies the error for the specified endpoint.",
             "typed": false
         },
         {
             "name": "keyPath",
-            "type": "array:string",
+            "type": "array",
             "required": false,
             "description": "An array of field names that uniquely identifies a field in the JSON input of the request. See Understanding the keyPath Array.",
             "typed": false
@@ -25,7 +26,7 @@
             "name": "message",
             "type": "string",
             "required": false,
-            "description": "A user friendly detailed explanation of the error code.",
+            "description": "A user-friendly, detailed explanation of the error code.",
             "typed": false
         },
         {

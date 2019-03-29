@@ -21,43 +21,43 @@ class CreateArticleMetadataFields extends BaseSdkObject
     protected $accessoryText;
 
     /**
-     * Indicates whether or not this article should be considered for
-     * featuring in News. See Creating Articles for Featured Stories.
+     * A boolean that indicates whether this article should be considered for
+     * featuring in News.
      * @var boolean
      */
     protected $isCandidateToBeFeatured;
 
     /**
-     * Indicates whether or not the article should be temporarily hidden from
-     * display in the News feed.
+     * A boolean that indicates whether the article should be temporarily
+     * hidden from display in the News feed.
      * @var boolean
      */
     protected $isHidden;
 
     /**
-     * Indicates whether this article should be public (live) or should be a
-     * preview that is only visible to members of your channel. Set isPreview
-     * to false to publish the article right away and make it visible to all
-     * News users.
+     * A boolean that indicates whether this article should be public (live)
+     * or should be a preview that is only visible to members of your
+     * channel. Set isPreview to false to publish the article immediately and
+     * make it visible to all News users.
      * If your channel has not yet been approved to publish articles in Apple
-     * News Format, setting isPreview to false will result in an
+     * News Format, setting isPreview to false results in an
      * ONLY_PREVIEW_ALLOWED error.
      * @var boolean
      */
     protected $isPreview;
 
     /**
-     * Indicates whether this article consists of sponsored content for
-     * promotional purposes. Sponsored content must be marked as such;
-     * channels that do not follow this policy may be suspended.
+     * A boolean that indicates whether this article consists of sponsored
+     * content for promotional purposes. Sponsored content must be marked as
+     * such; channels that do not follow this policy may be suspended.
      * @var boolean
      */
     protected $isSponsored;
 
     /**
-     * Indicates the viewing audience for the content. Note that a MATURE
-     * rating indicates explicit content that is only appropriate for a
-     * specific audience.
+     * A boolean that indicates the viewing audience for the content. A
+     * MATURE rating indicates explicit content that is only appropriate for
+     * a specific audience.
      * @var string
      */
     protected $maturityRating;

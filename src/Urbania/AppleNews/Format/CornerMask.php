@@ -31,7 +31,7 @@ class CornerMask extends BaseSdkObject
      * A supported unit or integer that describes the radius of the corners
      * in points. Corner radius cannot exceed half the component width or
      * height, whichever is smaller.
-     * @var integer|string
+     * @var string|integer
      */
     protected $radius;
 
@@ -137,7 +137,7 @@ class CornerMask extends BaseSdkObject
 
     /**
      * Get the radius
-     * @return integer|string
+     * @return string|integer
      */
     public function getRadius()
     {
@@ -146,7 +146,7 @@ class CornerMask extends BaseSdkObject
 
     /**
      * Set the radius
-     * @param integer|string $radius
+     * @param string|integer $radius
      * @return $this
      */
     public function setRadius($radius)
