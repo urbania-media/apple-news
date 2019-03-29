@@ -229,6 +229,10 @@ class Article extends BaseObject implements ArticleContract
         } else {
             $this->documentWithTheme = null;
         }
+
+        if (!is_null($this->theme)) {
+            $this->theme->applyFonts($this);
+        }
     }
 
     /**

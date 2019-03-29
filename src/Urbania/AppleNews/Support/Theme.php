@@ -4,6 +4,7 @@ namespace Urbania\AppleNews\Support;
 
 use Urbania\AppleNews\Contracts\Theme as ThemeContract;
 use Urbania\AppleNews\Article;
+use Urbania\AppleNews\Format\ArticleDocument;
 use Closure;
 
 class Theme implements ThemeContract
@@ -43,24 +44,40 @@ class Theme implements ThemeContract
         return [];
     }
 
+    public function getFonts()
+    {
+        return [];
+    }
+
     public function apply($article)
     {
-        $themeArticle = new Article([
+        $themeDocument = [
             'layout' => $this->getLayout(),
             'documentStyle' => $this->getDocumentStyle(),
             'textStyles' => $this->getTextStyles(),
             'componentTextStyles' => $this->getComponentTextStyles(),
             'componentLayouts' => $this->getComponentLayouts(),
             'componentStyles' => $this->getComponentStyles(),
-        ]);
+        ];
 
-        $articleWithTheme = new Article(clone $article);
-        $articleWithTheme = $articleWithTheme->merge($themeArticle);
+        if ($article instanceof Article) {
+            $themeArticle = new Article($themeDocument);
+            $this->applyFonts($themeArticle);
+        } else {
+            $themeArticle = new ArticleDocument($themeDocument);
+        }
+
+        $articleWithTheme = with(clone $article)->merge($themeArticle);
 
         $rules = $this->getComponentRules();
         $this->applyRulesToComponents($rules, $articleWithTheme->components);
 
         return $articleWithTheme;
+    }
+
+    public function applyFonts(Article $article)
+    {
+        return $article->setFonts($this->getFonts());
     }
 
     protected function applyRulesToComponents($rules, $components)
@@ -69,8 +86,10 @@ class Theme implements ThemeContract
         foreach ($rules as $rule) {
             $selector = $rule['selector'];
             $foundComponents = $finder->find($selector, $components);
-            foreach ($foundComponents as $component) {
-                $this->applyRulesToComponent($component, $rule);
+            if (isset($rule['rules'])) {
+                foreach ($foundComponents as $component) {
+                    $this->applyRulesToComponent($component, $rule);
+                }
             }
             if (isset($rule['transform'])) {
                 $transform = $rule['transform'];
