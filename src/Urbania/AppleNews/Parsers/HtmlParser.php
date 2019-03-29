@@ -7,12 +7,30 @@ use DiDom\Element;
 use DOMText;
 use Urbania\AppleNews\Article;
 use Urbania\AppleNews\Support\Parser;
+use Urbania\AppleNews\Support\Utils;
+use Urbania\AppleNews\Parsers\Concerns\HandlesBody;
+use Urbania\AppleNews\Parsers\Concerns\HandlesEmbed;
+use Urbania\AppleNews\Parsers\Concerns\HandlesGiphy;
+use Urbania\AppleNews\Parsers\Concerns\HandlesHeading;
+use Urbania\AppleNews\Parsers\Concerns\HandlesImage;
+use Urbania\AppleNews\Parsers\Concerns\HandlesQuote;
+use Urbania\AppleNews\Parsers\Concerns\HandlesTitle;
 
 class HtmlParser extends Parser
 {
+    use HandlesBody,
+        HandlesEmbed,
+        HandlesGiphy,
+        HandlesHeading,
+        HandlesImage,
+        HandlesQuote,
+        HandlesTitle;
+
     protected $article = [];
 
     protected $addClassAsInlineStyle = true;
+
+    protected $mergeConsecutiveBody = true;
 
     protected $moveUpContainers = [
         [
@@ -40,6 +58,10 @@ class HtmlParser extends Parser
             $this->addClassAsInlineStyle = $opts['addClassAsInlineStyle'];
         }
 
+        if (isset($opts['mergeConsecutiveBody'])) {
+            $this->mergeConsecutiveBody = $opts['mergeConsecutiveBody'];
+        }
+
         if (isset($opts['moveUpContainers'])) {
             $this->moveUpContainers = $opts['moveUpContainers'];
         }
@@ -60,6 +82,7 @@ class HtmlParser extends Parser
             $components = [
                 [
                     'role' => 'body',
+                    'format' => 'html',
                     'text' => $html
                 ]
             ];
@@ -81,51 +104,111 @@ class HtmlParser extends Parser
         return $parsedArticle;
     }
 
+    protected function getHandlersMethods()
+    {
+        $methods = get_class_methods($this);
+        $handlersMethods = [];
+        foreach ($methods as $method) {
+            // prettier-ignore
+            if (preg_match('/^isBlock(.*)$/', $method, $matches)) {
+                $handlerName = Utils::snakeCase($matches[1]);
+                if (!isset($handlersMethods[$handlerName])) {
+                    $handlersMethods[$handlerName] = [];
+                }
+                $handlersMethods[$handlerName]['test'] = $method;
+            } elseif (preg_match(
+                '/^getComponent(s)?From(.*?)Block$/',
+                $method,
+                $matches
+            )) {
+                $handlerName = Utils::snakeCase($matches[2]);
+                if (!isset($handlersMethods[$handlerName])) {
+                    $handlersMethods[$handlerName] = [];
+                }
+                $handlersMethods[$handlerName][
+                    'getComponent' . $matches[1]
+                ] = $method;
+            }
+        }
+        return $handlersMethods;
+    }
+
     protected function getComponentsFromBlocks($blocks, $components = [])
     {
-        foreach ($blocks as $block) {
-            if (is_string($block)) {
-                $components[] = [
-                    'role' => 'body',
-                    'text' => $block
-                ];
-            } elseif ($block['tag'] === 'p') {
-                $components[] = [
-                    'role' => 'body',
-                    'format' => 'html',
-                    'text' => $this->getBlockAsHtml($block)
-                ];
-            } elseif ($this->isTitle($block['tag'])) {
-                $components[] = isset($block['text'])
-                    ? [
-                        'role' => 'title',
-                        'text' => $this->removeWrapper($block['text'])
-                    ]
-                    : [
-                        'role' => 'title',
-                        'format' => 'html',
-                        'text' => $this->getBlockAsHtml($block, true)
-                    ];
-            } elseif ($heading = $this->isHeading($block['tag'])) {
-                $components[] = isset($block['text'])
-                    ? [
-                        'role' => 'heading' . $heading,
-                        'text' => $this->removeWrapper($block['text'])
-                    ]
-                    : [
-                        'role' => 'heading' . $heading,
-                        'format' => 'html',
-                        'text' => $this->getBlockAsHtml($block, true)
-                    ];
-            } elseif ($this->isEmbed($block)) {
-                $components[] = [
-                    'role' => 'embedwebvideo',
-                    'URL' => $block['attributes']['src']
-                ];
-            }
+        $handlersMethods = $this->getHandlersMethods();
+        $components = array_reduce(
+            $blocks,
+            function ($components, $block) use ($handlersMethods) {
+                // prettier-ignore
+                return array_reduce(
+                    array_keys($handlersMethods),
+                    function (
+                        $components,
+                        $handlerKey
+                    ) use (
+                        $handlersMethods,
+                        $block
+                    ) {
+                        $methods = $handlersMethods[$handlerKey];
+                        if ($this->{$methods['test']}($block)) {
+                            if (isset($methods['getComponents'])) {
+                                $components = array_merge(
+                                    $components,
+                                    $this->{$methods['getComponents']}($block)
+                                );
+                            } else {
+                                $components[] = $this->{$methods[
+                                    'getComponent'
+                                ]}($block);
+                            }
+                        }
+                        return $components;
+                    },
+                    $components
+                );
+            },
+            $components
+        );
+
+        if ($this->mergeConsecutiveBody) {
+            $components = $this->mergeConsecutiveBodyComponents($components);
         }
 
         return $components;
+    }
+
+    protected function mergeConsecutiveBodyComponents($components)
+    {
+        $newComponents = [];
+        $lastBodyComponent = null;
+        foreach ($components as $component) {
+            // prettier-ignore
+            if ($component['role'] === 'body' &&
+                isset($component['format']) &&
+                $component['format'] === 'html'
+            ) {
+                if (is_null($lastBodyComponent)) {
+                    $lastBodyComponent = $component;
+                } else {
+                    $lastBodyComponent['text'] .= PHP_EOL . $component['text'];
+                }
+                continue;
+            }
+
+            if (!is_null($lastBodyComponent)) {
+                $newComponents[] = $lastBodyComponent;
+                $lastBodyComponent = null;
+            }
+
+            $newComponents[] = $component;
+        }
+
+        if (!is_null($lastBodyComponent)) {
+            $newComponents[] = $lastBodyComponent;
+            $lastBodyComponent = null;
+        }
+
+        return $newComponents;
     }
 
     protected function getBlockAsHtml($block, $removeWrapper = false)
@@ -133,6 +216,12 @@ class HtmlParser extends Parser
         $element = $this->getBlockElement($block);
         $html = $element->html();
         return $removeWrapper ? $this->removeWrapper($html) : $html;
+    }
+
+    protected function getBlockAsText($block)
+    {
+        $element = $this->getBlockElement($block);
+        return $element->text();
     }
 
     protected function removeWrapper($html)
@@ -204,128 +293,177 @@ class HtmlParser extends Parser
         return empty($text);
     }
 
-    protected function isEmbed($block)
-    {
-        return $block['tag'] === 'iframe' &&
-            preg_match(
-                '/(youtube\.com|vimeo\.com)/i',
-                $block['attributes']['src']
-            ) === 1;
-    }
-
     protected function containsIframe($node)
     {
         $html = $node->html();
-        return preg_match('/<(amp-)iframe[^>]*><\/(amp-)iframe[^>]*>/i', $html);
+        return preg_match(
+            '/<(amp-)iframe[^>]*><\/(amp-)iframe[^>]*>/i',
+            $html
+        ) === 1;
+    }
+
+    protected function containsImg($node)
+    {
+        $html = $node->html();
+        return preg_match('/<(amp-)img[^>]*><\/(amp-)img[^>]*>/i', $html) === 1;
     }
 
     protected function isIframe($node)
     {
-        return preg_match('/^(amp-)iframe$/i', $node->tag);
+        return preg_match('/^(amp-)iframe$/i', $node->tag) === 1;
     }
 
-    public function getBlocks($node)
+    protected function isImg($node)
     {
-        $blocks = [];
-        $children = $node->children();
-        $lastWasInline = false;
-        foreach ($children as $child) {
-            $nodeIsEmpty = $this->isNodeEmpty($child);
-            $containsIframe = $this->containsIframe($child);
-            if (!$lastWasInline && $nodeIsEmpty && !$containsIframe) {
-                continue;
-            }
+        return preg_match('/^(amp-)img/i', $node->tag) === 1;
+    }
 
-            if ($child->isTextNode()) {
-                $blocks[] = $child->text();
-                $lastWasInline = true;
-                continue;
-            }
-
-            $isIframe = $this->isIframe($child);
-            $classes = $child->classes()->getAll();
-            sort($classes);
-            $block = [
-                'tag' => $isIframe ? 'iframe' : $child->tag,
-                'class' => $classes,
-                'attributes' => []
-            ];
-
-            if ($block['tag'] === 'a') {
-                $block['attributes']['href'] = (string) $child->getAttribute(
-                    'href'
-                );
-            } elseif ($isIframe) {
-                $block['attributes']['src'] = (string) $child->getAttribute(
-                    'src'
-                );
-            }
-
-            $lastWasInline = $this->isInline($child->tag);
-
-            $text = null;
-            $childBlocks = null;
-            if ($this->allChildrenAreTextNodes($child)) {
-                $text = $child->text();
-            } else {
-                $childBlocks = $this->getBlocks($child);
-            }
-
-            if ($this->isMoveUpContainer($block)) {
-                if (!is_null($text)) {
-                    $blocks[] = $text;
-                } else {
-                    $blocks = array_merge($blocks, $childBlocks);
-                }
-                continue;
-            }
-
-            if ($nodeIsEmpty && $containsIframe && !$isIframe) {
-                $blocks = array_merge($blocks, $childBlocks);
-                continue;
-            }
-
-            if (!is_null($text)) {
-                $block['text'] = $text;
-            } else {
-                $block['blocks'] = $childBlocks;
-            }
-
-            $blocks[] = $block;
+    protected function isAmpImageAlternatives($element)
+    {
+        // prettier-ignore
+        if (!$element->isTextNode() &&
+            preg_match('/^amp-img/i', $element->tag) === 1
+        ) {
+            return $element->hasAttribute('placeholder') || $element->hasAttribute('fallback');
         }
+        return false;
+    }
+
+    public function getBlocks($node, $nodeIsEmpty = false)
+    {
+        $lastWasInline = false;
+        $blocks = array_reduce(
+            $node->children(),
+            function ($blocks, $element) use ($nodeIsEmpty) {
+                $lastBlock = sizeof($blocks)
+                    ? $blocks[sizeof($blocks) - 1]
+                    : null;
+                $lastWasInline = !$nodeIsEmpty &&
+                    !is_null($lastBlock) &&
+                    (is_string($lastBlock) || $this->blockIsInline($lastBlock));
+                if (!$lastWasInline && $this->shouldIgnoreElement($element)) {
+                    return $blocks;
+                }
+
+                // Get the block from an element
+                $block = $this->getBlockFromElement($element);
+
+                // Check if we ignore the current block and only push the children
+                // prettier-ignore
+                if ($this->isMoveUpContainer($block) ||
+                    $this->isWrapper($element)
+                ) {
+                    return $this->isFigure($block) ? array_merge(
+                        $blocks,
+                        array_slice($block['blocks'], 0, 1)
+                    ) : array_merge(
+                        $blocks,
+                        isset($block['text'])
+                            ? [$block['text']]
+                            : $block['blocks']
+                    );
+                }
+
+                $blocks[] = $block;
+                return $blocks;
+            },
+            []
+        );
 
         return $blocks;
     }
 
-    protected function isInline($tag)
+    protected function shouldIgnoreElement($element)
     {
-        return in_array($tag, ['span', 'strong', 'b', 'em', 'a']);
+        return $this->isNodeEmpty($element) &&
+            !$this->containsIframe($element) &&
+            (!$this->containsImg($element) ||
+            $this->isAmpImageAlternatives($element));
     }
 
-    protected function isHeading($tag)
+    protected function getChildBlocks($element)
     {
-        return preg_match('/^h([2-6])$/', $tag, $matches) === 1
-            ? (int) $matches[1]
-            : false;
+        return $this->allChildrenAreTextNodes($element)
+            ? $element->text()
+            : $this->getBlocks($element, $this->isNodeEmpty($element));
     }
 
-    protected function isTitle($tag)
+    protected function getBlockFromElement($element)
     {
-        return preg_match('/^h1$/', $tag) === 1;
+        if ($element->isTextNode()) {
+            return $element->text();
+        }
+
+        $isIframe = $this->isIframe($element);
+        $isImg = $this->isImg($element);
+        $classes = $element->classes()->getAll();
+        sort($classes);
+        $tag = strtolower($element->tag);
+        if ($isIframe) {
+            $tag = 'iframe';
+        } elseif ($isImg) {
+            $tag = 'img';
+        }
+        $block = [
+            'tag' => $tag,
+            'class' => $classes,
+            'attributes' => []
+        ];
+
+        if ($block['tag'] === 'a') {
+            $block['attributes']['href'] = (string) $element->getAttribute(
+                'href'
+            );
+        } elseif ($isIframe || $isImg) {
+            $block['attributes']['src'] = (string) $element->getAttribute(
+                'src'
+            );
+        }
+
+        // Add the child blocks or text
+        $childBlocks = $this->getChildBlocks($element);
+        if (is_string($childBlocks)) {
+            $block['text'] = $childBlocks;
+        } else {
+            $block['blocks'] = $childBlocks;
+        }
+
+        return $block;
+    }
+
+    protected function blockIsInline($block)
+    {
+        return in_array($block['tag'], ['span', 'strong', 'b', 'em', 'a']);
+    }
+
+    protected function isWrapper($element)
+    {
+        $nodeIsEmpty = $this->isNodeEmpty($element);
+        $isIframeWrapper =
+            $this->containsIframe($element) && !$this->isIframe($element);
+        $isImgWrapper = $this->containsImg($element) && !$this->isImg($element);
+        return $nodeIsEmpty && ($isIframeWrapper || $isImgWrapper);
+    }
+
+    protected function isFigure($block)
+    {
+        return !is_string($block) && $block['tag'] === 'figure';
     }
 
     protected function isMoveUpContainer($block)
     {
-        return array_reduce(
-            $this->moveUpContainers,
-            function ($ignore, $container) use ($block) {
-                return $ignore || $this->isBlockEquals($container, $block);
-            },
-            false
-        );
+        return !is_string($block) &&
+            array_reduce(
+                $this->moveUpContainers,
+                function ($ignore, $container) use ($block) {
+                    return $ignore ||
+                        $this->blocksAreEquals($container, $block);
+                },
+                false
+            );
     }
 
-    protected function isBlockEquals($a, $b)
+    protected function blocksAreEquals($a, $b)
     {
         if (is_string($a) || is_string($b)) {
             return $a === $b;
