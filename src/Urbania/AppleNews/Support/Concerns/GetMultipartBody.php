@@ -37,6 +37,7 @@ trait GetMultipartBody
             foreach ($fonts as $key => $font) {
                 $body[] = [
                     'name' => 'font-'.$key,
+                    'filename' => basename($font),
                     'contents' => fopen($font, 'r'),
                     'headers' => [
                         'Content-type' => 'application/octet-stream'
@@ -50,6 +51,7 @@ trait GetMultipartBody
             foreach ($images as $key => $image) {
                 $body[] = [
                     'name' => 'image-'.$key,
+                    'filename' => basename($image),
                     'contents' => fopen($image, 'r'),
                     'headers' => [
                         'Content-type' => mime_content_type($image)
