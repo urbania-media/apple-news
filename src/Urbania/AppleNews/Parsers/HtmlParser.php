@@ -8,27 +8,11 @@ use DOMText;
 use Urbania\AppleNews\Article;
 use Urbania\AppleNews\Support\Parser;
 use Urbania\AppleNews\Support\Utils;
-use Urbania\AppleNews\Parsers\Concerns\HandlesBody;
-use Urbania\AppleNews\Parsers\Concerns\HandlesEmbed;
-use Urbania\AppleNews\Parsers\Concerns\HandlesGiphy;
-use Urbania\AppleNews\Parsers\Concerns\HandlesHeading;
-use Urbania\AppleNews\Parsers\Concerns\HandlesImage;
-use Urbania\AppleNews\Parsers\Concerns\HandlesQuote;
-use Urbania\AppleNews\Parsers\Concerns\HandlesTitle;
+use Urbania\AppleNews\Contracts\HtmlHandlerMultiple;
 
 class HtmlParser extends Parser
 {
-    use HandlesBody,
-        HandlesEmbed,
-        HandlesGiphy,
-        HandlesHeading,
-        HandlesImage,
-        HandlesQuote,
-        HandlesTitle;
-
     protected $article = [];
-
-    protected $addClassAsInlineStyle = true;
 
     protected $mergeConsecutiveBody = true;
 
@@ -43,6 +27,23 @@ class HtmlParser extends Parser
         ]
     ];
 
+    protected $handlersOptions = [
+        'addClassAsInlineStyle' => false,
+    ];
+
+    protected $handlers = [
+        \Urbania\AppleNews\Parsers\Handlers\BodyHandler::class,
+        \Urbania\AppleNews\Parsers\Handlers\EmbedHandler::class,
+        \Urbania\AppleNews\Parsers\Handlers\GiphyHandler::class,
+        \Urbania\AppleNews\Parsers\Handlers\HeadingHandler::class,
+        \Urbania\AppleNews\Parsers\Handlers\ImageHandler::class,
+        \Urbania\AppleNews\Parsers\Handlers\ListHandler::class,
+        \Urbania\AppleNews\Parsers\Handlers\QuoteHandler::class,
+        \Urbania\AppleNews\Parsers\Handlers\TitleHandler::class
+    ];
+
+    protected $handlersCache = [];
+
     public function __construct($opts = [])
     {
         $this->setOptions($opts);
@@ -54,16 +55,20 @@ class HtmlParser extends Parser
             $this->article = $opts['article'];
         }
 
-        if (isset($opts['addClassAsInlineStyle'])) {
-            $this->addClassAsInlineStyle = $opts['addClassAsInlineStyle'];
-        }
-
         if (isset($opts['mergeConsecutiveBody'])) {
             $this->mergeConsecutiveBody = $opts['mergeConsecutiveBody'];
         }
 
         if (isset($opts['moveUpContainers'])) {
             $this->moveUpContainers = $opts['moveUpContainers'];
+        }
+
+        if (isset($opts['handlers'])) {
+            $this->handlers = $opts['handlers'];
+        }
+
+        if (isset($opts['handlersOptions'])) {
+            $this->handlersOptions = $opts['handlersOptions'];
         }
     }
 
@@ -104,65 +109,122 @@ class HtmlParser extends Parser
         return $parsedArticle;
     }
 
-    protected function getHandlersMethods()
+    public function isFullyCompatible($html)
     {
-        $methods = get_class_methods($this);
-        $handlersMethods = [];
-        foreach ($methods as $method) {
-            // prettier-ignore
-            if (preg_match('/^isBlock(.*)$/', $method, $matches)) {
-                $handlerName = Utils::snakeCase($matches[1]);
-                if (!isset($handlersMethods[$handlerName])) {
-                    $handlersMethods[$handlerName] = [];
-                }
-                $handlersMethods[$handlerName]['test'] = $method;
-            } elseif (preg_match(
-                '/^getComponent(s)?From(.*?)Block$/',
-                $method,
-                $matches
-            )) {
-                $handlerName = Utils::snakeCase($matches[2]);
-                if (!isset($handlersMethods[$handlerName])) {
-                    $handlersMethods[$handlerName] = [];
-                }
-                $handlersMethods[$handlerName][
-                    'getComponent' . $matches[1]
-                ] = $method;
-            }
+        $document = new Document($html);
+        $bodyElements = $document->find('body');
+        $titleElements = $document->find('title');
+        $body = sizeof($bodyElements) ? $bodyElements[0] : null;
+        if (is_null($body)) {
+            return false;
         }
-        return $handlersMethods;
+        $innerNode = $this->getInnerNode($body);
+        $blocks = $this->getBlocks($innerNode);
+
+        $incompatibleBlocks = $this->getIncompatibleBlocks($blocks);
+        return sizeof($incompatibleBlocks) === 0;
+    }
+
+    public function getHandlers()
+    {
+        return $this->handlers;
+    }
+
+    public function setHandlers($handlers)
+    {
+        $this->handlers = $handlers;
+        $this->handlersCache = [];
+        return $this;
+    }
+
+    public function addHandler($handler)
+    {
+        $this->handlers[] = $handler;
+        return $this;
+    }
+
+    public function addHandlers($handlers)
+    {
+        $this->handlers = array_merge($this->handlers, $handlers);
+        return $this;
+    }
+
+    protected function getHandlersInstances()
+    {
+        return array_map(function ($handler) {
+            return is_string($handler) || is_array($handler) ? $this->getHandlerInstance($handler) : $handler;
+        }, $this->getHandlers());
+    }
+
+    protected function getHandlerInstance($handler)
+    {
+        $class = is_array($handler) ? $handler['class'] : $handler;
+        if (!isset($this->handlersCache[$class])) {
+            $this->handlersCache[$class] = new $class(
+                array_merge(
+                    $this->handlersOptions,
+                    is_array($handler) ? $handler : []
+                )
+            );
+        }
+        return $this->handlersCache[$class];
+    }
+
+    protected function getIncompatibleBlocks($blocks)
+    {
+        return array_reduce(
+            $blocks,
+            function ($foundBlocks, $block) {
+                if ($this->isBlockCompatible($block)) {
+                    return $foundBlocks;
+                }
+
+                $childBlocks =
+                    is_array($block) && isset($block['blocks'])
+                        ? $block['blocks']
+                        : [];
+                $childIncomptabileBlocks = $this->getIncompatibleBlocks(
+                    $childBlocks
+                );
+                return array_merge(
+                    $foundBlocks,
+                    [$block],
+                    $childIncomptabileBlocks
+                );
+            },
+            []
+        );
+    }
+
+    protected function isBlockCompatible($block)
+    {
+        // prettier-ignore
+        return array_reduce(
+            $this->getHandlersInstances(),
+            function ($compatible, $handler) use ($block) {
+                return $compatible || $handler->canHandle($block);
+            },
+            false
+        );
     }
 
     protected function getComponentsFromBlocks($blocks, $components = [])
     {
-        $handlersMethods = $this->getHandlersMethods();
         $components = array_reduce(
             $blocks,
-            function ($components, $block) use ($handlersMethods) {
+            function ($components, $block) {
                 // prettier-ignore
                 return array_reduce(
-                    array_keys($handlersMethods),
-                    function (
-                        $components,
-                        $handlerKey
-                    ) use (
-                        $handlersMethods,
-                        $block
-                    ) {
-                        $methods = $handlersMethods[$handlerKey];
-                        if ($this->{$methods['test']}($block)) {
-                            if (isset($methods['getComponents'])) {
-                                $components = array_merge(
-                                    $components,
-                                    $this->{$methods['getComponents']}($block)
-                                );
-                            } else {
-                                $components[] = $this->{$methods[
-                                    'getComponent'
-                                ]}($block);
-                            }
-                        }
-                        return $components;
+                    $this->getHandlersInstances(),
+                    function ($components, $handler) use ($block) {
+                        return $handler->canHandle($block)
+                            ? array_merge(
+                                $components,
+                                $handler instanceof HtmlHandlerMultiple
+                                    ? $handler->handle($block)
+                                    : [$handler->handle($block)]
+                            )
+                            : $components;
                     },
                     $components
                 );
@@ -209,56 +271,6 @@ class HtmlParser extends Parser
         }
 
         return $newComponents;
-    }
-
-    protected function getBlockAsHtml($block, $removeWrapper = false)
-    {
-        $element = $this->getBlockElement($block);
-        $html = $element->html();
-        return $removeWrapper ? $this->removeWrapper($html) : $html;
-    }
-
-    protected function getBlockAsText($block)
-    {
-        $element = $this->getBlockElement($block);
-        return $element->text();
-    }
-
-    protected function removeWrapper($html)
-    {
-        return $this->trimText(
-            preg_replace('/^(<[^>]+>)?(.*?)(<\/[^>]+>)?$/si', '$2', $html)
-        );
-    }
-
-    protected function getBlockElement($block)
-    {
-        if (is_string($block)) {
-            return new Element(new DOMText($block));
-        }
-
-        $attributes = array_merge(
-            $block['attributes'],
-            $this->addClassAsInlineStyle && sizeof($block['class'])
-                ? [
-                    'data-anf-textstyle' => implode('-', $block['class'])
-                ]
-                : []
-        );
-
-        $element = new Element($block['tag'], null, $attributes);
-        if (isset($block['text'])) {
-            $element->setValue(htmlspecialchars($block['text']));
-        }
-        if (isset($block['blocks'])) {
-            $childElements = array_map(function ($childBlock) {
-                return $this->getBlockElement($childBlock);
-            }, $block['blocks']);
-            foreach ($childElements as $childElement) {
-                $element->appendChild($childElement);
-            }
-        }
-        return $element;
     }
 
     public function getInnerNode($node)
@@ -338,7 +350,8 @@ class HtmlParser extends Parser
                 $lastBlock = sizeof($blocks)
                     ? $blocks[sizeof($blocks) - 1]
                     : null;
-                $lastWasInline = !$nodeIsEmpty &&
+                $lastWasInline =
+                    !$nodeIsEmpty &&
                     !is_null($lastBlock) &&
                     (is_string($lastBlock) || $this->blockIsInline($lastBlock));
                 if (!$lastWasInline && $this->shouldIgnoreElement($element)) {
@@ -378,7 +391,7 @@ class HtmlParser extends Parser
         return $this->isNodeEmpty($element) &&
             !$this->containsIframe($element) &&
             (!$this->containsImg($element) ||
-            $this->isAmpImageAlternatives($element));
+                $this->isAmpImageAlternatives($element));
     }
 
     protected function getChildBlocks($element)
@@ -422,9 +435,9 @@ class HtmlParser extends Parser
 
         // Add the child blocks or text
         $childBlocks = $this->getChildBlocks($element);
-        if (is_string($childBlocks)) {
+        if (is_string($childBlocks) && !empty($childBlocks)) {
             $block['text'] = $childBlocks;
-        } else {
+        } elseif (is_array($childBlocks) && sizeof($childBlocks) > 0) {
             $block['blocks'] = $childBlocks;
         }
 

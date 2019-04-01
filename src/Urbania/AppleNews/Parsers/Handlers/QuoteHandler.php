@@ -1,17 +1,19 @@
 <?php
 
-namespace Urbania\AppleNews\Parsers\Concerns;
+namespace Urbania\AppleNews\Parsers\Handlers;
 
-trait HandlesQuote
+use Urbania\AppleNews\Contracts\HtmlHandler;
+
+class QuoteHandler extends TextHandler implements HtmlHandler
 {
     protected $quotePattern = '/^blockquote$/i';
 
-    protected function isBlockQuote($block)
+    public function canHandle($block)
     {
         return preg_match($this->quotePattern, $block['tag']) === 1;
     }
 
-    protected function getComponentFromQuoteBlock($block)
+    public function handle($block)
     {
         return [
             'role' => 'quote',

@@ -1,19 +1,21 @@
 <?php
 
-namespace Urbania\AppleNews\Parsers\Concerns;
+namespace Urbania\AppleNews\Parsers\Handlers;
 
-trait HandlesEmbed
+use Urbania\AppleNews\Contracts\HtmlHandler;
+
+class EmbedHandler implements HtmlHandler
 {
     protected $embedPattern = '/(youtube\.com|vimeo\.com)/i';
 
-    protected function isBlockEmbed($block)
+    public function canHandle($block)
     {
         return $block['tag'] === 'iframe' &&
             isset($block['attributes']['src']) &&
             preg_match($this->embedPattern, $block['attributes']['src']) === 1;
     }
 
-    protected function getComponentFromEmbedBlock($block)
+    public function handle($block)
     {
         return [
             'role' => 'embedwebvideo',

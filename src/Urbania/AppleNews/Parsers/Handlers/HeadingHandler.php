@@ -1,17 +1,19 @@
 <?php
 
-namespace Urbania\AppleNews\Parsers\Concerns;
+namespace Urbania\AppleNews\Parsers\Handlers;
 
-trait HandlesHeading
+use Urbania\AppleNews\Contracts\HtmlHandler;
+
+class HeadingHandler extends TextHandler implements HtmlHandler
 {
     protected $headingPattern = '/^h([2-6])$/i';
 
-    protected function isBlockHeading($block)
+    public function canHandle($block)
     {
         return preg_match($this->headingPattern, $block['tag']) === 1;
     }
 
-    protected function getComponentFromHeadingBlock($block)
+    public function handle($block)
     {
         preg_match($this->headingPattern, $block['tag'], $matches);
         return isset($block['text'])
