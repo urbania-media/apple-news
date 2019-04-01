@@ -2,7 +2,7 @@
 
 namespace Urbania\AppleNews\Parsers;
 
-use Urbania\AppleNews\Wordpress\WordpressClient;
+use Urbania\AppleNews\Wordpress\Client;
 use Urbania\AppleNews\Article;
 use Urbania\AppleNews\Components\Header;
 use Urbania\AppleNews\Support\Parser;
@@ -27,7 +27,7 @@ class WordpressParser extends Parser
         }
 
         $this->client = !is_null($this->url)
-            ? new WordpressClient($this->url)
+            ? new Client($this->url)
             : null;
         $this->htmlParser = new HtmlParser();
     }
