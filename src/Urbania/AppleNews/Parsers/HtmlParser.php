@@ -170,6 +170,11 @@ class HtmlParser extends Parser
         return $this->handlersCache[$class];
     }
 
+    /**
+     * Get incompatible blocks
+     * @param  array $blocks All the blocks
+     * @return array
+     */
     protected function getIncompatibleBlocks($blocks)
     {
         return array_reduce(
@@ -202,6 +207,11 @@ class HtmlParser extends Parser
         );
     }
 
+    /**
+     * Check if a block is compatible agains handlers
+     * @param  array|string  $block The block
+     * @return boolean
+     */
     protected function isBlockCompatible($block)
     {
         // prettier-ignore
@@ -214,6 +224,12 @@ class HtmlParser extends Parser
         );
     }
 
+    /**
+     * Get Apple News components from blocks
+     * @param  array $blocks The blocks to convert to components
+     * @param  array $components The previous components when using recursively
+     * @return array
+     */
     protected function getComponentsFromBlocks($blocks, $components = [])
     {
         $components = array_reduce(
@@ -245,6 +261,11 @@ class HtmlParser extends Parser
         return $components;
     }
 
+    /**
+     * Merge all consecutive html body components
+     * @param  array $components The components
+     * @return array
+     */
     protected function mergeConsecutiveBodyComponents($components)
     {
         $newComponents = [];
@@ -279,6 +300,11 @@ class HtmlParser extends Parser
         return $newComponents;
     }
 
+    /**
+     * Remove wrapper nodes
+     * @param  Element $node The node to traverse
+     * @return Element
+     */
     public function getInnerNode($node)
     {
         $children = $node->children();
@@ -293,74 +319,26 @@ class HtmlParser extends Parser
             : $node;
     }
 
-    public function allChildrenAreTextNodes($node)
-    {
-        $children = $node->children();
-        return array_reduce(
-            $children,
-            function ($textNode, $child) {
-                return $textNode && $child->isTextNode();
-            },
-            true
-        );
-    }
-
-    protected function isNodeEmpty($node)
-    {
-        $text = $this->trimText($node->text());
-        return empty($text);
-    }
-
-    protected function containsIframe($node)
-    {
-        $html = $node->html();
-        return preg_match(
-            '/<(amp-)iframe[^>]*><\/(amp-)iframe[^>]*>/i',
-            $html
-        ) === 1;
-    }
-
-    protected function containsImg($node)
-    {
-        $html = $node->html();
-        return preg_match('/<(amp-)img[^>]*><\/(amp-)img[^>]*>/i', $html) === 1;
-    }
-
-    protected function isIframe($node)
-    {
-        return preg_match('/^(amp-)iframe$/i', $node->tag) === 1;
-    }
-
-    protected function isImg($node)
-    {
-        return preg_match('/^(amp-)img/i', $node->tag) === 1;
-    }
-
-    protected function isAmpImageAlternatives($element)
-    {
-        // prettier-ignore
-        if (!$element->isTextNode() &&
-            preg_match('/^amp-img/i', $element->tag) === 1
-        ) {
-            return $element->hasAttribute('placeholder') || $element->hasAttribute('fallback');
-        }
-        return false;
-    }
-
-    public function getBlocks($node, $nodeIsEmpty = false)
+    /**
+     * Get blocks from a node
+     * @param  Element  $node The element to transform into blocks
+     * @return array
+     */
+    public function getBlocks($node)
     {
         $lastWasInline = false;
+        $nodeIsEmpty = $this->isNodeEmpty($node);
         $blocks = array_reduce(
             $node->children(),
             function ($blocks, $element) use ($nodeIsEmpty) {
                 $lastBlock = sizeof($blocks)
                     ? $blocks[sizeof($blocks) - 1]
                     : null;
-                $lastWasInline =
+                $lastBlockIsInline =
                     !$nodeIsEmpty &&
                     !is_null($lastBlock) &&
-                    (is_string($lastBlock) || $this->blockIsInline($lastBlock));
-                if (!$lastWasInline && $this->shouldIgnoreElement($element)) {
+                    $this->isBlockInline($lastBlock);
+                if (!$lastBlockIsInline && $this->shouldIgnoreElement($element)) {
                     return $blocks;
                 }
 
@@ -369,10 +347,10 @@ class HtmlParser extends Parser
 
                 // Check if we ignore the current block and only push the children
                 // prettier-ignore
-                if ($this->isMoveUpContainer($block) ||
-                    $this->isWrapper($element)
+                if ($this->isBlockMoveUpContainer($block) ||
+                    $this->isNodeWrapper($element)
                 ) {
-                    return $this->isFigure($block) ? array_merge(
+                    return $this->isBlockFigure($block) ? array_merge(
                         $blocks,
                         array_slice($block['blocks'], 0, 1)
                     ) : array_merge(
@@ -395,16 +373,9 @@ class HtmlParser extends Parser
     protected function shouldIgnoreElement($element)
     {
         return $this->isNodeEmpty($element) &&
-            !$this->containsIframe($element) &&
-            (!$this->containsImg($element) ||
-                $this->isAmpImageAlternatives($element));
-    }
-
-    protected function getChildBlocks($element)
-    {
-        return $this->allChildrenAreTextNodes($element)
-            ? $element->text()
-            : $this->getBlocks($element, $this->isNodeEmpty($element));
+            !$this->isNodeContainsIframe($element) &&
+            (!$this->isNodeContainsImg($element) ||
+                $this->isNodeAmpImageAlternatives($element));
     }
 
     protected function getBlockFromElement($element)
@@ -413,8 +384,8 @@ class HtmlParser extends Parser
             return $element->text();
         }
 
-        $isIframe = $this->isIframe($element);
-        $isImg = $this->isImg($element);
+        $isIframe = $this->isNodeIframe($element);
+        $isImg = $this->isNodeImg($element);
         $classes = $element->classes()->getAll();
         sort($classes);
         $tag = strtolower($element->tag);
@@ -450,39 +421,166 @@ class HtmlParser extends Parser
         return $block;
     }
 
-    protected function blockIsInline($block)
+    /**
+     * Get the child blocks of a node
+     * @param  Element $node The node to get children
+     * @return string|array
+     */
+    protected function getChildBlocks($node)
     {
-        return in_array($block['tag'], ['span', 'strong', 'b', 'em', 'a']);
+        return $this->allChildrenAreTextNodes($node)
+            ? $node->text()
+            : $this->getBlocks($node);
     }
 
-    protected function isWrapper($element)
+    /**
+     * Check if all children are text nodes
+     * @param  Element $node The node to check
+     * @return boolean
+     */
+    public function allChildrenAreTextNodes($node)
     {
-        $nodeIsEmpty = $this->isNodeEmpty($element);
+        $children = $node->children();
+        return array_reduce(
+            $children,
+            function ($textNode, $child) {
+                return $textNode && $child->isTextNode();
+            },
+            true
+        );
+    }
+
+    /**
+     * Check if a node contains text
+     * @param  Element $node The node to check
+     * @return boolean
+     */
+    protected function isNodeEmpty($node)
+    {
+        $text = $this->trimText($node->text());
+        return empty($text);
+    }
+
+    /**
+     * Check if a node contains an iframe
+     * @param  Element $node The node to check
+     * @return boolean
+     */
+    protected function isNodeContainsIframe($node)
+    {
+        $html = $node->html();
+        return preg_match(
+            '/<(amp-)iframe[^>]*><\/(amp-)iframe[^>]*>/i',
+            $html
+        ) === 1;
+    }
+
+    /**
+     * Check if a node contains an image
+     * @param  Element $node The node to check
+     * @return boolean
+     */
+    protected function isNodeContainsImg($node)
+    {
+        $html = $node->html();
+        return preg_match('/<(amp-)img[^>]*><\/(amp-)img[^>]*>/i', $html) === 1;
+    }
+
+    /**
+     * Check if a node is an iframe
+     * @param  Element $node The node to check
+     * @return boolean
+     */
+    protected function isNodeIframe($node)
+    {
+        return preg_match('/^(amp-)iframe$/i', $node->tag) === 1;
+    }
+
+    /**
+     * Check if a node is an image
+     * @param  Element $node The node to check
+     * @return boolean
+     */
+    protected function isNodeImg($node)
+    {
+        return preg_match('/^(amp-)img/i', $node->tag) === 1;
+    }
+
+    /**
+     * Check if a node is an alternative amp image
+     * @param  Element $node The node to check
+     * @return boolean
+     */
+    protected function isNodeAmpImageAlternatives($node)
+    {
+        // prettier-ignore
+        if (!$node->isTextNode() &&
+            preg_match('/^amp-img/i', $node->tag) === 1
+        ) {
+            return $node->hasAttribute('placeholder') || $node->hasAttribute('fallback');
+        }
+        return false;
+    }
+
+    /**
+     * Check if a node is only a wrapper
+     * @param  Element  $node The node to check
+     * @return boolean
+     */
+    protected function isNodeWrapper($node)
+    {
+        $nodeIsEmpty = $this->isNodeEmpty($node);
         $isIframeWrapper =
-            $this->containsIframe($element) && !$this->isIframe($element);
-        $isImgWrapper = $this->containsImg($element) && !$this->isImg($element);
+            $this->isNodeContainsIframe($node) && !$this->isNodeIframe($node);
+        $isImgWrapper = $this->isNodeContainsImg($node) && !$this->isNodeImg($node);
         return $nodeIsEmpty && ($isIframeWrapper || $isImgWrapper);
     }
 
-    protected function isFigure($block)
+    /**
+     * Check if a block is empty
+     * @param  string|array  $block The block to check
+     * @return boolean
+     */
+    protected function isBlockInline($block)
+    {
+        return is_string($block) || in_array($block['tag'], ['span', 'strong', 'b', 'em', 'a']);
+    }
+
+    /**
+     * Check if a block is a figure
+     * @param  string|array  $block The block to check
+     * @return boolean
+     */
+    protected function isBlockFigure($block)
     {
         return !is_string($block) && $block['tag'] === 'figure';
     }
 
-    protected function isMoveUpContainer($block)
+    /**
+     * Check if the block is a move up container
+     * @param  string|array  $block The block to check
+     * @return boolean
+     */
+    protected function isBlockMoveUpContainer($block)
     {
         return !is_string($block) &&
             array_reduce(
                 $this->moveUpContainers,
                 function ($ignore, $container) use ($block) {
                     return $ignore ||
-                        $this->blocksAreEquals($container, $block);
+                        $this->blocksEquals($container, $block);
                 },
                 false
             );
     }
 
-    protected function blocksAreEquals($a, $b)
+    /**
+     * Check if blocks are equals
+     * @param  string|array $a The first block
+     * @param  string|array $b The second block
+     * @return boolean
+     */
+    protected function blocksEquals($a, $b)
     {
         if (is_string($a) || is_string($b)) {
             return $a === $b;
@@ -493,6 +591,11 @@ class HtmlParser extends Parser
             sizeof(array_diff($aClass, $bClass)) === 0;
     }
 
+    /**
+     * Trim multi-lines text
+     * @param  string $text The text to trim
+     * @return string
+     */
     protected function trimText($text)
     {
         return preg_replace('/^[\s\n\t]*(.*?)[\s\n\t]*$/us', '$1', $text);
