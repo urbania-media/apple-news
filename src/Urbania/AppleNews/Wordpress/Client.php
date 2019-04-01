@@ -16,9 +16,13 @@ class Client
         ], $opts));
     }
 
-    public function getPosts()
+    public function getPosts($query = [], $page = 1, $count = 10)
     {
-        $response = $this->makeRequest('wp/v2/posts');
+        $params = array_merge([
+            'page' => $page,
+            'per_page' => $count
+        ], $query);
+        $response = $this->makeRequest('wp/v2/posts', 'GET', $params);
         return $response;
     }
 
@@ -28,9 +32,29 @@ class Client
         return $response;
     }
 
-    public function getMedias()
+    public function getCategories($query = [], $page = 1, $count = 10)
     {
-        $response = $this->makeRequest('wp/v2/media');
+        $params = array_merge([
+            'page' => $page,
+            'per_page' => $count
+        ], $query);
+        $response = $this->makeRequest('wp/v2/categories', 'GET', $params);
+        return $response;
+    }
+
+    public function getCategory($categoryId)
+    {
+        $response = $this->makeRequest(sprintf('wp/v2/categories/%s', $categoryId));
+        return $response;
+    }
+
+    public function getMedias($query = [], $page = 1, $count = 10)
+    {
+        $params = array_merge([
+            'page' => $page,
+            'per_page' => $count
+        ], $query);
+        $response = $this->makeRequest('wp/v2/media', 'GET', $params);
         return $response;
     }
 
@@ -40,9 +64,13 @@ class Client
         return $response;
     }
 
-    public function getUsers()
+    public function getUsers($query = [], $page = 1, $count = 10)
     {
-        $response = $this->makeRequest('wp/v2/users');
+        $params = array_merge([
+            'page' => $page,
+            'per_page' => $count
+        ], $query);
+        $response = $this->makeRequest('wp/v2/users', 'GET', $params);
         return $response;
     }
 
@@ -60,9 +88,9 @@ class Client
             ] : [
                 'json' => $params,
             ]);
-            return new Response($response);
+            return new Response($response, $params);
         } catch (ClientException $e) {
-            return new Response($e->getResponse());
+            return new Response($e->getResponse(), $params);
         } catch (Exception $e) {
             return null;
         }

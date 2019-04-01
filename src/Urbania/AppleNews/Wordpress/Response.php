@@ -11,12 +11,14 @@ use Urbania\AppleNews\Support\BaseObject;
 class Response extends BaseObject
 {
     protected $response;
+    protected $request;
     protected $data;
     protected $error;
 
-    public function __construct(ResponseInterface $response)
+    public function __construct(ResponseInterface $response, $request = [])
     {
         $this->response = $response;
+        $this->request = $request;
         $this->data = $this->getPayload();
     }
 
@@ -45,6 +47,11 @@ class Response extends BaseObject
     {
         $pages = $this->getTotalPages();
         return !is_null($pages);
+    }
+
+    public function getPage()
+    {
+        return $this->isPaginated() ? array_get($this->request, 'page', 1) : null;
     }
 
     public function getTotal()
