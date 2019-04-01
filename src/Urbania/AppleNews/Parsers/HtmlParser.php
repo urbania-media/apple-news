@@ -175,22 +175,28 @@ class HtmlParser extends Parser
         return array_reduce(
             $blocks,
             function ($foundBlocks, $block) {
+                // If the block is compatible, don't check the children
                 if ($this->isBlockCompatible($block)) {
                     return $foundBlocks;
                 }
 
-                $childBlocks =
-                    is_array($block) && isset($block['blocks'])
-                        ? $block['blocks']
-                        : [];
+                // If the block doesn't have children, add it to incompatible
+                if (!is_array($block) || !isset($block['blocks'])) {
+                    return array_merge(
+                        $foundBlocks,
+                        [$block],
+                    );
+                }
+
+                // If there is children and all children are compatible,
+                // consider this block compatible too.
                 $childIncomptabileBlocks = $this->getIncompatibleBlocks(
-                    $childBlocks
+                    $block['blocks']
                 );
-                return array_merge(
+                return sizeof($childIncomptabileBlocks) > 0 ? array_merge(
                     $foundBlocks,
-                    [$block],
                     $childIncomptabileBlocks
-                );
+                ) : $foundBlocks;
             },
             []
         );
