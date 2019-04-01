@@ -5,7 +5,7 @@ namespace Urbania\AppleNews\Wordpress;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ClientException;
 
-class WordpressClient
+class Client
 {
     protected $client;
 
