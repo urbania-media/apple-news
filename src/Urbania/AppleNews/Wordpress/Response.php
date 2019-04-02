@@ -66,6 +66,13 @@ class Response extends BaseObject
         return !is_null($totalPages) && sizeof($totalPages) ? (int)$totalPages[0] : null;
     }
 
+    public function getNextPage()
+    {
+        $page = $this->getPage();
+        $totalPages = $this->getTotalPages();
+        return !is_null($page) && !is_null($totalPages) && $page < $totalPages ? $page + 1 : null;
+    }
+
     public function isError()
     {
         return $this->response->getStatusCode() >= 400;
