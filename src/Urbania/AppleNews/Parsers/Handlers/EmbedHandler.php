@@ -17,9 +17,10 @@ class EmbedHandler implements HtmlHandler
 
     public function handle($block)
     {
+        $url = parse_url($block['attributes']['src']);
         return [
             'role' => 'embedwebvideo',
-            'URL' => $block['attributes']['src']
+            'URL' => sprintf('%s://%s%s', $url['scheme'], $url['host'], $url['path'])
         ];
     }
 }
