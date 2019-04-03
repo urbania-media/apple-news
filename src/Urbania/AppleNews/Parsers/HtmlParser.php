@@ -457,7 +457,7 @@ class HtmlParser extends Parser
      */
     protected function isNodeEmpty($node)
     {
-        $text = $this->trimText($node->text());
+        $text = static::trimText($node->text());
         return empty($text);
     }
 
@@ -596,7 +596,7 @@ class HtmlParser extends Parser
      * @param  string $text The text to trim
      * @return string
      */
-    protected function trimText($text)
+    public static function trimText($text)
     {
         return preg_replace('/^[\s\n\t]*(.*?)[\s\n\t]*$/us', '$1', $text);
     }

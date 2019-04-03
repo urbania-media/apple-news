@@ -3,6 +3,7 @@
 namespace Urbania\AppleNews\Parsers\Handlers;
 
 use Urbania\AppleNews\Contracts\HtmlHandler;
+use Urbania\AppleNews\Parsers\HtmlParser;
 use DiDom\Element;
 use DOMText;
 
@@ -37,7 +38,7 @@ abstract class TextHandler implements HtmlHandler
 
     protected function removeWrapper($html)
     {
-        return $this->trimText(
+        return HtmlParser::trimText(
             preg_replace('/^(<[^>]+>)?(.*?)(<\/[^>]+>)?$/si', '$2', $html)
         );
     }
