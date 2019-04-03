@@ -25,7 +25,9 @@ trait GetMultipartBody
         if (!is_null($metadata)) {
             $body[] = [
                 'name' => 'metadata',
-                'contents' => json_encode($metadata),
+                'contents' => json_encode([
+                    'data' => $metadata
+                ]),
                 'headers' => [
                     'Content-type' => 'application/json'
                 ]
