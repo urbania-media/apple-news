@@ -5,6 +5,16 @@ namespace Urbania\AppleNews\Support;
 abstract class BaseSdkObject extends BaseObject
 {
     /**
+     * Check if a property exists
+     * @param  string  $name The name of the property
+     * @return boolean
+     */
+    public function hasProperty($name)
+    {
+        return property_exists($this, $name);
+    }
+
+    /**
      * Merge data into this object
      * @param  BaseObject|array $data The data to merge
      * @return $this
@@ -96,7 +106,7 @@ abstract class BaseSdkObject extends BaseObject
      */
     protected function propertyExists($name)
     {
-        return property_exists($this, $name) && isset($this->{$name});
+        return $this->hasProperty($name) && isset($this->{$name});
     }
 
     /**

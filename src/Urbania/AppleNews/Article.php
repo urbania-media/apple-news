@@ -19,6 +19,8 @@ class Article extends BaseObject implements ArticleContract
 {
     use GetMultipartBody, SaveJsonToFile, FindsComponents;
 
+    protected $id;
+
     protected $article;
 
     protected $document;
@@ -73,6 +75,29 @@ class Article extends BaseObject implements ArticleContract
     }
 
     /**
+     * Get the article id
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the article id
+     * @param string $is The id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        if (!is_null($this->article) && $this->article->id !== $id) {
+            $this->article->id = $id;
+        }
+        return $this;
+    }
+
+    /**
      * Get the article
      * @return ApiArticle
      */
@@ -91,6 +116,7 @@ class Article extends BaseObject implements ArticleContract
         $this->article = is_array($article)
             ? new ApiArticle($article)
             : $article;
+        $this->setId($this->article->id);
         $this->setDocument($this->article->getDocument());
         $this->setMetadata($this->article->toArray());
         return $this;
@@ -189,11 +215,24 @@ class Article extends BaseObject implements ArticleContract
         if (is_null($metadata)) {
             return $this;
         }
+
+        // prettier-ignore
         if (is_null($this->metadata)) {
             $this->setMetadata($metadata);
+        } elseif ((
+            is_array($metadata) && isset($metadata['revision'])
+            && $this->metadata instanceof CreateArticleMetadataFields
+        ) || (
+            $this->metadata instanceof CreateArticleMetadataFields
+            && $metadata instanceof UpdateArticleMetadataFields
+        )) {
+            $updateMetadata = new UpdateArticleMetadataFields($this->metadata->toArray());
+            $updateMetadata->merge($metadata);
+            $this->setMetadata($updateMetadata);
         } else {
             $this->metadata->merge($metadata);
         }
+
         return $this;
     }
 
@@ -330,6 +369,9 @@ class Article extends BaseObject implements ArticleContract
         if ($article instanceof self) {
             $this->mergeDocument($article->getDocument());
             $this->mergeMetadata($article->getMetadata());
+        } elseif ($article instanceof ApiArticle) {
+            $this->mergeDocument($article->getDocument());
+            $this->mergeMetadata($article->toArray());
         } else {
             $this->mergeDocument($article);
         }
@@ -354,7 +396,21 @@ class Article extends BaseObject implements ArticleContract
      */
     protected function propertyGet($name)
     {
+        if ($name === 'id') {
+            return $this->getId();
+        }
         $document = !is_null($this->documentWithTheme) ? $this->documentWithTheme : $this->document;
+
+        // If the property doesn't exist in the document, try to find it in the
+        // article or metadata
+        if (!isset($document->{$name})) {
+            if (!is_null($this->article) && isset($this->article->{$name})) {
+                return $this->article->{$name};
+            } elseif (!is_null($this->metadata) && isset($this->metadata->{$name})) {
+                return $this->metadata->{$name};
+            }
+            return null;
+        }
         return $document->{$name};
     }
 
@@ -366,9 +422,16 @@ class Article extends BaseObject implements ArticleContract
      */
     protected function propertySet($name, $value)
     {
-        if (!is_null($this->document)) {
+        if ($name === 'id') {
+            return $this->setId($value);
+        }
+        if (!is_null($this->document) && $this->document->hasProperty($name)) {
             $this->document->{$name} = $value;
             $this->updateTheme();
+        } elseif (!is_null($this->article) && $this->article->hasProperty($name)) {
+            $this->article->{$name} = $value;
+        } elseif (!is_null($this->metadata) && $this->metadata->hasProperty($name)) {
+            $this->metadata->{$name} = $value;
         }
         return $this;
     }

@@ -86,4 +86,28 @@ class ArticlesClient
 
         return $response;
     }
+
+    /**
+     * Update an Article
+     * @param  Article $article   The article object
+     * @return ArticleResponse The updated article
+     */
+    public function update(Article $article, $articleId = null)
+    {
+        if (is_null($articleId)) {
+            $articleId = $article->getId();
+        }
+
+        Assert::uuid($articleId);
+
+        $response = $this->client->makeRequest(
+            sprintf('/articles/%s', $articleId),
+            'POST',
+            $article->getMultipartBody()
+        );
+
+        $response->setObjectType(ArticleResponse::class);
+
+        return $response;
+    }
 }
