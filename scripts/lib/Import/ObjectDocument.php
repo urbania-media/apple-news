@@ -68,7 +68,7 @@ class ObjectDocument extends Document
                 $property['type'] = 'map:' . $property['type'];
             } elseif ($objectName === 'Heading' && $property['name'] === 'role' && !isset($property['value'])) {
                 $property['value'] = $property['enum_values'][0];
-            } elseif ($objectName === 'Error' && $property['name'] === 'keyPath') {
+            } elseif (in_array($objectName, ['Error', 'Warning']) && $property['name'] === 'keyPath') {
                 $property['type'] = 'array';
             }
             if (is_array($property['type'])) {

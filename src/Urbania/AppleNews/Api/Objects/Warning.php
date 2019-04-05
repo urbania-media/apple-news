@@ -16,7 +16,7 @@ class Warning extends BaseSdkObject
     /**
      * An array of field names that uniquely identifies a field in the JSON
      * input of the request.
-     * @var string[]
+     * @var array
      */
     protected $keypath;
 
@@ -73,7 +73,7 @@ class Warning extends BaseSdkObject
 
     /**
      * Set the keypath
-     * @param string[] $keypath
+     * @param array $keypath
      * @return $this
      */
     public function setKeypath($keypath)
@@ -84,7 +84,6 @@ class Warning extends BaseSdkObject
         }
 
         Assert::isArray($keypath);
-        Assert::allString($keypath);
 
         $this->keypath = $keypath;
         return $this;
