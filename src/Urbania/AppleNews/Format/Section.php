@@ -385,7 +385,6 @@ class Section extends Container
             },
             []
         );
-
         return $this;
     }
 

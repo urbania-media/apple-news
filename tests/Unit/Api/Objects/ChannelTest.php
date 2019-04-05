@@ -53,7 +53,7 @@ class ChannelTest extends TestCase
      */
     public function idProvider()
     {
-        return [["27b8a88c-5262-11e9-a878-f45c899bcb9d"]];
+        return [["81eb022c-57b8-11e9-a638-f45c899bcb9d"]];
     }
 
     /**

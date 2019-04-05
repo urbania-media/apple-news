@@ -21,46 +21,50 @@ class CreateArticleMetadataFields extends BaseSdkObject
     protected $accessoryText;
 
     /**
-     * A boolean that indicates whether this article should be considered for
-     * featuring in News.
+     * Indicates whether or not this article should be considered for
+     * featuring in News. See (To be Deleted) Submitting Articles with Cover
+     * Art for Featured Stories.
      * @var boolean
      */
     protected $isCandidateToBeFeatured;
 
     /**
-     * A boolean that indicates whether the article should be temporarily
-     * hidden from display in the News feed.
+     * Indicates whether or not the article should be temporarily hidden from
+     * display in the News feed.
      * @var boolean
      */
     protected $isHidden;
 
     /**
-     * A boolean that indicates whether this article should be public (live)
-     * or should be a preview that is only visible to members of your
-     * channel. Set isPreview to false to publish the article immediately and
-     * make it visible to all News users.
+     * Indicates whether this article should be public (live) or should be a
+     * preview that is only visible to members of your channel. Set isPreview
+     * to false to publish the article right away and make it visible to all
+     * News users.
      * If your channel has not yet been approved to publish articles in Apple
-     * News Format, setting isPreview to false results in an
+     * News Format, setting isPreview to false will result in an
      * ONLY_PREVIEW_ALLOWED error.
      * @var boolean
      */
     protected $isPreview;
 
     /**
-     * A boolean that indicates whether this article consists of sponsored
-     * content for promotional purposes. Sponsored content must be marked as
-     * such; channels that do not follow this policy may be suspended.
+     * Indicates whether this article consists of sponsored content for
+     * promotional purposes. Sponsored content must be marked as such;
+     * channels that do not follow this policy may be suspended.
      * @var boolean
      */
     protected $isSponsored;
 
     /**
-     * A boolean that indicates the viewing audience for the content. A
-     * MATURE rating indicates explicit content that is only appropriate for
-     * a specific audience.
+     * Indicates the viewing audience for the content. Note that a MATURE
+     * rating indicates explicit content that is only appropriate for a
+     * specific audience.
      * @var string
      */
     protected $maturityRating;
+
+    /** @var \Urbania\AppleNews\Api\Objects\ArticleLinks */
+    protected $links;
 
     public function __construct(array $data = [])
     {
@@ -86,6 +90,10 @@ class CreateArticleMetadataFields extends BaseSdkObject
 
         if (isset($data['maturityRating'])) {
             $this->setMaturityRating($data['maturityRating']);
+        }
+
+        if (isset($data['links'])) {
+            $this->setLinks($data['links']);
         }
     }
 
@@ -225,6 +233,33 @@ class CreateArticleMetadataFields extends BaseSdkObject
     }
 
     /**
+     * Get the links
+     * @return \Urbania\AppleNews\Api\Objects\ArticleLinks
+     */
+    public function getLinks()
+    {
+        return $this->links;
+    }
+
+    /**
+     * Set the links
+     * @param \Urbania\AppleNews\Api\Objects\ArticleLinks|array $links
+     * @return $this
+     */
+    public function setLinks($links)
+    {
+        if (is_null($links)) {
+            $this->links = null;
+            return $this;
+        }
+
+        Assert::isSdkObject($links, ArticleLinks::class);
+
+        $this->links = is_array($links) ? new ArticleLinks($links) : $links;
+        return $this;
+    }
+
+    /**
      * Get the maturityRating
      * @return string
      */
@@ -275,6 +310,12 @@ class CreateArticleMetadataFields extends BaseSdkObject
         }
         if (isset($this->maturityRating)) {
             $data['maturityRating'] = $this->maturityRating;
+        }
+        if (isset($this->links)) {
+            $data['links'] =
+                $this->links instanceof Arrayable
+                    ? $this->links->toArray()
+                    : $this->links;
         }
         return $data;
     }

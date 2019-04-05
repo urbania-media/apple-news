@@ -147,4 +147,27 @@ class CreateArticleMetadataFieldsTest extends TestCase
     {
         return [["KIDS"], ["MATURE"], ["GENERAL"]];
     }
+
+    /**
+     * Test the property links
+     * @test
+     * @dataProvider linksProvider
+     * @covers ::getLinks
+     * @covers ::setLinks
+     */
+    public function testPropertyLinks($value)
+    {
+        $object = new CreateArticleMetadataFields();
+        $object->setLinks($value);
+
+        $this->assertEquals($value, $object->getLinks());
+    }
+
+    /**
+     * Data provider for property links
+     */
+    public function linksProvider()
+    {
+        return [[new \Urbania\AppleNews\Api\Objects\ArticleLinks()]];
+    }
 }

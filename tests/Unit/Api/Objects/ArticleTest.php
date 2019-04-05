@@ -102,7 +102,7 @@ class ArticleTest extends TestCase
      */
     public function idProvider()
     {
-        return [["27b8b854-5262-11e9-961d-f45c899bcb9d"]];
+        return [["81eb0d9e-57b8-11e9-9aa0-f45c899bcb9d"]];
     }
 
     /**
@@ -172,29 +172,6 @@ class ArticleTest extends TestCase
     public function isSponsoredProvider()
     {
         return [[true], [false]];
-    }
-
-    /**
-     * Test the property links
-     * @test
-     * @dataProvider linksProvider
-     * @covers ::getLinks
-     * @covers ::setLinks
-     */
-    public function testPropertyLinks($value)
-    {
-        $object = new Article();
-        $object->setLinks($value);
-
-        $this->assertEquals($value, $object->getLinks());
-    }
-
-    /**
-     * Data provider for property links
-     */
-    public function linksProvider()
-    {
-        return [[new \Urbania\AppleNews\Api\Objects\ArticleLinks()]];
     }
 
     /**
@@ -386,5 +363,28 @@ class ArticleTest extends TestCase
     public function warningsProvider()
     {
         return [[[new \Urbania\AppleNews\Api\Objects\Warning()]]];
+    }
+
+    /**
+     * Test the property links
+     * @test
+     * @dataProvider linksProvider
+     * @covers ::getLinks
+     * @covers ::setLinks
+     */
+    public function testPropertyLinks($value)
+    {
+        $object = new Article();
+        $object->setLinks($value);
+
+        $this->assertEquals($value, $object->getLinks());
+    }
+
+    /**
+     * Data provider for property links
+     */
+    public function linksProvider()
+    {
+        return [[new \Urbania\AppleNews\Api\Objects\ArticleLinks()]];
     }
 }

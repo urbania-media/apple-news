@@ -27,9 +27,10 @@ class SearchResponse extends BaseSdkObject
     protected $links;
 
     /**
-     * The value to be set for the pageToken parameter and the parameters
-     * that were previously sent to get the next page of results. This field
-     * is automatically filled in with the next URL in the links section.
+     * The value that should be set for the pageToken parameter as well as
+     * the parameters that were previously sent to get the next page of
+     * results. This field is automatically filled in with the next URL in
+     * the links section.
      * @var string
      */
     protected $meta;

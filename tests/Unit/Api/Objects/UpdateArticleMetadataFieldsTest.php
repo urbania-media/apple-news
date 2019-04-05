@@ -170,4 +170,27 @@ class UpdateArticleMetadataFieldsTest extends TestCase
     {
         return [["a string"]];
     }
+
+    /**
+     * Test the property links
+     * @test
+     * @dataProvider linksProvider
+     * @covers ::getLinks
+     * @covers ::setLinks
+     */
+    public function testPropertyLinks($value)
+    {
+        $object = new UpdateArticleMetadataFields();
+        $object->setLinks($value);
+
+        $this->assertEquals($value, $object->getLinks());
+    }
+
+    /**
+     * Data provider for property links
+     */
+    public function linksProvider()
+    {
+        return [[new \Urbania\AppleNews\Api\Objects\ArticleLinks()]];
+    }
 }

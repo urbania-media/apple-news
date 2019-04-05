@@ -21,7 +21,7 @@ class Warning extends BaseSdkObject
     protected $keypath;
 
     /**
-     * A user-friendly, detailed explanation of the nonfatal warning.
+     * A user friendly, detailed explanation of the non-fatal warning.
      * @var string
      */
     protected $message;

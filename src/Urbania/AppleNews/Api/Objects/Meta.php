@@ -15,8 +15,8 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class Meta extends BaseSdkObject
 {
     /**
-     * The process responsible for regulating the rate at which requests are
-     * processed.
+     * Indicates the process responsible for regulating the rate at which
+     * requests are processed.
      * @var \Urbania\AppleNews\Api\Objects\Throttling
      */
     protected $throttling;

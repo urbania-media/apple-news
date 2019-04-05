@@ -22,7 +22,7 @@ class Throttling extends BaseSdkObject
     protected $estimatedDelayInSeconds;
 
     /**
-     * A Boolean value that indicates whether requests to this channel are
+     * A boolean value that indicates whether requests to this channel are
      * currently being throttled. If true, this request is added to the queue
      * to be processed later rather than immediately.
      * @var boolean
@@ -36,8 +36,8 @@ class Throttling extends BaseSdkObject
     protected $queueSize;
 
     /**
-     * Number of additional article publish or update requests that can be
-     * submitted now, before the system begins throttling.
+     * Number of additional article publish or update requests which could be
+     * submitted now before the system will begin throttling.
      * @var integer
      */
     protected $quotaAvailable;

@@ -14,7 +14,7 @@ use Urbania\AppleNews\Support\BaseSdkObject;
 class Error extends BaseSdkObject
 {
     /**
-     * An error code that, in combination with the key path, uniquely
+     * An error code that, in combination with the keyPath, uniquely
      * identifies the error for the specified endpoint.
      * @var string
      */
@@ -28,7 +28,7 @@ class Error extends BaseSdkObject
     protected $keyPath;
 
     /**
-     * A user-friendly, detailed explanation of the error code.
+     * A user friendly detailed explanation of the error code.
      * @var string
      */
     protected $message;
