@@ -14,7 +14,7 @@ class Response extends BaseObject
 {
     protected $response;
     protected $object;
-    protected $error;
+    protected $errors;
 
     public function __construct(ResponseInterface $response)
     {
@@ -36,7 +36,7 @@ class Response extends BaseObject
         return isset($payload['data']) ? $payload['data'] : null;
     }
 
-    public function getErrors()
+    public function getErrorsData()
     {
         $payload = $this->getPayload();
         return isset($payload['errors']) ? $payload['errors'] : [];
@@ -50,6 +50,11 @@ class Response extends BaseObject
     public function getObject()
     {
         return $this->object;
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
     }
 
     public function getNextPageToken()
@@ -69,11 +74,11 @@ class Response extends BaseObject
 
     public function setErrorType($type)
     {
-        $data = $this->getErrors();
+        $data = $this->getErrorsData();
         if ($type instanceof Closure) {
-            $this->error = $type($data);
+            $this->errors = $type($data);
         } else {
-            $this->error = array_map(function ($item) use ($type) {
+            $this->errors = array_map(function ($item) use ($type) {
                 return new $type($item);
             }, $data);
         }
