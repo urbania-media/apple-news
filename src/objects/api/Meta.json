@@ -12,7 +12,7 @@
             "name": "throttling",
             "type": "Api\\Objects\\Throttling",
             "required": false,
-            "description": "The process responsible for regulating the rate at which requests are processed.",
+            "description": "Indicates the process responsible for regulating the rate at which requests are processed.",
             "typed": false
         }
     ]

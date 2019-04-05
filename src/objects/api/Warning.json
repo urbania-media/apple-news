@@ -19,7 +19,7 @@
             "name": "message",
             "type": "string",
             "required": false,
-            "description": "A user-friendly, detailed explanation of the nonfatal warning.",
+            "description": "A user friendly, detailed explanation of the non-fatal warning.",
             "typed": false
         },
         {

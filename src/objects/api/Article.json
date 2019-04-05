@@ -43,35 +43,28 @@
             "name": "isCandidateToBeFeatured",
             "type": "boolean",
             "required": false,
-            "description": "A Boolean value that indicates whether or not this article should be considered for featuring in News.",
+            "description": "Indicates whether or not this article should be considered for featuring in News. See (To be Deleted) Submitting Articles with Cover Art for Featured Stories.",
             "typed": false
         },
         {
             "name": "isPreview",
             "type": "boolean",
             "required": false,
-            "description": "A Boolean value that indicates whether this article should be public (live) or should be a preview that is only visible to members of your channel. Set isPreview to false to publish the article immediately and make it visible to all News users.",
+            "description": "Indicates whether this article should be public (live) or should be a preview that is only visible to members of your channel. Set isPreview to false to publish the article right away and make it visible to all News users.",
             "typed": false
         },
         {
             "name": "isSponsored",
             "type": "boolean",
             "required": false,
-            "description": "A Boolean value that indicates whether this article consists of sponsored content for promotional purposes. Sponsored content must be marked as such; channels that do not follow this policy may be suspended.",
-            "typed": false
-        },
-        {
-            "name": "links",
-            "type": "Api\\Objects\\ArticleLinks",
-            "required": false,
-            "description": "The URL of the channel in which the article appears.",
+            "description": "Indicates whether this article consists of sponsored content for promotional purposes. Sponsored content must be marked as such; channels that do not follow this policy may be suspended.",
             "typed": false
         },
         {
             "name": "maturityRating",
             "type": "enum:string",
             "required": false,
-            "description": "A Boolean value that indicates the viewing audience for the content. The types of audiences or ratings are KIDS, MATURE, and GENERAL, or null if unspecified. A MATURE rating indicates explicit content that is only appropriate for a specific audience.",
+            "description": "Indicates the viewing audience for the content. The types of audiences or ratings are KIDS, MATURE, and GENERAL or null if unspecified. Note that a MATURE rating indicates explicit content that is only appropriate for a specific audience.",
             "enum_values": [
                 "KIDS",
                 "MATURE",
@@ -104,7 +97,7 @@
             "name": "state",
             "type": "enum:string",
             "required": false,
-            "description": "The current state of the article, which can be one of the following:",
+            "description": "The current state of the article which can be one of the following:",
             "enum_values": [
                 "PROCESSING",
                 "LIVE",
@@ -133,7 +126,13 @@
             "name": "warnings",
             "type": "array:Api\\Objects\\Warning",
             "required": false,
-            "description": "A list of warning messages indicating nonfatal problems with the article.",
+            "description": "A list of warning messages indicating problems with the article that are not fatal.",
+            "typed": false
+        },
+        {
+            "name": "links",
+            "type": "Api\\Objects\\ArticleLinks",
+            "required": false,
             "typed": false
         }
     ]

@@ -83,6 +83,11 @@ class ObjectDocument extends Document
                 'name' => 'data',
                 'type' => 'map'
             ];
+        } elseif (preg_match('/ArticleMetadataFields$/', $objectName) === 1) {
+            $properties[] = [
+                'name' => 'links',
+                'type' => $this->getType('ArticleLinks')
+            ];
         }
 
         return $properties;
@@ -112,7 +117,7 @@ class ObjectDocument extends Document
             'required' => false
         ]);
         $firstChild = $cell->firstChild();
-        $children = $firstChild->classes()->contains('description-wrapper')
+        $children = !is_null($firstChild) && $firstChild->classes()->contains('description-wrapper')
             ? array_merge(
                 $firstChild->children(),
                 array_slice($cell->children(), 1)
