@@ -16,6 +16,8 @@ class ChannelsClient
     {
         $this->client = $client;
         $this->channelId = $channelId;
+        $this->articlesClient = new ArticlesClient($client, $channelId);
+        $this->sectionsClient = new SectionsClient($client, $channelId);
     }
 
     /**
@@ -41,19 +43,23 @@ class ChannelsClient
     }
 
     /**
-     * Get an articles client
+     * Get the sections of a channel
      * @param  string $channelId The channel ID
-     * @return ArticlesClient The client
+     * @return SectionResponse[] The sections
      */
-    public function articles($channelId = null)
+    public function getSections($channelId = null)
     {
-        if (is_null($channelId)) {
-            $channelId = $this->channelId;
-        }
+        return $this->sectionsClient->get($channelId);
+    }
 
-        Assert::uuid($channelId);
-
-        return new ArticlesClient($this->client, $channelId);
+    /**
+     * Get the articles of a channel
+     * @param  string $channelId The channel ID
+     * @return ArticleResponse[] The articles
+     */
+    public function getArticles($channelId = null)
+    {
+        return $this->articlesClient->get($channelId);
     }
 
     /**
@@ -64,13 +70,7 @@ class ChannelsClient
      */
     public function createArticle(Article $article, $channelId = null)
     {
-        if (is_null($channelId)) {
-            $channelId = $this->channelId;
-        }
-
-        Assert::uuid($channelId);
-
-        return $this->articles($channelId)->create($article);
+        return $this->articlesClient->create($article);
     }
 
     /**
@@ -81,12 +81,6 @@ class ChannelsClient
      */
     public function searchArticles(array $query = [], $channelId = null)
     {
-        if (is_null($channelId)) {
-            $channelId = $this->channelId;
-        }
-
-        Assert::uuid($channelId);
-
-        return $this->articles($channelId)->search($query, $channelId);
+        return $this->articlesClient->search($query, $channelId);
     }
 }

@@ -31,4 +31,13 @@ class Api extends BaseApi
 
         return parent::articles($channelId);
     }
+
+    public function sections($channelId = null)
+    {
+        if (is_null($channelId)) {
+            $channelId = $this->channelId;
+        }
+
+        return parent::sections($channelId);
+    }
 }

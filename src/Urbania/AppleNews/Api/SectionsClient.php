@@ -31,7 +31,9 @@ class SectionsClient
             sprintf('/sections/%s', $sectionId)
         );
 
-        return new SectionResponse($response);
+        $response->setObjectType(SectionResponse::class);
+
+        return $response;
     }
 
     public function get($channelId = null)
@@ -46,7 +48,9 @@ class SectionsClient
             sprintf('/channels/%s/sections', $channelId)
         );
 
-        return new SectionResponse($response);
+        $response->setObjectType(SectionResponse::class, true);
+
+        return $response;
     }
 
     public function getPromotedArticles($sectionId)
@@ -57,7 +61,9 @@ class SectionsClient
             sprintf('/sections/%s/promotedArticles', $sectionId)
         );
 
-        return new PromoteArticleResponse($response);
+        $response->setObjectType(PromoteArticleResponse::class, true);
+
+        return $response;
     }
 
     public function promoteArticles($articles)
@@ -69,6 +75,8 @@ class SectionsClient
             'POST'
         );
 
-        return new PromoteArticleResponse($response);
+        $response->setObjectType(PromoteArticleResponse::class, true);
+
+        return $response;
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Api\Objects\Error;
 use Urbania\AppleNews\Support\BaseObject;
 use Urbania\AppleNews\Support\BaseObjectIterator;
+use ArrayIterator;
 
 class Response extends BaseObject
 {
@@ -103,7 +104,9 @@ class Response extends BaseObject
      */
     public function getIterator()
     {
-        return $this->object->getIterator();
+        return is_array($this->object)
+            ? new ArrayIterator($this->data)
+            : $this->object->getIterator();
     }
 
     /**
