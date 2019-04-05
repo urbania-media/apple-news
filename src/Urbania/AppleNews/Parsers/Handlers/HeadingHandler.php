@@ -10,7 +10,7 @@ class HeadingHandler extends TextHandler implements HtmlHandler
 
     public function canHandle($block)
     {
-        return preg_match($this->headingPattern, $block['tag']) === 1;
+        return is_array($block) && preg_match($this->headingPattern, $block['tag']) === 1;
     }
 
     public function handle($block)

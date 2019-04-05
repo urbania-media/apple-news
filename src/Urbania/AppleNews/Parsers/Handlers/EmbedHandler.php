@@ -10,7 +10,7 @@ class EmbedHandler implements HtmlHandler
 
     public function canHandle($block)
     {
-        return $block['tag'] === 'iframe' &&
+        return is_array($block) && $block['tag'] === 'iframe' &&
             isset($block['attributes']['src']) &&
             preg_match($this->embedPattern, $block['attributes']['src']) === 1;
     }

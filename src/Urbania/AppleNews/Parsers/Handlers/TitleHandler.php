@@ -10,7 +10,7 @@ class TitleHandler extends TextHandler implements HtmlHandler
 
     public function canHandle($block)
     {
-        return preg_match($this->titlePattern, $block['tag']) === 1;
+        return is_array($block) && preg_match($this->titlePattern, $block['tag']) === 1;
     }
 
     public function handle($block)

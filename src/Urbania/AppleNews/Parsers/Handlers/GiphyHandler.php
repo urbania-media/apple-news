@@ -10,7 +10,7 @@ class GiphyHandler implements HtmlHandler
 
     public function canHandle($block)
     {
-        return $block['tag'] === 'iframe' && isset($block['attributes']['src']) &&
+        return is_array($block) && $block['tag'] === 'iframe' && isset($block['attributes']['src']) &&
             preg_match($this->giphyPattern, $block['attributes']['src']) === 1;
     }
 

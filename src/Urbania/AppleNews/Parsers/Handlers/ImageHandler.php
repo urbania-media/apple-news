@@ -8,7 +8,7 @@ class ImageHandler implements HtmlHandler
 {
     public function canHandle($block)
     {
-        return $block['tag'] === 'img';
+        return is_array($block) && $block['tag'] === 'img';
     }
 
     public function handle($block)

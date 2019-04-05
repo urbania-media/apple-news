@@ -401,13 +401,13 @@ class HtmlParser extends Parser
         ];
 
         if ($block['tag'] === 'a') {
-            $block['attributes']['href'] = (string) $element->getAttribute(
+            $block['attributes']['href'] = $this->cleanLink((string) $element->getAttribute(
                 'href'
-            );
+            ));
         } elseif ($isIframe || $isImg) {
-            $block['attributes']['src'] = (string) $element->getAttribute(
+            $block['attributes']['src'] = $this->cleanLink((string) $element->getAttribute(
                 'src'
-            );
+            ));
         }
 
         // Add the child blocks or text
@@ -599,5 +599,15 @@ class HtmlParser extends Parser
     public static function trimText($text)
     {
         return preg_replace('/^[\s\n\t]*(.*?)[\s\n\t]*$/us', '$1', $text);
+    }
+
+    /**
+     * Clean links
+     * @param  string $link The link
+     * @return string
+     */
+    public static function cleanLink($link)
+    {
+        return preg_replace('/^\%20/', '', trim($link));
     }
 }
