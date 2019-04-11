@@ -6,13 +6,14 @@ use Urbania\AppleNews\Contracts\HtmlHandler;
 
 class BodyHandler extends TextHandler implements HtmlHandler
 {
+    protected $tagPattern = '/^(p|div)$/i';
+
     protected $inlinePattern = '/^(a|strong|em|span)$/i';
 
     public function canHandle($block)
     {
         return is_string($block) ||
-            $block['tag'] === 'p' ||
-            isset($block['text']) && !empty($block['text']);
+            preg_match($this->tagPattern, $block['tag']) === 1;
     }
 
     public function handle($block)
