@@ -10,7 +10,8 @@ class EmbedHandler implements HtmlHandler
 
     public function canHandle($block)
     {
-        return is_array($block) && $block['tag'] === 'iframe' &&
+        return is_array($block) &&
+            $block['tag'] === 'iframe' &&
             isset($block['attributes']['src']) &&
             preg_match($this->embedPattern, $block['attributes']['src']) === 1;
     }
@@ -20,7 +21,12 @@ class EmbedHandler implements HtmlHandler
         $url = parse_url($block['attributes']['src']);
         return [
             'role' => 'embedwebvideo',
-            'URL' => sprintf('%s://%s%s', $url['scheme'], $url['host'], $url['path'])
+            'URL' => sprintf(
+                '%s//%s%s',
+                isset($url['scheme']) ? $url['scheme'] . ':' : 'https:',
+                $url['host'],
+                $url['path']
+            )
         ];
     }
 }
