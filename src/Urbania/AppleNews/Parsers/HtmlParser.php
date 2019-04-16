@@ -338,7 +338,10 @@ class HtmlParser extends Parser
                     !$nodeIsEmpty &&
                     !is_null($lastBlock) &&
                     $this->isBlockInline($lastBlock);
-                if (!$lastBlockIsInline && $this->shouldIgnoreElement($element)) {
+                // prettier-ignore
+                if ((!$lastBlockIsInline && $this->shouldIgnoreElement($element)) ||
+                    ($lastBlockIsInline && $this->isNodeEmpty($element, true))
+                ) {
                     return $blocks;
                 }
 
@@ -455,10 +458,11 @@ class HtmlParser extends Parser
      * @param  Element $node The node to check
      * @return boolean
      */
-    protected function isNodeEmpty($node)
+    protected function isNodeEmpty($node, $spaceOnly = false)
     {
-        $text = static::trimText($node->text());
-        return empty($text);
+        $text = $node->text();
+        $trimedText = static::trimText($text);
+        return empty($trimedText) && (!$spaceOnly || preg_match('/^\s*$/us', $text) === 1);
     }
 
     /**
