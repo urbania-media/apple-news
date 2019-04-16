@@ -31,9 +31,8 @@ class DataDescriptor extends BaseSdkObject
 
     /**
      * The object that sets some additional formatting preferences if you are
-     * using the float or image data type. For example, use a FloatDataFormat
-     * object in this property to control rounding, or use an ImageDataFormat
-     * to control image size.
+     * using the float or image data type. For example, use a  object in this
+     * property to control rounding, or use an  to control image size.
      * @var \Urbania\AppleNews\Format\DataFormat
      */
     protected $format;

@@ -34,7 +34,7 @@
             "name": "format",
             "type": "Format\\DataFormat",
             "required": false,
-            "description": "The object that sets some additional formatting preferences if you are using the float or image data type. For example, use a FloatDataFormat object in this property to control rounding, or use an ImageDataFormat to control image size.",
+            "description": "The object that sets some additional formatting preferences if you are using the float or image data type. For example, use a  object in this property to control rounding, or use an  to control image size.",
             "typed": true
         },
         {

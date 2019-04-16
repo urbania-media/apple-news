@@ -16,9 +16,9 @@ class Warning extends BaseSdkObject
     /**
      * An array of field names that uniquely identifies a field in the JSON
      * input of the request.
-     * @var array
+     * @var string[]
      */
-    protected $keypath;
+    protected $keyPath;
 
     /**
      * A user friendly, detailed explanation of the non-fatal warning.
@@ -35,8 +35,8 @@ class Warning extends BaseSdkObject
 
     public function __construct(array $data = [])
     {
-        if (isset($data['keypath'])) {
-            $this->setKeypath($data['keypath']);
+        if (isset($data['keyPath'])) {
+            $this->setKeyPath($data['keyPath']);
         }
 
         if (isset($data['message'])) {
@@ -49,43 +49,44 @@ class Warning extends BaseSdkObject
     }
 
     /**
-     * Add an item to keypath
+     * Add an item to keyPath
      * @param string $item
      * @return $this
      */
-    public function addKeypath($item)
+    public function addKeyPath($item)
     {
-        return $this->setKeypath(
-            !is_null($this->keypath)
-                ? array_merge($this->keypath, [$item])
+        return $this->setKeyPath(
+            !is_null($this->keyPath)
+                ? array_merge($this->keyPath, [$item])
                 : [$item]
         );
     }
 
     /**
-     * Get the keypath
+     * Get the keyPath
      * @return string[]
      */
-    public function getKeypath()
+    public function getKeyPath()
     {
-        return $this->keypath;
+        return $this->keyPath;
     }
 
     /**
-     * Set the keypath
-     * @param array $keypath
+     * Set the keyPath
+     * @param string[] $keyPath
      * @return $this
      */
-    public function setKeypath($keypath)
+    public function setKeyPath($keyPath)
     {
-        if (is_null($keypath)) {
-            $this->keypath = null;
+        if (is_null($keyPath)) {
+            $this->keyPath = null;
             return $this;
         }
 
-        Assert::isArray($keypath);
+        Assert::isArray($keyPath);
+        Assert::allString($keyPath);
 
-        $this->keypath = $keypath;
+        $this->keyPath = $keyPath;
         return $this;
     }
 
@@ -150,8 +151,8 @@ class Warning extends BaseSdkObject
     public function toArray()
     {
         $data = [];
-        if (isset($this->keypath)) {
-            $data['keypath'] = $this->keypath;
+        if (isset($this->keyPath)) {
+            $data['keyPath'] = $this->keyPath;
         }
         if (isset($this->message)) {
             $data['message'] = $this->message;

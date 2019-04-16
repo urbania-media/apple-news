@@ -45,8 +45,7 @@ class Section extends Container
     protected $animation;
 
     /**
-     * An object that defines behavior for a component, like Parallax or
-     * Springy.
+     * An object that defines behavior for a component, like  or .
      * @var \Urbania\AppleNews\Format\Behavior
      */
     protected $behavior;

@@ -35,10 +35,10 @@ class Map extends Component
 
     /**
      * The caption that describes what is visible on the map. The text is
-     * used for VoiceOver for iOS and VoiceOver for macOS. The value in this
-     * property should describe the contents of the map for non-sighted
-     * users. If accessibilityCaption is not provided the caption value is
-     * used for VoiceOver for iOS and VoiceOver for macOS.
+     * used for  and . The value in this property should describe the
+     * contents of the map for non-sighted users. If accessibilityCaption is
+     * not provided the caption value is used for VoiceOver for iOS and
+     * VoiceOver for macOS.
      * @var string
      */
     protected $accessibilityCaption;
@@ -56,8 +56,7 @@ class Map extends Component
     protected $animation;
 
     /**
-     * An object that defines behavior for a component, like Parallax or
-     * Springy.
+     * An object that defines behavior for a component, like  or .
      * @var \Urbania\AppleNews\Format\Behavior
      */
     protected $behavior;
@@ -65,8 +64,7 @@ class Map extends Component
     /**
      * A string that describes what is displayed on the map. The caption is
      * displayed in the full screen version of the map. This text is also
-     * used by VoiceOver for iOS and VoiceOver for macOS, if
-     * accessibilityCaption text is not provided.
+     * used by  and , if accessibilityCaption text is not provided.
      * @var string
      */
     protected $caption;

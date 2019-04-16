@@ -13,6 +13,8 @@
             "type": "enum:string",
             "required": true,
             "description": "Always embedwebvideo or embedvideo for this component.",
+            "value": "embedwebvideo",
+            "read_only": true,
             "enum_values": [
                 "embedwebvideo",
                 "embedvideo"

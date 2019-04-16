@@ -11,24 +11,24 @@ use Urbania\AppleNews\Tests\TestCase;
 class WarningTest extends TestCase
 {
     /**
-     * Test the property keypath
+     * Test the property keyPath
      * @test
-     * @dataProvider keypathProvider
-     * @covers ::getKeypath
-     * @covers ::setKeypath
+     * @dataProvider keyPathProvider
+     * @covers ::getKeyPath
+     * @covers ::setKeyPath
      */
-    public function testPropertyKeypath($value)
+    public function testPropertyKeyPath($value)
     {
         $object = new Warning();
-        $object->setKeypath($value);
+        $object->setKeyPath($value);
 
-        $this->assertEquals($value, $object->getKeypath());
+        $this->assertEquals($value, $object->getKeyPath());
     }
 
     /**
-     * Data provider for property keypath
+     * Data provider for property keyPath
      */
-    public function keypathProvider()
+    public function keyPathProvider()
     {
         return [[[]]];
     }

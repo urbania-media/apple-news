@@ -9,7 +9,7 @@
     "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/warning",
     "properties": [
         {
-            "name": "keypath",
+            "name": "keyPath",
             "type": "array:string",
             "required": false,
             "description": "An array of field names that uniquely identifies a field in the JSON input of the request.",

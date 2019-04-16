@@ -21,20 +21,19 @@ class GalleryItem extends BaseSdkObject
     protected $URL;
 
     /**
-     * A caption that describes the image. The text is used for VoiceOver for
-     * iOS and VoiceOver for macOS. If accessibilityCaption is not provided,
-     * the caption value is used for VoiceOver for iOS and VoiceOver for
-     * macOS.
+     * A caption that describes the image. The text is used for  and . If
+     * accessibilityCaption is not provided, the caption value is used for
+     * VoiceOver for iOS and VoiceOver for macOS.
      * @var string
      */
     protected $accessibilityCaption;
 
     /**
      * A caption that describes the image. The text is seen when the image is
-     * in full screen. This text is also used by VoiceOver for iOS and
-     * VoiceOver for macOS, if accessibilityCaption text is not provided. The
-     * caption text does not appear in the main article view. To display a
-     * caption in the main article view, use the Caption component.
+     * in full screen. This text is also used by  and , if
+     * accessibilityCaption text is not provided. The caption text does not
+     * appear in the main article view. To display a caption in the main
+     * article view, use the  component.
      * @var \Urbania\AppleNews\Format\CaptionDescriptor|string
      */
     protected $caption;

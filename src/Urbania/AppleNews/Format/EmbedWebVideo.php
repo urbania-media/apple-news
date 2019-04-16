@@ -17,7 +17,7 @@ class EmbedWebVideo extends Component
      * Always embedwebvideo or embedvideo for this component.
      * @var string
      */
-    protected $role;
+    protected $role = 'embedwebvideo';
 
     /**
      * The URL of the embeddable video to display (the YouTube or Vimeo embed
@@ -118,10 +118,6 @@ class EmbedWebVideo extends Component
     public function __construct(array $data = [])
     {
         parent::__construct($data);
-
-        if (isset($data['role'])) {
-            $this->setRole($data['role']);
-        }
 
         if (isset($data['URL'])) {
             $this->setURL($data['URL']);
@@ -515,19 +511,6 @@ class EmbedWebVideo extends Component
     public function getRole()
     {
         return $this->role;
-    }
-
-    /**
-     * Set the role
-     * @param string $role
-     * @return $this
-     */
-    public function setRole($role)
-    {
-        Assert::oneOf($role, ["embedwebvideo", "embedvideo"]);
-
-        $this->role = $role;
-        return $this;
     }
 
     /**

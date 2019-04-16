@@ -81,7 +81,7 @@
                 "integer"
             ],
             "required": false,
-            "description": "A number in points or a string referring to a supported unit of measure defining the horizontal spacing between rows. See Specifying Measurements for Components.",
+            "description": "A number in points or a string referring to a supported unit of measure defining the horizontal spacing between rows. See .",
             "default": 0,
             "typed": false
         },

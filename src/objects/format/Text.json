@@ -47,7 +47,7 @@
             "name": "behavior",
             "type": "Format\\Behavior",
             "required": false,
-            "description": "An object that defines behavior for a component, like Parallax or Springy.",
+            "description": "An object that defines behavior for a component, like  or .",
             "typed": true
         },
         {

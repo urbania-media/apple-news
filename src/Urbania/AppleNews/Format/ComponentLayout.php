@@ -100,20 +100,18 @@ class ComponentLayout extends BaseSdkObject
 
     /**
      * A value that defines the minimum width of the layout when used within
-     * a Container with HorizontalStackDisplay as the specified
-     * contentDisplay type. The minimum width can be defined as an integer in
-     * points or using one of the available units of measure for components.
-     * See Specifying Measurements for Components.
+     * a  with  as the specified contentDisplay type. The minimum width can
+     * be defined as an integer in points or using one of the available units
+     * of measure for components. See Specifying Measurements for Components.
      * @var string|integer
      */
     protected $minimumWidth;
 
     /**
      * A value that defines the maximum width of the layout when used within
-     * a Container with HorizontalStackDisplay as the specified
-     * contentDisplay type. The maximum width can be defined as an integer in
-     * points or using one of the available units of measure for components.
-     * See Specifying Measurements for Components.
+     * a  with  as the specified contentDisplay type. The maximum width can
+     * be defined as an integer in points or using one of the available units
+     * of measure for components. See Specifying Measurements for Components.
      * @var string|integer
      */
     protected $maximumWidth;

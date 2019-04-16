@@ -15,12 +15,10 @@ class EmbedWebVideoTest extends TestCase
      * @test
      * @dataProvider roleProvider
      * @covers ::getRole
-     * @covers ::setRole
      */
     public function testPropertyRole($value)
     {
         $object = new EmbedWebVideo();
-        $object->setRole($value);
 
         $this->assertEquals($value, $object->getRole());
     }
@@ -30,7 +28,7 @@ class EmbedWebVideoTest extends TestCase
      */
     public function roleProvider()
     {
-        return [["embedwebvideo"], ["embedvideo"]];
+        return [["embedwebvideo"]];
     }
 
     /**

@@ -59,8 +59,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * A number in points or a string referring to a supported unit of
-     * measure defining the horizontal spacing between rows. See Specifying
-     * Measurements for Components.
+     * measure defining the horizontal spacing between rows. See .
      * @var string|integer
      */
     protected $rowSpacing;
