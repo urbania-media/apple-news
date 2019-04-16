@@ -18,7 +18,7 @@ class BodyHandler extends TextHandler implements HtmlHandler
 
     public function handle($block)
     {
-        if (is_array($block) && !isset($block['text'])) {
+        if (is_array($block) && (!isset($block['text']) || $block['tag'] === 'a')) {
             return [
                 'role' => 'body',
                 'format' => 'html',
