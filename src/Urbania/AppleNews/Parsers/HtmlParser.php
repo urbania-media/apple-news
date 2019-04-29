@@ -28,7 +28,7 @@ class HtmlParser extends Parser
     ];
 
     protected $handlersOptions = [
-        'addClassAsInlineStyle' => false,
+        'addClassAsInlineStyle' => false
     ];
 
     protected $handlers = [
@@ -152,7 +152,9 @@ class HtmlParser extends Parser
     protected function getHandlersInstances()
     {
         return array_map(function ($handler) {
-            return is_string($handler) || is_array($handler) ? $this->getHandlerInstance($handler) : $handler;
+            return is_string($handler) || is_array($handler)
+                ? $this->getHandlerInstance($handler)
+                : $handler;
         }, $this->getHandlers());
     }
 
@@ -187,10 +189,7 @@ class HtmlParser extends Parser
 
                 // If the block doesn't have children, add it to incompatible
                 if (!is_array($block) || !isset($block['blocks'])) {
-                    return array_merge(
-                        $foundBlocks,
-                        [$block],
-                    );
+                    return array_merge($foundBlocks, [$block]);
                 }
 
                 // If there is children and all children are compatible,
@@ -198,10 +197,9 @@ class HtmlParser extends Parser
                 $childIncomptabileBlocks = $this->getIncompatibleBlocks(
                     $block['blocks']
                 );
-                return sizeof($childIncomptabileBlocks) > 0 ? array_merge(
-                    $foundBlocks,
-                    $childIncomptabileBlocks
-                ) : $foundBlocks;
+                return sizeof($childIncomptabileBlocks) > 0
+                    ? array_merge($foundBlocks, $childIncomptabileBlocks)
+                    : $foundBlocks;
             },
             []
         );
@@ -404,13 +402,13 @@ class HtmlParser extends Parser
         ];
 
         if ($block['tag'] === 'a') {
-            $block['attributes']['href'] = $this->cleanLink((string) $element->getAttribute(
-                'href'
-            ));
+            $block['attributes']['href'] = $this->cleanLink(
+                (string) $element->getAttribute('href')
+            );
         } elseif ($isIframe || $isImg) {
-            $block['attributes']['src'] = $this->cleanLink((string) $element->getAttribute(
-                'src'
-            ));
+            $block['attributes']['src'] = $this->cleanLink(
+                (string) $element->getAttribute('src')
+            );
         }
 
         // Add the child blocks or text
@@ -462,7 +460,8 @@ class HtmlParser extends Parser
     {
         $text = $node->text();
         $trimedText = static::trimText($text);
-        return empty($trimedText) && (!$spaceOnly || preg_match('/^\s*$/us', $text) === 1);
+        return empty($trimedText) &&
+            (!$spaceOnly || preg_match('/^\s*$/us', $text) === 1);
     }
 
     /**
@@ -536,7 +535,8 @@ class HtmlParser extends Parser
         $nodeIsEmpty = $this->isNodeEmpty($node);
         $isIframeWrapper =
             $this->isNodeContainsIframe($node) && !$this->isNodeIframe($node);
-        $isImgWrapper = $this->isNodeContainsImg($node) && !$this->isNodeImg($node);
+        $isImgWrapper =
+            $this->isNodeContainsImg($node) && !$this->isNodeImg($node);
         return $nodeIsEmpty && ($isIframeWrapper || $isImgWrapper);
     }
 
@@ -547,7 +547,8 @@ class HtmlParser extends Parser
      */
     protected function isBlockInline($block)
     {
-        return is_string($block) || in_array($block['tag'], ['span', 'strong', 'b', 'em', 'a']);
+        return is_string($block) ||
+            in_array($block['tag'], ['span', 'strong', 'b', 'em', 'a']);
     }
 
     /**
@@ -571,8 +572,7 @@ class HtmlParser extends Parser
             array_reduce(
                 $this->moveUpContainers,
                 function ($ignore, $container) use ($block) {
-                    return $ignore ||
-                        $this->blocksEquals($container, $block);
+                    return $ignore || $this->blocksEquals($container, $block);
                 },
                 false
             );

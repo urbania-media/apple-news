@@ -26,9 +26,7 @@ class WordpressParser extends Parser
             $this->setOptions($opts);
         }
 
-        $this->client = !is_null($this->url)
-            ? new Client($this->url)
-            : null;
+        $this->client = !is_null($this->url) ? new Client($this->url) : null;
         $this->htmlParser = new HtmlParser();
     }
 
@@ -58,17 +56,23 @@ class WordpressParser extends Parser
             return null;
         }
 
-        $featuredMediaId = isset($post['featured_media']) ? $post['featured_media'] : null;
-        $featuredMedia = !is_null($featuredMediaId) ? $this->client->getMedia($featuredMediaId) : null;
+        $featuredMediaId = isset($post['featured_media'])
+            ? $post['featured_media']
+            : null;
+        $featuredMedia = !is_null($featuredMediaId)
+            ? $this->client->getMedia($featuredMediaId)
+            : null;
 
-        $title = html_entity_decode($post['title']['rendered'], ENT_QUOTES, 'utf-8');
+        $title = html_entity_decode(
+            $post['title']['rendered'],
+            ENT_QUOTES,
+            'utf-8'
+        );
 
         $data = [
             'title' => $title,
-            'identifier' => 'wordpress-'.$post['id'],
-            'components' => [
-                $this->getHeaderComponent($title, $featuredMedia)
-            ],
+            'identifier' => 'wordpress-' . $post['id'],
+            'components' => [$this->getHeaderComponent($title, $featuredMedia)]
         ];
 
         $parsedArticle = new Article($this->article);
@@ -78,7 +82,10 @@ class WordpressParser extends Parser
         $parsedArticle->merge($data);
 
         $content = isset($post['content']) ? $post['content'] : null;
-        $html = !is_null($content) && isset($content['rendered']) ? $content['rendered'] : null;
+        $html =
+            !is_null($content) && isset($content['rendered'])
+                ? $content['rendered']
+                : null;
         $parsedArticle = $this->htmlParser->parse($html, $parsedArticle);
 
         return $parsedArticle;
@@ -87,9 +94,18 @@ class WordpressParser extends Parser
     protected function getPostIdFromUrl($url)
     {
         $parsedUrl = parse_url($url);
-        if (isset($parsedUrl['query']) && preg_match('/^(.*&)?p=([0-9]+)(\&.*)?$/', $parsedUrl['query'], $matches)) {
+        // prettier-ignore
+        if (isset($parsedUrl['query']) &&
+            preg_match(
+                '/^(.*&)?p=([0-9]+)(\&.*)?$/',
+                $parsedUrl['query'],
+                $matches
+            )
+        ) {
             return $matches[2];
-        } elseif (isset($this->postUrlPattern) && preg_match($this->postUrlPattern, $url, $matches)) {
+        } elseif (isset($this->postUrlPattern) &&
+            preg_match($this->postUrlPattern, $url, $matches)
+        ) {
             return $matches['postId'];
         }
         return null;
