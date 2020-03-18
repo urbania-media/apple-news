@@ -308,7 +308,7 @@ class HtmlParser extends Parser
         $children = $node->children();
         $notEmptyChildren = [];
         foreach ($children as $child) {
-            if (!$this->isNodeEmpty($child)) {
+            if (!$this->isNodeEmpty($child) || $this->isNodeContainsIframe($child)) {
                 $notEmptyChildren[] = $child;
             }
         }
