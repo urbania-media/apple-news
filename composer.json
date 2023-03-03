@@ -20,25 +20,25 @@
         }
     ],
     "require": {
-        "php": ">=5.6",
-        "guzzlehttp/guzzle": "^6.3",
-        "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*",
-        "illuminate/contracts": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*",
-        "symfony/filesystem": "^3.0|^4.2",
+        "php": "^8.0",
+        "guzzlehttp/guzzle": "^6.3|^7.0",
+        "illuminate/support": "^7.0|^8.0|^9.0|^10.0",
+        "illuminate/contracts": "^7.0|^8.0|^9.0|^10.0",
+        "symfony/filesystem": "^5.0|^6.0",
         "webmozart/assert": "^1.4",
         "imangazaliev/didom": "^1.14",
-        "symfony/css-selector": "^2.7|^3.0|^4.2"
+        "symfony/css-selector": "^5.0|^6.0"
     },
     "require-dev": {
-        "fzaninotto/faker": "~1.4",
-        "orchestra/testbench": "3.1.*|3.2.*|3.3.*|3.4.*|3.5.*|3.6.*|3.7.*|3.8.*",
-        "mockery/mockery": "0.9.*|1.0.*",
-        "phpunit/phpunit": "~7.0|^7.5|^8.0",
+        "fakerphp/faker": "^1.21",
+        "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0",
+        "mockery/mockery": "^1.5.1",
+        "phpunit/phpunit": "^9.0|^10.0.7",
         "php-coveralls/php-coveralls": "^2.1",
-        "doctrine/dbal": "^2.0",
-        "vlucas/phpdotenv": "~1.0|^2.2",
+        "doctrine/dbal": "^3.5",
+        "vlucas/phpdotenv": "^5.4.1",
         "nette/php-generator": "^2.6|^3.2",
-        "symfony/finder": "^2.7|^3.0|^4.2",
+        "symfony/finder": "^5.0|^6.0",
         "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
@@ -69,6 +69,11 @@
             "aliases": {
                 "AppleNews": "Urbania\\AppleNews\\Laravel\\AppleNewsFacade"
             }
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
         }
     }
 }

@@ -6,7 +6,7 @@ use Urbania\AppleNews\Tests\TestCase;
 
 class UnitTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
