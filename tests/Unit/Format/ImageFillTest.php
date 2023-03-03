@@ -26,7 +26,7 @@ class ImageFillTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["image"]];
     }
@@ -49,7 +49,7 @@ class ImageFillTest extends TestCase
     /**
      * Data provider for property URL
      */
-    public function URLProvider()
+    public static function URLProvider()
     {
         return [["http://example.com"], ["https://example.com"]];
     }
@@ -72,7 +72,7 @@ class ImageFillTest extends TestCase
     /**
      * Data provider for property attachment
      */
-    public function attachmentProvider()
+    public static function attachmentProvider()
     {
         return [["fixed"], ["scroll"]];
     }
@@ -95,7 +95,7 @@ class ImageFillTest extends TestCase
     /**
      * Data provider for property fillMode
      */
-    public function fillModeProvider()
+    public static function fillModeProvider()
     {
         return [["fit"], ["cover"]];
     }
@@ -118,7 +118,7 @@ class ImageFillTest extends TestCase
     /**
      * Data provider for property horizontalAlignment
      */
-    public function horizontalAlignmentProvider()
+    public static function horizontalAlignmentProvider()
     {
         return [["left"], ["center"], ["right"]];
     }
@@ -141,7 +141,7 @@ class ImageFillTest extends TestCase
     /**
      * Data provider for property verticalAlignment
      */
-    public function verticalAlignmentProvider()
+    public static function verticalAlignmentProvider()
     {
         return [["top"], ["center"], ["bottom"]];
     }

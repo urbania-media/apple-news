@@ -28,7 +28,7 @@ class ChannelLinksTest extends TestCase
     /**
      * Data provider for property defaultSection
      */
-    public function defaultSectionProvider()
+    public static function defaultSectionProvider()
     {
         return [["a string"]];
     }
@@ -51,7 +51,7 @@ class ChannelLinksTest extends TestCase
     /**
      * Data provider for property self
      */
-    public function selfProvider()
+    public static function selfProvider()
     {
         return [["a string"]];
     }

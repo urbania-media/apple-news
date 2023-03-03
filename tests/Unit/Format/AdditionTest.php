@@ -28,7 +28,7 @@ class AdditionTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["a string"]];
     }
@@ -51,7 +51,7 @@ class AdditionTest extends TestCase
     /**
      * Data provider for property rangeLength
      */
-    public function rangeLengthProvider()
+    public static function rangeLengthProvider()
     {
         return [[1]];
     }
@@ -74,7 +74,7 @@ class AdditionTest extends TestCase
     /**
      * Data provider for property rangeStart
      */
-    public function rangeStartProvider()
+    public static function rangeStartProvider()
     {
         return [[1]];
     }

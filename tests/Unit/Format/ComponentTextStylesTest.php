@@ -28,7 +28,7 @@ class ComponentTextStylesTest extends TestCase
     /**
      * Data provider for property styles
      */
-    public function stylesProvider()
+    public static function stylesProvider()
     {
         return [
             [["test" => new \Urbania\AppleNews\Format\ComponentTextStyle()]]

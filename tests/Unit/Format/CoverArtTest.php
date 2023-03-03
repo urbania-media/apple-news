@@ -28,7 +28,7 @@ class CoverArtTest extends TestCase
     /**
      * Data provider for property URL
      */
-    public function URLProvider()
+    public static function URLProvider()
     {
         return [["a string"]];
     }
@@ -51,7 +51,7 @@ class CoverArtTest extends TestCase
     /**
      * Data provider for property accessibilityCaption
      */
-    public function accessibilityCaptionProvider()
+    public static function accessibilityCaptionProvider()
     {
         return [["a string"]];
     }
@@ -74,7 +74,7 @@ class CoverArtTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["a string"]];
     }

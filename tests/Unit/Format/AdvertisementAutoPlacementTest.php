@@ -28,7 +28,7 @@ class AdvertisementAutoPlacementTest extends TestCase
     /**
      * Data provider for property bannerType
      */
-    public function bannerTypeProvider()
+    public static function bannerTypeProvider()
     {
         return [["any"], ["standard"], ["double_height"], ["large"]];
     }
@@ -51,7 +51,7 @@ class AdvertisementAutoPlacementTest extends TestCase
     /**
      * Data provider for property conditional
      */
-    public function conditionalProvider()
+    public static function conditionalProvider()
     {
         return [[[new \Urbania\AppleNews\Format\ConditionalAutoPlacement()]]];
     }
@@ -74,7 +74,7 @@ class AdvertisementAutoPlacementTest extends TestCase
     /**
      * Data provider for property distanceFromMedia
      */
-    public function distanceFromMediaProvider()
+    public static function distanceFromMediaProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -97,7 +97,7 @@ class AdvertisementAutoPlacementTest extends TestCase
     /**
      * Data provider for property enabled
      */
-    public function enabledProvider()
+    public static function enabledProvider()
     {
         return [[true], [false]];
     }
@@ -120,7 +120,7 @@ class AdvertisementAutoPlacementTest extends TestCase
     /**
      * Data provider for property frequency
      */
-    public function frequencyProvider()
+    public static function frequencyProvider()
     {
         return [[1]];
     }
@@ -143,7 +143,7 @@ class AdvertisementAutoPlacementTest extends TestCase
     /**
      * Data provider for property layout
      */
-    public function layoutProvider()
+    public static function layoutProvider()
     {
         return [[new \Urbania\AppleNews\Format\AutoPlacementLayout()]];
     }

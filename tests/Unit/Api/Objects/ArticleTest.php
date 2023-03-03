@@ -28,7 +28,7 @@ class ArticleTest extends TestCase
     /**
      * Data provider for property accessoryText
      */
-    public function accessoryTextProvider()
+    public static function accessoryTextProvider()
     {
         return [["a string"]];
     }
@@ -51,7 +51,7 @@ class ArticleTest extends TestCase
     /**
      * Data provider for property createdAt
      */
-    public function createdAtProvider()
+    public static function createdAtProvider()
     {
         return [[null]];
     }
@@ -74,7 +74,7 @@ class ArticleTest extends TestCase
     /**
      * Data provider for property document
      */
-    public function documentProvider()
+    public static function documentProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\ArticleDocument()],
@@ -100,7 +100,7 @@ class ArticleTest extends TestCase
     /**
      * Data provider for property id
      */
-    public function idProvider()
+    public static function idProvider()
     {
         return [["9d6ab046-607e-11e9-8625-f45c899bcb9d"]];
     }
@@ -123,7 +123,7 @@ class ArticleTest extends TestCase
     /**
      * Data provider for property isCandidateToBeFeatured
      */
-    public function isCandidateToBeFeaturedProvider()
+    public static function isCandidateToBeFeaturedProvider()
     {
         return [[true], [false]];
     }
@@ -146,7 +146,7 @@ class ArticleTest extends TestCase
     /**
      * Data provider for property isPreview
      */
-    public function isPreviewProvider()
+    public static function isPreviewProvider()
     {
         return [[true], [false]];
     }
@@ -169,7 +169,7 @@ class ArticleTest extends TestCase
     /**
      * Data provider for property isSponsored
      */
-    public function isSponsoredProvider()
+    public static function isSponsoredProvider()
     {
         return [[true], [false]];
     }
@@ -192,7 +192,7 @@ class ArticleTest extends TestCase
     /**
      * Data provider for property maturityRating
      */
-    public function maturityRatingProvider()
+    public static function maturityRatingProvider()
     {
         return [["KIDS"], ["MATURE"], ["GENERAL"]];
     }
@@ -215,7 +215,7 @@ class ArticleTest extends TestCase
     /**
      * Data provider for property modifiedAt
      */
-    public function modifiedAtProvider()
+    public static function modifiedAtProvider()
     {
         return [[null]];
     }
@@ -238,7 +238,7 @@ class ArticleTest extends TestCase
     /**
      * Data provider for property revision
      */
-    public function revisionProvider()
+    public static function revisionProvider()
     {
         return [["a string"]];
     }
@@ -261,7 +261,7 @@ class ArticleTest extends TestCase
     /**
      * Data provider for property shareUrl
      */
-    public function shareUrlProvider()
+    public static function shareUrlProvider()
     {
         return [["a string"]];
     }
@@ -284,7 +284,7 @@ class ArticleTest extends TestCase
     /**
      * Data provider for property state
      */
-    public function stateProvider()
+    public static function stateProvider()
     {
         return [
             ["PROCESSING"],
@@ -314,7 +314,7 @@ class ArticleTest extends TestCase
     /**
      * Data provider for property title
      */
-    public function titleProvider()
+    public static function titleProvider()
     {
         return [["a string"]];
     }
@@ -337,7 +337,7 @@ class ArticleTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["a string"]];
     }
@@ -360,7 +360,7 @@ class ArticleTest extends TestCase
     /**
      * Data provider for property warnings
      */
-    public function warningsProvider()
+    public static function warningsProvider()
     {
         return [[[new \Urbania\AppleNews\Api\Objects\Warning()]]];
     }
@@ -383,7 +383,7 @@ class ArticleTest extends TestCase
     /**
      * Data provider for property links
      */
-    public function linksProvider()
+    public static function linksProvider()
     {
         return [[new \Urbania\AppleNews\Api\Objects\ArticleLinks()]];
     }

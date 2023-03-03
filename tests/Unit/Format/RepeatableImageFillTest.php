@@ -26,7 +26,7 @@ class RepeatableImageFillTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["repeatable_image"]];
     }
@@ -49,7 +49,7 @@ class RepeatableImageFillTest extends TestCase
     /**
      * Data provider for property URL
      */
-    public function URLProvider()
+    public static function URLProvider()
     {
         return [["http://example.com"], ["https://example.com"]];
     }
@@ -72,7 +72,7 @@ class RepeatableImageFillTest extends TestCase
     /**
      * Data provider for property attachment
      */
-    public function attachmentProvider()
+    public static function attachmentProvider()
     {
         return [["fixed"], ["scroll"]];
     }
@@ -95,7 +95,7 @@ class RepeatableImageFillTest extends TestCase
     /**
      * Data provider for property height
      */
-    public function heightProvider()
+    public static function heightProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -118,7 +118,7 @@ class RepeatableImageFillTest extends TestCase
     /**
      * Data provider for property horizontalAlignment
      */
-    public function horizontalAlignmentProvider()
+    public static function horizontalAlignmentProvider()
     {
         return [["left"], ["center"], ["right"]];
     }
@@ -141,7 +141,7 @@ class RepeatableImageFillTest extends TestCase
     /**
      * Data provider for property repeat
      */
-    public function repeatProvider()
+    public static function repeatProvider()
     {
         return [["none"], ["x"], ["y"], ["both"]];
     }
@@ -164,7 +164,7 @@ class RepeatableImageFillTest extends TestCase
     /**
      * Data provider for property verticalAlignment
      */
-    public function verticalAlignmentProvider()
+    public static function verticalAlignmentProvider()
     {
         return [["top"], ["center"], ["bottom"]];
     }
@@ -187,7 +187,7 @@ class RepeatableImageFillTest extends TestCase
     /**
      * Data provider for property width
      */
-    public function widthProvider()
+    public static function widthProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }

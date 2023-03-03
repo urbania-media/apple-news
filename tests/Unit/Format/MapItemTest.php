@@ -28,7 +28,7 @@ class MapItemTest extends TestCase
     /**
      * Data provider for property latitude
      */
-    public function latitudeProvider()
+    public static function latitudeProvider()
     {
         return [[1.1], [1]];
     }
@@ -51,7 +51,7 @@ class MapItemTest extends TestCase
     /**
      * Data provider for property longitude
      */
-    public function longitudeProvider()
+    public static function longitudeProvider()
     {
         return [[1.1], [1]];
     }
@@ -74,7 +74,7 @@ class MapItemTest extends TestCase
     /**
      * Data provider for property caption
      */
-    public function captionProvider()
+    public static function captionProvider()
     {
         return [["a string"]];
     }

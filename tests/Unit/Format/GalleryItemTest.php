@@ -28,7 +28,7 @@ class GalleryItemTest extends TestCase
     /**
      * Data provider for property URL
      */
-    public function URLProvider()
+    public static function URLProvider()
     {
         return [["http://example.com"], ["https://example.com"]];
     }
@@ -51,7 +51,7 @@ class GalleryItemTest extends TestCase
     /**
      * Data provider for property accessibilityCaption
      */
-    public function accessibilityCaptionProvider()
+    public static function accessibilityCaptionProvider()
     {
         return [["a string"]];
     }
@@ -74,7 +74,7 @@ class GalleryItemTest extends TestCase
     /**
      * Data provider for property caption
      */
-    public function captionProvider()
+    public static function captionProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\CaptionDescriptor()],
@@ -100,7 +100,7 @@ class GalleryItemTest extends TestCase
     /**
      * Data provider for property explicitContent
      */
-    public function explicitContentProvider()
+    public static function explicitContentProvider()
     {
         return [[true], [false]];
     }

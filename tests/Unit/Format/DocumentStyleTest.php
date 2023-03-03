@@ -28,7 +28,7 @@ class DocumentStyleTest extends TestCase
     /**
      * Data provider for property backgroundColor
      */
-    public function backgroundColorProvider()
+    public static function backgroundColorProvider()
     {
         return [["#fff"], ["#000"]];
     }

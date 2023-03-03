@@ -28,7 +28,7 @@ class MetadataTest extends TestCase
     /**
      * Data provider for property authors
      */
-    public function authorsProvider()
+    public static function authorsProvider()
     {
         return [[[]]];
     }
@@ -51,7 +51,7 @@ class MetadataTest extends TestCase
     /**
      * Data provider for property campaignData
      */
-    public function campaignDataProvider()
+    public static function campaignDataProvider()
     {
         return [[new \Urbania\AppleNews\Format\CampaignData()]];
     }
@@ -74,7 +74,7 @@ class MetadataTest extends TestCase
     /**
      * Data provider for property canonicalURL
      */
-    public function canonicalURLProvider()
+    public static function canonicalURLProvider()
     {
         return [["http://example.com"], ["https://example.com"]];
     }
@@ -97,7 +97,7 @@ class MetadataTest extends TestCase
     /**
      * Data provider for property dateCreated
      */
-    public function dateCreatedProvider()
+    public static function dateCreatedProvider()
     {
         return [[null]];
     }
@@ -120,7 +120,7 @@ class MetadataTest extends TestCase
     /**
      * Data provider for property dateModified
      */
-    public function dateModifiedProvider()
+    public static function dateModifiedProvider()
     {
         return [[null]];
     }
@@ -143,7 +143,7 @@ class MetadataTest extends TestCase
     /**
      * Data provider for property datePublished
      */
-    public function datePublishedProvider()
+    public static function datePublishedProvider()
     {
         return [[null]];
     }
@@ -166,7 +166,7 @@ class MetadataTest extends TestCase
     /**
      * Data provider for property excerpt
      */
-    public function excerptProvider()
+    public static function excerptProvider()
     {
         return [["a string"]];
     }
@@ -189,7 +189,7 @@ class MetadataTest extends TestCase
     /**
      * Data provider for property generatorIdentifier
      */
-    public function generatorIdentifierProvider()
+    public static function generatorIdentifierProvider()
     {
         return [["a string"]];
     }
@@ -212,7 +212,7 @@ class MetadataTest extends TestCase
     /**
      * Data provider for property generatorName
      */
-    public function generatorNameProvider()
+    public static function generatorNameProvider()
     {
         return [["a string"]];
     }
@@ -235,7 +235,7 @@ class MetadataTest extends TestCase
     /**
      * Data provider for property generatorVersion
      */
-    public function generatorVersionProvider()
+    public static function generatorVersionProvider()
     {
         return [["a string"]];
     }
@@ -258,7 +258,7 @@ class MetadataTest extends TestCase
     /**
      * Data provider for property keywords
      */
-    public function keywordsProvider()
+    public static function keywordsProvider()
     {
         return [[[]]];
     }
@@ -281,7 +281,7 @@ class MetadataTest extends TestCase
     /**
      * Data provider for property links
      */
-    public function linksProvider()
+    public static function linksProvider()
     {
         return [[[new \Urbania\AppleNews\Format\LinkedArticle()]]];
     }
@@ -304,7 +304,7 @@ class MetadataTest extends TestCase
     /**
      * Data provider for property thumbnailURL
      */
-    public function thumbnailURLProvider()
+    public static function thumbnailURLProvider()
     {
         return [["a string"]];
     }
@@ -327,7 +327,7 @@ class MetadataTest extends TestCase
     /**
      * Data provider for property transparentToolbar
      */
-    public function transparentToolbarProvider()
+    public static function transparentToolbarProvider()
     {
         return [[true], [false]];
     }
@@ -350,7 +350,7 @@ class MetadataTest extends TestCase
     /**
      * Data provider for property videoURL
      */
-    public function videoURLProvider()
+    public static function videoURLProvider()
     {
         return [["http://example.com"], ["https://example.com"]];
     }

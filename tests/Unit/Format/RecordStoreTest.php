@@ -28,7 +28,7 @@ class RecordStoreTest extends TestCase
     /**
      * Data provider for property descriptors
      */
-    public function descriptorsProvider()
+    public static function descriptorsProvider()
     {
         return [[[new \Urbania\AppleNews\Format\DataDescriptor()]]];
     }
@@ -51,7 +51,7 @@ class RecordStoreTest extends TestCase
     /**
      * Data provider for property records
      */
-    public function recordsProvider()
+    public static function recordsProvider()
     {
         return [[[new \Urbania\AppleNews\Format\Records()]]];
     }

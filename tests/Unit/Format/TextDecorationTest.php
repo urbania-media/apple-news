@@ -28,7 +28,7 @@ class TextDecorationTest extends TestCase
     /**
      * Data provider for property color
      */
-    public function colorProvider()
+    public static function colorProvider()
     {
         return [["#fff"], ["#000"]];
     }

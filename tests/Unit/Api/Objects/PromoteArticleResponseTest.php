@@ -28,7 +28,7 @@ class PromoteArticleResponseTest extends TestCase
     /**
      * Data provider for property promotedArticles
      */
-    public function promotedArticlesProvider()
+    public static function promotedArticlesProvider()
     {
         return [[[]]];
     }

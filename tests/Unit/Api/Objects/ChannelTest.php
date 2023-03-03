@@ -28,7 +28,7 @@ class ChannelTest extends TestCase
     /**
      * Data provider for property createdAt
      */
-    public function createdAtProvider()
+    public static function createdAtProvider()
     {
         return [[null]];
     }
@@ -51,7 +51,7 @@ class ChannelTest extends TestCase
     /**
      * Data provider for property id
      */
-    public function idProvider()
+    public static function idProvider()
     {
         return [["9d6aa4ac-607e-11e9-9aa6-f45c899bcb9d"]];
     }
@@ -74,7 +74,7 @@ class ChannelTest extends TestCase
     /**
      * Data provider for property modifiedAt
      */
-    public function modifiedAtProvider()
+    public static function modifiedAtProvider()
     {
         return [[null]];
     }
@@ -97,7 +97,7 @@ class ChannelTest extends TestCase
     /**
      * Data provider for property name
      */
-    public function nameProvider()
+    public static function nameProvider()
     {
         return [["a string"]];
     }
@@ -120,7 +120,7 @@ class ChannelTest extends TestCase
     /**
      * Data provider for property shareUrl
      */
-    public function shareUrlProvider()
+    public static function shareUrlProvider()
     {
         return [["a string"]];
     }
@@ -143,7 +143,7 @@ class ChannelTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["a string"]];
     }
@@ -166,7 +166,7 @@ class ChannelTest extends TestCase
     /**
      * Data provider for property website
      */
-    public function websiteProvider()
+    public static function websiteProvider()
     {
         return [["a string"]];
     }

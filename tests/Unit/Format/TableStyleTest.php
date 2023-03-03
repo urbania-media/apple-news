@@ -28,7 +28,7 @@ class TableStyleTest extends TestCase
     /**
      * Data provider for property cells
      */
-    public function cellsProvider()
+    public static function cellsProvider()
     {
         return [[new \Urbania\AppleNews\Format\TableCellStyle()]];
     }
@@ -51,7 +51,7 @@ class TableStyleTest extends TestCase
     /**
      * Data provider for property columns
      */
-    public function columnsProvider()
+    public static function columnsProvider()
     {
         return [[new \Urbania\AppleNews\Format\TableColumnStyle()]];
     }
@@ -74,7 +74,7 @@ class TableStyleTest extends TestCase
     /**
      * Data provider for property headerCells
      */
-    public function headerCellsProvider()
+    public static function headerCellsProvider()
     {
         return [[new \Urbania\AppleNews\Format\TableCellStyle()]];
     }
@@ -97,7 +97,7 @@ class TableStyleTest extends TestCase
     /**
      * Data provider for property headerColumns
      */
-    public function headerColumnsProvider()
+    public static function headerColumnsProvider()
     {
         return [[new \Urbania\AppleNews\Format\TableColumnStyle()]];
     }
@@ -120,7 +120,7 @@ class TableStyleTest extends TestCase
     /**
      * Data provider for property headerRows
      */
-    public function headerRowsProvider()
+    public static function headerRowsProvider()
     {
         return [[new \Urbania\AppleNews\Format\TableRowStyle()]];
     }
@@ -143,7 +143,7 @@ class TableStyleTest extends TestCase
     /**
      * Data provider for property rows
      */
-    public function rowsProvider()
+    public static function rowsProvider()
     {
         return [[new \Urbania\AppleNews\Format\TableRowStyle()]];
     }

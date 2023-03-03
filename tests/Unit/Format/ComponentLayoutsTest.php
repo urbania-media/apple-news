@@ -28,7 +28,7 @@ class ComponentLayoutsTest extends TestCase
     /**
      * Data provider for property layouts
      */
-    public function layoutsProvider()
+    public static function layoutsProvider()
     {
         return [[["test" => new \Urbania\AppleNews\Format\ComponentLayout()]]];
     }

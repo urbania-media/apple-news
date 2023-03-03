@@ -26,7 +26,7 @@ class ScaleFadeAnimationTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["scale_fade"]];
     }
@@ -49,7 +49,7 @@ class ScaleFadeAnimationTest extends TestCase
     /**
      * Data provider for property initialAlpha
      */
-    public function initialAlphaProvider()
+    public static function initialAlphaProvider()
     {
         return [[1.1], [1]];
     }
@@ -72,7 +72,7 @@ class ScaleFadeAnimationTest extends TestCase
     /**
      * Data provider for property initialScale
      */
-    public function initialScaleProvider()
+    public static function initialScaleProvider()
     {
         return [[1.1], [1]];
     }
@@ -95,7 +95,7 @@ class ScaleFadeAnimationTest extends TestCase
     /**
      * Data provider for property userControllable
      */
-    public function userControllableProvider()
+    public static function userControllableProvider()
     {
         return [[true], [false]];
     }

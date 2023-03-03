@@ -26,7 +26,7 @@ class MoveInAnimationTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["move_in"]];
     }
@@ -49,7 +49,7 @@ class MoveInAnimationTest extends TestCase
     /**
      * Data provider for property preferredStartingPosition
      */
-    public function preferredStartingPositionProvider()
+    public static function preferredStartingPositionProvider()
     {
         return [["left"], ["right"]];
     }
@@ -72,7 +72,7 @@ class MoveInAnimationTest extends TestCase
     /**
      * Data provider for property userControllable
      */
-    public function userControllableProvider()
+    public static function userControllableProvider()
     {
         return [[true], [false]];
     }

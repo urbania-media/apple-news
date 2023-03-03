@@ -28,7 +28,7 @@ class ConditionTest extends TestCase
     /**
      * Data provider for property horizontalSizeClass
      */
-    public function horizontalSizeClassProvider()
+    public static function horizontalSizeClassProvider()
     {
         return [["any"], ["regular"], ["compact"]];
     }
@@ -51,7 +51,7 @@ class ConditionTest extends TestCase
     /**
      * Data provider for property maxColumns
      */
-    public function maxColumnsProvider()
+    public static function maxColumnsProvider()
     {
         return [[1]];
     }
@@ -74,7 +74,7 @@ class ConditionTest extends TestCase
     /**
      * Data provider for property maxContentSizeCategory
      */
-    public function maxContentSizeCategoryProvider()
+    public static function maxContentSizeCategoryProvider()
     {
         return [
             ["XS"],
@@ -110,7 +110,7 @@ class ConditionTest extends TestCase
     /**
      * Data provider for property maxSpecVersion
      */
-    public function maxSpecVersionProvider()
+    public static function maxSpecVersionProvider()
     {
         return [["a string"]];
     }
@@ -133,7 +133,7 @@ class ConditionTest extends TestCase
     /**
      * Data provider for property maxViewportAspectRatio
      */
-    public function maxViewportAspectRatioProvider()
+    public static function maxViewportAspectRatioProvider()
     {
         return [[1.1]];
     }
@@ -156,7 +156,7 @@ class ConditionTest extends TestCase
     /**
      * Data provider for property maxViewportWidth
      */
-    public function maxViewportWidthProvider()
+    public static function maxViewportWidthProvider()
     {
         return [[1]];
     }
@@ -179,7 +179,7 @@ class ConditionTest extends TestCase
     /**
      * Data provider for property minColumns
      */
-    public function minColumnsProvider()
+    public static function minColumnsProvider()
     {
         return [[1]];
     }
@@ -202,7 +202,7 @@ class ConditionTest extends TestCase
     /**
      * Data provider for property minContentSizeCategory
      */
-    public function minContentSizeCategoryProvider()
+    public static function minContentSizeCategoryProvider()
     {
         return [
             ["XS"],
@@ -238,7 +238,7 @@ class ConditionTest extends TestCase
     /**
      * Data provider for property minSpecVersion
      */
-    public function minSpecVersionProvider()
+    public static function minSpecVersionProvider()
     {
         return [["a string"]];
     }
@@ -261,7 +261,7 @@ class ConditionTest extends TestCase
     /**
      * Data provider for property minViewportAspectRatio
      */
-    public function minViewportAspectRatioProvider()
+    public static function minViewportAspectRatioProvider()
     {
         return [[1.1]];
     }
@@ -284,7 +284,7 @@ class ConditionTest extends TestCase
     /**
      * Data provider for property minViewportWidth
      */
-    public function minViewportWidthProvider()
+    public static function minViewportWidthProvider()
     {
         return [[1]];
     }
@@ -307,7 +307,7 @@ class ConditionTest extends TestCase
     /**
      * Data provider for property platform
      */
-    public function platformProvider()
+    public static function platformProvider()
     {
         return [["any"], ["ios"], ["macos"]];
     }
@@ -330,7 +330,7 @@ class ConditionTest extends TestCase
     /**
      * Data provider for property subscriptionStatus
      */
-    public function subscriptionStatusProvider()
+    public static function subscriptionStatusProvider()
     {
         return [["bundle"], ["subscribed"]];
     }
@@ -353,7 +353,7 @@ class ConditionTest extends TestCase
     /**
      * Data provider for property verticalSizeClass
      */
-    public function verticalSizeClassProvider()
+    public static function verticalSizeClassProvider()
     {
         return [["any"], ["regular"], ["compact"]];
     }
@@ -376,7 +376,7 @@ class ConditionTest extends TestCase
     /**
      * Data provider for property viewLocation
      */
-    public function viewLocationProvider()
+    public static function viewLocationProvider()
     {
         return [["any"], ["article"], ["issue_table_of_contents"], ["issue"]];
     }

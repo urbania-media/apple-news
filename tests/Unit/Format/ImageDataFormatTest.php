@@ -26,7 +26,7 @@ class ImageDataFormatTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["image"]];
     }
@@ -49,7 +49,7 @@ class ImageDataFormatTest extends TestCase
     /**
      * Data provider for property maximumHeight
      */
-    public function maximumHeightProvider()
+    public static function maximumHeightProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -72,7 +72,7 @@ class ImageDataFormatTest extends TestCase
     /**
      * Data provider for property maximumWidth
      */
-    public function maximumWidthProvider()
+    public static function maximumWidthProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -95,7 +95,7 @@ class ImageDataFormatTest extends TestCase
     /**
      * Data provider for property minimumHeight
      */
-    public function minimumHeightProvider()
+    public static function minimumHeightProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -118,7 +118,7 @@ class ImageDataFormatTest extends TestCase
     /**
      * Data provider for property minimumWidth
      */
-    public function minimumWidthProvider()
+    public static function minimumWidthProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }

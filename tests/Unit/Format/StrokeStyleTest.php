@@ -28,7 +28,7 @@ class StrokeStyleTest extends TestCase
     /**
      * Data provider for property color
      */
-    public function colorProvider()
+    public static function colorProvider()
     {
         return [["#fff"], ["#000"]];
     }
@@ -51,7 +51,7 @@ class StrokeStyleTest extends TestCase
     /**
      * Data provider for property style
      */
-    public function styleProvider()
+    public static function styleProvider()
     {
         return [["solid"], ["dashed"], ["dotted"]];
     }
@@ -74,7 +74,7 @@ class StrokeStyleTest extends TestCase
     /**
      * Data provider for property width
      */
-    public function widthProvider()
+    public static function widthProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }

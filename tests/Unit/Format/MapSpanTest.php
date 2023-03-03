@@ -28,7 +28,7 @@ class MapSpanTest extends TestCase
     /**
      * Data provider for property latitudeDelta
      */
-    public function latitudeDeltaProvider()
+    public static function latitudeDeltaProvider()
     {
         return [[1.1], [1]];
     }
@@ -51,7 +51,7 @@ class MapSpanTest extends TestCase
     /**
      * Data provider for property longitudeDelta
      */
-    public function longitudeDeltaProvider()
+    public static function longitudeDeltaProvider()
     {
         return [[1.1], [1]];
     }

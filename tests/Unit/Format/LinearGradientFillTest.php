@@ -28,7 +28,7 @@ class LinearGradientFillTest extends TestCase
     /**
      * Data provider for property colorStops
      */
-    public function colorStopsProvider()
+    public static function colorStopsProvider()
     {
         return [[[new \Urbania\AppleNews\Format\ColorStop()]]];
     }
@@ -49,7 +49,7 @@ class LinearGradientFillTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["linear_gradient"]];
     }
@@ -72,7 +72,7 @@ class LinearGradientFillTest extends TestCase
     /**
      * Data provider for property angle
      */
-    public function angleProvider()
+    public static function angleProvider()
     {
         return [[1.1], [1]];
     }

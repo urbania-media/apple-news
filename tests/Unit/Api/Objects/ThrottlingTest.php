@@ -28,7 +28,7 @@ class ThrottlingTest extends TestCase
     /**
      * Data provider for property estimatedDelayInSeconds
      */
-    public function estimatedDelayInSecondsProvider()
+    public static function estimatedDelayInSecondsProvider()
     {
         return [[1]];
     }
@@ -51,7 +51,7 @@ class ThrottlingTest extends TestCase
     /**
      * Data provider for property isThrottled
      */
-    public function isThrottledProvider()
+    public static function isThrottledProvider()
     {
         return [[true], [false]];
     }
@@ -74,7 +74,7 @@ class ThrottlingTest extends TestCase
     /**
      * Data provider for property queueSize
      */
-    public function queueSizeProvider()
+    public static function queueSizeProvider()
     {
         return [[1]];
     }
@@ -97,7 +97,7 @@ class ThrottlingTest extends TestCase
     /**
      * Data provider for property quotaAvailable
      */
-    public function quotaAvailableProvider()
+    public static function quotaAvailableProvider()
     {
         return [[1]];
     }

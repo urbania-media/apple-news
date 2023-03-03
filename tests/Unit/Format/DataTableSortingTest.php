@@ -28,7 +28,7 @@ class DataTableSortingTest extends TestCase
     /**
      * Data provider for property descriptor
      */
-    public function descriptorProvider()
+    public static function descriptorProvider()
     {
         return [["a string"]];
     }
@@ -51,7 +51,7 @@ class DataTableSortingTest extends TestCase
     /**
      * Data provider for property direction
      */
-    public function directionProvider()
+    public static function directionProvider()
     {
         return [["ascending"], ["descending"]];
     }

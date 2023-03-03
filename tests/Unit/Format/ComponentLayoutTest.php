@@ -28,7 +28,7 @@ class ComponentLayoutTest extends TestCase
     /**
      * Data provider for property columnSpan
      */
-    public function columnSpanProvider()
+    public static function columnSpanProvider()
     {
         return [[1]];
     }
@@ -51,7 +51,7 @@ class ComponentLayoutTest extends TestCase
     /**
      * Data provider for property columnStart
      */
-    public function columnStartProvider()
+    public static function columnStartProvider()
     {
         return [[1]];
     }
@@ -74,7 +74,7 @@ class ComponentLayoutTest extends TestCase
     /**
      * Data provider for property conditional
      */
-    public function conditionalProvider()
+    public static function conditionalProvider()
     {
         return [[[new \Urbania\AppleNews\Format\ConditionalComponentLayout()]]];
     }
@@ -97,7 +97,7 @@ class ComponentLayoutTest extends TestCase
     /**
      * Data provider for property contentInset
      */
-    public function contentInsetProvider()
+    public static function contentInsetProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\ContentInset()],
@@ -124,7 +124,7 @@ class ComponentLayoutTest extends TestCase
     /**
      * Data provider for property horizontalContentAlignment
      */
-    public function horizontalContentAlignmentProvider()
+    public static function horizontalContentAlignmentProvider()
     {
         return [["left"], ["center"], ["right"]];
     }
@@ -147,7 +147,7 @@ class ComponentLayoutTest extends TestCase
     /**
      * Data provider for property ignoreDocumentGutter
      */
-    public function ignoreDocumentGutterProvider()
+    public static function ignoreDocumentGutterProvider()
     {
         return [["none"], ["left"], ["right"], ["both"], [true], [false]];
     }
@@ -170,7 +170,7 @@ class ComponentLayoutTest extends TestCase
     /**
      * Data provider for property ignoreDocumentMargin
      */
-    public function ignoreDocumentMarginProvider()
+    public static function ignoreDocumentMarginProvider()
     {
         return [["none"], ["left"], ["right"], ["both"], [true], [false]];
     }
@@ -193,7 +193,7 @@ class ComponentLayoutTest extends TestCase
     /**
      * Data provider for property margin
      */
-    public function marginProvider()
+    public static function marginProvider()
     {
         return [[new \Urbania\AppleNews\Format\Margin()], [1]];
     }
@@ -216,7 +216,7 @@ class ComponentLayoutTest extends TestCase
     /**
      * Data provider for property maximumContentWidth
      */
-    public function maximumContentWidthProvider()
+    public static function maximumContentWidthProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -239,7 +239,7 @@ class ComponentLayoutTest extends TestCase
     /**
      * Data provider for property minimumHeight
      */
-    public function minimumHeightProvider()
+    public static function minimumHeightProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -262,7 +262,7 @@ class ComponentLayoutTest extends TestCase
     /**
      * Data provider for property minimumWidth
      */
-    public function minimumWidthProvider()
+    public static function minimumWidthProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -285,7 +285,7 @@ class ComponentLayoutTest extends TestCase
     /**
      * Data provider for property maximumWidth
      */
-    public function maximumWidthProvider()
+    public static function maximumWidthProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -308,7 +308,7 @@ class ComponentLayoutTest extends TestCase
     /**
      * Data provider for property padding
      */
-    public function paddingProvider()
+    public static function paddingProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\Padding()],

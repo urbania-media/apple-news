@@ -28,7 +28,7 @@ class DropCapStyleTest extends TestCase
     /**
      * Data provider for property numberOfLines
      */
-    public function numberOfLinesProvider()
+    public static function numberOfLinesProvider()
     {
         return [[1]];
     }
@@ -51,7 +51,7 @@ class DropCapStyleTest extends TestCase
     /**
      * Data provider for property backgroundColor
      */
-    public function backgroundColorProvider()
+    public static function backgroundColorProvider()
     {
         return [["#fff"], ["#000"]];
     }
@@ -74,7 +74,7 @@ class DropCapStyleTest extends TestCase
     /**
      * Data provider for property fontName
      */
-    public function fontNameProvider()
+    public static function fontNameProvider()
     {
         return [["a string"]];
     }
@@ -97,7 +97,7 @@ class DropCapStyleTest extends TestCase
     /**
      * Data provider for property numberOfCharacters
      */
-    public function numberOfCharactersProvider()
+    public static function numberOfCharactersProvider()
     {
         return [[1]];
     }
@@ -120,7 +120,7 @@ class DropCapStyleTest extends TestCase
     /**
      * Data provider for property numberOfRaisedLines
      */
-    public function numberOfRaisedLinesProvider()
+    public static function numberOfRaisedLinesProvider()
     {
         return [[1]];
     }
@@ -143,7 +143,7 @@ class DropCapStyleTest extends TestCase
     /**
      * Data provider for property padding
      */
-    public function paddingProvider()
+    public static function paddingProvider()
     {
         return [[1]];
     }
@@ -166,7 +166,7 @@ class DropCapStyleTest extends TestCase
     /**
      * Data provider for property textColor
      */
-    public function textColorProvider()
+    public static function textColorProvider()
     {
         return [["#fff"], ["#000"]];
     }

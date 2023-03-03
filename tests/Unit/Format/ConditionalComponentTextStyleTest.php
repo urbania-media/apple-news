@@ -28,7 +28,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property conditions
      */
-    public function conditionsProvider()
+    public static function conditionsProvider()
     {
         return [[[new \Urbania\AppleNews\Format\Condition()]]];
     }
@@ -51,7 +51,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property backgroundColor
      */
-    public function backgroundColorProvider()
+    public static function backgroundColorProvider()
     {
         return [["#fff"], ["#000"]];
     }
@@ -74,7 +74,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property dropCapStyle
      */
-    public function dropCapStyleProvider()
+    public static function dropCapStyleProvider()
     {
         return [[new \Urbania\AppleNews\Format\DropCapStyle()]];
     }
@@ -97,7 +97,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property firstLineIndent
      */
-    public function firstLineIndentProvider()
+    public static function firstLineIndentProvider()
     {
         return [[1]];
     }
@@ -120,7 +120,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property fontFamily
      */
-    public function fontFamilyProvider()
+    public static function fontFamilyProvider()
     {
         return [["a string"]];
     }
@@ -143,7 +143,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property fontName
      */
-    public function fontNameProvider()
+    public static function fontNameProvider()
     {
         return [["a string"]];
     }
@@ -166,7 +166,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property fontSize
      */
-    public function fontSizeProvider()
+    public static function fontSizeProvider()
     {
         return [[1]];
     }
@@ -189,7 +189,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property fontStyle
      */
-    public function fontStyleProvider()
+    public static function fontStyleProvider()
     {
         return [["normal"], ["italic"], ["oblique"]];
     }
@@ -212,7 +212,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property fontWeight
      */
-    public function fontWeightProvider()
+    public static function fontWeightProvider()
     {
         return [
             [100],
@@ -268,7 +268,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property fontWidth
      */
-    public function fontWidthProvider()
+    public static function fontWidthProvider()
     {
         return [
             ["ultra-condensed"],
@@ -301,7 +301,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property hangingPunctuation
      */
-    public function hangingPunctuationProvider()
+    public static function hangingPunctuationProvider()
     {
         return [[true], [false]];
     }
@@ -324,7 +324,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property hyphenation
      */
-    public function hyphenationProvider()
+    public static function hyphenationProvider()
     {
         return [[true], [false]];
     }
@@ -347,7 +347,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property lineHeight
      */
-    public function lineHeightProvider()
+    public static function lineHeightProvider()
     {
         return [[1]];
     }
@@ -370,7 +370,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property linkStyle
      */
-    public function linkStyleProvider()
+    public static function linkStyleProvider()
     {
         return [[new \Urbania\AppleNews\Format\TextStyle()]];
     }
@@ -393,7 +393,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property orderedListItems
      */
-    public function orderedListItemsProvider()
+    public static function orderedListItemsProvider()
     {
         return [[new \Urbania\AppleNews\Format\ListItemStyle()]];
     }
@@ -416,7 +416,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property paragraphSpacingAfter
      */
-    public function paragraphSpacingAfterProvider()
+    public static function paragraphSpacingAfterProvider()
     {
         return [[1]];
     }
@@ -439,7 +439,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property paragraphSpacingBefore
      */
-    public function paragraphSpacingBeforeProvider()
+    public static function paragraphSpacingBeforeProvider()
     {
         return [[1]];
     }
@@ -462,7 +462,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property strikethrough
      */
-    public function strikethroughProvider()
+    public static function strikethroughProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\TextDecoration()],
@@ -489,7 +489,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property stroke
      */
-    public function strokeProvider()
+    public static function strokeProvider()
     {
         return [[new \Urbania\AppleNews\Format\TextStrokeStyle()]];
     }
@@ -512,7 +512,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property textAlignment
      */
-    public function textAlignmentProvider()
+    public static function textAlignmentProvider()
     {
         return [["left"], ["center"], ["right"], ["justified"], ["none"]];
     }
@@ -535,7 +535,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property textColor
      */
-    public function textColorProvider()
+    public static function textColorProvider()
     {
         return [["#fff"], ["#000"]];
     }
@@ -558,7 +558,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property textShadow
      */
-    public function textShadowProvider()
+    public static function textShadowProvider()
     {
         return [[new \Urbania\AppleNews\Format\Shadow()]];
     }
@@ -581,7 +581,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property textTransform
      */
-    public function textTransformProvider()
+    public static function textTransformProvider()
     {
         return [["uppercase"], ["lowercase"], ["capitalize"], ["none"]];
     }
@@ -604,7 +604,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property tracking
      */
-    public function trackingProvider()
+    public static function trackingProvider()
     {
         return [[1.1], [1]];
     }
@@ -627,7 +627,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property underline
      */
-    public function underlineProvider()
+    public static function underlineProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\TextDecoration()],
@@ -654,7 +654,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property unorderedListItems
      */
-    public function unorderedListItemsProvider()
+    public static function unorderedListItemsProvider()
     {
         return [[new \Urbania\AppleNews\Format\ListItemStyle()]];
     }
@@ -677,7 +677,7 @@ class ConditionalComponentTextStyleTest extends TestCase
     /**
      * Data provider for property verticalAlignment
      */
-    public function verticalAlignmentProvider()
+    public static function verticalAlignmentProvider()
     {
         return [["superscript"], ["subscript"], ["baseline"]];
     }

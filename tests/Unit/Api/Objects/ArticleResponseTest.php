@@ -28,7 +28,7 @@ class ArticleResponseTest extends TestCase
     /**
      * Data provider for property links
      */
-    public function linksProvider()
+    public static function linksProvider()
     {
         return [[new \Urbania\AppleNews\Api\Objects\ArticleLinks()]];
     }
@@ -51,7 +51,7 @@ class ArticleResponseTest extends TestCase
     /**
      * Data provider for property meta
      */
-    public function metaProvider()
+    public static function metaProvider()
     {
         return [[new \Urbania\AppleNews\Api\Objects\Meta()]];
     }

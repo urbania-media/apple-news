@@ -26,7 +26,7 @@ class MotionTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["motion"]];
     }

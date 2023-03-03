@@ -18,12 +18,6 @@ abstract class BaseObject implements
     IteratorAggregate
 {
     /**
-     * Get the object iterator
-     * @return \Iterator
-     */
-    abstract public function getIterator();
-
-    /**
      * Get a property value
      * @param  string $name The name of the property
      * @return mixed|null
@@ -85,7 +79,7 @@ abstract class BaseObject implements
      * @param  string  $offset
      * @return bool
      */
-    public function offsetExists($key)
+    public function offsetExists($key): bool
     {
         return $this->propertyExists($key);
     }
@@ -96,7 +90,7 @@ abstract class BaseObject implements
      * @param  string  $offset
      * @return mixed
      */
-    public function offsetGet($key)
+    public function offsetGet($key): mixed
     {
         return $this->propertyGet($key);
     }
@@ -108,7 +102,7 @@ abstract class BaseObject implements
      * @param  mixed   $value
      * @return void
      */
-    public function offsetSet($key, $value)
+    public function offsetSet($key, $value): void
     {
         $this->propertySet($key, $value);
     }
@@ -119,7 +113,7 @@ abstract class BaseObject implements
      * @param  string  $offset
      * @return void
      */
-    public function offsetUnset($key)
+    public function offsetUnset($key): void
     {
         $this->propertyUnset($key);
     }
@@ -173,7 +167,7 @@ abstract class BaseObject implements
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return $this->toArray();
     }

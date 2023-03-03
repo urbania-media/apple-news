@@ -28,7 +28,7 @@ class ShadowTest extends TestCase
     /**
      * Data provider for property color
      */
-    public function colorProvider()
+    public static function colorProvider()
     {
         return [["#fff"], ["#000"]];
     }
@@ -51,7 +51,7 @@ class ShadowTest extends TestCase
     /**
      * Data provider for property radius
      */
-    public function radiusProvider()
+    public static function radiusProvider()
     {
         return [[1.1], [1]];
     }
@@ -74,7 +74,7 @@ class ShadowTest extends TestCase
     /**
      * Data provider for property offset
      */
-    public function offsetProvider()
+    public static function offsetProvider()
     {
         return [[new \Urbania\AppleNews\Format\Offset()]];
     }
@@ -97,7 +97,7 @@ class ShadowTest extends TestCase
     /**
      * Data provider for property opacity
      */
-    public function opacityProvider()
+    public static function opacityProvider()
     {
         return [[1.1], [1]];
     }

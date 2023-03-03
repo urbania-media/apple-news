@@ -28,7 +28,7 @@ class WarningTest extends TestCase
     /**
      * Data provider for property keyPath
      */
-    public function keyPathProvider()
+    public static function keyPathProvider()
     {
         return [[[]]];
     }
@@ -51,7 +51,7 @@ class WarningTest extends TestCase
     /**
      * Data provider for property message
      */
-    public function messageProvider()
+    public static function messageProvider()
     {
         return [["a string"]];
     }
@@ -74,7 +74,7 @@ class WarningTest extends TestCase
     /**
      * Data provider for property value
      */
-    public function valueProvider()
+    public static function valueProvider()
     {
         return [["a string"]];
     }

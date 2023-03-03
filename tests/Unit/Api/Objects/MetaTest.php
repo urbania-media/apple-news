@@ -28,7 +28,7 @@ class MetaTest extends TestCase
     /**
      * Data provider for property throttling
      */
-    public function throttlingProvider()
+    public static function throttlingProvider()
     {
         return [[new \Urbania\AppleNews\Api\Objects\Throttling()]];
     }

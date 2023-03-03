@@ -26,7 +26,7 @@ class CollectionDisplayTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["collection"]];
     }
@@ -49,7 +49,7 @@ class CollectionDisplayTest extends TestCase
     /**
      * Data provider for property alignment
      */
-    public function alignmentProvider()
+    public static function alignmentProvider()
     {
         return [["left"], ["center"], ["right"]];
     }
@@ -72,7 +72,7 @@ class CollectionDisplayTest extends TestCase
     /**
      * Data provider for property distribution
      */
-    public function distributionProvider()
+    public static function distributionProvider()
     {
         return [["wide"], ["narrow"]];
     }
@@ -95,7 +95,7 @@ class CollectionDisplayTest extends TestCase
     /**
      * Data provider for property gutter
      */
-    public function gutterProvider()
+    public static function gutterProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -118,7 +118,7 @@ class CollectionDisplayTest extends TestCase
     /**
      * Data provider for property maximumWidth
      */
-    public function maximumWidthProvider()
+    public static function maximumWidthProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -141,7 +141,7 @@ class CollectionDisplayTest extends TestCase
     /**
      * Data provider for property minimumWidth
      */
-    public function minimumWidthProvider()
+    public static function minimumWidthProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -164,7 +164,7 @@ class CollectionDisplayTest extends TestCase
     /**
      * Data provider for property rowSpacing
      */
-    public function rowSpacingProvider()
+    public static function rowSpacingProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -187,7 +187,7 @@ class CollectionDisplayTest extends TestCase
     /**
      * Data provider for property variableSizing
      */
-    public function variableSizingProvider()
+    public static function variableSizingProvider()
     {
         return [[true], [false]];
     }
@@ -210,7 +210,7 @@ class CollectionDisplayTest extends TestCase
     /**
      * Data provider for property widows
      */
-    public function widowsProvider()
+    public static function widowsProvider()
     {
         return [["equalize"], ["optimize"]];
     }

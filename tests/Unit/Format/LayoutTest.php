@@ -28,7 +28,7 @@ class LayoutTest extends TestCase
     /**
      * Data provider for property columns
      */
-    public function columnsProvider()
+    public static function columnsProvider()
     {
         return [[1]];
     }
@@ -51,7 +51,7 @@ class LayoutTest extends TestCase
     /**
      * Data provider for property width
      */
-    public function widthProvider()
+    public static function widthProvider()
     {
         return [[1]];
     }
@@ -74,7 +74,7 @@ class LayoutTest extends TestCase
     /**
      * Data provider for property gutter
      */
-    public function gutterProvider()
+    public static function gutterProvider()
     {
         return [[1]];
     }
@@ -97,7 +97,7 @@ class LayoutTest extends TestCase
     /**
      * Data provider for property margin
      */
-    public function marginProvider()
+    public static function marginProvider()
     {
         return [[1]];
     }

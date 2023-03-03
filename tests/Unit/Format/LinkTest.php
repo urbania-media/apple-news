@@ -26,7 +26,7 @@ class LinkTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["link"]];
     }
@@ -49,7 +49,7 @@ class LinkTest extends TestCase
     /**
      * Data provider for property URL
      */
-    public function URLProvider()
+    public static function URLProvider()
     {
         return [["http://example.com"], ["https://example.com"]];
     }
@@ -72,7 +72,7 @@ class LinkTest extends TestCase
     /**
      * Data provider for property rangeLength
      */
-    public function rangeLengthProvider()
+    public static function rangeLengthProvider()
     {
         return [[1]];
     }
@@ -95,7 +95,7 @@ class LinkTest extends TestCase
     /**
      * Data provider for property rangeStart
      */
-    public function rangeStartProvider()
+    public static function rangeStartProvider()
     {
         return [[1]];
     }

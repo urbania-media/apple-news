@@ -28,7 +28,7 @@ class TextStrokeStyleTest extends TestCase
     /**
      * Data provider for property color
      */
-    public function colorProvider()
+    public static function colorProvider()
     {
         return [["#fff"], ["#000"]];
     }
@@ -51,7 +51,7 @@ class TextStrokeStyleTest extends TestCase
     /**
      * Data provider for property width
      */
-    public function widthProvider()
+    public static function widthProvider()
     {
         return [[1]];
     }

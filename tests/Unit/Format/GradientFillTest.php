@@ -28,7 +28,7 @@ class GradientFillTest extends TestCase
     /**
      * Data provider for property colorStops
      */
-    public function colorStopsProvider()
+    public static function colorStopsProvider()
     {
         return [[[new \Urbania\AppleNews\Format\ColorStop()]]];
     }
@@ -51,7 +51,7 @@ class GradientFillTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["a string"]];
     }
@@ -74,7 +74,7 @@ class GradientFillTest extends TestCase
     /**
      * Data provider for property attachment
      */
-    public function attachmentProvider()
+    public static function attachmentProvider()
     {
         return [["fixed"], ["scroll"]];
     }

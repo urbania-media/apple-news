@@ -28,7 +28,7 @@ class AutoPlacementTest extends TestCase
     /**
      * Data provider for property advertisement
      */
-    public function advertisementProvider()
+    public static function advertisementProvider()
     {
         return [[new \Urbania\AppleNews\Format\AdvertisementAutoPlacement()]];
     }

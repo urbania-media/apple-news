@@ -28,7 +28,7 @@ class FadingStickyHeaderTest extends TestCase
     /**
      * Data provider for property fadeColor
      */
-    public function fadeColorProvider()
+    public static function fadeColorProvider()
     {
         return [["#fff"], ["#000"]];
     }
@@ -49,7 +49,7 @@ class FadingStickyHeaderTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["fading_sticky_header"]];
     }

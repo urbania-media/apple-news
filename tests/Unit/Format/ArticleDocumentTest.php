@@ -28,7 +28,7 @@ class ArticleDocumentTest extends TestCase
     /**
      * Data provider for property components
      */
-    public function componentsProvider()
+    public static function componentsProvider()
     {
         return [[[new \Urbania\AppleNews\Format\Component()]]];
     }
@@ -51,7 +51,7 @@ class ArticleDocumentTest extends TestCase
     /**
      * Data provider for property componentTextStyles
      */
-    public function componentTextStylesProvider()
+    public static function componentTextStylesProvider()
     {
         return [[new \Urbania\AppleNews\Format\ComponentTextStyles()]];
     }
@@ -74,7 +74,7 @@ class ArticleDocumentTest extends TestCase
     /**
      * Data provider for property identifier
      */
-    public function identifierProvider()
+    public static function identifierProvider()
     {
         return [["a string"]];
     }
@@ -97,7 +97,7 @@ class ArticleDocumentTest extends TestCase
     /**
      * Data provider for property language
      */
-    public function languageProvider()
+    public static function languageProvider()
     {
         return [["a string"]];
     }
@@ -120,7 +120,7 @@ class ArticleDocumentTest extends TestCase
     /**
      * Data provider for property layout
      */
-    public function layoutProvider()
+    public static function layoutProvider()
     {
         return [[new \Urbania\AppleNews\Format\Layout()]];
     }
@@ -143,7 +143,7 @@ class ArticleDocumentTest extends TestCase
     /**
      * Data provider for property title
      */
-    public function titleProvider()
+    public static function titleProvider()
     {
         return [["a string"]];
     }
@@ -166,7 +166,7 @@ class ArticleDocumentTest extends TestCase
     /**
      * Data provider for property version
      */
-    public function versionProvider()
+    public static function versionProvider()
     {
         return [["a string"]];
     }
@@ -189,7 +189,7 @@ class ArticleDocumentTest extends TestCase
     /**
      * Data provider for property advertisingSettings
      */
-    public function advertisingSettingsProvider()
+    public static function advertisingSettingsProvider()
     {
         return [[new \Urbania\AppleNews\Format\AdvertisingSettings()]];
     }
@@ -212,7 +212,7 @@ class ArticleDocumentTest extends TestCase
     /**
      * Data provider for property autoplacement
      */
-    public function autoplacementProvider()
+    public static function autoplacementProvider()
     {
         return [[new \Urbania\AppleNews\Format\AutoPlacement()]];
     }
@@ -235,7 +235,7 @@ class ArticleDocumentTest extends TestCase
     /**
      * Data provider for property componentLayouts
      */
-    public function componentLayoutsProvider()
+    public static function componentLayoutsProvider()
     {
         return [[new \Urbania\AppleNews\Format\ComponentLayouts()]];
     }
@@ -258,7 +258,7 @@ class ArticleDocumentTest extends TestCase
     /**
      * Data provider for property componentStyles
      */
-    public function componentStylesProvider()
+    public static function componentStylesProvider()
     {
         return [[new \Urbania\AppleNews\Format\ComponentStyles()]];
     }
@@ -281,7 +281,7 @@ class ArticleDocumentTest extends TestCase
     /**
      * Data provider for property documentStyle
      */
-    public function documentStyleProvider()
+    public static function documentStyleProvider()
     {
         return [[new \Urbania\AppleNews\Format\DocumentStyle()]];
     }
@@ -304,7 +304,7 @@ class ArticleDocumentTest extends TestCase
     /**
      * Data provider for property metadata
      */
-    public function metadataProvider()
+    public static function metadataProvider()
     {
         return [[new \Urbania\AppleNews\Format\Metadata()]];
     }
@@ -327,7 +327,7 @@ class ArticleDocumentTest extends TestCase
     /**
      * Data provider for property subtitle
      */
-    public function subtitleProvider()
+    public static function subtitleProvider()
     {
         return [["a string"]];
     }
@@ -350,7 +350,7 @@ class ArticleDocumentTest extends TestCase
     /**
      * Data provider for property textStyles
      */
-    public function textStylesProvider()
+    public static function textStylesProvider()
     {
         return [[new \Urbania\AppleNews\Format\TextStyles()]];
     }

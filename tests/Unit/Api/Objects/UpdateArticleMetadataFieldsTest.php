@@ -28,7 +28,7 @@ class UpdateArticleMetadataFieldsTest extends TestCase
     /**
      * Data provider for property accessoryText
      */
-    public function accessoryTextProvider()
+    public static function accessoryTextProvider()
     {
         return [["a string"]];
     }
@@ -51,7 +51,7 @@ class UpdateArticleMetadataFieldsTest extends TestCase
     /**
      * Data provider for property isCandidateToBeFeatured
      */
-    public function isCandidateToBeFeaturedProvider()
+    public static function isCandidateToBeFeaturedProvider()
     {
         return [[true], [false]];
     }
@@ -74,7 +74,7 @@ class UpdateArticleMetadataFieldsTest extends TestCase
     /**
      * Data provider for property isHidden
      */
-    public function isHiddenProvider()
+    public static function isHiddenProvider()
     {
         return [[true], [false]];
     }
@@ -97,7 +97,7 @@ class UpdateArticleMetadataFieldsTest extends TestCase
     /**
      * Data provider for property isPreview
      */
-    public function isPreviewProvider()
+    public static function isPreviewProvider()
     {
         return [[true], [false]];
     }
@@ -120,7 +120,7 @@ class UpdateArticleMetadataFieldsTest extends TestCase
     /**
      * Data provider for property isSponsored
      */
-    public function isSponsoredProvider()
+    public static function isSponsoredProvider()
     {
         return [[true], [false]];
     }
@@ -143,7 +143,7 @@ class UpdateArticleMetadataFieldsTest extends TestCase
     /**
      * Data provider for property maturityRating
      */
-    public function maturityRatingProvider()
+    public static function maturityRatingProvider()
     {
         return [["KIDS"], ["MATURE"], ["GENERAL"]];
     }
@@ -166,7 +166,7 @@ class UpdateArticleMetadataFieldsTest extends TestCase
     /**
      * Data provider for property revision
      */
-    public function revisionProvider()
+    public static function revisionProvider()
     {
         return [["a string"]];
     }
@@ -189,7 +189,7 @@ class UpdateArticleMetadataFieldsTest extends TestCase
     /**
      * Data provider for property links
      */
-    public function linksProvider()
+    public static function linksProvider()
     {
         return [[new \Urbania\AppleNews\Api\Objects\ArticleLinks()]];
     }

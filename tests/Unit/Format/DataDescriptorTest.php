@@ -28,7 +28,7 @@ class DataDescriptorTest extends TestCase
     /**
      * Data provider for property dataType
      */
-    public function dataTypeProvider()
+    public static function dataTypeProvider()
     {
         return [
             ["string"],
@@ -58,7 +58,7 @@ class DataDescriptorTest extends TestCase
     /**
      * Data provider for property key
      */
-    public function keyProvider()
+    public static function keyProvider()
     {
         return [["a string"]];
     }
@@ -81,7 +81,7 @@ class DataDescriptorTest extends TestCase
     /**
      * Data provider for property format
      */
-    public function formatProvider()
+    public static function formatProvider()
     {
         return [[new \Urbania\AppleNews\Format\DataFormat()]];
     }
@@ -104,7 +104,7 @@ class DataDescriptorTest extends TestCase
     /**
      * Data provider for property identifier
      */
-    public function identifierProvider()
+    public static function identifierProvider()
     {
         return [["a string"]];
     }
@@ -127,7 +127,7 @@ class DataDescriptorTest extends TestCase
     /**
      * Data provider for property label
      */
-    public function labelProvider()
+    public static function labelProvider()
     {
         return [[new \Urbania\AppleNews\Format\FormattedText()], ["a string"]];
     }

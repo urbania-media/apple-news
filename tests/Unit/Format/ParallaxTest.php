@@ -26,7 +26,7 @@ class ParallaxTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["parallax"]];
     }
@@ -49,7 +49,7 @@ class ParallaxTest extends TestCase
     /**
      * Data provider for property factor
      */
-    public function factorProvider()
+    public static function factorProvider()
     {
         return [[1.1], [1]];
     }

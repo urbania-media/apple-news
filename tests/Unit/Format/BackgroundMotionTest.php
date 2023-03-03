@@ -26,7 +26,7 @@ class BackgroundMotionTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["background_motion"]];
     }

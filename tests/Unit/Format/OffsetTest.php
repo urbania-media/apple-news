@@ -28,7 +28,7 @@ class OffsetTest extends TestCase
     /**
      * Data provider for property x
      */
-    public function xProvider()
+    public static function xProvider()
     {
         return [[1.1], [1]];
     }
@@ -51,7 +51,7 @@ class OffsetTest extends TestCase
     /**
      * Data provider for property y
      */
-    public function yProvider()
+    public static function yProvider()
     {
         return [[1.1], [1]];
     }

@@ -28,7 +28,7 @@ class ErrorTest extends TestCase
     /**
      * Data provider for property code
      */
-    public function codeProvider()
+    public static function codeProvider()
     {
         return [["a code"]];
     }
@@ -51,7 +51,7 @@ class ErrorTest extends TestCase
     /**
      * Data provider for property keyPath
      */
-    public function keyPathProvider()
+    public static function keyPathProvider()
     {
         return [[[]]];
     }
@@ -74,7 +74,7 @@ class ErrorTest extends TestCase
     /**
      * Data provider for property message
      */
-    public function messageProvider()
+    public static function messageProvider()
     {
         return [["a string"]];
     }
@@ -97,7 +97,7 @@ class ErrorTest extends TestCase
     /**
      * Data provider for property status
      */
-    public function statusProvider()
+    public static function statusProvider()
     {
         return [[200], [400]];
     }
@@ -120,7 +120,7 @@ class ErrorTest extends TestCase
     /**
      * Data provider for property value
      */
-    public function valueProvider()
+    public static function valueProvider()
     {
         return [["a string"]];
     }

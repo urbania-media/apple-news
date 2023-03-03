@@ -2,6 +2,8 @@
 
 namespace Urbania\AppleNews\Support;
 
+use Traversable;
+
 abstract class BaseSdkObject extends BaseObject
 {
     /**
@@ -44,7 +46,7 @@ abstract class BaseSdkObject extends BaseObject
      * Get the object iterator
      * @return \Iterator
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new BaseObjectIterator($this, array_keys(get_object_vars($this)));
     }

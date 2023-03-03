@@ -26,7 +26,7 @@ class FloatDataFormatTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["float"]];
     }
@@ -49,7 +49,7 @@ class FloatDataFormatTest extends TestCase
     /**
      * Data provider for property decimals
      */
-    public function decimalsProvider()
+    public static function decimalsProvider()
     {
         return [[1]];
     }

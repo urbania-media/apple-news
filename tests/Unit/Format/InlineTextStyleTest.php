@@ -28,7 +28,7 @@ class InlineTextStyleTest extends TestCase
     /**
      * Data provider for property rangeLength
      */
-    public function rangeLengthProvider()
+    public static function rangeLengthProvider()
     {
         return [[1]];
     }
@@ -51,7 +51,7 @@ class InlineTextStyleTest extends TestCase
     /**
      * Data provider for property rangeStart
      */
-    public function rangeStartProvider()
+    public static function rangeStartProvider()
     {
         return [[1]];
     }
@@ -74,7 +74,7 @@ class InlineTextStyleTest extends TestCase
     /**
      * Data provider for property textStyle
      */
-    public function textStyleProvider()
+    public static function textStyleProvider()
     {
         return [[new \Urbania\AppleNews\Format\TextStyle()], ["a string"]];
     }

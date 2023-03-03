@@ -28,7 +28,7 @@ class ConditionalSectionTest extends TestCase
     /**
      * Data provider for property conditions
      */
-    public function conditionsProvider()
+    public static function conditionsProvider()
     {
         return [[[new \Urbania\AppleNews\Format\Condition()]]];
     }
@@ -51,7 +51,7 @@ class ConditionalSectionTest extends TestCase
     /**
      * Data provider for property anchor
      */
-    public function anchorProvider()
+    public static function anchorProvider()
     {
         return [[new \Urbania\AppleNews\Format\Anchor()]];
     }
@@ -74,7 +74,7 @@ class ConditionalSectionTest extends TestCase
     /**
      * Data provider for property animation
      */
-    public function animationProvider()
+    public static function animationProvider()
     {
         return [[new \Urbania\AppleNews\Format\ComponentAnimation()]];
     }
@@ -97,7 +97,7 @@ class ConditionalSectionTest extends TestCase
     /**
      * Data provider for property behavior
      */
-    public function behaviorProvider()
+    public static function behaviorProvider()
     {
         return [[new \Urbania\AppleNews\Format\Behavior()]];
     }
@@ -120,7 +120,7 @@ class ConditionalSectionTest extends TestCase
     /**
      * Data provider for property hidden
      */
-    public function hiddenProvider()
+    public static function hiddenProvider()
     {
         return [[true], [false]];
     }
@@ -143,7 +143,7 @@ class ConditionalSectionTest extends TestCase
     /**
      * Data provider for property layout
      */
-    public function layoutProvider()
+    public static function layoutProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\ComponentLayout()],
@@ -169,7 +169,7 @@ class ConditionalSectionTest extends TestCase
     /**
      * Data provider for property scene
      */
-    public function sceneProvider()
+    public static function sceneProvider()
     {
         return [[new \Urbania\AppleNews\Format\Scene()]];
     }
@@ -192,7 +192,7 @@ class ConditionalSectionTest extends TestCase
     /**
      * Data provider for property style
      */
-    public function styleProvider()
+    public static function styleProvider()
     {
         return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
     }

@@ -28,7 +28,7 @@ class FillTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [
             ["linear_gradient"],
@@ -56,7 +56,7 @@ class FillTest extends TestCase
     /**
      * Data provider for property attachment
      */
-    public function attachmentProvider()
+    public static function attachmentProvider()
     {
         return [["fixed"], ["scroll"]];
     }

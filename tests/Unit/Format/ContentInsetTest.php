@@ -28,7 +28,7 @@ class ContentInsetTest extends TestCase
     /**
      * Data provider for property bottom
      */
-    public function bottomProvider()
+    public static function bottomProvider()
     {
         return [[true], [false]];
     }
@@ -51,7 +51,7 @@ class ContentInsetTest extends TestCase
     /**
      * Data provider for property left
      */
-    public function leftProvider()
+    public static function leftProvider()
     {
         return [[true], [false]];
     }
@@ -74,7 +74,7 @@ class ContentInsetTest extends TestCase
     /**
      * Data provider for property right
      */
-    public function rightProvider()
+    public static function rightProvider()
     {
         return [[true], [false]];
     }
@@ -97,7 +97,7 @@ class ContentInsetTest extends TestCase
     /**
      * Data provider for property top
      */
-    public function topProvider()
+    public static function topProvider()
     {
         return [[true], [false]];
     }

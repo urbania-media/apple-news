@@ -28,7 +28,7 @@ class ConditionalAutoPlacementTest extends TestCase
     /**
      * Data provider for property conditions
      */
-    public function conditionsProvider()
+    public static function conditionsProvider()
     {
         return [[[new \Urbania\AppleNews\Format\Condition()]]];
     }
@@ -51,7 +51,7 @@ class ConditionalAutoPlacementTest extends TestCase
     /**
      * Data provider for property enabled
      */
-    public function enabledProvider()
+    public static function enabledProvider()
     {
         return [[true], [false]];
     }
@@ -74,7 +74,7 @@ class ConditionalAutoPlacementTest extends TestCase
     /**
      * Data provider for property layout
      */
-    public function layoutProvider()
+    public static function layoutProvider()
     {
         return [[new \Urbania\AppleNews\Format\AutoPlacementLayout()]];
     }

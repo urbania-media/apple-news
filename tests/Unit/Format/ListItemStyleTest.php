@@ -28,7 +28,7 @@ class ListItemStyleTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [
             ["bullet"],
@@ -60,7 +60,7 @@ class ListItemStyleTest extends TestCase
     /**
      * Data provider for property character
      */
-    public function characterProvider()
+    public static function characterProvider()
     {
         return [["a string"]];
     }

@@ -28,7 +28,7 @@ class RecordsTest extends TestCase
     /**
      * Data provider for property data
      */
-    public function dataProvider()
+    public static function dataProvider()
     {
         return [[["test" => "value"]]];
     }

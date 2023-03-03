@@ -28,7 +28,7 @@ class SearchResponseLinksTest extends TestCase
     /**
      * Data provider for property self
      */
-    public function selfProvider()
+    public static function selfProvider()
     {
         return [["a string"]];
     }
@@ -51,7 +51,7 @@ class SearchResponseLinksTest extends TestCase
     /**
      * Data provider for property next
      */
-    public function nextProvider()
+    public static function nextProvider()
     {
         return [["a string"]];
     }

@@ -28,7 +28,7 @@ class CaptionDescriptorTest extends TestCase
     /**
      * Data provider for property text
      */
-    public function textProvider()
+    public static function textProvider()
     {
         return [["a string"]];
     }
@@ -51,7 +51,7 @@ class CaptionDescriptorTest extends TestCase
     /**
      * Data provider for property additions
      */
-    public function additionsProvider()
+    public static function additionsProvider()
     {
         return [[[new \Urbania\AppleNews\Format\Addition()]]];
     }
@@ -74,7 +74,7 @@ class CaptionDescriptorTest extends TestCase
     /**
      * Data provider for property format
      */
-    public function formatProvider()
+    public static function formatProvider()
     {
         return [["markdown"], ["html"], ["none"]];
     }
@@ -97,7 +97,7 @@ class CaptionDescriptorTest extends TestCase
     /**
      * Data provider for property inlineTextStyles
      */
-    public function inlineTextStylesProvider()
+    public static function inlineTextStylesProvider()
     {
         return [[[new \Urbania\AppleNews\Format\InlineTextStyle()]]];
     }
@@ -120,7 +120,7 @@ class CaptionDescriptorTest extends TestCase
     /**
      * Data provider for property textStyle
      */
-    public function textStyleProvider()
+    public static function textStyleProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\ComponentTextStyle()],

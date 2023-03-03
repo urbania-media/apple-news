@@ -28,7 +28,7 @@ class PaddingTest extends TestCase
     /**
      * Data provider for property bottom
      */
-    public function bottomProvider()
+    public static function bottomProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -51,7 +51,7 @@ class PaddingTest extends TestCase
     /**
      * Data provider for property left
      */
-    public function leftProvider()
+    public static function leftProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -74,7 +74,7 @@ class PaddingTest extends TestCase
     /**
      * Data provider for property right
      */
-    public function rightProvider()
+    public static function rightProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -97,7 +97,7 @@ class PaddingTest extends TestCase
     /**
      * Data provider for property top
      */
-    public function topProvider()
+    public static function topProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }

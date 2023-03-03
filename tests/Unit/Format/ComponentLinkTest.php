@@ -26,7 +26,7 @@ class ComponentLinkTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["link"]];
     }
@@ -49,7 +49,7 @@ class ComponentLinkTest extends TestCase
     /**
      * Data provider for property URL
      */
-    public function URLProvider()
+    public static function URLProvider()
     {
         return [["http://example.com"], ["https://example.com"]];
     }

@@ -28,7 +28,7 @@ class ColorStopTest extends TestCase
     /**
      * Data provider for property color
      */
-    public function colorProvider()
+    public static function colorProvider()
     {
         return [["#fff"], ["#000"]];
     }
@@ -51,7 +51,7 @@ class ColorStopTest extends TestCase
     /**
      * Data provider for property location
      */
-    public function locationProvider()
+    public static function locationProvider()
     {
         return [[1.1], [1]];
     }

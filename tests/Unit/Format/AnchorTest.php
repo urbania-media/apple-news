@@ -28,7 +28,7 @@ class AnchorTest extends TestCase
     /**
      * Data provider for property targetAnchorPosition
      */
-    public function targetAnchorPositionProvider()
+    public static function targetAnchorPositionProvider()
     {
         return [["top"], ["center"], ["bottom"]];
     }
@@ -51,7 +51,7 @@ class AnchorTest extends TestCase
     /**
      * Data provider for property originAnchorPosition
      */
-    public function originAnchorPositionProvider()
+    public static function originAnchorPositionProvider()
     {
         return [["top"], ["center"], ["bottom"]];
     }
@@ -74,7 +74,7 @@ class AnchorTest extends TestCase
     /**
      * Data provider for property rangeLength
      */
-    public function rangeLengthProvider()
+    public static function rangeLengthProvider()
     {
         return [[1]];
     }
@@ -97,7 +97,7 @@ class AnchorTest extends TestCase
     /**
      * Data provider for property rangeStart
      */
-    public function rangeStartProvider()
+    public static function rangeStartProvider()
     {
         return [[1]];
     }
@@ -120,7 +120,7 @@ class AnchorTest extends TestCase
     /**
      * Data provider for property target
      */
-    public function targetProvider()
+    public static function targetProvider()
     {
         return [["a string"]];
     }
@@ -143,7 +143,7 @@ class AnchorTest extends TestCase
     /**
      * Data provider for property targetComponentIdentifier
      */
-    public function targetComponentIdentifierProvider()
+    public static function targetComponentIdentifierProvider()
     {
         return [["a string"]];
     }

@@ -28,7 +28,7 @@ class TableRowSelectorTest extends TestCase
     /**
      * Data provider for property descriptor
      */
-    public function descriptorProvider()
+    public static function descriptorProvider()
     {
         return [["a string"]];
     }
@@ -51,7 +51,7 @@ class TableRowSelectorTest extends TestCase
     /**
      * Data provider for property rowIndex
      */
-    public function rowIndexProvider()
+    public static function rowIndexProvider()
     {
         return [[1]];
     }
@@ -74,7 +74,7 @@ class TableRowSelectorTest extends TestCase
     /**
      * Data provider for property odd
      */
-    public function oddProvider()
+    public static function oddProvider()
     {
         return [[true], [false]];
     }
@@ -97,7 +97,7 @@ class TableRowSelectorTest extends TestCase
     /**
      * Data provider for property even
      */
-    public function evenProvider()
+    public static function evenProvider()
     {
         return [[true], [false]];
     }

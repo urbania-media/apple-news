@@ -28,7 +28,7 @@ class CornerMaskTest extends TestCase
     /**
      * Data provider for property bottomLeft
      */
-    public function bottomLeftProvider()
+    public static function bottomLeftProvider()
     {
         return [[true], [false]];
     }
@@ -51,7 +51,7 @@ class CornerMaskTest extends TestCase
     /**
      * Data provider for property bottomRight
      */
-    public function bottomRightProvider()
+    public static function bottomRightProvider()
     {
         return [[true], [false]];
     }
@@ -74,7 +74,7 @@ class CornerMaskTest extends TestCase
     /**
      * Data provider for property radius
      */
-    public function radiusProvider()
+    public static function radiusProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -97,7 +97,7 @@ class CornerMaskTest extends TestCase
     /**
      * Data provider for property topLeft
      */
-    public function topLeftProvider()
+    public static function topLeftProvider()
     {
         return [[true], [false]];
     }
@@ -120,7 +120,7 @@ class CornerMaskTest extends TestCase
     /**
      * Data provider for property topRight
      */
-    public function topRightProvider()
+    public static function topRightProvider()
     {
         return [[true], [false]];
     }
@@ -143,7 +143,7 @@ class CornerMaskTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["a string"]];
     }

@@ -28,7 +28,7 @@ class ConditionalTableRowStyleTest extends TestCase
     /**
      * Data provider for property selectors
      */
-    public function selectorsProvider()
+    public static function selectorsProvider()
     {
         return [[[new \Urbania\AppleNews\Format\TableRowSelector()]]];
     }
@@ -51,7 +51,7 @@ class ConditionalTableRowStyleTest extends TestCase
     /**
      * Data provider for property backgroundColor
      */
-    public function backgroundColorProvider()
+    public static function backgroundColorProvider()
     {
         return [["#fff"], ["#000"]];
     }
@@ -74,7 +74,7 @@ class ConditionalTableRowStyleTest extends TestCase
     /**
      * Data provider for property divider
      */
-    public function dividerProvider()
+    public static function dividerProvider()
     {
         return [[new \Urbania\AppleNews\Format\TableStrokeStyle()]];
     }
@@ -97,7 +97,7 @@ class ConditionalTableRowStyleTest extends TestCase
     /**
      * Data provider for property height
      */
-    public function heightProvider()
+    public static function heightProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }

@@ -28,7 +28,7 @@ class ArticleLinksTest extends TestCase
     /**
      * Data provider for property channel
      */
-    public function channelProvider()
+    public static function channelProvider()
     {
         return [["a string"]];
     }
@@ -51,7 +51,7 @@ class ArticleLinksTest extends TestCase
     /**
      * Data provider for property sections
      */
-    public function sectionsProvider()
+    public static function sectionsProvider()
     {
         return [[[]]];
     }
@@ -74,7 +74,7 @@ class ArticleLinksTest extends TestCase
     /**
      * Data provider for property self
      */
-    public function selfProvider()
+    public static function selfProvider()
     {
         return [["a string"]];
     }

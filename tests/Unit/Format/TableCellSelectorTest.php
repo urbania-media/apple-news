@@ -28,7 +28,7 @@ class TableCellSelectorTest extends TestCase
     /**
      * Data provider for property columnIndex
      */
-    public function columnIndexProvider()
+    public static function columnIndexProvider()
     {
         return [[1]];
     }
@@ -51,7 +51,7 @@ class TableCellSelectorTest extends TestCase
     /**
      * Data provider for property descriptor
      */
-    public function descriptorProvider()
+    public static function descriptorProvider()
     {
         return [["a string"]];
     }
@@ -74,7 +74,7 @@ class TableCellSelectorTest extends TestCase
     /**
      * Data provider for property evenColumns
      */
-    public function evenColumnsProvider()
+    public static function evenColumnsProvider()
     {
         return [[true], [false]];
     }
@@ -97,7 +97,7 @@ class TableCellSelectorTest extends TestCase
     /**
      * Data provider for property evenRows
      */
-    public function evenRowsProvider()
+    public static function evenRowsProvider()
     {
         return [[true], [false]];
     }
@@ -120,7 +120,7 @@ class TableCellSelectorTest extends TestCase
     /**
      * Data provider for property oddColumns
      */
-    public function oddColumnsProvider()
+    public static function oddColumnsProvider()
     {
         return [[true], [false]];
     }
@@ -143,7 +143,7 @@ class TableCellSelectorTest extends TestCase
     /**
      * Data provider for property oddRows
      */
-    public function oddRowsProvider()
+    public static function oddRowsProvider()
     {
         return [[true], [false]];
     }
@@ -166,7 +166,7 @@ class TableCellSelectorTest extends TestCase
     /**
      * Data provider for property rowIndex
      */
-    public function rowIndexProvider()
+    public static function rowIndexProvider()
     {
         return [[1]];
     }

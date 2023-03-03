@@ -28,7 +28,7 @@ class ConditionalComponentStyleTest extends TestCase
     /**
      * Data provider for property conditions
      */
-    public function conditionsProvider()
+    public static function conditionsProvider()
     {
         return [[[new \Urbania\AppleNews\Format\Condition()]]];
     }
@@ -51,7 +51,7 @@ class ConditionalComponentStyleTest extends TestCase
     /**
      * Data provider for property backgroundColor
      */
-    public function backgroundColorProvider()
+    public static function backgroundColorProvider()
     {
         return [["#fff"], ["#000"]];
     }
@@ -74,7 +74,7 @@ class ConditionalComponentStyleTest extends TestCase
     /**
      * Data provider for property border
      */
-    public function borderProvider()
+    public static function borderProvider()
     {
         return [[new \Urbania\AppleNews\Format\Border()]];
     }
@@ -97,7 +97,7 @@ class ConditionalComponentStyleTest extends TestCase
     /**
      * Data provider for property fill
      */
-    public function fillProvider()
+    public static function fillProvider()
     {
         return [[new \Urbania\AppleNews\Format\Fill()]];
     }
@@ -120,7 +120,7 @@ class ConditionalComponentStyleTest extends TestCase
     /**
      * Data provider for property mask
      */
-    public function maskProvider()
+    public static function maskProvider()
     {
         return [[new \Urbania\AppleNews\Format\CornerMask()]];
     }
@@ -143,7 +143,7 @@ class ConditionalComponentStyleTest extends TestCase
     /**
      * Data provider for property opacity
      */
-    public function opacityProvider()
+    public static function opacityProvider()
     {
         return [[1.1], [1]];
     }
@@ -166,7 +166,7 @@ class ConditionalComponentStyleTest extends TestCase
     /**
      * Data provider for property tableStyle
      */
-    public function tableStyleProvider()
+    public static function tableStyleProvider()
     {
         return [[new \Urbania\AppleNews\Format\TableStyle()]];
     }

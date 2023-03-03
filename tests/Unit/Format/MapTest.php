@@ -28,7 +28,7 @@ class MapTest extends TestCase
     /**
      * Data provider for property latitude
      */
-    public function latitudeProvider()
+    public static function latitudeProvider()
     {
         return [[1.1], [1]];
     }
@@ -51,7 +51,7 @@ class MapTest extends TestCase
     /**
      * Data provider for property longitude
      */
-    public function longitudeProvider()
+    public static function longitudeProvider()
     {
         return [[1.1], [1]];
     }
@@ -72,7 +72,7 @@ class MapTest extends TestCase
     /**
      * Data provider for property role
      */
-    public function roleProvider()
+    public static function roleProvider()
     {
         return [["map"]];
     }
@@ -95,7 +95,7 @@ class MapTest extends TestCase
     /**
      * Data provider for property accessibilityCaption
      */
-    public function accessibilityCaptionProvider()
+    public static function accessibilityCaptionProvider()
     {
         return [["a string"]];
     }
@@ -118,7 +118,7 @@ class MapTest extends TestCase
     /**
      * Data provider for property anchor
      */
-    public function anchorProvider()
+    public static function anchorProvider()
     {
         return [[new \Urbania\AppleNews\Format\Anchor()]];
     }
@@ -141,7 +141,7 @@ class MapTest extends TestCase
     /**
      * Data provider for property animation
      */
-    public function animationProvider()
+    public static function animationProvider()
     {
         return [[new \Urbania\AppleNews\Format\ComponentAnimation()]];
     }
@@ -164,7 +164,7 @@ class MapTest extends TestCase
     /**
      * Data provider for property behavior
      */
-    public function behaviorProvider()
+    public static function behaviorProvider()
     {
         return [[new \Urbania\AppleNews\Format\Behavior()]];
     }
@@ -187,7 +187,7 @@ class MapTest extends TestCase
     /**
      * Data provider for property caption
      */
-    public function captionProvider()
+    public static function captionProvider()
     {
         return [["a string"]];
     }
@@ -210,7 +210,7 @@ class MapTest extends TestCase
     /**
      * Data provider for property conditional
      */
-    public function conditionalProvider()
+    public static function conditionalProvider()
     {
         return [[[new \Urbania\AppleNews\Format\ConditionalComponent()]]];
     }
@@ -233,7 +233,7 @@ class MapTest extends TestCase
     /**
      * Data provider for property hidden
      */
-    public function hiddenProvider()
+    public static function hiddenProvider()
     {
         return [[true], [false]];
     }
@@ -256,7 +256,7 @@ class MapTest extends TestCase
     /**
      * Data provider for property identifier
      */
-    public function identifierProvider()
+    public static function identifierProvider()
     {
         return [["a string"]];
     }
@@ -279,7 +279,7 @@ class MapTest extends TestCase
     /**
      * Data provider for property items
      */
-    public function itemsProvider()
+    public static function itemsProvider()
     {
         return [[[new \Urbania\AppleNews\Format\MapItem()]]];
     }
@@ -302,7 +302,7 @@ class MapTest extends TestCase
     /**
      * Data provider for property layout
      */
-    public function layoutProvider()
+    public static function layoutProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\ComponentLayout()],
@@ -328,7 +328,7 @@ class MapTest extends TestCase
     /**
      * Data provider for property mapType
      */
-    public function mapTypeProvider()
+    public static function mapTypeProvider()
     {
         return [["standard"], ["hybrid"], ["satellite"]];
     }
@@ -351,7 +351,7 @@ class MapTest extends TestCase
     /**
      * Data provider for property span
      */
-    public function spanProvider()
+    public static function spanProvider()
     {
         return [[new \Urbania\AppleNews\Format\MapSpan()]];
     }
@@ -374,7 +374,7 @@ class MapTest extends TestCase
     /**
      * Data provider for property style
      */
-    public function styleProvider()
+    public static function styleProvider()
     {
         return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
     }

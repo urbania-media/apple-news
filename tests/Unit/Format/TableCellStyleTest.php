@@ -28,7 +28,7 @@ class TableCellStyleTest extends TestCase
     /**
      * Data provider for property backgroundColor
      */
-    public function backgroundColorProvider()
+    public static function backgroundColorProvider()
     {
         return [["#fff"], ["#000"]];
     }
@@ -51,7 +51,7 @@ class TableCellStyleTest extends TestCase
     /**
      * Data provider for property border
      */
-    public function borderProvider()
+    public static function borderProvider()
     {
         return [[new \Urbania\AppleNews\Format\TableBorder()]];
     }
@@ -74,7 +74,7 @@ class TableCellStyleTest extends TestCase
     /**
      * Data provider for property conditional
      */
-    public function conditionalProvider()
+    public static function conditionalProvider()
     {
         return [[[new \Urbania\AppleNews\Format\ConditionalTableCellStyle()]]];
     }
@@ -97,7 +97,7 @@ class TableCellStyleTest extends TestCase
     /**
      * Data provider for property height
      */
-    public function heightProvider()
+    public static function heightProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -120,7 +120,7 @@ class TableCellStyleTest extends TestCase
     /**
      * Data provider for property horizontalAlignment
      */
-    public function horizontalAlignmentProvider()
+    public static function horizontalAlignmentProvider()
     {
         return [["left"], ["center"], ["right"]];
     }
@@ -143,7 +143,7 @@ class TableCellStyleTest extends TestCase
     /**
      * Data provider for property minimumWidth
      */
-    public function minimumWidthProvider()
+    public static function minimumWidthProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -166,7 +166,7 @@ class TableCellStyleTest extends TestCase
     /**
      * Data provider for property padding
      */
-    public function paddingProvider()
+    public static function paddingProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\Padding()],
@@ -195,7 +195,7 @@ class TableCellStyleTest extends TestCase
     /**
      * Data provider for property textStyle
      */
-    public function textStyleProvider()
+    public static function textStyleProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\ComponentTextStyle()],
@@ -221,7 +221,7 @@ class TableCellStyleTest extends TestCase
     /**
      * Data provider for property verticalAlignment
      */
-    public function verticalAlignmentProvider()
+    public static function verticalAlignmentProvider()
     {
         return [["top"], ["center"], ["bottom"]];
     }
@@ -244,7 +244,7 @@ class TableCellStyleTest extends TestCase
     /**
      * Data provider for property width
      */
-    public function widthProvider()
+    public static function widthProvider()
     {
         return [[1]];
     }

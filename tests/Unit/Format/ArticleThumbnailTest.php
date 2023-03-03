@@ -26,7 +26,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property role
      */
-    public function roleProvider()
+    public static function roleProvider()
     {
         return [["article_thumbnail"]];
     }
@@ -49,7 +49,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property accessibilityCaption
      */
-    public function accessibilityCaptionProvider()
+    public static function accessibilityCaptionProvider()
     {
         return [["a string"]];
     }
@@ -72,7 +72,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property additions
      */
-    public function additionsProvider()
+    public static function additionsProvider()
     {
         return [[[new \Urbania\AppleNews\Format\ComponentLink()]]];
     }
@@ -95,7 +95,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property anchor
      */
-    public function anchorProvider()
+    public static function anchorProvider()
     {
         return [[new \Urbania\AppleNews\Format\Anchor()]];
     }
@@ -118,7 +118,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property animation
      */
-    public function animationProvider()
+    public static function animationProvider()
     {
         return [[new \Urbania\AppleNews\Format\ComponentAnimation()]];
     }
@@ -141,7 +141,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property aspectRatio
      */
-    public function aspectRatioProvider()
+    public static function aspectRatioProvider()
     {
         return [[1.1]];
     }
@@ -164,7 +164,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property behavior
      */
-    public function behaviorProvider()
+    public static function behaviorProvider()
     {
         return [[new \Urbania\AppleNews\Format\Behavior()]];
     }
@@ -187,7 +187,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property caption
      */
-    public function captionProvider()
+    public static function captionProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\CaptionDescriptor()],
@@ -213,7 +213,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property conditional
      */
-    public function conditionalProvider()
+    public static function conditionalProvider()
     {
         return [[[new \Urbania\AppleNews\Format\ConditionalComponent()]]];
     }
@@ -236,7 +236,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property explicitContent
      */
-    public function explicitContentProvider()
+    public static function explicitContentProvider()
     {
         return [[true], [false]];
     }
@@ -259,7 +259,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property fillMode
      */
-    public function fillModeProvider()
+    public static function fillModeProvider()
     {
         return [["cover"], ["fit"]];
     }
@@ -282,7 +282,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property hidden
      */
-    public function hiddenProvider()
+    public static function hiddenProvider()
     {
         return [[true], [false]];
     }
@@ -305,7 +305,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property horizontalAlignment
      */
-    public function horizontalAlignmentProvider()
+    public static function horizontalAlignmentProvider()
     {
         return [["left"], ["center"], ["right"]];
     }
@@ -328,7 +328,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property identifier
      */
-    public function identifierProvider()
+    public static function identifierProvider()
     {
         return [["a string"]];
     }
@@ -351,7 +351,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property layout
      */
-    public function layoutProvider()
+    public static function layoutProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\ComponentLayout()],
@@ -377,7 +377,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property style
      */
-    public function styleProvider()
+    public static function styleProvider()
     {
         return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
     }
@@ -400,7 +400,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property URL
      */
-    public function URLProvider()
+    public static function URLProvider()
     {
         return [["http://example.com"], ["https://example.com"]];
     }
@@ -423,7 +423,7 @@ class ArticleThumbnailTest extends TestCase
     /**
      * Data provider for property verticalAlignment
      */
-    public function verticalAlignmentProvider()
+    public static function verticalAlignmentProvider()
     {
         return [["top"], ["center"], ["bottom"]];
     }

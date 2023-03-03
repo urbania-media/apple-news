@@ -28,7 +28,7 @@ class HeadingTest extends TestCase
     /**
      * Data provider for property role
      */
-    public function roleProvider()
+    public static function roleProvider()
     {
         return [
             ["heading"],
@@ -59,7 +59,7 @@ class HeadingTest extends TestCase
     /**
      * Data provider for property text
      */
-    public function textProvider()
+    public static function textProvider()
     {
         return [["a string"]];
     }
@@ -82,7 +82,7 @@ class HeadingTest extends TestCase
     /**
      * Data provider for property additions
      */
-    public function additionsProvider()
+    public static function additionsProvider()
     {
         return [[[new \Urbania\AppleNews\Format\Addition()]]];
     }
@@ -105,7 +105,7 @@ class HeadingTest extends TestCase
     /**
      * Data provider for property anchor
      */
-    public function anchorProvider()
+    public static function anchorProvider()
     {
         return [[new \Urbania\AppleNews\Format\Anchor()]];
     }
@@ -128,7 +128,7 @@ class HeadingTest extends TestCase
     /**
      * Data provider for property animation
      */
-    public function animationProvider()
+    public static function animationProvider()
     {
         return [[new \Urbania\AppleNews\Format\ComponentAnimation()]];
     }
@@ -151,7 +151,7 @@ class HeadingTest extends TestCase
     /**
      * Data provider for property behavior
      */
-    public function behaviorProvider()
+    public static function behaviorProvider()
     {
         return [[new \Urbania\AppleNews\Format\Behavior()]];
     }
@@ -174,7 +174,7 @@ class HeadingTest extends TestCase
     /**
      * Data provider for property conditional
      */
-    public function conditionalProvider()
+    public static function conditionalProvider()
     {
         return [[[new \Urbania\AppleNews\Format\ConditionalText()]]];
     }
@@ -197,7 +197,7 @@ class HeadingTest extends TestCase
     /**
      * Data provider for property format
      */
-    public function formatProvider()
+    public static function formatProvider()
     {
         return [["markdown"], ["html"], ["none"]];
     }
@@ -220,7 +220,7 @@ class HeadingTest extends TestCase
     /**
      * Data provider for property hidden
      */
-    public function hiddenProvider()
+    public static function hiddenProvider()
     {
         return [[true], [false]];
     }
@@ -243,7 +243,7 @@ class HeadingTest extends TestCase
     /**
      * Data provider for property identifier
      */
-    public function identifierProvider()
+    public static function identifierProvider()
     {
         return [["a string"]];
     }
@@ -266,7 +266,7 @@ class HeadingTest extends TestCase
     /**
      * Data provider for property inlineTextStyles
      */
-    public function inlineTextStylesProvider()
+    public static function inlineTextStylesProvider()
     {
         return [[[new \Urbania\AppleNews\Format\InlineTextStyle()]]];
     }
@@ -289,7 +289,7 @@ class HeadingTest extends TestCase
     /**
      * Data provider for property layout
      */
-    public function layoutProvider()
+    public static function layoutProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\ComponentLayout()],
@@ -315,7 +315,7 @@ class HeadingTest extends TestCase
     /**
      * Data provider for property style
      */
-    public function styleProvider()
+    public static function styleProvider()
     {
         return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
     }
@@ -338,7 +338,7 @@ class HeadingTest extends TestCase
     /**
      * Data provider for property textStyle
      */
-    public function textStyleProvider()
+    public static function textStyleProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\ComponentTextStyle()],

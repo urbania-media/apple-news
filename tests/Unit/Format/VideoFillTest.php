@@ -28,7 +28,7 @@ class VideoFillTest extends TestCase
     /**
      * Data provider for property stillURL
      */
-    public function stillURLProvider()
+    public static function stillURLProvider()
     {
         return [["http://example.com"], ["https://example.com"]];
     }
@@ -49,7 +49,7 @@ class VideoFillTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["video"]];
     }
@@ -72,7 +72,7 @@ class VideoFillTest extends TestCase
     /**
      * Data provider for property URL
      */
-    public function URLProvider()
+    public static function URLProvider()
     {
         return [["http://example.com"], ["https://example.com"]];
     }
@@ -95,7 +95,7 @@ class VideoFillTest extends TestCase
     /**
      * Data provider for property attachment
      */
-    public function attachmentProvider()
+    public static function attachmentProvider()
     {
         return [["fixed"], ["scroll"]];
     }
@@ -118,7 +118,7 @@ class VideoFillTest extends TestCase
     /**
      * Data provider for property fillMode
      */
-    public function fillModeProvider()
+    public static function fillModeProvider()
     {
         return [["fit"], ["cover"]];
     }
@@ -141,7 +141,7 @@ class VideoFillTest extends TestCase
     /**
      * Data provider for property horizontalAlignment
      */
-    public function horizontalAlignmentProvider()
+    public static function horizontalAlignmentProvider()
     {
         return [["left"], ["center"], ["right"]];
     }
@@ -164,7 +164,7 @@ class VideoFillTest extends TestCase
     /**
      * Data provider for property loop
      */
-    public function loopProvider()
+    public static function loopProvider()
     {
         return [[true], [false]];
     }
@@ -187,7 +187,7 @@ class VideoFillTest extends TestCase
     /**
      * Data provider for property verticalAlignment
      */
-    public function verticalAlignmentProvider()
+    public static function verticalAlignmentProvider()
     {
         return [["top"], ["center"], ["bottom"]];
     }

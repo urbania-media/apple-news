@@ -28,7 +28,7 @@ class TableColumnStyleTest extends TestCase
     /**
      * Data provider for property backgroundColor
      */
-    public function backgroundColorProvider()
+    public static function backgroundColorProvider()
     {
         return [["#fff"], ["#000"]];
     }
@@ -51,7 +51,7 @@ class TableColumnStyleTest extends TestCase
     /**
      * Data provider for property conditional
      */
-    public function conditionalProvider()
+    public static function conditionalProvider()
     {
         return [
             [[new \Urbania\AppleNews\Format\ConditionalTableColumnStyle()]]
@@ -76,7 +76,7 @@ class TableColumnStyleTest extends TestCase
     /**
      * Data provider for property divider
      */
-    public function dividerProvider()
+    public static function dividerProvider()
     {
         return [[new \Urbania\AppleNews\Format\TableStrokeStyle()]];
     }
@@ -99,7 +99,7 @@ class TableColumnStyleTest extends TestCase
     /**
      * Data provider for property minimumWidth
      */
-    public function minimumWidthProvider()
+    public static function minimumWidthProvider()
     {
         return [["1vh"], [1], ["1vmin"], [1]];
     }
@@ -122,7 +122,7 @@ class TableColumnStyleTest extends TestCase
     /**
      * Data provider for property width
      */
-    public function widthProvider()
+    public static function widthProvider()
     {
         return [[1]];
     }

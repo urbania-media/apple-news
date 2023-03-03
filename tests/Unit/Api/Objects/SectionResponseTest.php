@@ -28,7 +28,7 @@ class SectionResponseTest extends TestCase
     /**
      * Data provider for property links
      */
-    public function linksProvider()
+    public static function linksProvider()
     {
         return [[new \Urbania\AppleNews\Api\Objects\SectionLinks()]];
     }

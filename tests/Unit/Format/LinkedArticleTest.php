@@ -28,7 +28,7 @@ class LinkedArticleTest extends TestCase
     /**
      * Data provider for property relationship
      */
-    public function relationshipProvider()
+    public static function relationshipProvider()
     {
         return [["related"], ["promoted"]];
     }
@@ -51,7 +51,7 @@ class LinkedArticleTest extends TestCase
     /**
      * Data provider for property URL
      */
-    public function URLProvider()
+    public static function URLProvider()
     {
         return [["http://example.com"], ["https://example.com"]];
     }

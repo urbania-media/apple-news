@@ -28,7 +28,7 @@ class ComponentAnimationTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["appear"], ["fade_in"], ["move_in"], ["scale_fade"]];
     }

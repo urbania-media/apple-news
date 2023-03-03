@@ -28,7 +28,7 @@ class FormattedTextTest extends TestCase
     /**
      * Data provider for property text
      */
-    public function textProvider()
+    public static function textProvider()
     {
         return [["a string"]];
     }
@@ -49,7 +49,7 @@ class FormattedTextTest extends TestCase
     /**
      * Data provider for property type
      */
-    public function typeProvider()
+    public static function typeProvider()
     {
         return [["formatted_text"]];
     }
@@ -72,7 +72,7 @@ class FormattedTextTest extends TestCase
     /**
      * Data provider for property additions
      */
-    public function additionsProvider()
+    public static function additionsProvider()
     {
         return [[[new \Urbania\AppleNews\Format\Addition()]]];
     }
@@ -95,7 +95,7 @@ class FormattedTextTest extends TestCase
     /**
      * Data provider for property format
      */
-    public function formatProvider()
+    public static function formatProvider()
     {
         return [["html"], ["none"]];
     }
@@ -118,7 +118,7 @@ class FormattedTextTest extends TestCase
     /**
      * Data provider for property inlineTextStyles
      */
-    public function inlineTextStylesProvider()
+    public static function inlineTextStylesProvider()
     {
         return [[[new \Urbania\AppleNews\Format\InlineTextStyle()]]];
     }
@@ -141,7 +141,7 @@ class FormattedTextTest extends TestCase
     /**
      * Data provider for property textStyle
      */
-    public function textStyleProvider()
+    public static function textStyleProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\ComponentTextStyle()],

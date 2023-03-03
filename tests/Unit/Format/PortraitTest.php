@@ -26,7 +26,7 @@ class PortraitTest extends TestCase
     /**
      * Data provider for property role
      */
-    public function roleProvider()
+    public static function roleProvider()
     {
         return [["portrait"]];
     }
@@ -49,7 +49,7 @@ class PortraitTest extends TestCase
     /**
      * Data provider for property URL
      */
-    public function URLProvider()
+    public static function URLProvider()
     {
         return [["http://example.com"], ["https://example.com"]];
     }
@@ -72,7 +72,7 @@ class PortraitTest extends TestCase
     /**
      * Data provider for property accessibilityCaption
      */
-    public function accessibilityCaptionProvider()
+    public static function accessibilityCaptionProvider()
     {
         return [["a string"]];
     }
@@ -95,7 +95,7 @@ class PortraitTest extends TestCase
     /**
      * Data provider for property additions
      */
-    public function additionsProvider()
+    public static function additionsProvider()
     {
         return [[[new \Urbania\AppleNews\Format\ComponentLink()]]];
     }
@@ -118,7 +118,7 @@ class PortraitTest extends TestCase
     /**
      * Data provider for property anchor
      */
-    public function anchorProvider()
+    public static function anchorProvider()
     {
         return [[new \Urbania\AppleNews\Format\Anchor()]];
     }
@@ -141,7 +141,7 @@ class PortraitTest extends TestCase
     /**
      * Data provider for property animation
      */
-    public function animationProvider()
+    public static function animationProvider()
     {
         return [[new \Urbania\AppleNews\Format\ComponentAnimation()]];
     }
@@ -164,7 +164,7 @@ class PortraitTest extends TestCase
     /**
      * Data provider for property behavior
      */
-    public function behaviorProvider()
+    public static function behaviorProvider()
     {
         return [[new \Urbania\AppleNews\Format\Behavior()]];
     }
@@ -187,7 +187,7 @@ class PortraitTest extends TestCase
     /**
      * Data provider for property caption
      */
-    public function captionProvider()
+    public static function captionProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\CaptionDescriptor()],
@@ -213,7 +213,7 @@ class PortraitTest extends TestCase
     /**
      * Data provider for property conditional
      */
-    public function conditionalProvider()
+    public static function conditionalProvider()
     {
         return [[[new \Urbania\AppleNews\Format\ConditionalComponent()]]];
     }
@@ -236,7 +236,7 @@ class PortraitTest extends TestCase
     /**
      * Data provider for property explicitContent
      */
-    public function explicitContentProvider()
+    public static function explicitContentProvider()
     {
         return [[true], [false]];
     }
@@ -259,7 +259,7 @@ class PortraitTest extends TestCase
     /**
      * Data provider for property hidden
      */
-    public function hiddenProvider()
+    public static function hiddenProvider()
     {
         return [[true], [false]];
     }
@@ -282,7 +282,7 @@ class PortraitTest extends TestCase
     /**
      * Data provider for property identifier
      */
-    public function identifierProvider()
+    public static function identifierProvider()
     {
         return [["a string"]];
     }
@@ -305,7 +305,7 @@ class PortraitTest extends TestCase
     /**
      * Data provider for property layout
      */
-    public function layoutProvider()
+    public static function layoutProvider()
     {
         return [
             [new \Urbania\AppleNews\Format\ComponentLayout()],
@@ -331,7 +331,7 @@ class PortraitTest extends TestCase
     /**
      * Data provider for property style
      */
-    public function styleProvider()
+    public static function styleProvider()
     {
         return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
     }
