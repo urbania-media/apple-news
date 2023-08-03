@@ -90,7 +90,7 @@ abstract class BaseObject implements
      * @param  string  $offset
      * @return mixed
      */
-    public function offsetGet($key): mixed
+    public function offsetGet($key)
     {
         return $this->propertyGet($key);
     }
@@ -167,7 +167,7 @@ abstract class BaseObject implements
      * Convert the object into something JSON serializable.
      * @return array
      */
-    public function jsonSerialize(): mixed
+    public function jsonSerialize()
     {
         return $this->toArray();
     }
