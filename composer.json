@@ -22,8 +22,8 @@
     "require": {
         "php": "^7.0|^8.0",
         "guzzlehttp/guzzle": "^6.3|^7.0",
-        "illuminate/support": "^7.0|^8.0|^9.0|^10.0",
-        "illuminate/contracts": "^7.0|^8.0|^9.0|^10.0",
+        "illuminate/support": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0",
+        "illuminate/contracts": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0",
         "symfony/filesystem": "^5.0|^6.0",
         "webmozart/assert": "^1.4",
         "imangazaliev/didom": "^1.14",
