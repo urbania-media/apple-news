@@ -15,7 +15,7 @@ class ImageHandler implements HtmlHandler
     {
         return [
             'role' => 'photo',
-            'URL' => $block['attributes']['src']
+            'URL' => preg_replace('/-(scaled|([0-9]+x[0-9]+))\.(gif|jpg|png|jpeg)/i', '.$3', $block['attributes']['src'])
         ];
     }
 }
