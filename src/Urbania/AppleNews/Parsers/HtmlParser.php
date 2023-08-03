@@ -473,7 +473,7 @@ class HtmlParser extends Parser
     {
         $html = $node->html();
         return preg_match(
-            '/<(amp-)iframe[^>]*><\/(amp-)iframe[^>]*>/i',
+            '/<(amp-)?iframe[^>]*>/i',
             $html
         ) === 1;
     }
@@ -486,7 +486,7 @@ class HtmlParser extends Parser
     protected function isNodeContainsImg($node)
     {
         $html = $node->html();
-        return preg_match('/<(amp-)img[^>]*><\/(amp-)img[^>]*>/i', $html) === 1;
+        return preg_match('/<(amp-)?img[^>]*>/i', $html) === 1;
     }
 
     /**
@@ -496,7 +496,7 @@ class HtmlParser extends Parser
      */
     protected function isNodeIframe($node)
     {
-        return preg_match('/^(amp-)iframe$/i', $node->tag) === 1;
+        return preg_match('/^(amp-)?iframe$/i', $node->tag) === 1;
     }
 
     /**
@@ -506,7 +506,7 @@ class HtmlParser extends Parser
      */
     protected function isNodeImg($node)
     {
-        return preg_match('/^(amp-)img/i', $node->tag) === 1;
+        return preg_match('/^(amp-)?img/i', $node->tag) === 1;
     }
 
     /**
