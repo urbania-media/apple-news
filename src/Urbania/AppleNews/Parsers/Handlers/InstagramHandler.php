@@ -10,14 +10,15 @@ class InstagramHandler implements HtmlHandler
     {
         return is_array($block) &&
             $block['tag'] === 'blockquote' &&
-            isset($block['attributes']['class']) &&
-            $block['attributes']['class'] === 'instagram-media' && isset($block['attributes']['data-instgrm-permalink']);
+            isset($block['class']) &&
+            in_array('instagram-media', $block['class']) &&
+            isset($block['attributes']['data-instgrm-permalink']);
     }
 
     public function handle($block)
     {
         return [
-            'role' => 'tiktok',
+            'role' => 'instagram',
             'URL' => $block['attributes']['data-instgrm-permalink'],
         ];
     }

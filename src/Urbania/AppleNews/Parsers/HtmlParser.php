@@ -400,7 +400,7 @@ class HtmlParser extends Parser
         $block = [
             'tag' => $tag,
             'class' => $classes,
-            'attributes' => []
+            'attributes' => $element->attributes()
         ];
 
         if ($block['tag'] === 'a') {

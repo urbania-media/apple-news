@@ -10,8 +10,9 @@ class TiktokHandler implements HtmlHandler
     {
         return is_array($block) &&
             $block['tag'] === 'blockquote' &&
-            isset($block['attributes']['class']) &&
-            $block['attributes']['class'] === 'tiktok-embed' && isset($block['attributes']['cite']);
+            isset($block['class']) &&
+            in_array('tiktok-embed', $block['class']) &&
+            isset($block['attributes']['cite']);
     }
 
     public function handle($block)
