@@ -6,7 +6,7 @@ use Urbania\AppleNews\Contracts\HtmlHandler;
 
 class EmbedHandler implements HtmlHandler
 {
-    protected $embedPattern = '/(youtube\.com|vimeo\.com)/i';
+    protected $embedPattern = '/(youtube\.com|vimeo\.com|dailymotion\.com)/i';
 
     public function canHandle($block)
     {

@@ -32,6 +32,8 @@ class HtmlParser extends Parser
     ];
 
     protected $handlers = [
+        \Urbania\AppleNews\Parsers\Handlers\InstagramHandler::class,
+        \Urbania\AppleNews\Parsers\Handlers\TiktokHandler::class,
         \Urbania\AppleNews\Parsers\Handlers\BodyHandler::class,
         \Urbania\AppleNews\Parsers\Handlers\EmbedHandler::class,
         \Urbania\AppleNews\Parsers\Handlers\GiphyHandler::class,
