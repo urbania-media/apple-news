@@ -232,24 +232,22 @@ class HtmlParser extends Parser
      */
     protected function getComponentsFromBlocks($blocks, $components = [])
     {
+        $handlers = collect($this->getHandlersInstances());
         $components = array_reduce(
             $blocks,
-            function ($components, $block) {
-                // prettier-ignore
-                return array_reduce(
-                    $this->getHandlersInstances(),
-                    function ($components, $handler) use ($block) {
-                        return $handler->canHandle($block)
-                            ? array_merge(
-                                $components,
-                                $handler instanceof HtmlHandlerMultiple
-                                    ? $handler->handle($block)
-                                    : [$handler->handle($block)]
-                            )
-                            : $components;
-                    },
-                    $components
-                );
+            function ($components, $block) use ($handlers) {
+
+                $handler = $handlers->first(function ($handler) use ($block) {
+                    return $handler->canHandle($block);
+                });
+
+                return isset($handler) ? array_merge(
+                    $components,
+                    $handler instanceof HtmlHandlerMultiple
+                        ? $handler->handle($block)
+                        : [$handler->handle($block)]
+                )
+                : $components;
             },
             $components
         );
