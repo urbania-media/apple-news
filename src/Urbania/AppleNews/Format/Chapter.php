@@ -509,9 +509,17 @@ class Chapter extends Container
             Assert::eq($contentDisplay, 'none');
         }
 
-        $this->contentDisplay = Utils::isAssociativeArray($contentDisplay)
-            ? new CollectionDisplay($contentDisplay)
-            : $contentDisplay;
+        if (Utils::isAssociativeArray($contentDisplay) &&
+            $contentDisplay['type'] === 'collection'
+        ) {
+            $this->contentDisplay = new CollectionDisplay($contentDisplay);
+        } elseif (Utils::isAssociativeArray($contentDisplay) &&
+            $contentDisplay['type'] === 'horizontal_stack'
+        ) {
+            $this->contentDisplay = new HorizontalStackDisplay($contentDisplay);
+        } else {
+            $this->contentDisplay = $contentDisplay;
+        }
         return $this;
     }
 

@@ -5,6 +5,7 @@ namespace Urbania\AppleNews\Scripts\Builder;
 use Nette\PhpGenerator\Method;
 use Urbania\AppleNews\Scripts\Builder\Traits\ClassUtils;
 use Urbania\AppleNews\Support\Utils;
+use Illuminate\Support\Str;
 
 class ObjectSetMethodBuilder
 {
@@ -367,6 +368,34 @@ class ObjectSetMethodBuilder
 
         $isTyped = $property['typed'] ?? false;
         $relativeClassPath = $this->getRelativeClassPathFromObjectName($type, $baseNamespace);
+        if ($property['name'] === 'contentDisplay') {
+            $types = collect($property['type'])
+                ->filter(function ($type) {
+                    return preg_match('/Display$/', $type) === 1;
+                })
+                ->values()
+                ->map(function ($type) use ($baseNamespace) {
+                    return [
+                        'key' => Str::snake(
+                            preg_replace('/^Format\\\([A-Z][a-zA-Z]+)Display$/', '$1', $type)
+                        ),
+                        'class' => $this->getRelativeClassPathFromObjectName($type, $baseNamespace),
+                    ];
+                })
+                ->map(function ($type, $index) {
+                    return ($index === 0 ? 'if' : 'else if') .
+                        ' (Utils::isAssociativeArray(%2$s) && %2$s[\'type\'] === \'' .
+                        $type['key'] .
+                        '\') { %1$s = new ' .
+                        $type['class'] .
+                        '(%2$s); }';
+                })->join('');
+            return sprintf(
+                $types . 'else { %1$s = %2$s; }',
+                sprintf('$this->%s', $property['name']),
+                sprintf('$%s', $property['name'])
+            );
+        }
         return sprintf(
             $isTyped
                 ? '%1$s = Utils::isAssociativeArray(%2$s) ? %3$s::createTyped(%2$s) : %2$s;'
