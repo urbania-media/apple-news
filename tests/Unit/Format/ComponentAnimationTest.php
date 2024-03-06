@@ -30,6 +30,6 @@ class ComponentAnimationTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["appear"], ["fade_in"], ["move_in"], ["scale_fade"]];
+        return [['appear'], ['fade_in'], ['move_in'], ['scale_fade']];
     }
 }

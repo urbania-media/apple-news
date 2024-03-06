@@ -11,29 +11,6 @@ use Urbania\AppleNews\Tests\TestCase;
 class ArticleResponseTest extends TestCase
 {
     /**
-     * Test the property links
-     * @test
-     * @dataProvider linksProvider
-     * @covers ::getLinks
-     * @covers ::setLinks
-     */
-    public function testPropertyLinks($value)
-    {
-        $object = new ArticleResponse();
-        $object->setLinks($value);
-
-        $this->assertEquals($value, $object->getLinks());
-    }
-
-    /**
-     * Data provider for property links
-     */
-    public static function linksProvider()
-    {
-        return [[new \Urbania\AppleNews\Api\Objects\ArticleLinks()]];
-    }
-
-    /**
      * Test the property meta
      * @test
      * @dataProvider metaProvider

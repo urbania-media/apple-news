@@ -6,7 +6,7 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/inlinetextstyle",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/inlinetextstyle.json",
     "properties": [
         {
             "name": "rangeLength",
@@ -19,7 +19,7 @@
             "name": "rangeStart",
             "type": "integer",
             "required": true,
-            "description": "The starting point of the text to which the alternative styling should be applied. Note: the first available character is at 0, not 1.",
+            "description": "The starting point of the text to which the alternative styling should be applied. Note: the first available character is at , not 1.",
             "typed": false
         },
         {
@@ -29,7 +29,7 @@
                 "string"
             ],
             "required": true,
-            "description": "A TextStyle or the name of a TextStyle object defined in the ArticleDocument.textStyles object.",
+            "description": "Either a text style object or the name of a  object defined in the  object.",
             "typed": false
         }
     ]

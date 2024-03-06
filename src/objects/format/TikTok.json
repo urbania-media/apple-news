@@ -1,0 +1,101 @@
+{
+    "name": "Format\\TikTok",
+    "description": "The component for adding a TikTok post.",
+    "version": "1.18+",
+    "deprecated": false,
+    "from_class": null,
+    "extends": "Format\\Component",
+    "typed": null,
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/tiktok.json",
+    "properties": [
+        {
+            "name": "role",
+            "type": "string",
+            "required": true,
+            "description": "Always tiktok for this component.",
+            "value": "tiktok",
+            "read_only": true,
+            "typed": false
+        },
+        {
+            "name": "URL",
+            "type": "uri",
+            "required": true,
+            "description": "The URL of the TikTok post you want to embed.\nApple News supports the following URL format for TikTok:\nhttps:\/\/www.tiktok.com\/{userId}\/video\/{videoId} ",
+            "typed": false
+        },
+        {
+            "name": "anchor",
+            "type": "Format\\Anchor",
+            "required": false,
+            "description": "An object that defines vertical alignment with another component.",
+            "typed": false
+        },
+        {
+            "name": "animation",
+            "type": [
+                "Format\\ComponentAnimation",
+                "none"
+            ],
+            "required": false,
+            "description": "An object that defines an animation to be applied to the component.\nThe none value is used for conditional design elements. Adding it here has no effect.",
+            "typed": true
+        },
+        {
+            "name": "behavior",
+            "type": [
+                "Format\\Behavior",
+                "none"
+            ],
+            "required": false,
+            "description": "An object that defines behavior for a component, like  or .\nThe none value is used for conditional design elements. Adding it here has no effect.",
+            "typed": true
+        },
+        {
+            "name": "conditional",
+            "type": [
+                "Format\\ConditionalComponent",
+                "array:Format\\ConditionalComponent"
+            ],
+            "required": false,
+            "description": "An instance or array of component properties that can be applied conditionally, and the conditions that cause them to be applied.",
+            "typed": false
+        },
+        {
+            "name": "hidden",
+            "type": "boolean",
+            "required": false,
+            "description": "A Boolean value that determines whether the component is hidden.",
+            "default": true,
+            "typed": false
+        },
+        {
+            "name": "identifier",
+            "type": "string",
+            "required": false,
+            "description": "An optional unique identifier for this component. If used, this identifier must be unique across the entire document. You will need an identifier for your component if you want to anchor other components to it. ",
+            "typed": false
+        },
+        {
+            "name": "layout",
+            "type": [
+                "Format\\ComponentLayout",
+                "string"
+            ],
+            "required": false,
+            "description": "An inline ComponentLayout object that contains layout information, or a string reference to a ComponentLayout object that is defined at the top level of the document.\nIf layout is not defined, size and position will be based on various factors, such as the device type, the length of the content, and the role of this component.",
+            "typed": false
+        },
+        {
+            "name": "style",
+            "type": [
+                "Format\\ComponentStyle",
+                "string",
+                "none"
+            ],
+            "required": false,
+            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle object that is defined at the top level of the document.\nThe none value is used for conditional design elements. Adding it here has no effect.",
+            "typed": false
+        }
+    ]
+}

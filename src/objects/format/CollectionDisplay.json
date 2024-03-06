@@ -6,7 +6,7 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/collectiondisplay",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/collectiondisplay.json",
     "properties": [
         {
             "name": "type",
@@ -21,7 +21,7 @@
             "name": "alignment",
             "type": "enum:string",
             "required": false,
-            "description": "A string that defines how components are aligned within their rows. This is especially visible when distribution is set to narrow.",
+            "description": "A string that defines how components are aligned within their rows. This is especially visible when distribution is set to narrow.\nValid values:",
             "default": "left",
             "enum_values": [
                 "left",
@@ -34,7 +34,7 @@
             "name": "distribution",
             "type": "enum:string",
             "required": false,
-            "description": "A string that defines how components should be distributed horizontally in a row.",
+            "description": "A string that defines how components should be distributed horizontally in a row.\nValid values:",
             "default": "wide",
             "enum_values": [
                 "wide",
@@ -46,62 +46,62 @@
             "name": "gutter",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "A number in points or a string referring to a supported unit of measure defining the vertical gutter between components.",
-            "default": 0,
+            "description": "A number in points or a string referring to a supported unit of measure defining the vertical gutter between components.\nSee .\nThis value cannot be negative.",
+            "default": "0",
             "typed": false
         },
         {
             "name": "maximumWidth",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "A number in points or a string referring to a supported unit of measure defining the maximum width of each child component inside the collection.",
-            "default": "50cw",
+            "description": "A number in points or a string referring to a supported unit of measure defining the maximum width of each child component inside the collection.\nIf the maximumWidth is smaller than the minimumWidth, the minimumWidth is used. \nIf no maximumWidth is provided, a default of 100cw is used. \nSee .",
             "typed": false
         },
         {
             "name": "minimumWidth",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "A number in points or a string referring to a supported unit of measure defining the minimum width of each child component inside the collection.",
+            "description": "A number in points or a string referring to a supported unit of measure defining the minimum width of each child component inside the collection.\nminimumWidth should not exceed the maximumWidth value. A child component will never be larger than the width of its parent. If no minimumWidth has been provided, News attempts to decide the optimal size for each child component based on its contents. See .\nThis value cannot be negative.",
             "typed": false
         },
         {
             "name": "rowSpacing",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "A number in points or a string referring to a supported unit of measure defining the horizontal spacing between rows. See .",
-            "default": 0,
+            "description": "A number in points or a string referring to a supported unit of measure defining the horizontal spacing between rows. See .\n This value cannot be negative.",
+            "default": "0",
             "typed": false
         },
         {
             "name": "variableSizing",
             "type": "boolean",
             "required": false,
-            "description": "A Boolean value that defines whether the components\u2019 area is allowed to be sized differently per row.",
-            "default": "false",
+            "description": "A Boolean value that defines whether the components\u2019 area is allowed to be sized differently per row.\nIf true, individual rows might have different widths for their components to make use of the entire available width.\nIf false, all components in the collection will have the same width.",
+            "default": true,
             "typed": false
         },
         {
             "name": "widows",
             "type": "enum:string",
             "required": false,
-            "description": "A string that defines the approach to prevent the collection from having component widows.",
+            "description": "A string that defines the approach to prevent the collection from having component widows.\nValid values:",
             "default": "optimize",
             "enum_values": [
                 "equalize",
-                "optimize"
+                "optimize",
+                "allow"
             ],
             "typed": false
         }

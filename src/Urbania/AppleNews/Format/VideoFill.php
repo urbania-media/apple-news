@@ -5,32 +5,31 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for adding a video background fill to a component.
  *
- * @see https://developer.apple.com/documentation/apple_news/videofill
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/videofill.json
  */
 class VideoFill extends Fill
 {
     /**
      * The URL of the image file to use as a still image when the video is
      * not playing.
+     * Image URLs can begin with http://, https://, or bundle://. If the
+     * image URL begins with bundle://, the referenced image file must be in
+     * the same directory as the document.
+     * Image filenames should be properly encoded as URLs.
+     * See .
      * @var string
      */
     protected $stillURL;
 
     /**
-     * Always video for this object.
-     * @var string
-     */
-    protected $type = 'video';
-
-    /**
      * The URL of a video file that can be played using AV Player. HTTP Live
-     * Streaming (HLS) is highly recommended (.M3U8). For more information on
-     * HLS, refer to the iOS developer documentation on HTTP Live Streaming,
-     * especially the following sections of the HTTP Live Streaming Overview:
+     * Streaming (HLS) is highly recommended (.M3U8). For more information
+     * about HLS, see  .
      * @var string
      */
     protected $URL;
@@ -38,33 +37,54 @@ class VideoFill extends Fill
     /**
      * A string that indicates how the fill should behave when a user
      * scrolls.
+     * Valid values:
      * @var string
      */
     protected $attachment;
 
     /**
-     * A string that indicates how the video fill should be displayed.
+     * Indicates how the video fill should be displayed.
+     * Valid values:
      * @var string
      */
     protected $fillMode;
 
     /**
-     * A string that sets the horizontal alignment of the video fill within
-     * its component.
+     * Sets the horizontal alignment of the video fill within its component.
+     * Valid values:
+     * You can use fillMode with horizontalAlignment to achieve the effect
+     * you want. For example, set fillMode to fit and horizontalAlignment to
+     * left to fit the video based on its aspect ratio and also align the
+     * left edge of the fill with the left edge of the component. Or set
+     * fillMode to cover and horizontalAlignment to right to scale the video
+     * horizontally and also align the right edge of the fill with the right
+     * edge of the component.
      * @var string
      */
     protected $horizontalAlignment;
 
     /**
-     * A Boolean value when set to true, specifies that the video will start
-     * over again when it reaches the end.
+     * When true, it specifies that the video will start over again when it
+     * reaches the end.
      * @var boolean
      */
     protected $loop;
 
     /**
-     * A string value that sets the vertical alignment of the video fill
-     * within its component.
+     * Describes the type of fill. Must be video for a video fill.
+     * @var string
+     */
+    protected $type = 'video';
+
+    /**
+     * Sets the vertical alignment of the video fill within its component.
+     * Valid values:
+     * You can use fillMode with verticalAlignment to achieve the effect you
+     * want. For example, set fillMode to fit and verticalAlignment to top to
+     * fit the video based on its aspect ratio and also align the top of the
+     * fill with the top edge of the component. Or set fillMode to cover and
+     * verticalAlignment to top to scale the video vertically and also align
+     * the top of the fill with the top edge of the component.
      * @var string
      */
     protected $verticalAlignment;
@@ -123,7 +143,7 @@ class VideoFill extends Fill
             return $this;
         }
 
-        Assert::oneOf($attachment, ["fixed", "scroll"]);
+        Assert::oneOf($attachment, ['fixed', 'scroll']);
 
         $this->attachment = $attachment;
         return $this;
@@ -150,7 +170,7 @@ class VideoFill extends Fill
             return $this;
         }
 
-        Assert::oneOf($fillMode, ["fit", "cover"]);
+        Assert::oneOf($fillMode, ['fit', 'cover']);
 
         $this->fillMode = $fillMode;
         return $this;
@@ -177,7 +197,7 @@ class VideoFill extends Fill
             return $this;
         }
 
-        Assert::oneOf($horizontalAlignment, ["left", "center", "right"]);
+        Assert::oneOf($horizontalAlignment, ['left', 'center', 'right']);
 
         $this->horizontalAlignment = $horizontalAlignment;
         return $this;
@@ -284,7 +304,7 @@ class VideoFill extends Fill
             return $this;
         }
 
-        Assert::oneOf($verticalAlignment, ["top", "center", "bottom"]);
+        Assert::oneOf($verticalAlignment, ['top', 'center', 'bottom']);
 
         $this->verticalAlignment = $verticalAlignment;
         return $this;
@@ -300,9 +320,6 @@ class VideoFill extends Fill
         if (isset($this->stillURL)) {
             $data['stillURL'] = $this->stillURL;
         }
-        if (isset($this->type)) {
-            $data['type'] = $this->type;
-        }
         if (isset($this->URL)) {
             $data['URL'] = $this->URL;
         }
@@ -317,6 +334,9 @@ class VideoFill extends Fill
         }
         if (isset($this->loop)) {
             $data['loop'] = $this->loop;
+        }
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
         }
         if (isset($this->verticalAlignment)) {
             $data['verticalAlignment'] = $this->verticalAlignment;

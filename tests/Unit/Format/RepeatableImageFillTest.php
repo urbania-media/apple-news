@@ -28,7 +28,7 @@ class RepeatableImageFillTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["repeatable_image"]];
+        return [['repeatable_image']];
     }
 
     /**
@@ -51,7 +51,7 @@ class RepeatableImageFillTest extends TestCase
      */
     public static function URLProvider()
     {
-        return [["http://example.com"], ["https://example.com"]];
+        return [['http://example.com'], ['https://example.com']];
     }
 
     /**
@@ -74,7 +74,7 @@ class RepeatableImageFillTest extends TestCase
      */
     public static function attachmentProvider()
     {
-        return [["fixed"], ["scroll"]];
+        return [['fixed'], ['scroll']];
     }
 
     /**
@@ -97,7 +97,7 @@ class RepeatableImageFillTest extends TestCase
      */
     public static function heightProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**
@@ -120,7 +120,7 @@ class RepeatableImageFillTest extends TestCase
      */
     public static function horizontalAlignmentProvider()
     {
-        return [["left"], ["center"], ["right"]];
+        return [['left'], ['center'], ['right']];
     }
 
     /**
@@ -143,7 +143,7 @@ class RepeatableImageFillTest extends TestCase
      */
     public static function repeatProvider()
     {
-        return [["none"], ["x"], ["y"], ["both"]];
+        return [['none'], ['x'], ['y'], ['both']];
     }
 
     /**
@@ -166,7 +166,7 @@ class RepeatableImageFillTest extends TestCase
      */
     public static function verticalAlignmentProvider()
     {
-        return [["top"], ["center"], ["bottom"]];
+        return [['top'], ['center'], ['bottom']];
     }
 
     /**
@@ -189,6 +189,6 @@ class RepeatableImageFillTest extends TestCase
      */
     public static function widthProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 }

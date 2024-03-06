@@ -30,6 +30,6 @@ class ComponentStylesTest extends TestCase
      */
     public static function stylesProvider()
     {
-        return [[["test" => new \Urbania\AppleNews\Format\ComponentStyle()]]];
+        return [[['test' => new \Urbania\AppleNews\Format\ComponentStyle()]]];
     }
 }

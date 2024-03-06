@@ -5,12 +5,13 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * An object used in any container component type to define how the
  * collection of child components is presented.
  *
- * @see https://developer.apple.com/documentation/apple_news/collectiondisplay
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/collectiondisplay.json
  */
 class CollectionDisplay extends BaseSdkObject
 {
@@ -23,6 +24,7 @@ class CollectionDisplay extends BaseSdkObject
     /**
      * A string that defines how components are aligned within their rows.
      * This is especially visible when distribution is set to narrow.
+     * Valid values:
      * @var string
      */
     protected $alignment;
@@ -30,6 +32,7 @@ class CollectionDisplay extends BaseSdkObject
     /**
      * A string that defines how components should be distributed
      * horizontally in a row.
+     * Valid values:
      * @var string
      */
     protected $distribution;
@@ -37,7 +40,9 @@ class CollectionDisplay extends BaseSdkObject
     /**
      * A number in points or a string referring to a supported unit of
      * measure defining the vertical gutter between components.
-     * @var string|integer
+     * See .
+     * This value cannot be negative.
+     * @var string|integer|float
      */
     protected $gutter;
 
@@ -45,7 +50,11 @@ class CollectionDisplay extends BaseSdkObject
      * A number in points or a string referring to a supported unit of
      * measure defining the maximum width of each child component inside the
      * collection.
-     * @var string|integer
+     * If the maximumWidth is smaller than the minimumWidth, the minimumWidth
+     * is used.
+     * If no maximumWidth is provided, a default of 100cw is used.
+     * See .
+     * @var string|integer|float
      */
     protected $maximumWidth;
 
@@ -53,20 +62,29 @@ class CollectionDisplay extends BaseSdkObject
      * A number in points or a string referring to a supported unit of
      * measure defining the minimum width of each child component inside the
      * collection.
-     * @var string|integer
+     * minimumWidth should not exceed the maximumWidth value. A child
+     * component will never be larger than the width of its parent. If no
+     * minimumWidth has been provided, News attempts to decide the optimal
+     * size for each child component based on its contents. See .
+     * This value cannot be negative.
+     * @var string|integer|float
      */
     protected $minimumWidth;
 
     /**
      * A number in points or a string referring to a supported unit of
      * measure defining the horizontal spacing between rows. See .
-     * @var string|integer
+     *  This value cannot be negative.
+     * @var string|integer|float
      */
     protected $rowSpacing;
 
     /**
      * A Boolean value that defines whether the components’ area is allowed
      * to be sized differently per row.
+     * If true, individual rows might have different widths for their
+     * components to make use of the entire available width.
+     * If false, all components in the collection will have the same width.
      * @var boolean
      */
     protected $variableSizing;
@@ -74,6 +92,7 @@ class CollectionDisplay extends BaseSdkObject
     /**
      * A string that defines the approach to prevent the collection from
      * having component widows.
+     * Valid values:
      * @var string
      */
     protected $widows;
@@ -134,7 +153,7 @@ class CollectionDisplay extends BaseSdkObject
             return $this;
         }
 
-        Assert::oneOf($alignment, ["left", "center", "right"]);
+        Assert::oneOf($alignment, ['left', 'center', 'right']);
 
         $this->alignment = $alignment;
         return $this;
@@ -161,7 +180,7 @@ class CollectionDisplay extends BaseSdkObject
             return $this;
         }
 
-        Assert::oneOf($distribution, ["wide", "narrow"]);
+        Assert::oneOf($distribution, ['wide', 'narrow']);
 
         $this->distribution = $distribution;
         return $this;
@@ -169,7 +188,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Get the gutter
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getGutter()
     {
@@ -178,7 +197,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Set the gutter
-     * @param string|integer $gutter
+     * @param string|integer|float $gutter
      * @return $this
      */
     public function setGutter($gutter)
@@ -196,7 +215,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Get the maximumWidth
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getMaximumWidth()
     {
@@ -205,7 +224,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Set the maximumWidth
-     * @param string|integer $maximumWidth
+     * @param string|integer|float $maximumWidth
      * @return $this
      */
     public function setMaximumWidth($maximumWidth)
@@ -223,7 +242,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Get the minimumWidth
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getMinimumWidth()
     {
@@ -232,7 +251,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Set the minimumWidth
-     * @param string|integer $minimumWidth
+     * @param string|integer|float $minimumWidth
      * @return $this
      */
     public function setMinimumWidth($minimumWidth)
@@ -250,7 +269,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Get the rowSpacing
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getRowSpacing()
     {
@@ -259,7 +278,7 @@ class CollectionDisplay extends BaseSdkObject
 
     /**
      * Set the rowSpacing
-     * @param string|integer $rowSpacing
+     * @param string|integer|float $rowSpacing
      * @return $this
      */
     public function setRowSpacing($rowSpacing)
@@ -332,7 +351,7 @@ class CollectionDisplay extends BaseSdkObject
             return $this;
         }
 
-        Assert::oneOf($widows, ["equalize", "optimize"]);
+        Assert::oneOf($widows, ['equalize', 'optimize', 'allow']);
 
         $this->widows = $widows;
         return $this;
@@ -356,9 +375,7 @@ class CollectionDisplay extends BaseSdkObject
         }
         if (isset($this->gutter)) {
             $data['gutter'] =
-                $this->gutter instanceof Arrayable
-                    ? $this->gutter->toArray()
-                    : $this->gutter;
+                $this->gutter instanceof Arrayable ? $this->gutter->toArray() : $this->gutter;
         }
         if (isset($this->maximumWidth)) {
             $data['maximumWidth'] =

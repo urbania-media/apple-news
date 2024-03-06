@@ -6,29 +6,20 @@
     "from_class": null,
     "extends": "Format\\Fill",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/imagefill",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/imagefill.json",
     "properties": [
-        {
-            "name": "type",
-            "type": "string",
-            "required": true,
-            "description": "Always image for this object.",
-            "value": "image",
-            "read_only": true,
-            "typed": false
-        },
         {
             "name": "URL",
             "type": "uri",
             "required": true,
-            "description": "The URL of the image file to use for filling the component.",
+            "description": "The URL of the image file to use for filling the component.\nImage URLs can begin with http:\/\/, https:\/\/, or bundle:\/\/. If the image URL begins with bundle:\/\/, the referenced image file must be in the same directory as the document.\nImage filenames should be properly encoded as URLs\nSee .",
             "typed": false
         },
         {
             "name": "attachment",
             "type": "enum:string",
             "required": false,
-            "description": "A string that indicates how the fill should behave when a user scrolls.",
+            "description": "A string that indicates how the fill should behave when a user scrolls. \nValid values:",
             "default": "scroll",
             "enum_values": [
                 "fixed",
@@ -40,7 +31,7 @@
             "name": "fillMode",
             "type": "enum:string",
             "required": false,
-            "description": "A string that indicates how the image fill should be displayed.",
+            "description": "Indicates how the image fill should be displayed. \nValid values:",
             "default": "cover",
             "enum_values": [
                 "fit",
@@ -52,7 +43,7 @@
             "name": "horizontalAlignment",
             "type": "enum:string",
             "required": false,
-            "description": "A string that sets the horizontal alignment of the image fill within its component. Valid values:",
+            "description": "Sets the horizontal alignment of the image fill within its component.\nValid values:\nYou can use fillMode with horizontalAlignment to achieve the effect you want. For example, set fillMode to fit and horizontalAlignment to left to fit the image based on its aspect ratio and also align the left edge of the fill with the left edge of the component. Or set fillMode to cover and horizontalAlignment to right to scale the image horizontally and also align the right edge of the fill with the right edge of the component.",
             "default": "center",
             "enum_values": [
                 "left",
@@ -62,10 +53,19 @@
             "typed": false
         },
         {
+            "name": "type",
+            "type": "string",
+            "required": true,
+            "description": "The type of fill to apply. This property should always be set to image.",
+            "value": "image",
+            "read_only": true,
+            "typed": false
+        },
+        {
             "name": "verticalAlignment",
             "type": "enum:string",
             "required": false,
-            "description": "A string that sets the vertical alignment of the image fill within its component. Valid values:",
+            "description": "Sets the vertical alignment of the image fill within its component.\nValid values:\nYou can use fillMode with verticalAlignment to achieve the effect you want. For example, set fillMode to fit and verticalAlignment to top to fit the image based on its aspect ratio and also align the top of the fill with the top edge of the component. Or set fillMode to cover and verticalAlignment to top to scale the image vertically and also align the top of the fill with the top edge of the component.",
             "default": "center",
             "enum_values": [
                 "top",

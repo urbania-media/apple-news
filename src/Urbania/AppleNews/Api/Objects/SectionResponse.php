@@ -5,11 +5,12 @@ namespace Urbania\AppleNews\Api\Objects;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * See which objects make up the section response.
  *
- * @see https://developer.apple.com/documentation/apple_news/sectionresponse
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/sectionresponse.json
  */
 class SectionResponse extends Section
 {
@@ -48,7 +49,7 @@ class SectionResponse extends Section
 
         Assert::isSdkObject($links, SectionLinks::class);
 
-        $this->links = is_array($links) ? new SectionLinks($links) : $links;
+        $this->links = Utils::isAssociativeArray($links) ? new SectionLinks($links) : $links;
         return $this;
     }
 
@@ -61,9 +62,7 @@ class SectionResponse extends Section
         $data = parent::toArray();
         if (isset($this->links)) {
             $data['links'] =
-                $this->links instanceof Arrayable
-                    ? $this->links->toArray()
-                    : $this->links;
+                $this->links instanceof Arrayable ? $this->links->toArray() : $this->links;
         }
         return $data;
     }

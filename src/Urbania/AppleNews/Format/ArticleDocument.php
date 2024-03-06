@@ -7,12 +7,13 @@ use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 use Urbania\AppleNews\Support\Concerns\FindsComponents;
+use Urbania\AppleNews\Support\Utils;
 
 /**
- * The root object of an Apple News article, containing required
+ * The root object of an Apple News article, that contains required
  * properties, metadata, content, layout, and styles.
  *
- * @see https://developer.apple.com/documentation/apple_news/articledocument
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/articledocument.json
  */
 class ArticleDocument extends BaseSdkObject
 {
@@ -20,7 +21,7 @@ class ArticleDocument extends BaseSdkObject
 
     /**
      * An array of components that form the content of this article.
-     * Components have different roles and types, such as Photo and Music.
+     * Components have different roles and types, such as  and .
      * @var Format\Component[]
      */
     protected $components;
@@ -29,24 +30,24 @@ class ArticleDocument extends BaseSdkObject
      * The component text styles that can be referred to by components in
      * this document. Each article.json file must have, at minimum, a default
      * component text style named default. Defaults by component role can
-     * also be set. See Defining and Using Text Styles.
+     * also be set. See .
      * @var \Urbania\AppleNews\Format\ComponentTextStyles
      */
     protected $componentTextStyles;
 
     /**
-     * An unique, publisher-provided identifier for this article. This
+     * A unique, publisher-provided identifier for this article. This
      * identifier must remain constant; it cannot change when the article is
-     * updated.
+     * updated. See .
+     * This identifier can include the following:
      * @var string
      */
     protected $identifier;
 
     /**
-     * A code that indicates the language of the article. Use the IANA.org
-     * language subtag registry to find the appropriate code; e.g., en for
-     * English, or the more specific en_UK for English (U.K.) or en_US for
-     * English (U.S.).
+     * A code that indicates the language of the article. Use the  to find
+     * the appropriate code; e.g., en for English, or the more specific en-GB
+     * for English (U.K.) or en-US for English (U.S.).
      * @var string
      */
     protected $language;
@@ -55,7 +56,7 @@ class ArticleDocument extends BaseSdkObject
      * The article’s column system. Apple News Format layouts make it
      * possible to recreate print design on iPhone, iPad, iPod touch and Mac.
      * Layout information is also used to calculate relative positioning and
-     * size for these devices. See Planning the Layout for Your Article.
+     * size for these devices. See .
      * @var \Urbania\AppleNews\Format\Layout
      */
     protected $layout;
@@ -69,6 +70,9 @@ class ArticleDocument extends BaseSdkObject
 
     /**
      * The version of Apple News Format used in the JSON document.
+     * The value of the version property must not be earlier than the version
+     * number of any property that is used anywhere in the article.
+     * See .
      * @var string
      */
     protected $version;
@@ -77,6 +81,7 @@ class ArticleDocument extends BaseSdkObject
      * An advertisement to be inserted at a position that is both possible
      * and optimal. You can specify what bannerType you want to have
      * automatically inserted.
+     * Note. This property is deprecated. Use the  object instead.
      * @var \Urbania\AppleNews\Format\AdvertisingSettings
      */
     protected $advertisingSettings;
@@ -89,16 +94,21 @@ class ArticleDocument extends BaseSdkObject
     protected $autoplacement;
 
     /**
+     * The colorScheme object that you use for automatic Dark Mode behavior.
+     * @var \Urbania\AppleNews\Format\ColorScheme
+     */
+    protected $colorScheme;
+
+    /**
      * The article-level ComponentLayout objects that can be referred to by
-     * their key within the ComponentLayouts object. See Positioning the
-     * Content in Your Article.
+     * their key within the ComponentLayouts object. See .
      * @var \Urbania\AppleNews\Format\ComponentLayouts
      */
     protected $componentLayouts;
 
     /**
      * The component styles that can be referred to by components within this
-     * document. See Enhancing Your Articles with Styles.
+     * document. See .
      * @var \Urbania\AppleNews\Format\ComponentStyles
      */
     protected $componentStyles;
@@ -124,9 +134,20 @@ class ArticleDocument extends BaseSdkObject
     protected $subtitle;
 
     /**
+     * The global text format to apply to  components and  objects.
+     * If the textFormat property is not specified, the format of Text
+     * components and formattedText objects defaults to none.
+     * If the textFormat property is specified, the format of Text components
+     * and formattedText objects defaults to the value of this property.
+     * To override the textFormat value, use the format property in the Text
+     * component or the formattedText object.
+     * @var string
+     */
+    protected $textFormat;
+
+    /**
      * The TextStyle objects available to use inline for text in Text
-     * components. See Using HTML with Apple News Format, Using Markdown with
-     * Apple News Format, and InlineTextStyle.
+     * components. See , , and .
      * @var \Urbania\AppleNews\Format\TextStyles
      */
     protected $textStyles;
@@ -169,6 +190,10 @@ class ArticleDocument extends BaseSdkObject
             $this->setAutoplacement($data['autoplacement']);
         }
 
+        if (isset($data['colorScheme'])) {
+            $this->setColorScheme($data['colorScheme']);
+        }
+
         if (isset($data['componentLayouts'])) {
             $this->setComponentLayouts($data['componentLayouts']);
         }
@@ -187,6 +212,10 @@ class ArticleDocument extends BaseSdkObject
 
         if (isset($data['subtitle'])) {
             $this->setSubtitle($data['subtitle']);
+        }
+
+        if (isset($data['textFormat'])) {
+            $this->setTextFormat($data['textFormat']);
         }
 
         if (isset($data['textStyles'])) {
@@ -217,7 +246,7 @@ class ArticleDocument extends BaseSdkObject
 
         Assert::isSdkObject($advertisingSettings, AdvertisingSettings::class);
 
-        $this->advertisingSettings = is_array($advertisingSettings)
+        $this->advertisingSettings = Utils::isAssociativeArray($advertisingSettings)
             ? new AdvertisingSettings($advertisingSettings)
             : $advertisingSettings;
         return $this;
@@ -246,9 +275,38 @@ class ArticleDocument extends BaseSdkObject
 
         Assert::isSdkObject($autoplacement, AutoPlacement::class);
 
-        $this->autoplacement = is_array($autoplacement)
+        $this->autoplacement = Utils::isAssociativeArray($autoplacement)
             ? new AutoPlacement($autoplacement)
             : $autoplacement;
+        return $this;
+    }
+
+    /**
+     * Get the colorScheme
+     * @return \Urbania\AppleNews\Format\ColorScheme
+     */
+    public function getColorScheme()
+    {
+        return $this->colorScheme;
+    }
+
+    /**
+     * Set the colorScheme
+     * @param \Urbania\AppleNews\Format\ColorScheme|array $colorScheme
+     * @return $this
+     */
+    public function setColorScheme($colorScheme)
+    {
+        if (is_null($colorScheme)) {
+            $this->colorScheme = null;
+            return $this;
+        }
+
+        Assert::isSdkObject($colorScheme, ColorScheme::class);
+
+        $this->colorScheme = Utils::isAssociativeArray($colorScheme)
+            ? new ColorScheme($colorScheme)
+            : $colorScheme;
         return $this;
     }
 
@@ -260,9 +318,7 @@ class ArticleDocument extends BaseSdkObject
     public function addComponent($item)
     {
         return $this->setComponents(
-            !is_null($this->components)
-                ? array_merge($this->components, [$item])
-                : [$item]
+            !is_null($this->components) ? array_merge($this->components, [$item]) : [$item]
         );
     }
 
@@ -289,7 +345,7 @@ class ArticleDocument extends BaseSdkObject
 
         Assert::isSdkObject($componentLayouts, ComponentLayouts::class);
 
-        $this->componentLayouts = is_array($componentLayouts)
+        $this->componentLayouts = Utils::isAssociativeArray($componentLayouts)
             ? new ComponentLayouts($componentLayouts)
             : $componentLayouts;
         return $this;
@@ -318,7 +374,7 @@ class ArticleDocument extends BaseSdkObject
 
         Assert::isSdkObject($componentStyles, ComponentStyles::class);
 
-        $this->componentStyles = is_array($componentStyles)
+        $this->componentStyles = Utils::isAssociativeArray($componentStyles)
             ? new ComponentStyles($componentStyles)
             : $componentStyles;
         return $this;
@@ -342,7 +398,7 @@ class ArticleDocument extends BaseSdkObject
     {
         Assert::isSdkObject($componentTextStyles, ComponentTextStyles::class);
 
-        $this->componentTextStyles = is_array($componentTextStyles)
+        $this->componentTextStyles = Utils::isAssociativeArray($componentTextStyles)
             ? new ComponentTextStyles($componentTextStyles)
             : $componentTextStyles;
         return $this;
@@ -357,9 +413,7 @@ class ArticleDocument extends BaseSdkObject
     {
         Assert::isArray($items);
         return $this->setComponents(
-            !is_null($this->components)
-                ? array_merge($this->components, $items)
-                : $items
+            !is_null($this->components) ? array_merge($this->components, $items) : $items
         );
     }
 
@@ -382,21 +436,23 @@ class ArticleDocument extends BaseSdkObject
         Assert::isArray($components);
         Assert::allIsComponent($components);
 
-        $this->components = array_reduce(
-            array_keys($components),
-            function ($array, $key) use ($components) {
-                $item = $components[$key];
-                if ($item instanceof Componentable) {
-                    $array[$key] = $item->toComponent();
-                } elseif (is_array($item)) {
-                    $array[$key] = Component::createTyped($item);
-                } else {
-                    $array[$key] = $item;
-                }
-                return $array;
-            },
-            []
-        );
+        $this->components = is_array($components)
+            ? array_reduce(
+                array_keys($components),
+                function ($array, $key) use ($components) {
+                    $item = $components[$key];
+                    if ($item instanceof Componentable) {
+                        $array[$key] = $item->toComponent();
+                    } elseif (Utils::isAssociativeArray($item)) {
+                        $array[$key] = Component::createTyped($item);
+                    } else {
+                        $array[$key] = $item;
+                    }
+                    return $array;
+                },
+                []
+            )
+            : $components;
         return $this;
     }
 
@@ -423,7 +479,7 @@ class ArticleDocument extends BaseSdkObject
 
         Assert::isSdkObject($documentStyle, DocumentStyle::class);
 
-        $this->documentStyle = is_array($documentStyle)
+        $this->documentStyle = Utils::isAssociativeArray($documentStyle)
             ? new DocumentStyle($documentStyle)
             : $documentStyle;
         return $this;
@@ -491,7 +547,7 @@ class ArticleDocument extends BaseSdkObject
     {
         Assert::isSdkObject($layout, Layout::class);
 
-        $this->layout = is_array($layout) ? new Layout($layout) : $layout;
+        $this->layout = Utils::isAssociativeArray($layout) ? new Layout($layout) : $layout;
         return $this;
     }
 
@@ -518,7 +574,7 @@ class ArticleDocument extends BaseSdkObject
 
         Assert::isSdkObject($metadata, Metadata::class);
 
-        $this->metadata = is_array($metadata)
+        $this->metadata = Utils::isAssociativeArray($metadata)
             ? new Metadata($metadata)
             : $metadata;
         return $this;
@@ -552,6 +608,33 @@ class ArticleDocument extends BaseSdkObject
     }
 
     /**
+     * Get the textFormat
+     * @return string
+     */
+    public function getTextFormat()
+    {
+        return $this->textFormat;
+    }
+
+    /**
+     * Set the textFormat
+     * @param string $textFormat
+     * @return $this
+     */
+    public function setTextFormat($textFormat)
+    {
+        if (is_null($textFormat)) {
+            $this->textFormat = null;
+            return $this;
+        }
+
+        Assert::oneOf($textFormat, ['markdown', 'html', 'none']);
+
+        $this->textFormat = $textFormat;
+        return $this;
+    }
+
+    /**
      * Get the textStyles
      * @return \Urbania\AppleNews\Format\TextStyles
      */
@@ -574,7 +657,7 @@ class ArticleDocument extends BaseSdkObject
 
         Assert::isSdkObject($textStyles, TextStyles::class);
 
-        $this->textStyles = is_array($textStyles)
+        $this->textStyles = Utils::isAssociativeArray($textStyles)
             ? new TextStyles($textStyles)
             : $textStyles;
         return $this;
@@ -660,9 +743,7 @@ class ArticleDocument extends BaseSdkObject
         }
         if (isset($this->layout)) {
             $data['layout'] =
-                $this->layout instanceof Arrayable
-                    ? $this->layout->toArray()
-                    : $this->layout;
+                $this->layout instanceof Arrayable ? $this->layout->toArray() : $this->layout;
         }
         if (isset($this->title)) {
             $data['title'] = $this->title;
@@ -681,6 +762,12 @@ class ArticleDocument extends BaseSdkObject
                 $this->autoplacement instanceof Arrayable
                     ? $this->autoplacement->toArray()
                     : $this->autoplacement;
+        }
+        if (isset($this->colorScheme)) {
+            $data['colorScheme'] =
+                $this->colorScheme instanceof Arrayable
+                    ? $this->colorScheme->toArray()
+                    : $this->colorScheme;
         }
         if (isset($this->componentLayouts)) {
             $data['componentLayouts'] =
@@ -702,12 +789,13 @@ class ArticleDocument extends BaseSdkObject
         }
         if (isset($this->metadata)) {
             $data['metadata'] =
-                $this->metadata instanceof Arrayable
-                    ? $this->metadata->toArray()
-                    : $this->metadata;
+                $this->metadata instanceof Arrayable ? $this->metadata->toArray() : $this->metadata;
         }
         if (isset($this->subtitle)) {
             $data['subtitle'] = $this->subtitle;
+        }
+        if (isset($this->textFormat)) {
+            $data['textFormat'] = $this->textFormat;
         }
         if (isset($this->textStyles)) {
             $data['textStyles'] =

@@ -6,27 +6,20 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/tablecolumnselector",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/tablecolumnselector.json",
     "properties": [
         {
             "name": "columnIndex",
             "type": "integer",
             "required": false,
-            "description": "A number that specifies a column index. The leftmost column of data has an index of 0. The specified column is selected.",
+            "description": "A number that specifies a column index. The leftmost column of data has an index of . Only the column with the specific index is selected.",
             "typed": false
         },
         {
             "name": "descriptor",
             "type": "string",
             "required": false,
-            "description": "A number that specifies the identifier of a specific data descriptor. All columns for this data descriptor are selected. See DataDescriptor.",
-            "typed": false
-        },
-        {
-            "name": "odd",
-            "type": "boolean",
-            "required": false,
-            "description": "A Boolean value when true, selects the odd columns.",
+            "description": "A number that specifies the identifier of a specific data descriptor. All columns for this data descriptor are selected. See .\nWhen dataOrientation is set to vertical, which is the default, each column displays data for one data descriptor. See .",
             "typed": false
         },
         {
@@ -34,6 +27,13 @@
             "type": "boolean",
             "required": false,
             "description": "A Boolean value when true, selects the even columns.",
+            "typed": false
+        },
+        {
+            "name": "odd",
+            "type": "boolean",
+            "required": false,
+            "description": "A Boolean value when true, selects the odd columns.",
             "typed": false
         }
     ]

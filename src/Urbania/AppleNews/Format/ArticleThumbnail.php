@@ -5,11 +5,12 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The component for displaying a thumbnail image with an article link.
  *
- * @see https://developer.apple.com/documentation/apple_news/articlethumbnail
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/articlethumbnail.json
  */
 class ArticleThumbnail extends Component
 {
@@ -20,15 +21,16 @@ class ArticleThumbnail extends Component
     protected $role = 'article_thumbnail';
 
     /**
-     * A caption that describes the image. The text is used for VoiceOver for
-     * iOS and VoiceOver for macOS. If accessibilityCaption is not provided,
-     * the caption value is used instead.
+     * A caption that describes the image. The text is used for VoiceOver.
+     * For more information about VoiceOver, see the  page in Accessibility.
+     * If accessibilityCaption is not provided, the caption value is used for
+     * VoiceOver for iOS, VoiceOver for iPadOS, and VoiceOver for macOS.
      * @var string
      */
     protected $accessibilityCaption;
 
     /**
-     * Ignored for all children of ArticleLink.
+     * Ignored for all children of .
      * @var Format\ComponentLink[]
      */
     protected $additions;
@@ -41,9 +43,19 @@ class ArticleThumbnail extends Component
 
     /**
      * An object that defines an animation to be applied to the component.
-     * @var \Urbania\AppleNews\Format\ComponentAnimation
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\ComponentAnimation|none
      */
     protected $animation;
+
+    /**
+     * The identifier of the article that this component displays the
+     * thumbnail of. By default the articleIdentifier value is inherited from
+     * the parent  component.
+     * @var string
+     */
+    protected $articleIdentifier;
 
     /**
      * The aspect ratio of the component in which the article thumbnail is
@@ -53,26 +65,28 @@ class ArticleThumbnail extends Component
     protected $aspectRatio;
 
     /**
-     * An object that defines behavior for a component, like Parallax or
-     * Springy.
-     * @var \Urbania\AppleNews\Format\Behavior
+     * An object that defines behavior for a component, like  or .
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\Behavior|none
      */
     protected $behavior;
 
     /**
-     * A caption that describes the image. The text is seen when the image is
-     * in full screen. This text is also used by VoiceOver for iOS and
-     * VoiceOver for macOS, if accessibilityCaption text is not provided. The
-     * caption text does not appear in the main article view. To display a
-     * caption in the main article view, use the Caption component.
+     * A caption that describes the image. The article displays this text
+     * when the image is full screen, and VoiceOver uses this text if you
+     * don’t provide accessibilityCaption text. For more information about
+     * VoiceOver, see the  page in Accessibility. The caption text doesn’t
+     * appear in the main article view. To display a caption in the main
+     * article view, use the  component.
      * @var \Urbania\AppleNews\Format\CaptionDescriptor|string
      */
     protected $caption;
 
     /**
-     * An array of component properties that can be applied conditionally,
-     * and the conditions that cause them to be applied.
-     * @var Format\ConditionalComponent[]
+     * An instance or array of component properties that can be applied
+     * conditionally, and the conditions that cause them to be applied.
+     * @var Format\ConditionalComponent[]|\Urbania\AppleNews\Format\ConditionalComponent
      */
     protected $conditional;
 
@@ -84,6 +98,7 @@ class ArticleThumbnail extends Component
 
     /**
      * A string that indicates how to display the image fill.
+     * Valid values:
      * @var string
      */
     protected $fillMode;
@@ -97,6 +112,14 @@ class ArticleThumbnail extends Component
     /**
      * A string that sets the horizontal alignment of the image fill within
      * its component.
+     * Valid values:
+     * You can use fillMode with horizontalAlignment to achieve the effect
+     * you want. For example, set fillMode to fit and horizontalAlignment to
+     * left to fit the image based on its aspect ratio and align the left
+     * edge of the fill with the left edge of the component. Or set fillMode
+     * to cover and horizontalAlignment to right to scale the image
+     * horizontally and align the right edge of the fill with the right edge
+     * of the component.
      * @var string
      */
     protected $horizontalAlignment;
@@ -104,7 +127,7 @@ class ArticleThumbnail extends Component
     /**
      * A unique identifier for this component. If used, the identifier must
      * be unique across the entire document. An identifier is required if you
-     * want to anchor other components to this component. See Anchor.
+     * want to anchor other components to this component. See .
      * @var string
      */
     protected $identifier;
@@ -113,6 +136,9 @@ class ArticleThumbnail extends Component
      * An inline ComponentLayout object that contains layout information, or
      * a string reference to a ComponentLayout object that is defined at the
      * top level of the document.
+     *  If layout is not defined, size and position are based on various
+     * factors, such as the device type, the length of the content, and the
+     * role of this component.
      * @var \Urbania\AppleNews\Format\ComponentLayout|string
      */
     protected $layout;
@@ -121,12 +147,22 @@ class ArticleThumbnail extends Component
      * An inline ComponentStyle object that defines the appearance of this
      * component, or a string reference to a ComponentStyle object that is
      * defined at the top level of the document.
-     * @var \Urbania\AppleNews\Format\ComponentStyle|string
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\ComponentStyle|string|none
      */
     protected $style;
 
     /**
      * The URL of an image file.
+     * If omitted, the thumbnail of the article referenced in the  component
+     * is used. Images should be high-resolution so they can be smoothly
+     * scaled down.
+     * Image URLs can begin with http://, https://, or bundle://. If the
+     * image URL begins with bundle://, the image file must be in the same
+     * directory as the document.
+     * Image filenames should be properly encoded as URLs.
+     *  See .
      * @var string
      */
     protected $URL;
@@ -156,6 +192,10 @@ class ArticleThumbnail extends Component
 
         if (isset($data['animation'])) {
             $this->setAnimation($data['animation']);
+        }
+
+        if (isset($data['articleIdentifier'])) {
+            $this->setArticleIdentifier($data['articleIdentifier']);
         }
 
         if (isset($data['aspectRatio'])) {
@@ -246,9 +286,7 @@ class ArticleThumbnail extends Component
     public function addAddition($item)
     {
         return $this->setAdditions(
-            !is_null($this->additions)
-                ? array_merge($this->additions, [$item])
-                : [$item]
+            !is_null($this->additions) ? array_merge($this->additions, [$item]) : [$item]
         );
     }
 
@@ -261,9 +299,7 @@ class ArticleThumbnail extends Component
     {
         Assert::isArray($items);
         return $this->setAdditions(
-            !is_null($this->additions)
-                ? array_merge($this->additions, $items)
-                : $items
+            !is_null($this->additions) ? array_merge($this->additions, $items) : $items
         );
     }
 
@@ -291,17 +327,19 @@ class ArticleThumbnail extends Component
         Assert::isArray($additions);
         Assert::allIsSdkObject($additions, ComponentLink::class);
 
-        $this->additions = array_reduce(
-            array_keys($additions),
-            function ($array, $key) use ($additions) {
-                $item = $additions[$key];
-                $array[$key] = is_array($item)
-                    ? new ComponentLink($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->additions = is_array($additions)
+            ? array_reduce(
+                array_keys($additions),
+                function ($array, $key) use ($additions) {
+                    $item = $additions[$key];
+                    $array[$key] = Utils::isAssociativeArray($item)
+                        ? new ComponentLink($item)
+                        : $item;
+                    return $array;
+                },
+                []
+            )
+            : $additions;
         return $this;
     }
 
@@ -328,13 +366,13 @@ class ArticleThumbnail extends Component
 
         Assert::isSdkObject($anchor, Anchor::class);
 
-        $this->anchor = is_array($anchor) ? new Anchor($anchor) : $anchor;
+        $this->anchor = Utils::isAssociativeArray($anchor) ? new Anchor($anchor) : $anchor;
         return $this;
     }
 
     /**
      * Get the animation
-     * @return \Urbania\AppleNews\Format\ComponentAnimation
+     * @return \Urbania\AppleNews\Format\ComponentAnimation|none
      */
     public function getAnimation()
     {
@@ -343,7 +381,7 @@ class ArticleThumbnail extends Component
 
     /**
      * Set the animation
-     * @param \Urbania\AppleNews\Format\ComponentAnimation|array $animation
+     * @param \Urbania\AppleNews\Format\ComponentAnimation|array|none $animation
      * @return $this
      */
     public function setAnimation($animation)
@@ -353,11 +391,42 @@ class ArticleThumbnail extends Component
             return $this;
         }
 
-        Assert::isSdkObject($animation, ComponentAnimation::class);
+        if (is_object($animation) || Utils::isAssociativeArray($animation)) {
+            Assert::isSdkObject($animation, ComponentAnimation::class);
+        } else {
+            Assert::eq($animation, 'none');
+        }
 
-        $this->animation = is_array($animation)
+        $this->animation = Utils::isAssociativeArray($animation)
             ? ComponentAnimation::createTyped($animation)
             : $animation;
+        return $this;
+    }
+
+    /**
+     * Get the articleIdentifier
+     * @return string
+     */
+    public function getArticleIdentifier()
+    {
+        return $this->articleIdentifier;
+    }
+
+    /**
+     * Set the articleIdentifier
+     * @param string $articleIdentifier
+     * @return $this
+     */
+    public function setArticleIdentifier($articleIdentifier)
+    {
+        if (is_null($articleIdentifier)) {
+            $this->articleIdentifier = null;
+            return $this;
+        }
+
+        Assert::string($articleIdentifier);
+
+        $this->articleIdentifier = $articleIdentifier;
         return $this;
     }
 
@@ -390,7 +459,7 @@ class ArticleThumbnail extends Component
 
     /**
      * Get the behavior
-     * @return \Urbania\AppleNews\Format\Behavior
+     * @return \Urbania\AppleNews\Format\Behavior|none
      */
     public function getBehavior()
     {
@@ -399,7 +468,7 @@ class ArticleThumbnail extends Component
 
     /**
      * Set the behavior
-     * @param \Urbania\AppleNews\Format\Behavior|array $behavior
+     * @param \Urbania\AppleNews\Format\Behavior|array|none $behavior
      * @return $this
      */
     public function setBehavior($behavior)
@@ -409,9 +478,13 @@ class ArticleThumbnail extends Component
             return $this;
         }
 
-        Assert::isSdkObject($behavior, Behavior::class);
+        if (is_object($behavior) || Utils::isAssociativeArray($behavior)) {
+            Assert::isSdkObject($behavior, Behavior::class);
+        } else {
+            Assert::eq($behavior, 'none');
+        }
 
-        $this->behavior = is_array($behavior)
+        $this->behavior = Utils::isAssociativeArray($behavior)
             ? Behavior::createTyped($behavior)
             : $behavior;
         return $this;
@@ -438,35 +511,21 @@ class ArticleThumbnail extends Component
             return $this;
         }
 
-        if (is_object($caption) || is_array($caption)) {
+        if (is_object($caption) || Utils::isAssociativeArray($caption)) {
             Assert::isSdkObject($caption, CaptionDescriptor::class);
         } else {
             Assert::string($caption);
         }
 
-        $this->caption = is_array($caption)
+        $this->caption = Utils::isAssociativeArray($caption)
             ? new CaptionDescriptor($caption)
             : $caption;
         return $this;
     }
 
     /**
-     * Add an item to conditional
-     * @param \Urbania\AppleNews\Format\ConditionalComponent|array $item
-     * @return $this
-     */
-    public function addConditional($item)
-    {
-        return $this->setConditional(
-            !is_null($this->conditional)
-                ? array_merge($this->conditional, [$item])
-                : [$item]
-        );
-    }
-
-    /**
      * Get the conditional
-     * @return Format\ConditionalComponent[]
+     * @return Format\ConditionalComponent[]|\Urbania\AppleNews\Format\ConditionalComponent
      */
     public function getConditional()
     {
@@ -475,7 +534,7 @@ class ArticleThumbnail extends Component
 
     /**
      * Set the conditional
-     * @param Format\ConditionalComponent[] $conditional
+     * @param Format\ConditionalComponent[]|\Urbania\AppleNews\Format\ConditionalComponent|array $conditional
      * @return $this
      */
     public function setConditional($conditional)
@@ -485,20 +544,16 @@ class ArticleThumbnail extends Component
             return $this;
         }
 
-        Assert::isArray($conditional);
-        Assert::allIsSdkObject($conditional, ConditionalComponent::class);
+        if (is_object($conditional) || Utils::isAssociativeArray($conditional)) {
+            Assert::isSdkObject($conditional, ConditionalComponent::class);
+        } else {
+            Assert::isArray($conditional);
+            Assert::allIsSdkObject($conditional, ConditionalComponent::class);
+        }
 
-        $this->conditional = array_reduce(
-            array_keys($conditional),
-            function ($array, $key) use ($conditional) {
-                $item = $conditional[$key];
-                $array[$key] = is_array($item)
-                    ? new ConditionalComponent($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->conditional = Utils::isAssociativeArray($conditional)
+            ? new ConditionalComponent($conditional)
+            : $conditional;
         return $this;
     }
 
@@ -550,7 +605,7 @@ class ArticleThumbnail extends Component
             return $this;
         }
 
-        Assert::oneOf($fillMode, ["cover", "fit"]);
+        Assert::oneOf($fillMode, ['cover', 'fit']);
 
         $this->fillMode = $fillMode;
         return $this;
@@ -604,7 +659,7 @@ class ArticleThumbnail extends Component
             return $this;
         }
 
-        Assert::oneOf($horizontalAlignment, ["left", "center", "right"]);
+        Assert::oneOf($horizontalAlignment, ['left', 'center', 'right']);
 
         $this->horizontalAlignment = $horizontalAlignment;
         return $this;
@@ -658,15 +713,13 @@ class ArticleThumbnail extends Component
             return $this;
         }
 
-        if (is_object($layout) || is_array($layout)) {
+        if (is_object($layout) || Utils::isAssociativeArray($layout)) {
             Assert::isSdkObject($layout, ComponentLayout::class);
         } else {
             Assert::string($layout);
         }
 
-        $this->layout = is_array($layout)
-            ? new ComponentLayout($layout)
-            : $layout;
+        $this->layout = Utils::isAssociativeArray($layout) ? new ComponentLayout($layout) : $layout;
         return $this;
     }
 
@@ -681,7 +734,7 @@ class ArticleThumbnail extends Component
 
     /**
      * Get the style
-     * @return \Urbania\AppleNews\Format\ComponentStyle|string
+     * @return \Urbania\AppleNews\Format\ComponentStyle|string|none
      */
     public function getStyle()
     {
@@ -690,7 +743,7 @@ class ArticleThumbnail extends Component
 
     /**
      * Set the style
-     * @param \Urbania\AppleNews\Format\ComponentStyle|array|string $style
+     * @param \Urbania\AppleNews\Format\ComponentStyle|array|string|none $style
      * @return $this
      */
     public function setStyle($style)
@@ -700,13 +753,13 @@ class ArticleThumbnail extends Component
             return $this;
         }
 
-        if (is_object($style) || is_array($style)) {
+        if (is_object($style) || Utils::isAssociativeArray($style)) {
             Assert::isSdkObject($style, ComponentStyle::class);
         } else {
             Assert::string($style);
         }
 
-        $this->style = is_array($style) ? new ComponentStyle($style) : $style;
+        $this->style = Utils::isAssociativeArray($style) ? new ComponentStyle($style) : $style;
         return $this;
     }
 
@@ -758,7 +811,7 @@ class ArticleThumbnail extends Component
             return $this;
         }
 
-        Assert::oneOf($verticalAlignment, ["top", "center", "bottom"]);
+        Assert::oneOf($verticalAlignment, ['top', 'center', 'bottom']);
 
         $this->verticalAlignment = $verticalAlignment;
         return $this;
@@ -794,9 +847,7 @@ class ArticleThumbnail extends Component
         }
         if (isset($this->anchor)) {
             $data['anchor'] =
-                $this->anchor instanceof Arrayable
-                    ? $this->anchor->toArray()
-                    : $this->anchor;
+                $this->anchor instanceof Arrayable ? $this->anchor->toArray() : $this->anchor;
         }
         if (isset($this->animation)) {
             $data['animation'] =
@@ -804,35 +855,25 @@ class ArticleThumbnail extends Component
                     ? $this->animation->toArray()
                     : $this->animation;
         }
+        if (isset($this->articleIdentifier)) {
+            $data['articleIdentifier'] = $this->articleIdentifier;
+        }
         if (isset($this->aspectRatio)) {
             $data['aspectRatio'] = $this->aspectRatio;
         }
         if (isset($this->behavior)) {
             $data['behavior'] =
-                $this->behavior instanceof Arrayable
-                    ? $this->behavior->toArray()
-                    : $this->behavior;
+                $this->behavior instanceof Arrayable ? $this->behavior->toArray() : $this->behavior;
         }
         if (isset($this->caption)) {
             $data['caption'] =
-                $this->caption instanceof Arrayable
-                    ? $this->caption->toArray()
-                    : $this->caption;
+                $this->caption instanceof Arrayable ? $this->caption->toArray() : $this->caption;
         }
         if (isset($this->conditional)) {
-            $data['conditional'] = !is_null($this->conditional)
-                ? array_reduce(
-                    array_keys($this->conditional),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->conditional[$key] instanceof Arrayable
-                                ? $this->conditional[$key]->toArray()
-                                : $this->conditional[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->conditional;
+            $data['conditional'] =
+                $this->conditional instanceof Arrayable
+                    ? $this->conditional->toArray()
+                    : $this->conditional;
         }
         if (isset($this->explicitContent)) {
             $data['explicitContent'] = $this->explicitContent;
@@ -851,15 +892,11 @@ class ArticleThumbnail extends Component
         }
         if (isset($this->layout)) {
             $data['layout'] =
-                $this->layout instanceof Arrayable
-                    ? $this->layout->toArray()
-                    : $this->layout;
+                $this->layout instanceof Arrayable ? $this->layout->toArray() : $this->layout;
         }
         if (isset($this->style)) {
             $data['style'] =
-                $this->style instanceof Arrayable
-                    ? $this->style->toArray()
-                    : $this->style;
+                $this->style instanceof Arrayable ? $this->style->toArray() : $this->style;
         }
         if (isset($this->URL)) {
             $data['URL'] = $this->URL;

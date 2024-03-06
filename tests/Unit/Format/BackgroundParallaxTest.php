@@ -28,6 +28,6 @@ class BackgroundParallaxTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["background_parallax"]];
+        return [['background_parallax']];
     }
 }

@@ -30,7 +30,7 @@ class StrokeStyleTest extends TestCase
      */
     public static function colorProvider()
     {
-        return [["#fff"], ["#000"]];
+        return [['#fff'], ['#000']];
     }
 
     /**
@@ -53,7 +53,7 @@ class StrokeStyleTest extends TestCase
      */
     public static function styleProvider()
     {
-        return [["solid"], ["dashed"], ["dotted"]];
+        return [['solid'], ['dashed'], ['dotted']];
     }
 
     /**
@@ -76,6 +76,6 @@ class StrokeStyleTest extends TestCase
      */
     public static function widthProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 }

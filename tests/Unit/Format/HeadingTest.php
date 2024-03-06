@@ -31,13 +31,13 @@ class HeadingTest extends TestCase
     public static function roleProvider()
     {
         return [
-            ["heading"],
-            ["heading1"],
-            ["heading2"],
-            ["heading3"],
-            ["heading4"],
-            ["heading5"],
-            ["heading6"]
+            ['heading'],
+            ['heading1'],
+            ['heading2'],
+            ['heading3'],
+            ['heading4'],
+            ['heading5'],
+            ['heading6'],
         ];
     }
 
@@ -61,7 +61,7 @@ class HeadingTest extends TestCase
      */
     public static function textProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -130,7 +130,7 @@ class HeadingTest extends TestCase
      */
     public static function animationProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentAnimation()]];
+        return [[new \Urbania\AppleNews\Format\ComponentAnimation()], ['none']];
     }
 
     /**
@@ -153,7 +153,7 @@ class HeadingTest extends TestCase
      */
     public static function behaviorProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Behavior()]];
+        return [[new \Urbania\AppleNews\Format\Behavior()], ['none']];
     }
 
     /**
@@ -176,7 +176,10 @@ class HeadingTest extends TestCase
      */
     public static function conditionalProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\ConditionalText()]]];
+        return [
+            [new \Urbania\AppleNews\Format\ConditionalText()],
+            [[new \Urbania\AppleNews\Format\ConditionalText()]],
+        ];
     }
 
     /**
@@ -199,7 +202,7 @@ class HeadingTest extends TestCase
      */
     public static function formatProvider()
     {
-        return [["markdown"], ["html"], ["none"]];
+        return [['markdown'], ['html'], ['none']];
     }
 
     /**
@@ -245,7 +248,7 @@ class HeadingTest extends TestCase
      */
     public static function identifierProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -268,7 +271,7 @@ class HeadingTest extends TestCase
      */
     public static function inlineTextStylesProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\InlineTextStyle()]]];
+        return [[[new \Urbania\AppleNews\Format\InlineTextStyle()]], ['none']];
     }
 
     /**
@@ -291,10 +294,7 @@ class HeadingTest extends TestCase
      */
     public static function layoutProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\ComponentLayout()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\ComponentLayout()], ['a string']];
     }
 
     /**
@@ -317,7 +317,7 @@ class HeadingTest extends TestCase
      */
     public static function styleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
+        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ['a string'], ['none']];
     }
 
     /**
@@ -340,9 +340,6 @@ class HeadingTest extends TestCase
      */
     public static function textStyleProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\ComponentTextStyle()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\ComponentTextStyle()], ['a string']];
     }
 }

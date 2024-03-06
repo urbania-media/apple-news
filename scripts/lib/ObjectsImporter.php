@@ -17,6 +17,7 @@ class ObjectsImporter
     protected $filesystem;
     protected $output;
     protected $client;
+    protected $parser;
     protected $importedObjects = [];
 
     public function __construct($sdk = null)
@@ -30,15 +31,11 @@ class ObjectsImporter
     public function import($startUrl, $outputPath)
     {
         $state = $this->importDocument($startUrl);
-        $objects = $state->objects;
+        $objects = $state['objects'];
 
-        $this->output->writeln(
-            '<comment>Cleaning:</comment> Existing files...'
-        );
+        $this->output->writeln('<comment>Cleaning:</comment> Existing files...');
         $cleanedFiles = $this->cleanFiles($outputPath);
-        $this->output->writeln(
-            '<info>Cleaned:</info> '.sizeof($cleanedFiles).' files...'
-        );
+        $this->output->writeln('<info>Cleaned:</info> ' . sizeof($cleanedFiles) . ' files...');
 
         $extends = $this->getExtends($objects);
         foreach ($objects as $object) {
@@ -46,14 +43,10 @@ class ObjectsImporter
                 $object->setTypedChildClasses($extends[$object->getClassName()]);
             }
             $this->output->writeln(
-                '<comment>Writing:</comment> Object ' .
-                    $object->getName() .
-                    '...'
+                '<comment>Writing:</comment> Object ' . $object->getName() . '...'
             );
             $this->writeObject($object, $outputPath);
-            $this->output->writeln(
-                '<info>Imported:</info> Object ' . $object->getName() . '.'
-            );
+            $this->output->writeln('<info>Imported:</info> Object ' . $object->getName() . '.');
         }
 
         return $objects;
@@ -85,18 +78,19 @@ class ObjectsImporter
             if ($parent === $parentClassName) {
                 continue;
             }
-            $found = array_reduce($childClasses, function ($found, $childClass) use ($parentClassName) {
-                return $found || $parentClassName === $childClass->getClassName();
-            }, false);
+            $found = array_reduce(
+                $childClasses,
+                function ($found, $childClass) use ($parentClassName) {
+                    return $found || $parentClassName === $childClass->getClassName();
+                },
+                false
+            );
             if ($found) {
                 $newExtends = $this->addExtends($newExtends, $parent, $object);
             } elseif ($className === $parent) {
                 $newExtends[$parentClassName] = array_values(
                     array_unique(
-                        array_merge(
-                            $newExtends[$parentClassName],
-                            $childClasses
-                        ),
+                        array_merge($newExtends[$parentClassName], $childClasses),
                         SORT_REGULAR
                     )
                 );
@@ -105,36 +99,31 @@ class ObjectsImporter
         return $newExtends;
     }
 
-    protected function importDocument($url, $state = null)
+    protected function importDocument($url, $previousState = null)
     {
         $this->output->writeln('<comment>Fetching:</comment> ' . $url . '...');
 
-        if (is_null($state)) {
-            $state = new StdClass();
-            $state->objects = [];
-            $state->urls = [];
-        }
+        $state = [
+            'objects' => data_get($previousState, 'objects', []),
+            'urls' => data_get($previousState, 'urls', []),
+        ];
 
-        $html = $this->fetchUrl($url);
-        $state->urls[] = $url;
+        $data = $this->fetchUrl($url);
+        $state['urls'][] = $url;
 
-        $document = $this->parser->parse($html, $url);
+        $document = $this->parser->parse($data, $url);
 
         if ($document instanceof ObjectDocument) {
-            $state->objects[$document->getName()] = $document;
+            $state['objects'][$document->getName()] = $document;
             $this->output->writeln(
-                '<info>Found:</info> Object ' .
-                    $document->getName() .
-                    ' at ' .
-                    $url .
-                    '.'
+                '<info>Found:</info> Object ' . $document->getName() . ' at ' . $url . '.'
             );
         }
 
         $links = $document->getLinks();
         unset($document);
         foreach ($links as $link) {
-            if (in_array($link, $state->urls)) {
+            if (in_array($link, $state['urls'])) {
                 continue;
             }
             $state = $this->importDocument($link, $state);
@@ -147,7 +136,7 @@ class ObjectsImporter
     {
         try {
             $response = $this->client->get($url);
-            return (string) $response->getBody();
+            return json_decode((string) $response->getBody(), true);
         } catch (Exception $e) {
             return null;
         }

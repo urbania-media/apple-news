@@ -31,11 +31,11 @@ class BehaviorTest extends TestCase
     public static function typeProvider()
     {
         return [
-            ["background_motion"],
-            ["background_parallax"],
-            ["motion"],
-            ["parallax"],
-            ["springy"]
+            ['background_motion'],
+            ['background_parallax'],
+            ['motion'],
+            ['parallax'],
+            ['springy'],
         ];
     }
 }

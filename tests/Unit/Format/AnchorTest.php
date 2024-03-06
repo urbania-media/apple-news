@@ -30,7 +30,7 @@ class AnchorTest extends TestCase
      */
     public static function targetAnchorPositionProvider()
     {
-        return [["top"], ["center"], ["bottom"]];
+        return [['top'], ['center'], ['bottom']];
     }
 
     /**
@@ -53,7 +53,7 @@ class AnchorTest extends TestCase
      */
     public static function originAnchorPositionProvider()
     {
-        return [["top"], ["center"], ["bottom"]];
+        return [['top'], ['center'], ['bottom']];
     }
 
     /**
@@ -122,7 +122,7 @@ class AnchorTest extends TestCase
      */
     public static function targetProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -145,6 +145,6 @@ class AnchorTest extends TestCase
      */
     public static function targetComponentIdentifierProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 }

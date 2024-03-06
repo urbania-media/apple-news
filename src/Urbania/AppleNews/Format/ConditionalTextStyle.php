@@ -5,26 +5,28 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for defining conditional properties for a text style, and
  * when the conditional properties are in effect.
  *
- * @see https://developer.apple.com/documentation/apple_news/conditionaltextstyle
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/conditionaltextstyle.json
  */
 class ConditionalTextStyle extends TextStyle
 {
     /**
-     * An array of conditions that, when met, cause the conditional text
-     * style properties to be in effect.
-     * @var Format\Condition[]
+     * An instance or array of conditions that, when met, cause the
+     * conditional text style properties to take effect.
+     * @var Format\Condition[]|\Urbania\AppleNews\Format\Condition
      */
     protected $conditions;
 
     /**
      * The background color for text lines. This value defaults to
      * transparent.
-     * @var string
+     * To remove a previously set condition, use none.
+     * @var string|none
      */
     protected $backgroundColor;
 
@@ -33,8 +35,10 @@ class ConditionalTextStyle extends TextStyle
      * Using a combination of fontFamily, fontWeight, and fontStyle, you can
      * define the appearance of the text. Apple News automatically selects
      * the appropriate font variant from the available variants in that
-     * family.
-     * @var string
+     * family. See .
+     * In iOS 13, iPadOS 13,  and macOS 10.15, you can use the value system
+     * to show text in the default font used by the operating system.
+     * @var string|string
      */
     protected $fontFamily;
 
@@ -44,6 +48,7 @@ class ConditionalTextStyle extends TextStyle
      * of fontFamily, fontWeight, and fontStyle to have Apple News
      * automatically select the appropriate variant depending on the text
      * formatting used.
+     * See .
      * @var string
      */
     protected $fontName;
@@ -52,14 +57,15 @@ class ConditionalTextStyle extends TextStyle
      * The size of the font, in points. By default, the font size is
      * inherited from a parent component or a default style. As a best
      * practice, try not to go below 16 points for body text. The fontSize
-     * may be automatically resized for different device sizes or for iOS
-     * devices with Larger Accessibility Sizes enabled.
+     * may be automatically resized for different device sizes or for iOS and
+     * iPadOS devices with Larger Accessibility Sizes enabled.
      * @var integer
      */
     protected $fontSize;
 
     /**
      * The font style to apply for the selected font.
+     * Valid values:
      * @var string
      */
     protected $fontStyle;
@@ -69,6 +75,13 @@ class ConditionalTextStyle extends TextStyle
      * explicit weights (named or numerical), lighter and bolder are
      * available, to set text in a lighter or bolder font as compared to the
      * surrounding text.
+     * If a font variant with the given specifications cannot be found in the
+     * provided font family, the closest match is selected. If no bold or
+     * bolder font is found, Apple News does not create a faux-bold
+     * alternative, but falls back to the closest match. Similarly, if no
+     * italic or oblique font variant can be found, text is not slanted to
+     * make it appear italicized.
+     * Valid values:
      * @var integer|string
      */
     protected $fontWeight;
@@ -80,6 +93,7 @@ class ConditionalTextStyle extends TextStyle
      * width (for example, Avenir Next and Avenir Next Condensed), so make
      * sure that the font family you select supports the specified font
      * width.
+     * Valid values:
      * @var string
      */
     protected $fontWidth;
@@ -88,7 +102,8 @@ class ConditionalTextStyle extends TextStyle
      * An object for use with text components with HTML markup. You can
      * create text styles containing an orderedListItems definition to
      * configure how to display list items inside <ol> tags.
-     * @var \Urbania\AppleNews\Format\ListItemStyle
+     * To remove a previously set condition, use none.
+     * @var \Urbania\AppleNews\Format\ListItemStyle|none
      */
     protected $orderedListItems;
 
@@ -103,7 +118,8 @@ class ConditionalTextStyle extends TextStyle
 
     /**
      * The stroke style for the text outline. By default, stroke is omitted.
-     * @var \Urbania\AppleNews\Format\TextStrokeStyle
+     * To remove a previously set condition, use none.
+     * @var \Urbania\AppleNews\Format\TextStrokeStyle|none
      */
     protected $stroke;
 
@@ -115,12 +131,14 @@ class ConditionalTextStyle extends TextStyle
 
     /**
      * The text shadow for this style.
-     * @var \Urbania\AppleNews\Format\Shadow
+     * To remove a previously set condition, use none.
+     * @var \Urbania\AppleNews\Format\TextShadow|none
      */
     protected $textShadow;
 
     /**
      * The transform to apply to the text.
+     * Valid values:
      * @var string
      */
     protected $textTransform;
@@ -129,6 +147,9 @@ class ConditionalTextStyle extends TextStyle
      * The amount of tracking (spacing between characters) in text, as a
      * percentage of the font size. The actual spacing between letters is
      * determined by combining information from the font and font size.
+     * Example: Set tracking to 0.5 to make the distance between characters
+     * increase by 50% of the fontSize. With a font size of 10, the
+     * additional space between characters is 5 points.
      * @var integer|float
      */
     protected $tracking;
@@ -146,13 +167,19 @@ class ConditionalTextStyle extends TextStyle
      * An object for use with text components with HTML markup. You can
      * create text styles containing an unorderedListItems definition to
      * configure how to display list items inside <ul> tags.
-     * @var \Urbania\AppleNews\Format\ListItemStyle
+     * To remove a previously set condition, use none.
+     * @var \Urbania\AppleNews\Format\ListItemStyle|none
      */
     protected $unorderedListItems;
 
     /**
      * The vertical alignment of the text. You can use this property for
      * superscripts and subscripts.
+     * Overrides values specified in parent text styles.
+     * Default value: baseline when unspecified, or the value specified in a
+     * TextStyle object applied to the same range.
+     * The values superscript and subscript also adjust the font size to
+     * two-thirds of the size defined for that character range.
      * @var string
      */
     protected $verticalAlignment;
@@ -236,7 +263,7 @@ class ConditionalTextStyle extends TextStyle
 
     /**
      * Get the backgroundColor
-     * @return string
+     * @return string|none
      */
     public function getBackgroundColor()
     {
@@ -245,7 +272,7 @@ class ConditionalTextStyle extends TextStyle
 
     /**
      * Set the backgroundColor
-     * @param string $backgroundColor
+     * @param string|none $backgroundColor
      * @return $this
      */
     public function setBackgroundColor($backgroundColor)
@@ -255,44 +282,17 @@ class ConditionalTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::isColor($backgroundColor);
+        if ($backgroundColor !== 'none') {
+            Assert::isColor($backgroundColor);
+        }
 
         $this->backgroundColor = $backgroundColor;
         return $this;
     }
 
     /**
-     * Add an item to conditions
-     * @param \Urbania\AppleNews\Format\Condition|array $item
-     * @return $this
-     */
-    public function addCondition($item)
-    {
-        return $this->setConditions(
-            !is_null($this->conditions)
-                ? array_merge($this->conditions, [$item])
-                : [$item]
-        );
-    }
-
-    /**
-     * Add items to conditions
-     * @param array $items
-     * @return $this
-     */
-    public function addConditions($items)
-    {
-        Assert::isArray($items);
-        return $this->setConditions(
-            !is_null($this->conditions)
-                ? array_merge($this->conditions, $items)
-                : $items
-        );
-    }
-
-    /**
      * Get the conditions
-     * @return Format\Condition[]
+     * @return Format\Condition[]|\Urbania\AppleNews\Format\Condition
      */
     public function getConditions()
     {
@@ -301,29 +301,27 @@ class ConditionalTextStyle extends TextStyle
 
     /**
      * Set the conditions
-     * @param Format\Condition[] $conditions
+     * @param Format\Condition[]|\Urbania\AppleNews\Format\Condition|array $conditions
      * @return $this
      */
     public function setConditions($conditions)
     {
-        Assert::isArray($conditions);
-        Assert::allIsSdkObject($conditions, Condition::class);
+        if (is_object($conditions) || Utils::isAssociativeArray($conditions)) {
+            Assert::isSdkObject($conditions, Condition::class);
+        } else {
+            Assert::isArray($conditions);
+            Assert::allIsSdkObject($conditions, Condition::class);
+        }
 
-        $this->conditions = array_reduce(
-            array_keys($conditions),
-            function ($array, $key) use ($conditions) {
-                $item = $conditions[$key];
-                $array[$key] = is_array($item) ? new Condition($item) : $item;
-                return $array;
-            },
-            []
-        );
+        $this->conditions = Utils::isAssociativeArray($conditions)
+            ? new Condition($conditions)
+            : $conditions;
         return $this;
     }
 
     /**
      * Get the fontFamily
-     * @return string
+     * @return string|string
      */
     public function getFontFamily()
     {
@@ -332,7 +330,7 @@ class ConditionalTextStyle extends TextStyle
 
     /**
      * Set the fontFamily
-     * @param string $fontFamily
+     * @param string|string $fontFamily
      * @return $this
      */
     public function setFontFamily($fontFamily)
@@ -342,7 +340,7 @@ class ConditionalTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::string($fontFamily);
+        Assert::oneOf($fontFamily, ['system']);
 
         $this->fontFamily = $fontFamily;
         return $this;
@@ -423,7 +421,7 @@ class ConditionalTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::oneOf($fontStyle, ["normal", "italic", "oblique"]);
+        Assert::oneOf($fontStyle, ['normal', 'italic', 'oblique']);
 
         $this->fontStyle = $fontStyle;
         return $this;
@@ -460,29 +458,29 @@ class ConditionalTextStyle extends TextStyle
             700,
             800,
             900,
-            "thin",
-            "extra-light",
-            "extralight",
-            "ultra-light",
-            "light",
-            "regular",
-            "normal",
-            "book",
-            "roman",
-            "medium",
-            "semi-bold",
-            "semibold",
-            "demi-bold",
-            "demibold",
-            "bold",
-            "extra-bold",
-            "extrabold",
-            "ultra-bold",
-            "ultrabold",
-            "black",
-            "heavy",
-            "lighter",
-            "bolder"
+            'thin',
+            'extra-light',
+            'extralight',
+            'ultra-light',
+            'light',
+            'regular',
+            'normal',
+            'book',
+            'roman',
+            'medium',
+            'semi-bold',
+            'semibold',
+            'demi-bold',
+            'demibold',
+            'bold',
+            'extra-bold',
+            'extrabold',
+            'ultra-bold',
+            'ultrabold',
+            'black',
+            'heavy',
+            'lighter',
+            'bolder',
         ]);
 
         $this->fontWeight = $fontWeight;
@@ -511,15 +509,18 @@ class ConditionalTextStyle extends TextStyle
         }
 
         Assert::oneOf($fontWidth, [
-            "ultra-condensed",
-            "extra-condensed",
-            "condensed",
-            "semi-condensed",
-            "normal",
-            "semi-expanded",
-            "expanded",
-            "extra-expanded",
-            "ultra-expanded"
+            'ultra-compressed',
+            'extra-compressed',
+            'compressed',
+            'ultra-condensed',
+            'extra-condensed',
+            'condensed',
+            'semi-condensed',
+            'normal',
+            'semi-expanded',
+            'expanded',
+            'extra-expanded',
+            'ultra-expanded',
         ]);
 
         $this->fontWidth = $fontWidth;
@@ -528,7 +529,7 @@ class ConditionalTextStyle extends TextStyle
 
     /**
      * Get the orderedListItems
-     * @return \Urbania\AppleNews\Format\ListItemStyle
+     * @return \Urbania\AppleNews\Format\ListItemStyle|none
      */
     public function getOrderedListItems()
     {
@@ -537,7 +538,7 @@ class ConditionalTextStyle extends TextStyle
 
     /**
      * Set the orderedListItems
-     * @param \Urbania\AppleNews\Format\ListItemStyle|array $orderedListItems
+     * @param \Urbania\AppleNews\Format\ListItemStyle|array|none $orderedListItems
      * @return $this
      */
     public function setOrderedListItems($orderedListItems)
@@ -547,9 +548,13 @@ class ConditionalTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::isSdkObject($orderedListItems, ListItemStyle::class);
+        if (is_object($orderedListItems) || Utils::isAssociativeArray($orderedListItems)) {
+            Assert::isSdkObject($orderedListItems, ListItemStyle::class);
+        } else {
+            Assert::eq($orderedListItems, 'none');
+        }
 
-        $this->orderedListItems = is_array($orderedListItems)
+        $this->orderedListItems = Utils::isAssociativeArray($orderedListItems)
             ? new ListItemStyle($orderedListItems)
             : $orderedListItems;
         return $this;
@@ -576,13 +581,13 @@ class ConditionalTextStyle extends TextStyle
             return $this;
         }
 
-        if (is_object($strikethrough) || is_array($strikethrough)) {
+        if (is_object($strikethrough) || Utils::isAssociativeArray($strikethrough)) {
             Assert::isSdkObject($strikethrough, TextDecoration::class);
         } else {
             Assert::boolean($strikethrough);
         }
 
-        $this->strikethrough = is_array($strikethrough)
+        $this->strikethrough = Utils::isAssociativeArray($strikethrough)
             ? new TextDecoration($strikethrough)
             : $strikethrough;
         return $this;
@@ -590,7 +595,7 @@ class ConditionalTextStyle extends TextStyle
 
     /**
      * Get the stroke
-     * @return \Urbania\AppleNews\Format\TextStrokeStyle
+     * @return \Urbania\AppleNews\Format\TextStrokeStyle|none
      */
     public function getStroke()
     {
@@ -599,7 +604,7 @@ class ConditionalTextStyle extends TextStyle
 
     /**
      * Set the stroke
-     * @param \Urbania\AppleNews\Format\TextStrokeStyle|array $stroke
+     * @param \Urbania\AppleNews\Format\TextStrokeStyle|array|none $stroke
      * @return $this
      */
     public function setStroke($stroke)
@@ -609,11 +614,13 @@ class ConditionalTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::isSdkObject($stroke, TextStrokeStyle::class);
+        if (is_object($stroke) || Utils::isAssociativeArray($stroke)) {
+            Assert::isSdkObject($stroke, TextStrokeStyle::class);
+        } else {
+            Assert::eq($stroke, 'none');
+        }
 
-        $this->stroke = is_array($stroke)
-            ? new TextStrokeStyle($stroke)
-            : $stroke;
+        $this->stroke = Utils::isAssociativeArray($stroke) ? new TextStrokeStyle($stroke) : $stroke;
         return $this;
     }
 
@@ -646,7 +653,7 @@ class ConditionalTextStyle extends TextStyle
 
     /**
      * Get the textShadow
-     * @return \Urbania\AppleNews\Format\Shadow
+     * @return \Urbania\AppleNews\Format\TextShadow|none
      */
     public function getTextShadow()
     {
@@ -655,7 +662,7 @@ class ConditionalTextStyle extends TextStyle
 
     /**
      * Set the textShadow
-     * @param \Urbania\AppleNews\Format\Shadow|array $textShadow
+     * @param \Urbania\AppleNews\Format\TextShadow|array|none $textShadow
      * @return $this
      */
     public function setTextShadow($textShadow)
@@ -665,10 +672,14 @@ class ConditionalTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::isSdkObject($textShadow, Shadow::class);
+        if (is_object($textShadow) || Utils::isAssociativeArray($textShadow)) {
+            Assert::isSdkObject($textShadow, TextShadow::class);
+        } else {
+            Assert::eq($textShadow, 'none');
+        }
 
-        $this->textShadow = is_array($textShadow)
-            ? new Shadow($textShadow)
+        $this->textShadow = Utils::isAssociativeArray($textShadow)
+            ? new TextShadow($textShadow)
             : $textShadow;
         return $this;
     }
@@ -695,10 +706,11 @@ class ConditionalTextStyle extends TextStyle
         }
 
         Assert::oneOf($textTransform, [
-            "uppercase",
-            "lowercase",
-            "capitalize",
-            "none"
+            'uppercase',
+            'lowercase',
+            'capitalize',
+            'smallcaps',
+            'none',
         ]);
 
         $this->textTransform = $textTransform;
@@ -753,13 +765,13 @@ class ConditionalTextStyle extends TextStyle
             return $this;
         }
 
-        if (is_object($underline) || is_array($underline)) {
+        if (is_object($underline) || Utils::isAssociativeArray($underline)) {
             Assert::isSdkObject($underline, TextDecoration::class);
         } else {
             Assert::boolean($underline);
         }
 
-        $this->underline = is_array($underline)
+        $this->underline = Utils::isAssociativeArray($underline)
             ? new TextDecoration($underline)
             : $underline;
         return $this;
@@ -767,7 +779,7 @@ class ConditionalTextStyle extends TextStyle
 
     /**
      * Get the unorderedListItems
-     * @return \Urbania\AppleNews\Format\ListItemStyle
+     * @return \Urbania\AppleNews\Format\ListItemStyle|none
      */
     public function getUnorderedListItems()
     {
@@ -776,7 +788,7 @@ class ConditionalTextStyle extends TextStyle
 
     /**
      * Set the unorderedListItems
-     * @param \Urbania\AppleNews\Format\ListItemStyle|array $unorderedListItems
+     * @param \Urbania\AppleNews\Format\ListItemStyle|array|none $unorderedListItems
      * @return $this
      */
     public function setUnorderedListItems($unorderedListItems)
@@ -786,9 +798,13 @@ class ConditionalTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::isSdkObject($unorderedListItems, ListItemStyle::class);
+        if (is_object($unorderedListItems) || Utils::isAssociativeArray($unorderedListItems)) {
+            Assert::isSdkObject($unorderedListItems, ListItemStyle::class);
+        } else {
+            Assert::eq($unorderedListItems, 'none');
+        }
 
-        $this->unorderedListItems = is_array($unorderedListItems)
+        $this->unorderedListItems = Utils::isAssociativeArray($unorderedListItems)
             ? new ListItemStyle($unorderedListItems)
             : $unorderedListItems;
         return $this;
@@ -815,11 +831,7 @@ class ConditionalTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::oneOf($verticalAlignment, [
-            "superscript",
-            "subscript",
-            "baseline"
-        ]);
+        Assert::oneOf($verticalAlignment, ['superscript', 'subscript', 'baseline']);
 
         $this->verticalAlignment = $verticalAlignment;
         return $this;
@@ -833,19 +845,10 @@ class ConditionalTextStyle extends TextStyle
     {
         $data = parent::toArray();
         if (isset($this->conditions)) {
-            $data['conditions'] = !is_null($this->conditions)
-                ? array_reduce(
-                    array_keys($this->conditions),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->conditions[$key] instanceof Arrayable
-                                ? $this->conditions[$key]->toArray()
-                                : $this->conditions[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->conditions;
+            $data['conditions'] =
+                $this->conditions instanceof Arrayable
+                    ? $this->conditions->toArray()
+                    : $this->conditions;
         }
         if (isset($this->backgroundColor)) {
             $data['backgroundColor'] =
@@ -885,9 +888,7 @@ class ConditionalTextStyle extends TextStyle
         }
         if (isset($this->stroke)) {
             $data['stroke'] =
-                $this->stroke instanceof Arrayable
-                    ? $this->stroke->toArray()
-                    : $this->stroke;
+                $this->stroke instanceof Arrayable ? $this->stroke->toArray() : $this->stroke;
         }
         if (isset($this->textColor)) {
             $data['textColor'] =

@@ -1,0 +1,32 @@
+{
+    "name": "Format\\ComponentShadowOffset",
+    "description": "The object for setting an offset value to use with a component shadow.",
+    "version": "1.10+",
+    "deprecated": false,
+    "from_class": null,
+    "extends": null,
+    "typed": null,
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/componentshadowoffset.json",
+    "properties": [
+        {
+            "name": "x",
+            "type": [
+                "SupportedUnits",
+                "number"
+            ],
+            "required": false,
+            "description": "The x offset, as a value in . Implementation is device dependent.",
+            "typed": false
+        },
+        {
+            "name": "y",
+            "type": [
+                "SupportedUnits",
+                "number"
+            ],
+            "required": false,
+            "description": "The y offset, as a value in . Implementation is device dependent.",
+            "typed": false
+        }
+    ]
+}

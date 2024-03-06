@@ -5,16 +5,23 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for applying styles to cells in a table.
  *
- * @see https://developer.apple.com/documentation/apple_news/tablecellstyle
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/tablecellstyle.json
  */
 class TableCellStyle extends BaseSdkObject
 {
     /**
      * The background color for the cell.
+     * If this property is omitted, the background is transparent.
+     * The cell background color is highest priority, followed by the column,
+     * and finally the row. All three colors are applied, meaning that
+     * non-opaque values can cause combined colors. For example, using a red
+     * row together with a blue cell, both with 50% opacity, creates a purple
+     * cell.
      * @var string
      */
     protected $backgroundColor;
@@ -36,45 +43,42 @@ class TableCellStyle extends BaseSdkObject
     protected $conditional;
 
     /**
-     * The height of the cell and its row, as an integer in points, or using
-     * one of the units of measure for components. See Specifying
-     * Measurements for Components.
-     * @var string|integer
+     * The height of the cell and its row, as a number in points, or using
+     * one of the units of measure for components.See .
+     * By default, the height of each row is determined by the height of the
+     * content in that row.
+     * @var string|integer|float
      */
     protected $height;
 
     /**
-     * A string that defines the horizontal alignment of content inside
-     * cells.
+     * Defines the horizontal alignment of content inside cells.
      * @var string
      */
     protected $horizontalAlignment;
 
     /**
-     * The minimum width of the cell and its column, as an integer in points
-     * or in one of the available units of measure for components. See
-     * Specifying Measurements for Components.
-     * @var string|integer
+     * The minimum width of the cell and its column, as a number in points or
+     * in one of the available units of measure for components. See .
+     * @var string|integer|float
      */
     protected $minimumWidth;
 
     /**
      * The space around the content in a table cell in points, supported
-     * units, or a Padding object that specifies padding for each side
-     * separately.
-     * @var \Urbania\AppleNews\Format\Padding|string|integer
+     * units, or a  object that specifies padding for each side separately.
+     * @var \Urbania\AppleNews\Format\Padding|string|integer|float
      */
     protected $padding;
 
     /**
-     * The name string of one of your styles in the Article
-     * ArticleDocument.componentTextStyles object.
+     * The name string of one of your styles in the Article  object.
      * @var \Urbania\AppleNews\Format\ComponentTextStyle|string
      */
     protected $textStyle;
 
     /**
-     * A string that defines the vertical alignment of content inside cells.
+     * Defines the vertical alignment of content inside cells.
      * @var string
      */
     protected $verticalAlignment;
@@ -180,7 +184,7 @@ class TableCellStyle extends BaseSdkObject
 
         Assert::isSdkObject($border, TableBorder::class);
 
-        $this->border = is_array($border) ? new TableBorder($border) : $border;
+        $this->border = Utils::isAssociativeArray($border) ? new TableBorder($border) : $border;
         return $this;
     }
 
@@ -192,9 +196,7 @@ class TableCellStyle extends BaseSdkObject
     public function addConditional($item)
     {
         return $this->setConditional(
-            !is_null($this->conditional)
-                ? array_merge($this->conditional, [$item])
-                : [$item]
+            !is_null($this->conditional) ? array_merge($this->conditional, [$item]) : [$item]
         );
     }
 
@@ -222,23 +224,25 @@ class TableCellStyle extends BaseSdkObject
         Assert::isArray($conditional);
         Assert::allIsSdkObject($conditional, ConditionalTableCellStyle::class);
 
-        $this->conditional = array_reduce(
-            array_keys($conditional),
-            function ($array, $key) use ($conditional) {
-                $item = $conditional[$key];
-                $array[$key] = is_array($item)
-                    ? new ConditionalTableCellStyle($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->conditional = is_array($conditional)
+            ? array_reduce(
+                array_keys($conditional),
+                function ($array, $key) use ($conditional) {
+                    $item = $conditional[$key];
+                    $array[$key] = Utils::isAssociativeArray($item)
+                        ? new ConditionalTableCellStyle($item)
+                        : $item;
+                    return $array;
+                },
+                []
+            )
+            : $conditional;
         return $this;
     }
 
     /**
      * Get the height
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getHeight()
     {
@@ -247,7 +251,7 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * Set the height
-     * @param string|integer $height
+     * @param string|integer|float $height
      * @return $this
      */
     public function setHeight($height)
@@ -284,7 +288,7 @@ class TableCellStyle extends BaseSdkObject
             return $this;
         }
 
-        Assert::oneOf($horizontalAlignment, ["left", "center", "right"]);
+        Assert::oneOf($horizontalAlignment, ['left', 'center', 'right']);
 
         $this->horizontalAlignment = $horizontalAlignment;
         return $this;
@@ -292,7 +296,7 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * Get the minimumWidth
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getMinimumWidth()
     {
@@ -301,7 +305,7 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * Set the minimumWidth
-     * @param string|integer $minimumWidth
+     * @param string|integer|float $minimumWidth
      * @return $this
      */
     public function setMinimumWidth($minimumWidth)
@@ -319,7 +323,7 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * Get the padding
-     * @return \Urbania\AppleNews\Format\Padding|string|integer
+     * @return \Urbania\AppleNews\Format\Padding|string|integer|float
      */
     public function getPadding()
     {
@@ -328,7 +332,7 @@ class TableCellStyle extends BaseSdkObject
 
     /**
      * Set the padding
-     * @param \Urbania\AppleNews\Format\Padding|array|string|integer $padding
+     * @param \Urbania\AppleNews\Format\Padding|array|string|integer|float $padding
      * @return $this
      */
     public function setPadding($padding)
@@ -344,7 +348,7 @@ class TableCellStyle extends BaseSdkObject
             Assert::isSupportedUnits($padding);
         }
 
-        $this->padding = is_array($padding) ? new Padding($padding) : $padding;
+        $this->padding = Utils::isAssociativeArray($padding) ? new Padding($padding) : $padding;
         return $this;
     }
 
@@ -369,13 +373,13 @@ class TableCellStyle extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($textStyle) || is_array($textStyle)) {
+        if (is_object($textStyle) || Utils::isAssociativeArray($textStyle)) {
             Assert::isSdkObject($textStyle, ComponentTextStyle::class);
         } else {
             Assert::string($textStyle);
         }
 
-        $this->textStyle = is_array($textStyle)
+        $this->textStyle = Utils::isAssociativeArray($textStyle)
             ? new ComponentTextStyle($textStyle)
             : $textStyle;
         return $this;
@@ -402,7 +406,7 @@ class TableCellStyle extends BaseSdkObject
             return $this;
         }
 
-        Assert::oneOf($verticalAlignment, ["top", "center", "bottom"]);
+        Assert::oneOf($verticalAlignment, ['top', 'center', 'bottom']);
 
         $this->verticalAlignment = $verticalAlignment;
         return $this;
@@ -450,9 +454,7 @@ class TableCellStyle extends BaseSdkObject
         }
         if (isset($this->border)) {
             $data['border'] =
-                $this->border instanceof Arrayable
-                    ? $this->border->toArray()
-                    : $this->border;
+                $this->border instanceof Arrayable ? $this->border->toArray() : $this->border;
         }
         if (isset($this->conditional)) {
             $data['conditional'] = !is_null($this->conditional)
@@ -471,9 +473,7 @@ class TableCellStyle extends BaseSdkObject
         }
         if (isset($this->height)) {
             $data['height'] =
-                $this->height instanceof Arrayable
-                    ? $this->height->toArray()
-                    : $this->height;
+                $this->height instanceof Arrayable ? $this->height->toArray() : $this->height;
         }
         if (isset($this->horizontalAlignment)) {
             $data['horizontalAlignment'] = $this->horizontalAlignment;
@@ -486,9 +486,7 @@ class TableCellStyle extends BaseSdkObject
         }
         if (isset($this->padding)) {
             $data['padding'] =
-                $this->padding instanceof Arrayable
-                    ? $this->padding->toArray()
-                    : $this->padding;
+                $this->padding instanceof Arrayable ? $this->padding->toArray() : $this->padding;
         }
         if (isset($this->textStyle)) {
             $data['textStyle'] =

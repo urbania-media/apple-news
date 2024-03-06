@@ -4,15 +4,26 @@
     "version": "1.9+",
     "deprecated": false,
     "from_class": null,
-    "extends": null,
+    "extends": "Format\\ConditionalComponent",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/conditionalcontainer",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/conditionalcontainer.json",
     "properties": [
         {
             "name": "conditions",
-            "type": "array:Format\\Condition",
+            "type": [
+                "Format\\Condition",
+                "array:Format\\Condition"
+            ],
             "required": true,
-            "description": "An array of conditions that, when met, cause the conditional container properties to be in effect.",
+            "description": "An instance or array of conditions that, when met, cause the conditional container properties to take effect.",
+            "typed": false
+        },
+        {
+            "name": "allowAutoplacedAds",
+            "type": "boolean",
+            "required": false,
+            "description": "A Boolean value that allows the placement of ad banners between components. Nested components inherit the value of the outermost container that explicitly sets allowAutoplacedAds. The default value is true.",
+            "default": true,
             "typed": false
         },
         {
@@ -24,24 +35,41 @@
         },
         {
             "name": "animation",
-            "type": "Format\\ComponentAnimation",
+            "type": [
+                "Format\\ComponentAnimation",
+                "none"
+            ],
             "required": false,
-            "description": "An object that defines an animation to be applied to the component.",
+            "description": "An object that defines an animation to be applied to the component.\nTo remove a previously set condition, use none.",
             "typed": true
         },
         {
             "name": "behavior",
-            "type": "Format\\Behavior",
+            "type": [
+                "Format\\Behavior",
+                "none"
+            ],
             "required": false,
-            "description": "An object that defines behavior for a component, like Parallax or Springy.",
+            "description": "An object that defines behavior for a component, like  or .\nTo remove a previously set condition, use none.",
             "typed": true
+        },
+        {
+            "name": "contentDisplay",
+            "type": [
+                "Format\\CollectionDisplay",
+                "Format\\HorizontalStackDisplay",
+                "none"
+            ],
+            "required": false,
+            "description": "An object that defines how to position child components within this ConditionalContainer  component. A , for example, allows for displaying child components side by side.\nIn versions of News prior to iOS 11, child components are positioned as if contentDisplay were not defined.\nTo remove a previously set condition, use none. ",
+            "typed": false
         },
         {
             "name": "hidden",
             "type": "boolean",
             "required": false,
             "description": "A Boolean value that determines whether the component is hidden.",
-            "default": "false",
+            "default": true,
             "typed": false
         },
         {
@@ -51,17 +79,18 @@
                 "string"
             ],
             "required": false,
-            "description": "An inline ComponentLayout object that contains layout information, or a string reference to a ComponentLayout object that is defined at the top level of the document.",
+            "description": "An inline ComponentLayout object that contains layout information, or a string reference to a ComponentLayout object that is defined at the top level of the document. \nIf layout is not defined, size and position are based on various factors, such as the device type, the length of the content, and the role of this component.",
             "typed": false
         },
         {
             "name": "style",
             "type": [
                 "Format\\ComponentStyle",
-                "string"
+                "string",
+                "none"
             ],
             "required": false,
-            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle that is defined at the top level of the document.",
+            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle that is defined at the top level of the document.\nTo remove a previously set condition, use none.",
             "typed": false
         }
     ]

@@ -5,38 +5,40 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The animation in which a component scales up and fades into view.
  *
- * @see https://developer.apple.com/documentation/apple_news/scalefadeanimation
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/scalefadeanimation.json
  */
 class ScaleFadeAnimation extends ComponentAnimation
 {
     /**
-     * Always scale_fade for this animation type.
+     * This animation always has the type scale_fade.
      * @var string
      */
     protected $type = 'scale_fade';
 
     /**
-     * The initial transparency of the component. Set initialAlpha to a value
-     * between 0 (completely transparent) and 1 (completely opaque).
+     * The initial transparency of the component (and the animation). Set
+     * initialAlpha to a value between 0 (completely transparent) and 1
+     * (completely visible).
      * @var integer|float
      */
     protected $initialAlpha;
 
     /**
-     * The initial scale of the component. Set initialScale to a value
-     * between 0 (completely scaled down) and 1 (the component’s original
-     * size).
+     * The initial scale of the component (and the animation). Set
+     * initialScale to a value between 0 (completely scaled down) and 1 (the
+     * component’s original size).
      * @var integer|float
      */
     protected $initialScale;
 
     /**
-     * A Boolean value that indicates whether the animation occurs in
-     * response to user action (true) or happens automatically (false).
+     * Indicates whether the animation is controlled by (is in response to)
+     * user action (true) or happens automatically (false).
      * @var boolean
      */
     protected $userControllable;

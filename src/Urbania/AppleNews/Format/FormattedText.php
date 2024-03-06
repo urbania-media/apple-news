@@ -5,15 +5,45 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for specifying formatted text content and styling for
  * captions in table cells.
  *
- * @see https://developer.apple.com/documentation/apple_news/formattedtext
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/formattedtext.json
  */
 class FormattedText extends BaseSdkObject
 {
+    /**
+     * The type must be formatted_text.
+     * @var string
+     */
+    protected $type = 'formatted_text';
+
+    /**
+     * An array of addition objects that supply additional information for
+     * ranges of text in the text property.
+     * This property is ignored when format is set to html.
+     * @var Format\Addition[]
+     */
+    protected $additions;
+
+    /**
+     * The formatting or markup method applied to the text. If format is set
+     * to html, neither additions nor inlineTextStyles is supported.
+     * @var string
+     */
+    protected $format;
+
+    /**
+     * An array specifying ranges of characters and a  object to apply to
+     * each range.
+     * This property is ignored when format is set to html.
+     * @var Format\InlineTextStyle[]
+     */
+    protected $inlineTextStyles;
+
     /**
      * The text, including any HTML tags.
      * @var string
@@ -21,45 +51,14 @@ class FormattedText extends BaseSdkObject
     protected $text;
 
     /**
-     * Always formatted_text for this object.
-     * @var string
-     */
-    protected $type = 'formatted_text';
-
-    /**
-     * An array of Addition objects that supply additional information for
-     * ranges of text in the text property.
-     * @var Format\Addition[]
-     */
-    protected $additions;
-
-    /**
-     * The formatting or markup method applied to the text. If format is set
-     * to html, neither additions nor inlineTextStyles are supported.
-     * @var string
-     */
-    protected $format;
-
-    /**
-     * An array specifying ranges of characters and a TextStyle object to
-     * apply to each range.
-     * @var Format\InlineTextStyle[]
-     */
-    protected $inlineTextStyles;
-
-    /**
-     * A component TextStyle object, or the name string of one of your styles
-     * in the ArticleDocument.componentTextStyles object.
+     * Either a component text style object, or the name string of one of
+     * your styles in the  object.
      * @var \Urbania\AppleNews\Format\ComponentTextStyle|string
      */
     protected $textStyle;
 
     public function __construct(array $data = [])
     {
-        if (isset($data['text'])) {
-            $this->setText($data['text']);
-        }
-
         if (isset($data['additions'])) {
             $this->setAdditions($data['additions']);
         }
@@ -70,6 +69,10 @@ class FormattedText extends BaseSdkObject
 
         if (isset($data['inlineTextStyles'])) {
             $this->setInlineTextStyles($data['inlineTextStyles']);
+        }
+
+        if (isset($data['text'])) {
+            $this->setText($data['text']);
         }
 
         if (isset($data['textStyle'])) {
@@ -85,9 +88,7 @@ class FormattedText extends BaseSdkObject
     public function addAddition($item)
     {
         return $this->setAdditions(
-            !is_null($this->additions)
-                ? array_merge($this->additions, [$item])
-                : [$item]
+            !is_null($this->additions) ? array_merge($this->additions, [$item]) : [$item]
         );
     }
 
@@ -100,9 +101,7 @@ class FormattedText extends BaseSdkObject
     {
         Assert::isArray($items);
         return $this->setAdditions(
-            !is_null($this->additions)
-                ? array_merge($this->additions, $items)
-                : $items
+            !is_null($this->additions) ? array_merge($this->additions, $items) : $items
         );
     }
 
@@ -130,15 +129,17 @@ class FormattedText extends BaseSdkObject
         Assert::isArray($additions);
         Assert::allIsSdkObject($additions, Addition::class);
 
-        $this->additions = array_reduce(
-            array_keys($additions),
-            function ($array, $key) use ($additions) {
-                $item = $additions[$key];
-                $array[$key] = is_array($item) ? new Addition($item) : $item;
-                return $array;
-            },
-            []
-        );
+        $this->additions = is_array($additions)
+            ? array_reduce(
+                array_keys($additions),
+                function ($array, $key) use ($additions) {
+                    $item = $additions[$key];
+                    $array[$key] = Utils::isAssociativeArray($item) ? new Addition($item) : $item;
+                    return $array;
+                },
+                []
+            )
+            : $additions;
         return $this;
     }
 
@@ -163,7 +164,7 @@ class FormattedText extends BaseSdkObject
             return $this;
         }
 
-        Assert::oneOf($format, ["html", "none"]);
+        Assert::oneOf($format, ['html', 'none']);
 
         $this->format = $format;
         return $this;
@@ -222,17 +223,19 @@ class FormattedText extends BaseSdkObject
         Assert::isArray($inlineTextStyles);
         Assert::allIsSdkObject($inlineTextStyles, InlineTextStyle::class);
 
-        $this->inlineTextStyles = array_reduce(
-            array_keys($inlineTextStyles),
-            function ($array, $key) use ($inlineTextStyles) {
-                $item = $inlineTextStyles[$key];
-                $array[$key] = is_array($item)
-                    ? new InlineTextStyle($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->inlineTextStyles = is_array($inlineTextStyles)
+            ? array_reduce(
+                array_keys($inlineTextStyles),
+                function ($array, $key) use ($inlineTextStyles) {
+                    $item = $inlineTextStyles[$key];
+                    $array[$key] = Utils::isAssociativeArray($item)
+                        ? new InlineTextStyle($item)
+                        : $item;
+                    return $array;
+                },
+                []
+            )
+            : $inlineTextStyles;
         return $this;
     }
 
@@ -279,13 +282,13 @@ class FormattedText extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($textStyle) || is_array($textStyle)) {
+        if (is_object($textStyle) || Utils::isAssociativeArray($textStyle)) {
             Assert::isSdkObject($textStyle, ComponentTextStyle::class);
         } else {
             Assert::string($textStyle);
         }
 
-        $this->textStyle = is_array($textStyle)
+        $this->textStyle = Utils::isAssociativeArray($textStyle)
             ? new ComponentTextStyle($textStyle)
             : $textStyle;
         return $this;
@@ -307,9 +310,6 @@ class FormattedText extends BaseSdkObject
     public function toArray()
     {
         $data = [];
-        if (isset($this->text)) {
-            $data['text'] = $this->text;
-        }
         if (isset($this->type)) {
             $data['type'] = $this->type;
         }
@@ -345,6 +345,9 @@ class FormattedText extends BaseSdkObject
                     []
                 )
                 : $this->inlineTextStyles;
+        }
+        if (isset($this->text)) {
+            $data['text'] = $this->text;
         }
         if (isset($this->textStyle)) {
             $data['textStyle'] =

@@ -8,13 +8,13 @@
     "typed": {
         "property": "type",
         "types": {
-            "video": "VideoFill",
             "image": "ImageFill",
-            "linear_gradient": "LinearGradientFill",
-            "repeatable_image": "RepeatableImageFill"
+            "repeatable_image": "RepeatableImageFill",
+            "video": "VideoFill",
+            "linear_gradient": "LinearGradientFill"
         }
     },
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/fill",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/fill.json",
     "properties": [
         {
             "name": "type",
@@ -33,7 +33,7 @@
             "name": "attachment",
             "type": "enum:string",
             "required": false,
-            "description": "A string that indicates how the fill should behave when a user scrolls.",
+            "description": "Indicates how the fill should behave when a user scrolls. \nValid values:",
             "default": "scroll",
             "enum_values": [
                 "fixed",

@@ -11,6 +11,29 @@ use Urbania\AppleNews\Tests\TestCase;
 class UpdateArticleMetadataFieldsTest extends TestCase
 {
     /**
+     * Test the property revision
+     * @test
+     * @dataProvider revisionProvider
+     * @covers ::getRevision
+     * @covers ::setRevision
+     */
+    public function testPropertyRevision($value)
+    {
+        $object = new UpdateArticleMetadataFields();
+        $object->setRevision($value);
+
+        $this->assertEquals($value, $object->getRevision());
+    }
+
+    /**
+     * Data provider for property revision
+     */
+    public static function revisionProvider()
+    {
+        return [['a string']];
+    }
+
+    /**
      * Test the property accessoryText
      * @test
      * @dataProvider accessoryTextProvider
@@ -30,7 +53,7 @@ class UpdateArticleMetadataFieldsTest extends TestCase
      */
     public static function accessoryTextProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -126,52 +149,6 @@ class UpdateArticleMetadataFieldsTest extends TestCase
     }
 
     /**
-     * Test the property maturityRating
-     * @test
-     * @dataProvider maturityRatingProvider
-     * @covers ::getMaturityRating
-     * @covers ::setMaturityRating
-     */
-    public function testPropertyMaturityRating($value)
-    {
-        $object = new UpdateArticleMetadataFields();
-        $object->setMaturityRating($value);
-
-        $this->assertEquals($value, $object->getMaturityRating());
-    }
-
-    /**
-     * Data provider for property maturityRating
-     */
-    public static function maturityRatingProvider()
-    {
-        return [["KIDS"], ["MATURE"], ["GENERAL"]];
-    }
-
-    /**
-     * Test the property revision
-     * @test
-     * @dataProvider revisionProvider
-     * @covers ::getRevision
-     * @covers ::setRevision
-     */
-    public function testPropertyRevision($value)
-    {
-        $object = new UpdateArticleMetadataFields();
-        $object->setRevision($value);
-
-        $this->assertEquals($value, $object->getRevision());
-    }
-
-    /**
-     * Data provider for property revision
-     */
-    public static function revisionProvider()
-    {
-        return [["a string"]];
-    }
-
-    /**
      * Test the property links
      * @test
      * @dataProvider linksProvider
@@ -192,5 +169,51 @@ class UpdateArticleMetadataFieldsTest extends TestCase
     public static function linksProvider()
     {
         return [[new \Urbania\AppleNews\Api\Objects\ArticleLinks()]];
+    }
+
+    /**
+     * Test the property maturityRating
+     * @test
+     * @dataProvider maturityRatingProvider
+     * @covers ::getMaturityRating
+     * @covers ::setMaturityRating
+     */
+    public function testPropertyMaturityRating($value)
+    {
+        $object = new UpdateArticleMetadataFields();
+        $object->setMaturityRating($value);
+
+        $this->assertEquals($value, $object->getMaturityRating());
+    }
+
+    /**
+     * Data provider for property maturityRating
+     */
+    public static function maturityRatingProvider()
+    {
+        return [['KIDS'], ['MATURE'], ['GENERAL']];
+    }
+
+    /**
+     * Test the property targetTerritoryCountryCodes
+     * @test
+     * @dataProvider targetTerritoryCountryCodesProvider
+     * @covers ::getTargetTerritoryCountryCodes
+     * @covers ::setTargetTerritoryCountryCodes
+     */
+    public function testPropertyTargetTerritoryCountryCodes($value)
+    {
+        $object = new UpdateArticleMetadataFields();
+        $object->setTargetTerritoryCountryCodes($value);
+
+        $this->assertEquals($value, $object->getTargetTerritoryCountryCodes());
+    }
+
+    /**
+     * Data provider for property targetTerritoryCountryCodes
+     */
+    public static function targetTerritoryCountryCodesProvider()
+    {
+        return [[[]]];
     }
 }

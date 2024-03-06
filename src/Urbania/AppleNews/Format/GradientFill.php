@@ -5,17 +5,19 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The properties shared by all gradient fill types.
  *
- * @see https://developer.apple.com/documentation/apple_news/gradientfill
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/gradientfill.json
  */
 class GradientFill extends Fill
 {
     /**
      * An array of color stops. Each stop sets a color and location along the
      * gradient.
+     * Provide at least 2 colorStop items.
      * @var Format\ColorStop[]
      */
     protected $colorStops;
@@ -29,6 +31,7 @@ class GradientFill extends Fill
     /**
      * A string that indicates how the fill should behave when a user
      * scrolls.
+     * Valid values:
      * @var string
      */
     protected $attachment;
@@ -71,7 +74,7 @@ class GradientFill extends Fill
             return $this;
         }
 
-        Assert::oneOf($attachment, ["fixed", "scroll"]);
+        Assert::oneOf($attachment, ['fixed', 'scroll']);
 
         $this->attachment = $attachment;
         return $this;
@@ -85,9 +88,7 @@ class GradientFill extends Fill
     public function addColorStop($item)
     {
         return $this->setColorStops(
-            !is_null($this->colorStops)
-                ? array_merge($this->colorStops, [$item])
-                : [$item]
+            !is_null($this->colorStops) ? array_merge($this->colorStops, [$item]) : [$item]
         );
     }
 
@@ -100,9 +101,7 @@ class GradientFill extends Fill
     {
         Assert::isArray($items);
         return $this->setColorStops(
-            !is_null($this->colorStops)
-                ? array_merge($this->colorStops, $items)
-                : $items
+            !is_null($this->colorStops) ? array_merge($this->colorStops, $items) : $items
         );
     }
 
@@ -125,15 +124,17 @@ class GradientFill extends Fill
         Assert::isArray($colorStops);
         Assert::allIsSdkObject($colorStops, ColorStop::class);
 
-        $this->colorStops = array_reduce(
-            array_keys($colorStops),
-            function ($array, $key) use ($colorStops) {
-                $item = $colorStops[$key];
-                $array[$key] = is_array($item) ? new ColorStop($item) : $item;
-                return $array;
-            },
-            []
-        );
+        $this->colorStops = is_array($colorStops)
+            ? array_reduce(
+                array_keys($colorStops),
+                function ($array, $key) use ($colorStops) {
+                    $item = $colorStops[$key];
+                    $array[$key] = Utils::isAssociativeArray($item) ? new ColorStop($item) : $item;
+                    return $array;
+                },
+                []
+            )
+            : $colorStops;
         return $this;
     }
 

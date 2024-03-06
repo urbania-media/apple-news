@@ -28,6 +28,6 @@ class BackgroundMotionTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["background_motion"]];
+        return [['background_motion']];
     }
 }

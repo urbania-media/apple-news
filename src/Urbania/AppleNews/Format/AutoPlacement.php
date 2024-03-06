@@ -5,12 +5,13 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for automatically placing components within Apple News
  * Format articles.
  *
- * @see https://developer.apple.com/documentation/apple_news/autoplacement
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/autoplacement.json
  */
 class AutoPlacement extends BaseSdkObject
 {
@@ -51,7 +52,7 @@ class AutoPlacement extends BaseSdkObject
 
         Assert::isSdkObject($advertisement, AdvertisementAutoPlacement::class);
 
-        $this->advertisement = is_array($advertisement)
+        $this->advertisement = Utils::isAssociativeArray($advertisement)
             ? new AdvertisementAutoPlacement($advertisement)
             : $advertisement;
         return $this;

@@ -5,16 +5,23 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for applying styles to columns in a table.
  *
- * @see https://developer.apple.com/documentation/apple_news/tablecolumnstyle
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/tablecolumnstyle.json
  */
 class TableColumnStyle extends BaseSdkObject
 {
     /**
      * The background color for the table column.
+     * If this property is omitted, the background is transparent.
+     * The cell background color is highest priority, followed by the column,
+     * and finally the row. All three colors are applied, meaning that
+     * non-opaque values can cause combined colors. For example, using a red
+     * row together with a blue column, both with 50% opacity, creates a
+     * purple cell.
      * @var string
      */
     protected $backgroundColor;
@@ -34,10 +41,9 @@ class TableColumnStyle extends BaseSdkObject
     protected $divider;
 
     /**
-     * The minimum width of the columns, as an integer in points or using the
-     * available units of measure for components. See Specifying Measurements
-     * for Components.
-     * @var string|integer
+     * The minimum width of the columns, as a number in points or using the
+     * available units of measure for components. See .
+     * @var string|integer|float
      */
     protected $minimumWidth;
 
@@ -45,6 +51,11 @@ class TableColumnStyle extends BaseSdkObject
      * The relative column width. This value influences the distribution of
      * column width but does not dictate any exact values. To set an exact
      * minimum width, use minimumWidth instead.
+     * It might be useful to think of the value of width as a percentage of
+     * the component’s width. For example, if you know that one column’s
+     * width should be about half that of the whole component, and another
+     * should be about a quarter of the component width, use values of 50 and
+     * 25.
      * @var integer
      */
     protected $width;
@@ -107,9 +118,7 @@ class TableColumnStyle extends BaseSdkObject
     public function addConditional($item)
     {
         return $this->setConditional(
-            !is_null($this->conditional)
-                ? array_merge($this->conditional, [$item])
-                : [$item]
+            !is_null($this->conditional) ? array_merge($this->conditional, [$item]) : [$item]
         );
     }
 
@@ -135,22 +144,21 @@ class TableColumnStyle extends BaseSdkObject
         }
 
         Assert::isArray($conditional);
-        Assert::allIsSdkObject(
-            $conditional,
-            ConditionalTableColumnStyle::class
-        );
+        Assert::allIsSdkObject($conditional, ConditionalTableColumnStyle::class);
 
-        $this->conditional = array_reduce(
-            array_keys($conditional),
-            function ($array, $key) use ($conditional) {
-                $item = $conditional[$key];
-                $array[$key] = is_array($item)
-                    ? new ConditionalTableColumnStyle($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->conditional = is_array($conditional)
+            ? array_reduce(
+                array_keys($conditional),
+                function ($array, $key) use ($conditional) {
+                    $item = $conditional[$key];
+                    $array[$key] = Utils::isAssociativeArray($item)
+                        ? new ConditionalTableColumnStyle($item)
+                        : $item;
+                    return $array;
+                },
+                []
+            )
+            : $conditional;
         return $this;
     }
 
@@ -177,7 +185,7 @@ class TableColumnStyle extends BaseSdkObject
 
         Assert::isSdkObject($divider, TableStrokeStyle::class);
 
-        $this->divider = is_array($divider)
+        $this->divider = Utils::isAssociativeArray($divider)
             ? new TableStrokeStyle($divider)
             : $divider;
         return $this;
@@ -185,7 +193,7 @@ class TableColumnStyle extends BaseSdkObject
 
     /**
      * Get the minimumWidth
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getMinimumWidth()
     {
@@ -194,7 +202,7 @@ class TableColumnStyle extends BaseSdkObject
 
     /**
      * Set the minimumWidth
-     * @param string|integer $minimumWidth
+     * @param string|integer|float $minimumWidth
      * @return $this
      */
     public function setMinimumWidth($minimumWidth)
@@ -267,9 +275,7 @@ class TableColumnStyle extends BaseSdkObject
         }
         if (isset($this->divider)) {
             $data['divider'] =
-                $this->divider instanceof Arrayable
-                    ? $this->divider->toArray()
-                    : $this->divider;
+                $this->divider instanceof Arrayable ? $this->divider->toArray() : $this->divider;
         }
         if (isset($this->minimumWidth)) {
             $data['minimumWidth'] =

@@ -6,11 +6,12 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
- * See the fields returned by the section endpoints.
+ * See the fields the section endpoints returned.
  *
- * @see https://developer.apple.com/documentation/apple_news/section
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/section.json
  */
 class Section extends BaseSdkObject
 {
@@ -52,7 +53,7 @@ class Section extends BaseSdkObject
     protected $shareUrl;
 
     /**
-     * Section
+     * The section.
      * @var string
      */
     protected $type;
@@ -111,9 +112,7 @@ class Section extends BaseSdkObject
 
         Assert::isDate($createdAt);
 
-        $this->createdAt = is_string($createdAt)
-            ? Carbon::parse($createdAt)
-            : $createdAt;
+        $this->createdAt = is_string($createdAt) ? Carbon::parse($createdAt) : $createdAt;
         return $this;
     }
 
@@ -194,9 +193,7 @@ class Section extends BaseSdkObject
 
         Assert::isDate($modifiedAt);
 
-        $this->modifiedAt = is_string($modifiedAt)
-            ? Carbon::parse($modifiedAt)
-            : $modifiedAt;
+        $this->modifiedAt = is_string($modifiedAt) ? Carbon::parse($modifiedAt) : $modifiedAt;
         return $this;
     }
 

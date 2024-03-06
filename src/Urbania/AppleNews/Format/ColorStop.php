@@ -5,12 +5,13 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for specifying the color and location for a color stop in a
  * gradient.
  *
- * @see https://developer.apple.com/documentation/apple_news/colorstop
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/colorstop.json
  */
 class ColorStop extends BaseSdkObject
 {
@@ -99,9 +100,7 @@ class ColorStop extends BaseSdkObject
         $data = [];
         if (isset($this->color)) {
             $data['color'] =
-                $this->color instanceof Arrayable
-                    ? $this->color->toArray()
-                    : $this->color;
+                $this->color instanceof Arrayable ? $this->color->toArray() : $this->color;
         }
         if (isset($this->location)) {
             $data['location'] = $this->location;

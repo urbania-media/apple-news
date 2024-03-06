@@ -5,11 +5,12 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for defining the stroke to use for an outline on text.
  *
- * @see https://developer.apple.com/documentation/apple_news/textstrokestyle
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/textstrokestyle.json
  */
 class TextStrokeStyle extends BaseSdkObject
 {
@@ -20,7 +21,7 @@ class TextStrokeStyle extends BaseSdkObject
     protected $color;
 
     /**
-     * The width of the stroke as a percentage relative to the font size.
+     * Width of the stroke as a percentage relative to the font size.
      * @var integer
      */
     protected $width;
@@ -99,9 +100,7 @@ class TextStrokeStyle extends BaseSdkObject
         $data = [];
         if (isset($this->color)) {
             $data['color'] =
-                $this->color instanceof Arrayable
-                    ? $this->color->toArray()
-                    : $this->color;
+                $this->color instanceof Arrayable ? $this->color->toArray() : $this->color;
         }
         if (isset($this->width)) {
             $data['width'] = $this->width;

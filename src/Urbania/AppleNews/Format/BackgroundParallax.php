@@ -5,17 +5,18 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The behavior whereby the background of a component moves slightly
  * slower than the user’s scroll speed.
  *
- * @see https://developer.apple.com/documentation/apple_news/backgroundparallax
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/backgroundparallax.json
  */
 class BackgroundParallax extends Behavior
 {
     /**
-     * Always background_parallax for this behavior.
+     * This behavior always has the type background_parallax.
      * @var string
      */
     protected $type = 'background_parallax';

@@ -3,73 +3,47 @@
 namespace Urbania\AppleNews\Scripts\Import;
 
 use DiDom\Document as DomDocument;
+use Illuminate\Support\Arr;
 use Webmozart\Assert\Assert;
 
 class AppleDocumentationParser
 {
-    const APPLE_NEWS_FORMAT = 'APPLE_NEWS_FORMAT';
-    const APPLE_NEWS_API = 'APPLE_NEWS_API';
+    const APPLE_NEWS_FORMAT = 'Apple News Format';
+    const APPLE_NEWS_API = 'Apple News API';
 
     protected $sdk = self::APPLE_NEWS_FORMAT;
-
-    protected $patterns = [
-        self::APPLE_NEWS_FORMAT => '/Apple News Format/',
-        self::APPLE_NEWS_API => '/Apple News API/'
-    ];
 
     public function __construct($sdk = null)
     {
         if (!is_null($sdk)) {
-            Assert::oneOf($sdk, [
-                static::APPLE_NEWS_FORMAT,
-                static::APPLE_NEWS_API
-            ]);
+            Assert::oneOf($sdk, [static::APPLE_NEWS_FORMAT, static::APPLE_NEWS_API]);
             $this->sdk = $sdk;
         }
     }
 
-    public function parse($html, $url)
+    public function parse($data, $url)
     {
-        $document = new DomDocument($html);
-
-        if ($this->isObject($document)) {
+        if ($this->isObject($data)) {
             if ($this->sdk === static::APPLE_NEWS_API) {
-                return new ApiObjectDocument($document, $url);
+                return new ApiObjectDocument($data, $url);
             } else {
-                return new ObjectDocument($document, $url);
+                return new ObjectDocument($data, $url);
             }
         }
 
-        return new Document($document, $url);
+        return new Document($data, $url);
     }
 
-    protected function isObject(DomDocument $document)
+    protected function isObject($data)
     {
-        return $this->isObjectFromTitle($document) &&
-            $this->isFromSdk($document);
+        $role = data_get($data, 'metadata.roleHeading');
+        return $role === 'Object' && $this->isFromSdk($data);
     }
 
-    protected function isObjectFromTitle(DomDocument $document)
+    protected function isFromSdk($data)
     {
-        return $this->eyebrowIsObject($document);
-    }
-
-    protected function eyebrowIsObject(DomDocument $document)
-    {
-        $eyebrowSelector = '#main .topic-title .eyebrow';
-        return $document->has($eyebrowSelector) &&
-            strtolower(trim($document->find($eyebrowSelector)[0]->text())) ===
-                'object';
-    }
-
-    protected function isFromSdk(DomDocument $document)
-    {
-        $pattern = $this->patterns[$this->sdk];
-        $technologySelector = '#main .topic-summary .sdks';
-        return $document->has($technologySelector) &&
-            preg_match(
-                $pattern,
-                $document->find($technologySelector)[0]->text()
-            );
+        return collect(data_get($data, 'metadata.modules', []))->contains(function ($module) {
+            return $module['name'] === $this->sdk;
+        });
     }
 }

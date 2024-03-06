@@ -28,6 +28,6 @@ class HorizontalStackDisplayTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["horizontal_stack"]];
+        return [['horizontal_stack']];
     }
 }

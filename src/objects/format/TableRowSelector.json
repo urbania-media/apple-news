@@ -6,20 +6,20 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/tablerowselector",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/tablerowselector.json",
     "properties": [
         {
             "name": "descriptor",
             "type": "string",
             "required": false,
-            "description": "A string that specifies the identifier of a specific data descriptor. All rows for this data descriptor will be selected. See DataDescriptor.",
+            "description": "A string that specifies the identifier of a specific data descriptor. All rows for this data descriptor will be selected. See .\nWhen dataOrientation is set to horizontal, which is not the default each row displays data for one data descriptor. See .",
             "typed": false
         },
         {
-            "name": "rowIndex",
-            "type": "integer",
+            "name": "even",
+            "type": "boolean",
             "required": false,
-            "description": "A number that specifies a row index. The topmost row of data has an index of 0. The specified column is selected.",
+            "description": "A Boolean value when true, selects the even rows.",
             "typed": false
         },
         {
@@ -30,10 +30,10 @@
             "typed": false
         },
         {
-            "name": "even",
-            "type": "boolean",
+            "name": "rowIndex",
+            "type": "integer",
             "required": false,
-            "description": "A Boolean value when true, selects the even rows.",
+            "description": "A number that specifies a row index. The topmost row of data has an index of . The specified column is selected.",
             "typed": false
         }
     ]

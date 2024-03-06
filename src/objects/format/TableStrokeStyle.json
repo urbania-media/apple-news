@@ -6,32 +6,35 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/tablestrokestyle",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/tablestrokestyle.json",
     "properties": [
         {
             "name": "color",
             "type": "Color",
             "required": false,
-            "description": "The stroke color.",
+            "description": "The stroke color. The value defaults to #000 (black).",
             "typed": false
         },
         {
             "name": "style",
-            "type": "string",
+            "type": "enum:string",
             "required": false,
-            "description": "The style of the stroke.",
+            "description": "The style of the stroke. ",
             "default": "solid",
+            "enum_values": [
+                "solid"
+            ],
             "typed": false
         },
         {
             "name": "width",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The width of the stroke line. Can be either an integer value in points, or a string according to Specifying Measurements for Components.",
-            "default": 1,
+            "description": "The width of the stroke line. ",
+            "default": "1",
             "typed": false
         }
     ]

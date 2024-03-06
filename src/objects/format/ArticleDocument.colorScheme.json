@@ -1,0 +1,20 @@
+{
+    "name": "Format\\ColorScheme",
+    "description": "The object that contains information about the color scheme of the document, including Dark Mode behavior.",
+    "version": "1.14.1+",
+    "deprecated": false,
+    "from_class": null,
+    "extends": null,
+    "typed": null,
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/articledocument\/colorscheme.json",
+    "properties": [
+        {
+            "name": "automaticDarkModeEnabled",
+            "type": "boolean",
+            "required": false,
+            "description": "A Boolean value that indicates whether automatic Dark Mode is enabled for the document. The value for this property defaults to true, which causes the document to be inverted when the user switches the device to Dark Mode.",
+            "default": true,
+            "typed": false
+        }
+    ]
+}

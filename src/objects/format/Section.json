@@ -1,12 +1,12 @@
 {
     "name": "Format\\Section",
-    "description": "The component for organizing an article into sections.",
+    "description": "The component for organizing an article into sections. ",
     "version": "1.7+",
     "deprecated": false,
     "from_class": null,
     "extends": "Format\\Container",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/section-ka8",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/section-ka8.json",
     "properties": [
         {
             "name": "role",
@@ -21,7 +21,15 @@
             "name": "additions",
             "type": "array:Format\\ComponentLink",
             "required": false,
-            "description": "An array of ComponentLink objects. This can be used to create a ComponentLink, allowing a link to anywhere in News. Adding a link to a section component will make the entire component interactable. Any links used in its child components are not interactable.",
+            "description": "An array of ComponentLink objects. This can be used to create a , allowing a link to anywhere in News. Adding a link to a section component will make the entire component interactable. Any links used in its child components are not interactable.",
+            "typed": false
+        },
+        {
+            "name": "allowAutoplacedAds",
+            "type": "boolean",
+            "required": false,
+            "description": "A Boolean value that allows the placement of ad banners between components. Nested components inherit the value of the outermost container that explicitly sets allowAutoplacedAds. The default value is true. ",
+            "default": true,
             "typed": false
         },
         {
@@ -33,16 +41,22 @@
         },
         {
             "name": "animation",
-            "type": "Format\\ComponentAnimation",
+            "type": [
+                "Format\\ComponentAnimation",
+                "none"
+            ],
             "required": false,
-            "description": "An object that defines an animation to be applied to the component.",
+            "description": "An object that defines an animation to be applied to the component.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": true
         },
         {
             "name": "behavior",
-            "type": "Format\\Behavior",
+            "type": [
+                "Format\\Behavior",
+                "none"
+            ],
             "required": false,
-            "description": "An object that defines behavior for a component, like  or .",
+            "description": "An object that defines behavior for a component, like  or .\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": true
         },
         {
@@ -54,19 +68,23 @@
         },
         {
             "name": "conditional",
-            "type": "array:Format\\ConditionalSection",
+            "type": [
+                "Format\\ConditionalSection",
+                "array:Format\\ConditionalSection"
+            ],
             "required": false,
-            "description": "An array of section properties that can be applied conditionally, and the conditions that cause them to be applied.",
+            "description": "An instance or array of section properties that can be applied conditionally, and the conditions that cause them to be applied.",
             "typed": false
         },
         {
             "name": "contentDisplay",
             "type": [
                 "Format\\CollectionDisplay",
-                "Format\\HorizontalStackDisplay"
+                "Format\\HorizontalStackDisplay",
+                "none"
             ],
             "required": false,
-            "description": "Defines how child components are positioned within this section component. For example, this property can allow for displaying child components side-by-side and can make sure they are sized equally.",
+            "description": "An object that defines how to position child components within this section component. A , for example, allows for displaying child components side by side.\nIn versions of News prior to iOS 11, child components are positioned as if contentDisplay were not defined.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {
@@ -74,14 +92,14 @@
             "type": "boolean",
             "required": false,
             "description": "A Boolean value that determines whether the component is hidden.",
-            "default": "false",
+            "default": true,
             "typed": false
         },
         {
             "name": "identifier",
             "type": "string",
             "required": false,
-            "description": "An optional unique identifier for this component. If used, this identifier must be unique across the entire document. You will need an identifier for your component if you want to anchor other components to it.",
+            "description": "An optional unique identifier for this component. If used, this identifier must be unique across the entire document. You will need an identifier for your component if you want to anchor other components to it. ",
             "typed": false
         },
         {
@@ -91,24 +109,25 @@
                 "string"
             ],
             "required": false,
-            "description": "An inline ComponentLayout object that contains layout information, or a string reference to a ComponentLayout object that is defined at the top level of the document.",
+            "description": "An inline ComponentLayout object that contains layout information, or a string reference to a ComponentLayout object that is defined at the top level of the document. \nIf layout is not defined, size and position are based on various factors, such as the device type, the length of the content, and the role of this component.",
             "typed": false
         },
         {
             "name": "scene",
             "type": "Format\\Scene",
             "required": false,
-            "description": "A set of animations applied to any header component that is a child of this section.",
+            "description": "A set of animations applied to any header component that is a child of this section. ",
             "typed": true
         },
         {
             "name": "style",
             "type": [
                 "Format\\ComponentStyle",
-                "string"
+                "string",
+                "none"
             ],
             "required": false,
-            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle object that is defined at the top level of the document.",
+            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle object that is defined at the top level of the document.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         }
     ]

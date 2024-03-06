@@ -5,33 +5,39 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for defining the style for a text component, including
  * spacing, alignment, and drop caps.
  *
- * @see https://developer.apple.com/documentation/apple_news/componenttextstyle
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/componenttextstyle.json
  */
 class ComponentTextStyle extends TextStyle
 {
     /**
      * The background color for text lines. The value defaults to
      * transparent.
-     * @var string
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var string|none
      */
     protected $backgroundColor;
 
     /**
-     * An array of component text style properties that can be applied
-     * conditionally, and the conditions that cause them to be applied.
-     * @var Format\ConditionalComponentTextStyle[]
+     * An instance or array of component text style properties that can be
+     * applied conditionally, and the conditions that cause them to be
+     * applied.
+     * @var Format\ConditionalComponentTextStyle[]|\Urbania\AppleNews\Format\ConditionalComponentTextStyle
      */
     protected $conditional;
 
     /**
      * The style of drop cap to apply to the first paragraph of the
      * component.
-     * @var \Urbania\AppleNews\Format\DropCapStyle
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\DropCapStyle|none
      */
     protected $dropCapStyle;
 
@@ -42,12 +48,14 @@ class ComponentTextStyle extends TextStyle
     protected $firstLineIndent;
 
     /**
-     * The font family to use for text rendering, for example Gill Sans.
+     * The font family to use for text rendering; for example, Gill Sans.
      * Using a combination of fontFamily, fontWidth, fontWeight, and
-     * fontStyle you can define the appearance of the text. News
+     * fontStyle, you can define the appearance of the text. Apple News
      * automatically selects the appropriate font variant from the available
-     * variants in that family.
-     * @var string
+     * variants in that family. See .
+     * In iOS 13, iPadOS 13, and macOS 10.15, you can use the value system to
+     * show text in the default font used by the operating system.
+     * @var string|string
      */
     protected $fontFamily;
 
@@ -57,22 +65,39 @@ class ComponentTextStyle extends TextStyle
      * fontFamily, fontWeight, fontWidth and/or fontStyle to have News
      * automatically select the appropriate variant depending on the text
      * formatting used.
+     * See .
      * @var string
      */
     protected $fontName;
 
     /**
+     * A Boolean value that indicates whether scaling of font sizes for
+     * various screen sizes is enabled.
+     * By default, text in Apple News Format articles is  scaled down when
+     * viewed on devices with screens that are narrower than the width
+     * specified in the document layout. This scaling effect occurs at a
+     * faster rate for heading roles (, , and so on) than for body roles (, ,
+     * , and so on).
+     * To disable this effect, set fontScaling to false. When doing so, be
+     * mindful of how larger text appears on smaller devices and make use of
+     * conditions as appropriate. See .
+     * @var boolean
+     */
+    protected $fontScaling;
+
+    /**
      * The size of the font, in points. By default, the font size will be
      * inherited from a parent component or a default style. As a best
      * practice, try not to go below 16 points for body text. The fontSize
-     * may be automatically resized for different device sizes or for iOS
-     * devices with Larger Accessibility Sizes enabled.
+     * may be automatically resized for different device sizes or for iOS and
+     * iPadOS devices with Larger Accessibility Sizes enabled.
      * @var integer
      */
     protected $fontSize;
 
     /**
      * The font style to apply.
+     * Valid values:
      * @var string
      */
     protected $fontStyle;
@@ -81,6 +106,13 @@ class ComponentTextStyle extends TextStyle
      * The font weight to apply for font selection. In addition to explicit
      * weights (named or numerical), lighter and bolder are available, to set
      * text in a lighter or bolder font as compared to its surrounding text.
+     * If a font variant with the given specifications cannot be found in the
+     * provided font family, an alternative is selected that has the closest
+     * match. If no bold/bolder font is found, News will not create a
+     * faux-bold alternative, but will fall back to the closest match.
+     * Similarly, if no italic or oblique font variant is found, text will
+     * not be slanted to make text appear italicized.
+     * Valid values:
      * @var integer|string
      */
     protected $fontWeight;
@@ -92,6 +124,7 @@ class ComponentTextStyle extends TextStyle
      * separate families assigned for different widths (for example, Avenir
      * Next and Avenir Next Condensed), so make sure that the fontFamily you
      * select supports the specified fontWidth.
+     * Valid values:
      * @var string
      */
     protected $fontWidth;
@@ -112,6 +145,45 @@ class ComponentTextStyle extends TextStyle
     protected $hyphenation;
 
     /**
+     * The minimum number of characters required after the hyphen to enable
+     * hyphenation.
+     * @var integer
+     */
+    protected $hyphenationMinimumCharactersAfter;
+
+    /**
+     * The minimum number of characters required before the hyphen to enable
+     * hyphenation.
+     * @var integer
+     */
+    protected $hyphenationMinimumCharactersBefore;
+
+    /**
+     * The minimum number of characters required for a word to be hyphenated.
+     *
+     * @var integer
+     */
+    protected $hyphenationMinimumWordLength;
+
+    /**
+     * The area in points from the right edge of the text component before
+     * which a word needs to start to enable hyphenation.
+     * By default, the value is set to 18 points.
+     * A larger value reduces the allowable hyphenation area of a word, which
+     * can result in a more ragged appearance of the text along the right
+     * margin.
+     * @var integer
+     */
+    protected $hyphenationZone;
+
+    /**
+     * A Boolean value that defines whether the system should enable line
+     * balancing for the text component.
+     * @var boolean
+     */
+    protected $lineBalancing;
+
+    /**
      * A number that provides the default line height, in points. The
      * lineHeight is recalculated as necessary, relative to the fontSize. For
      * example, when the font is automatically resized to fit a smaller
@@ -123,7 +195,9 @@ class ComponentTextStyle extends TextStyle
     /**
      * An object that provides text styling for all links within a text
      * component.
-     * @var \Urbania\AppleNews\Format\TextStyle
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\TextStyle|none
      */
     protected $linkStyle;
 
@@ -131,7 +205,9 @@ class ComponentTextStyle extends TextStyle
      * An object for use with text components with HTML markup. You can
      * create text styles containing an orderedListItems definition to
      * configure how list items inside <ol> tags should be displayed.
-     * @var \Urbania\AppleNews\Format\ListItemStyle
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\ListItemStyle|none
      */
     protected $orderedListItems;
 
@@ -160,12 +236,17 @@ class ComponentTextStyle extends TextStyle
     /**
      * The stroke style for the text outline. By default, stroke will be
      * omitted.
-     * @var \Urbania\AppleNews\Format\TextStrokeStyle
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\TextStrokeStyle|none
      */
     protected $stroke;
 
     /**
      * The justification for all text within the component.
+     * If textAlignment is omitted or set to none, the justification will be
+     * determined by the text direction (left-to-right text will be aligned
+     * to the left and right-to-left text will be aligned to the right).
      * @var string
      */
     protected $textAlignment;
@@ -178,12 +259,15 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * The text shadow for this style.
-     * @var \Urbania\AppleNews\Format\Shadow
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\TextShadow|none
      */
     protected $textShadow;
 
     /**
      * The transform to apply to the text.
+     *  Valid values:
      * @var string
      */
     protected $textTransform;
@@ -192,6 +276,9 @@ class ComponentTextStyle extends TextStyle
      * The amount of tracking (spacing between characters) in text, as a
      * percentage of the fontSize. The actual spacing between letters is
      * determined by combining information from the font and font size.
+     * Example: Set tracking to 0.5 to make the distance between characters
+     * increase by 50% of the fontSize. With a font size of 10, the
+     * additional space between characters is 5 points.
      * @var integer|float
      */
     protected $tracking;
@@ -208,13 +295,20 @@ class ComponentTextStyle extends TextStyle
      * The object for use with text components with HTML markup. You can
      * create text styles containing an unorderedListItems definition to
      * configure how list items inside <ul> tags should be displayed.
-     * @var \Urbania\AppleNews\Format\ListItemStyle
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\ListItemStyle|none
      */
     protected $unorderedListItems;
 
     /**
      * The vertical alignment of the text. You can use this property for
      * superscripts and subscripts.
+     * To override values specified in parent text styles, use baseline.
+     * Defaults to baseline when unspecified, and inherits the value
+     * specified in a TextStyle applied to the same range.
+     * The values superscript and subscript also adjust the font size to 2/3
+     * of the size defined for that character range.
      * @var string
      */
     protected $verticalAlignment;
@@ -247,6 +341,10 @@ class ComponentTextStyle extends TextStyle
             $this->setFontName($data['fontName']);
         }
 
+        if (isset($data['fontScaling'])) {
+            $this->setFontScaling($data['fontScaling']);
+        }
+
         if (isset($data['fontSize'])) {
             $this->setFontSize($data['fontSize']);
         }
@@ -269,6 +367,28 @@ class ComponentTextStyle extends TextStyle
 
         if (isset($data['hyphenation'])) {
             $this->setHyphenation($data['hyphenation']);
+        }
+
+        if (isset($data['hyphenationMinimumCharactersAfter'])) {
+            $this->setHyphenationMinimumCharactersAfter($data['hyphenationMinimumCharactersAfter']);
+        }
+
+        if (isset($data['hyphenationMinimumCharactersBefore'])) {
+            $this->setHyphenationMinimumCharactersBefore(
+                $data['hyphenationMinimumCharactersBefore']
+            );
+        }
+
+        if (isset($data['hyphenationMinimumWordLength'])) {
+            $this->setHyphenationMinimumWordLength($data['hyphenationMinimumWordLength']);
+        }
+
+        if (isset($data['hyphenationZone'])) {
+            $this->setHyphenationZone($data['hyphenationZone']);
+        }
+
+        if (isset($data['lineBalancing'])) {
+            $this->setLineBalancing($data['lineBalancing']);
         }
 
         if (isset($data['lineHeight'])) {
@@ -334,7 +454,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Get the backgroundColor
-     * @return string
+     * @return string|none
      */
     public function getBackgroundColor()
     {
@@ -343,7 +463,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Set the backgroundColor
-     * @param string $backgroundColor
+     * @param string|none $backgroundColor
      * @return $this
      */
     public function setBackgroundColor($backgroundColor)
@@ -353,29 +473,17 @@ class ComponentTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::isColor($backgroundColor);
+        if ($backgroundColor !== 'none') {
+            Assert::isColor($backgroundColor);
+        }
 
         $this->backgroundColor = $backgroundColor;
         return $this;
     }
 
     /**
-     * Add an item to conditional
-     * @param \Urbania\AppleNews\Format\ConditionalComponentTextStyle|array $item
-     * @return $this
-     */
-    public function addConditional($item)
-    {
-        return $this->setConditional(
-            !is_null($this->conditional)
-                ? array_merge($this->conditional, [$item])
-                : [$item]
-        );
-    }
-
-    /**
      * Get the conditional
-     * @return Format\ConditionalComponentTextStyle[]
+     * @return Format\ConditionalComponentTextStyle[]|\Urbania\AppleNews\Format\ConditionalComponentTextStyle
      */
     public function getConditional()
     {
@@ -384,7 +492,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Set the conditional
-     * @param Format\ConditionalComponentTextStyle[] $conditional
+     * @param Format\ConditionalComponentTextStyle[]|\Urbania\AppleNews\Format\ConditionalComponentTextStyle|array $conditional
      * @return $this
      */
     public function setConditional($conditional)
@@ -394,29 +502,22 @@ class ComponentTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::isArray($conditional);
-        Assert::allIsSdkObject(
-            $conditional,
-            ConditionalComponentTextStyle::class
-        );
+        if (is_object($conditional) || Utils::isAssociativeArray($conditional)) {
+            Assert::isSdkObject($conditional, ConditionalComponentTextStyle::class);
+        } else {
+            Assert::isArray($conditional);
+            Assert::allIsSdkObject($conditional, ConditionalComponentTextStyle::class);
+        }
 
-        $this->conditional = array_reduce(
-            array_keys($conditional),
-            function ($array, $key) use ($conditional) {
-                $item = $conditional[$key];
-                $array[$key] = is_array($item)
-                    ? new ConditionalComponentTextStyle($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->conditional = Utils::isAssociativeArray($conditional)
+            ? new ConditionalComponentTextStyle($conditional)
+            : $conditional;
         return $this;
     }
 
     /**
      * Get the dropCapStyle
-     * @return \Urbania\AppleNews\Format\DropCapStyle
+     * @return \Urbania\AppleNews\Format\DropCapStyle|none
      */
     public function getDropCapStyle()
     {
@@ -425,7 +526,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Set the dropCapStyle
-     * @param \Urbania\AppleNews\Format\DropCapStyle|array $dropCapStyle
+     * @param \Urbania\AppleNews\Format\DropCapStyle|array|none $dropCapStyle
      * @return $this
      */
     public function setDropCapStyle($dropCapStyle)
@@ -435,9 +536,13 @@ class ComponentTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::isSdkObject($dropCapStyle, DropCapStyle::class);
+        if (is_object($dropCapStyle) || Utils::isAssociativeArray($dropCapStyle)) {
+            Assert::isSdkObject($dropCapStyle, DropCapStyle::class);
+        } else {
+            Assert::eq($dropCapStyle, 'none');
+        }
 
-        $this->dropCapStyle = is_array($dropCapStyle)
+        $this->dropCapStyle = Utils::isAssociativeArray($dropCapStyle)
             ? new DropCapStyle($dropCapStyle)
             : $dropCapStyle;
         return $this;
@@ -472,7 +577,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Get the fontFamily
-     * @return string
+     * @return string|string
      */
     public function getFontFamily()
     {
@@ -481,7 +586,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Set the fontFamily
-     * @param string $fontFamily
+     * @param string|string $fontFamily
      * @return $this
      */
     public function setFontFamily($fontFamily)
@@ -491,7 +596,7 @@ class ComponentTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::string($fontFamily);
+        Assert::oneOf($fontFamily, ['system']);
 
         $this->fontFamily = $fontFamily;
         return $this;
@@ -521,6 +626,33 @@ class ComponentTextStyle extends TextStyle
         Assert::string($fontName);
 
         $this->fontName = $fontName;
+        return $this;
+    }
+
+    /**
+     * Get the fontScaling
+     * @return boolean
+     */
+    public function getFontScaling()
+    {
+        return $this->fontScaling;
+    }
+
+    /**
+     * Set the fontScaling
+     * @param boolean $fontScaling
+     * @return $this
+     */
+    public function setFontScaling($fontScaling)
+    {
+        if (is_null($fontScaling)) {
+            $this->fontScaling = null;
+            return $this;
+        }
+
+        Assert::boolean($fontScaling);
+
+        $this->fontScaling = $fontScaling;
         return $this;
     }
 
@@ -572,7 +704,7 @@ class ComponentTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::oneOf($fontStyle, ["normal", "italic", "oblique"]);
+        Assert::oneOf($fontStyle, ['normal', 'italic', 'oblique']);
 
         $this->fontStyle = $fontStyle;
         return $this;
@@ -609,29 +741,29 @@ class ComponentTextStyle extends TextStyle
             700,
             800,
             900,
-            "thin",
-            "extra-light",
-            "extralight",
-            "ultra-light",
-            "light",
-            "regular",
-            "normal",
-            "book",
-            "roman",
-            "medium",
-            "semi-bold",
-            "semibold",
-            "demi-bold",
-            "demibold",
-            "bold",
-            "extra-bold",
-            "extrabold",
-            "ultra-bold",
-            "ultrabold",
-            "black",
-            "heavy",
-            "lighter",
-            "bolder"
+            'thin',
+            'extra-light',
+            'extralight',
+            'ultra-light',
+            'light',
+            'regular',
+            'normal',
+            'book',
+            'roman',
+            'medium',
+            'semi-bold',
+            'semibold',
+            'demi-bold',
+            'demibold',
+            'bold',
+            'extra-bold',
+            'extrabold',
+            'ultra-bold',
+            'ultrabold',
+            'black',
+            'heavy',
+            'lighter',
+            'bolder',
         ]);
 
         $this->fontWeight = $fontWeight;
@@ -660,15 +792,18 @@ class ComponentTextStyle extends TextStyle
         }
 
         Assert::oneOf($fontWidth, [
-            "ultra-condensed",
-            "extra-condensed",
-            "condensed",
-            "semi-condensed",
-            "normal",
-            "semi-expanded",
-            "expanded",
-            "extra-expanded",
-            "ultra-expanded"
+            'ultra-compressed',
+            'extra-compressed',
+            'compressed',
+            'ultra-condensed',
+            'extra-condensed',
+            'condensed',
+            'semi-condensed',
+            'normal',
+            'semi-expanded',
+            'expanded',
+            'extra-expanded',
+            'ultra-expanded',
         ]);
 
         $this->fontWidth = $fontWidth;
@@ -730,6 +865,141 @@ class ComponentTextStyle extends TextStyle
     }
 
     /**
+     * Get the hyphenationMinimumCharactersAfter
+     * @return integer
+     */
+    public function getHyphenationMinimumCharactersAfter()
+    {
+        return $this->hyphenationMinimumCharactersAfter;
+    }
+
+    /**
+     * Set the hyphenationMinimumCharactersAfter
+     * @param integer $hyphenationMinimumCharactersAfter
+     * @return $this
+     */
+    public function setHyphenationMinimumCharactersAfter($hyphenationMinimumCharactersAfter)
+    {
+        if (is_null($hyphenationMinimumCharactersAfter)) {
+            $this->hyphenationMinimumCharactersAfter = null;
+            return $this;
+        }
+
+        Assert::integer($hyphenationMinimumCharactersAfter);
+
+        $this->hyphenationMinimumCharactersAfter = $hyphenationMinimumCharactersAfter;
+        return $this;
+    }
+
+    /**
+     * Get the hyphenationMinimumCharactersBefore
+     * @return integer
+     */
+    public function getHyphenationMinimumCharactersBefore()
+    {
+        return $this->hyphenationMinimumCharactersBefore;
+    }
+
+    /**
+     * Set the hyphenationMinimumCharactersBefore
+     * @param integer $hyphenationMinimumCharactersBefore
+     * @return $this
+     */
+    public function setHyphenationMinimumCharactersBefore($hyphenationMinimumCharactersBefore)
+    {
+        if (is_null($hyphenationMinimumCharactersBefore)) {
+            $this->hyphenationMinimumCharactersBefore = null;
+            return $this;
+        }
+
+        Assert::integer($hyphenationMinimumCharactersBefore);
+
+        $this->hyphenationMinimumCharactersBefore = $hyphenationMinimumCharactersBefore;
+        return $this;
+    }
+
+    /**
+     * Get the hyphenationMinimumWordLength
+     * @return integer
+     */
+    public function getHyphenationMinimumWordLength()
+    {
+        return $this->hyphenationMinimumWordLength;
+    }
+
+    /**
+     * Set the hyphenationMinimumWordLength
+     * @param integer $hyphenationMinimumWordLength
+     * @return $this
+     */
+    public function setHyphenationMinimumWordLength($hyphenationMinimumWordLength)
+    {
+        if (is_null($hyphenationMinimumWordLength)) {
+            $this->hyphenationMinimumWordLength = null;
+            return $this;
+        }
+
+        Assert::integer($hyphenationMinimumWordLength);
+
+        $this->hyphenationMinimumWordLength = $hyphenationMinimumWordLength;
+        return $this;
+    }
+
+    /**
+     * Get the hyphenationZone
+     * @return integer
+     */
+    public function getHyphenationZone()
+    {
+        return $this->hyphenationZone;
+    }
+
+    /**
+     * Set the hyphenationZone
+     * @param integer $hyphenationZone
+     * @return $this
+     */
+    public function setHyphenationZone($hyphenationZone)
+    {
+        if (is_null($hyphenationZone)) {
+            $this->hyphenationZone = null;
+            return $this;
+        }
+
+        Assert::integer($hyphenationZone);
+
+        $this->hyphenationZone = $hyphenationZone;
+        return $this;
+    }
+
+    /**
+     * Get the lineBalancing
+     * @return boolean
+     */
+    public function getLineBalancing()
+    {
+        return $this->lineBalancing;
+    }
+
+    /**
+     * Set the lineBalancing
+     * @param boolean $lineBalancing
+     * @return $this
+     */
+    public function setLineBalancing($lineBalancing)
+    {
+        if (is_null($lineBalancing)) {
+            $this->lineBalancing = null;
+            return $this;
+        }
+
+        Assert::boolean($lineBalancing);
+
+        $this->lineBalancing = $lineBalancing;
+        return $this;
+    }
+
+    /**
      * Get the lineHeight
      * @return integer
      */
@@ -758,7 +1028,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Get the linkStyle
-     * @return \Urbania\AppleNews\Format\TextStyle
+     * @return \Urbania\AppleNews\Format\TextStyle|none
      */
     public function getLinkStyle()
     {
@@ -767,7 +1037,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Set the linkStyle
-     * @param \Urbania\AppleNews\Format\TextStyle|array $linkStyle
+     * @param \Urbania\AppleNews\Format\TextStyle|array|none $linkStyle
      * @return $this
      */
     public function setLinkStyle($linkStyle)
@@ -777,9 +1047,13 @@ class ComponentTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::isSdkObject($linkStyle, TextStyle::class);
+        if (is_object($linkStyle) || Utils::isAssociativeArray($linkStyle)) {
+            Assert::isSdkObject($linkStyle, TextStyle::class);
+        } else {
+            Assert::eq($linkStyle, 'none');
+        }
 
-        $this->linkStyle = is_array($linkStyle)
+        $this->linkStyle = Utils::isAssociativeArray($linkStyle)
             ? new TextStyle($linkStyle)
             : $linkStyle;
         return $this;
@@ -787,7 +1061,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Get the orderedListItems
-     * @return \Urbania\AppleNews\Format\ListItemStyle
+     * @return \Urbania\AppleNews\Format\ListItemStyle|none
      */
     public function getOrderedListItems()
     {
@@ -796,7 +1070,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Set the orderedListItems
-     * @param \Urbania\AppleNews\Format\ListItemStyle|array $orderedListItems
+     * @param \Urbania\AppleNews\Format\ListItemStyle|array|none $orderedListItems
      * @return $this
      */
     public function setOrderedListItems($orderedListItems)
@@ -806,9 +1080,13 @@ class ComponentTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::isSdkObject($orderedListItems, ListItemStyle::class);
+        if (is_object($orderedListItems) || Utils::isAssociativeArray($orderedListItems)) {
+            Assert::isSdkObject($orderedListItems, ListItemStyle::class);
+        } else {
+            Assert::eq($orderedListItems, 'none');
+        }
 
-        $this->orderedListItems = is_array($orderedListItems)
+        $this->orderedListItems = Utils::isAssociativeArray($orderedListItems)
             ? new ListItemStyle($orderedListItems)
             : $orderedListItems;
         return $this;
@@ -889,13 +1167,13 @@ class ComponentTextStyle extends TextStyle
             return $this;
         }
 
-        if (is_object($strikethrough) || is_array($strikethrough)) {
+        if (is_object($strikethrough) || Utils::isAssociativeArray($strikethrough)) {
             Assert::isSdkObject($strikethrough, TextDecoration::class);
         } else {
             Assert::boolean($strikethrough);
         }
 
-        $this->strikethrough = is_array($strikethrough)
+        $this->strikethrough = Utils::isAssociativeArray($strikethrough)
             ? new TextDecoration($strikethrough)
             : $strikethrough;
         return $this;
@@ -903,7 +1181,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Get the stroke
-     * @return \Urbania\AppleNews\Format\TextStrokeStyle
+     * @return \Urbania\AppleNews\Format\TextStrokeStyle|none
      */
     public function getStroke()
     {
@@ -912,7 +1190,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Set the stroke
-     * @param \Urbania\AppleNews\Format\TextStrokeStyle|array $stroke
+     * @param \Urbania\AppleNews\Format\TextStrokeStyle|array|none $stroke
      * @return $this
      */
     public function setStroke($stroke)
@@ -922,11 +1200,13 @@ class ComponentTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::isSdkObject($stroke, TextStrokeStyle::class);
+        if (is_object($stroke) || Utils::isAssociativeArray($stroke)) {
+            Assert::isSdkObject($stroke, TextStrokeStyle::class);
+        } else {
+            Assert::eq($stroke, 'none');
+        }
 
-        $this->stroke = is_array($stroke)
-            ? new TextStrokeStyle($stroke)
-            : $stroke;
+        $this->stroke = Utils::isAssociativeArray($stroke) ? new TextStrokeStyle($stroke) : $stroke;
         return $this;
     }
 
@@ -951,13 +1231,7 @@ class ComponentTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::oneOf($textAlignment, [
-            "left",
-            "center",
-            "right",
-            "justified",
-            "none"
-        ]);
+        Assert::oneOf($textAlignment, ['left', 'center', 'right', 'justified', 'none']);
 
         $this->textAlignment = $textAlignment;
         return $this;
@@ -992,7 +1266,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Get the textShadow
-     * @return \Urbania\AppleNews\Format\Shadow
+     * @return \Urbania\AppleNews\Format\TextShadow|none
      */
     public function getTextShadow()
     {
@@ -1001,7 +1275,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Set the textShadow
-     * @param \Urbania\AppleNews\Format\Shadow|array $textShadow
+     * @param \Urbania\AppleNews\Format\TextShadow|array|none $textShadow
      * @return $this
      */
     public function setTextShadow($textShadow)
@@ -1011,10 +1285,14 @@ class ComponentTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::isSdkObject($textShadow, Shadow::class);
+        if (is_object($textShadow) || Utils::isAssociativeArray($textShadow)) {
+            Assert::isSdkObject($textShadow, TextShadow::class);
+        } else {
+            Assert::eq($textShadow, 'none');
+        }
 
-        $this->textShadow = is_array($textShadow)
-            ? new Shadow($textShadow)
+        $this->textShadow = Utils::isAssociativeArray($textShadow)
+            ? new TextShadow($textShadow)
             : $textShadow;
         return $this;
     }
@@ -1041,10 +1319,11 @@ class ComponentTextStyle extends TextStyle
         }
 
         Assert::oneOf($textTransform, [
-            "uppercase",
-            "lowercase",
-            "capitalize",
-            "none"
+            'uppercase',
+            'lowercase',
+            'capitalize',
+            'smallcaps',
+            'none',
         ]);
 
         $this->textTransform = $textTransform;
@@ -1099,13 +1378,13 @@ class ComponentTextStyle extends TextStyle
             return $this;
         }
 
-        if (is_object($underline) || is_array($underline)) {
+        if (is_object($underline) || Utils::isAssociativeArray($underline)) {
             Assert::isSdkObject($underline, TextDecoration::class);
         } else {
             Assert::boolean($underline);
         }
 
-        $this->underline = is_array($underline)
+        $this->underline = Utils::isAssociativeArray($underline)
             ? new TextDecoration($underline)
             : $underline;
         return $this;
@@ -1113,7 +1392,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Get the unorderedListItems
-     * @return \Urbania\AppleNews\Format\ListItemStyle
+     * @return \Urbania\AppleNews\Format\ListItemStyle|none
      */
     public function getUnorderedListItems()
     {
@@ -1122,7 +1401,7 @@ class ComponentTextStyle extends TextStyle
 
     /**
      * Set the unorderedListItems
-     * @param \Urbania\AppleNews\Format\ListItemStyle|array $unorderedListItems
+     * @param \Urbania\AppleNews\Format\ListItemStyle|array|none $unorderedListItems
      * @return $this
      */
     public function setUnorderedListItems($unorderedListItems)
@@ -1132,9 +1411,13 @@ class ComponentTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::isSdkObject($unorderedListItems, ListItemStyle::class);
+        if (is_object($unorderedListItems) || Utils::isAssociativeArray($unorderedListItems)) {
+            Assert::isSdkObject($unorderedListItems, ListItemStyle::class);
+        } else {
+            Assert::eq($unorderedListItems, 'none');
+        }
 
-        $this->unorderedListItems = is_array($unorderedListItems)
+        $this->unorderedListItems = Utils::isAssociativeArray($unorderedListItems)
             ? new ListItemStyle($unorderedListItems)
             : $unorderedListItems;
         return $this;
@@ -1161,11 +1444,7 @@ class ComponentTextStyle extends TextStyle
             return $this;
         }
 
-        Assert::oneOf($verticalAlignment, [
-            "superscript",
-            "subscript",
-            "baseline"
-        ]);
+        Assert::oneOf($verticalAlignment, ['superscript', 'subscript', 'baseline']);
 
         $this->verticalAlignment = $verticalAlignment;
         return $this;
@@ -1185,19 +1464,10 @@ class ComponentTextStyle extends TextStyle
                     : $this->backgroundColor;
         }
         if (isset($this->conditional)) {
-            $data['conditional'] = !is_null($this->conditional)
-                ? array_reduce(
-                    array_keys($this->conditional),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->conditional[$key] instanceof Arrayable
-                                ? $this->conditional[$key]->toArray()
-                                : $this->conditional[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->conditional;
+            $data['conditional'] =
+                $this->conditional instanceof Arrayable
+                    ? $this->conditional->toArray()
+                    : $this->conditional;
         }
         if (isset($this->dropCapStyle)) {
             $data['dropCapStyle'] =
@@ -1213,6 +1483,9 @@ class ComponentTextStyle extends TextStyle
         }
         if (isset($this->fontName)) {
             $data['fontName'] = $this->fontName;
+        }
+        if (isset($this->fontScaling)) {
+            $data['fontScaling'] = $this->fontScaling;
         }
         if (isset($this->fontSize)) {
             $data['fontSize'] = $this->fontSize;
@@ -1231,6 +1504,21 @@ class ComponentTextStyle extends TextStyle
         }
         if (isset($this->hyphenation)) {
             $data['hyphenation'] = $this->hyphenation;
+        }
+        if (isset($this->hyphenationMinimumCharactersAfter)) {
+            $data['hyphenationMinimumCharactersAfter'] = $this->hyphenationMinimumCharactersAfter;
+        }
+        if (isset($this->hyphenationMinimumCharactersBefore)) {
+            $data['hyphenationMinimumCharactersBefore'] = $this->hyphenationMinimumCharactersBefore;
+        }
+        if (isset($this->hyphenationMinimumWordLength)) {
+            $data['hyphenationMinimumWordLength'] = $this->hyphenationMinimumWordLength;
+        }
+        if (isset($this->hyphenationZone)) {
+            $data['hyphenationZone'] = $this->hyphenationZone;
+        }
+        if (isset($this->lineBalancing)) {
+            $data['lineBalancing'] = $this->lineBalancing;
         }
         if (isset($this->lineHeight)) {
             $data['lineHeight'] = $this->lineHeight;
@@ -1261,9 +1549,7 @@ class ComponentTextStyle extends TextStyle
         }
         if (isset($this->stroke)) {
             $data['stroke'] =
-                $this->stroke instanceof Arrayable
-                    ? $this->stroke->toArray()
-                    : $this->stroke;
+                $this->stroke instanceof Arrayable ? $this->stroke->toArray() : $this->stroke;
         }
         if (isset($this->textAlignment)) {
             $data['textAlignment'] = $this->textAlignment;

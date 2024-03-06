@@ -1,0 +1,88 @@
+{
+    "name": "Format\\ConditionalDivider",
+    "description": "The object for defining conditional properties for a divider component, and when the conditional properties are in effect.",
+    "version": "1.10.0+",
+    "deprecated": false,
+    "from_class": null,
+    "extends": "Format\\ConditionalComponent",
+    "typed": null,
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/conditionaldivider.json",
+    "properties": [
+        {
+            "name": "conditions",
+            "type": [
+                "Format\\Condition",
+                "array:Format\\Condition"
+            ],
+            "required": true,
+            "description": "An instance or array of conditions that, when met, cause the conditional divider component properties to take effect.",
+            "typed": false
+        },
+        {
+            "name": "anchor",
+            "type": "Format\\Anchor",
+            "required": false,
+            "description": "An object that defines vertical alignment with another component.",
+            "typed": false
+        },
+        {
+            "name": "animation",
+            "type": [
+                "Format\\ComponentAnimation",
+                "none"
+            ],
+            "required": false,
+            "description": "An object that defines an animation to be applied to the component.\nTo remove a previously set condition, use none.",
+            "typed": true
+        },
+        {
+            "name": "behavior",
+            "type": [
+                "Format\\Behavior",
+                "none"
+            ],
+            "required": false,
+            "description": "An object that defines behavior for a component, like  or .\nTo remove a previously set condition, use none.",
+            "typed": true
+        },
+        {
+            "name": "hidden",
+            "type": "boolean",
+            "required": false,
+            "description": "A Boolean value that determines whether the component is hidden.",
+            "default": true,
+            "typed": false
+        },
+        {
+            "name": "layout",
+            "type": [
+                "Format\\ComponentLayout",
+                "string"
+            ],
+            "required": false,
+            "description": "An inline  object that contains layout information, or a string reference to a ComponentLayout object that is defined at the top level of the document. \nIf layout is not defined, size and position are based on various factors, such as the device type, the length of the content, and the role of this component.",
+            "typed": false
+        },
+        {
+            "name": "stroke",
+            "type": [
+                "Format\\StrokeStyle",
+                "none"
+            ],
+            "required": false,
+            "description": "An object that defines the color, width, and style of a divider.\nTo remove a previously set condition, use none.",
+            "typed": false
+        },
+        {
+            "name": "style",
+            "type": [
+                "Format\\ComponentStyle",
+                "string",
+                "none"
+            ],
+            "required": false,
+            "description": "An inline  object that defines the appearance of this component, or a string reference to a ComponentStyle object that is defined at the top level of the document.\nTo remove a previously set condition, use none.",
+            "typed": false
+        }
+    ]
+}

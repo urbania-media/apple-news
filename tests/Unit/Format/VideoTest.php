@@ -28,7 +28,7 @@ class VideoTest extends TestCase
      */
     public static function roleProvider()
     {
-        return [["video"]];
+        return [['video']];
     }
 
     /**
@@ -51,7 +51,7 @@ class VideoTest extends TestCase
      */
     public static function URLProvider()
     {
-        return [["http://example.com"], ["https://example.com"]];
+        return [['http://example.com'], ['https://example.com']];
     }
 
     /**
@@ -74,7 +74,30 @@ class VideoTest extends TestCase
      */
     public static function accessibilityCaptionProvider()
     {
-        return [["a string"]];
+        return [['a string']];
+    }
+
+    /**
+     * Test the property allowsPrerollAds
+     * @test
+     * @dataProvider allowsPrerollAdsProvider
+     * @covers ::getAllowsPrerollAds
+     * @covers ::setAllowsPrerollAds
+     */
+    public function testPropertyAllowsPrerollAds($value)
+    {
+        $object = new Video();
+        $object->setAllowsPrerollAds($value);
+
+        $this->assertEquals($value, $object->getAllowsPrerollAds());
+    }
+
+    /**
+     * Data provider for property allowsPrerollAds
+     */
+    public static function allowsPrerollAdsProvider()
+    {
+        return [[true], [false]];
     }
 
     /**
@@ -120,7 +143,7 @@ class VideoTest extends TestCase
      */
     public static function animationProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentAnimation()]];
+        return [[new \Urbania\AppleNews\Format\ComponentAnimation()], ['none']];
     }
 
     /**
@@ -166,7 +189,7 @@ class VideoTest extends TestCase
      */
     public static function behaviorProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Behavior()]];
+        return [[new \Urbania\AppleNews\Format\Behavior()], ['none']];
     }
 
     /**
@@ -189,7 +212,7 @@ class VideoTest extends TestCase
      */
     public static function captionProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -212,7 +235,10 @@ class VideoTest extends TestCase
      */
     public static function conditionalProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\ConditionalComponent()]]];
+        return [
+            [new \Urbania\AppleNews\Format\ConditionalComponent()],
+            [[new \Urbania\AppleNews\Format\ConditionalComponent()]],
+        ];
     }
 
     /**
@@ -281,7 +307,7 @@ class VideoTest extends TestCase
      */
     public static function identifierProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -304,10 +330,7 @@ class VideoTest extends TestCase
      */
     public static function layoutProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\ComponentLayout()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\ComponentLayout()], ['a string']];
     }
 
     /**
@@ -330,7 +353,7 @@ class VideoTest extends TestCase
      */
     public static function stillURLProvider()
     {
-        return [["http://example.com"], ["https://example.com"]];
+        return [['http://example.com'], ['https://example.com']];
     }
 
     /**
@@ -353,6 +376,6 @@ class VideoTest extends TestCase
      */
     public static function styleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
+        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ['a string'], ['none']];
     }
 }

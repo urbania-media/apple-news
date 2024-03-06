@@ -30,7 +30,7 @@ class TextStyleTest extends TestCase
      */
     public static function backgroundColorProvider()
     {
-        return [["#fff"], ["#000"]];
+        return [['#fff'], ['#000'], ['none']];
     }
 
     /**
@@ -53,7 +53,10 @@ class TextStyleTest extends TestCase
      */
     public static function conditionalProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\ConditionalTextStyle()]]];
+        return [
+            [new \Urbania\AppleNews\Format\ConditionalTextStyle()],
+            [[new \Urbania\AppleNews\Format\ConditionalTextStyle()]],
+        ];
     }
 
     /**
@@ -76,7 +79,7 @@ class TextStyleTest extends TestCase
      */
     public static function fontFamilyProvider()
     {
-        return [["a string"]];
+        return [['system']];
     }
 
     /**
@@ -99,7 +102,7 @@ class TextStyleTest extends TestCase
      */
     public static function fontNameProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -145,7 +148,7 @@ class TextStyleTest extends TestCase
      */
     public static function fontStyleProvider()
     {
-        return [["normal"], ["italic"], ["oblique"]];
+        return [['normal'], ['italic'], ['oblique']];
     }
 
     /**
@@ -178,29 +181,29 @@ class TextStyleTest extends TestCase
             [700],
             [800],
             [900],
-            ["thin"],
-            ["extra-light"],
-            ["extralight"],
-            ["ultra-light"],
-            ["light"],
-            ["regular"],
-            ["normal"],
-            ["book"],
-            ["roman"],
-            ["medium"],
-            ["semi-bold"],
-            ["semibold"],
-            ["demi-bold"],
-            ["demibold"],
-            ["bold"],
-            ["extra-bold"],
-            ["extrabold"],
-            ["ultra-bold"],
-            ["ultrabold"],
-            ["black"],
-            ["heavy"],
-            ["lighter"],
-            ["bolder"]
+            ['thin'],
+            ['extra-light'],
+            ['extralight'],
+            ['ultra-light'],
+            ['light'],
+            ['regular'],
+            ['normal'],
+            ['book'],
+            ['roman'],
+            ['medium'],
+            ['semi-bold'],
+            ['semibold'],
+            ['demi-bold'],
+            ['demibold'],
+            ['bold'],
+            ['extra-bold'],
+            ['extrabold'],
+            ['ultra-bold'],
+            ['ultrabold'],
+            ['black'],
+            ['heavy'],
+            ['lighter'],
+            ['bolder'],
         ];
     }
 
@@ -225,15 +228,18 @@ class TextStyleTest extends TestCase
     public static function fontWidthProvider()
     {
         return [
-            ["ultra-condensed"],
-            ["extra-condensed"],
-            ["condensed"],
-            ["semi-condensed"],
-            ["normal"],
-            ["semi-expanded"],
-            ["expanded"],
-            ["extra-expanded"],
-            ["ultra-expanded"]
+            ['ultra-compressed'],
+            ['extra-compressed'],
+            ['compressed'],
+            ['ultra-condensed'],
+            ['extra-condensed'],
+            ['condensed'],
+            ['semi-condensed'],
+            ['normal'],
+            ['semi-expanded'],
+            ['expanded'],
+            ['extra-expanded'],
+            ['ultra-expanded'],
         ];
     }
 
@@ -257,7 +263,7 @@ class TextStyleTest extends TestCase
      */
     public static function orderedListItemsProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ListItemStyle()]];
+        return [[new \Urbania\AppleNews\Format\ListItemStyle()], ['none']];
     }
 
     /**
@@ -280,11 +286,7 @@ class TextStyleTest extends TestCase
      */
     public static function strikethroughProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\TextDecoration()],
-            [true],
-            [false]
-        ];
+        return [[new \Urbania\AppleNews\Format\TextDecoration()], [true], [false]];
     }
 
     /**
@@ -307,7 +309,7 @@ class TextStyleTest extends TestCase
      */
     public static function strokeProvider()
     {
-        return [[new \Urbania\AppleNews\Format\TextStrokeStyle()]];
+        return [[new \Urbania\AppleNews\Format\TextStrokeStyle()], ['none']];
     }
 
     /**
@@ -330,7 +332,7 @@ class TextStyleTest extends TestCase
      */
     public static function textColorProvider()
     {
-        return [["#fff"], ["#000"]];
+        return [['#fff'], ['#000']];
     }
 
     /**
@@ -353,7 +355,7 @@ class TextStyleTest extends TestCase
      */
     public static function textShadowProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Shadow()]];
+        return [[new \Urbania\AppleNews\Format\TextShadow()], ['none']];
     }
 
     /**
@@ -376,7 +378,7 @@ class TextStyleTest extends TestCase
      */
     public static function textTransformProvider()
     {
-        return [["uppercase"], ["lowercase"], ["capitalize"], ["none"]];
+        return [['uppercase'], ['lowercase'], ['capitalize'], ['smallcaps'], ['none']];
     }
 
     /**
@@ -422,11 +424,7 @@ class TextStyleTest extends TestCase
      */
     public static function underlineProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\TextDecoration()],
-            [true],
-            [false]
-        ];
+        return [[new \Urbania\AppleNews\Format\TextDecoration()], [true], [false]];
     }
 
     /**
@@ -449,7 +447,7 @@ class TextStyleTest extends TestCase
      */
     public static function unorderedListItemsProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ListItemStyle()]];
+        return [[new \Urbania\AppleNews\Format\ListItemStyle()], ['none']];
     }
 
     /**
@@ -472,6 +470,6 @@ class TextStyleTest extends TestCase
      */
     public static function verticalAlignmentProvider()
     {
-        return [["superscript"], ["subscript"], ["baseline"]];
+        return [['superscript'], ['subscript'], ['baseline']];
     }
 }

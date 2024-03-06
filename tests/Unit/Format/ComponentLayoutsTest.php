@@ -30,6 +30,6 @@ class ComponentLayoutsTest extends TestCase
      */
     public static function layoutsProvider()
     {
-        return [[["test" => new \Urbania\AppleNews\Format\ComponentLayout()]]];
+        return [[['test' => new \Urbania\AppleNews\Format\ComponentLayout()]]];
     }
 }

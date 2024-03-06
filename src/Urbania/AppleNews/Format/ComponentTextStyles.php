@@ -5,12 +5,13 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * An object containing component text style defaults as well as
  * component text styles that components in the article can use.
  *
- * @see https://developer.apple.com/documentation/apple_news/articledocument/componenttextstyles
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/articledocument/componenttextstyles.json
  */
 class ComponentTextStyles extends BaseSdkObject
 {
@@ -52,17 +53,19 @@ class ComponentTextStyles extends BaseSdkObject
         }
         Assert::allIsSdkObject($styles, ComponentTextStyle::class);
 
-        $this->styles = array_reduce(
-            array_keys($styles),
-            function ($array, $key) use ($styles) {
-                $item = $styles[$key];
-                $array[$key] = is_array($item)
-                    ? new ComponentTextStyle($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->styles = is_array($styles)
+            ? array_reduce(
+                array_keys($styles),
+                function ($array, $key) use ($styles) {
+                    $item = $styles[$key];
+                    $array[$key] = Utils::isAssociativeArray($item)
+                        ? new ComponentTextStyle($item)
+                        : $item;
+                    return $array;
+                },
+                []
+            )
+            : $styles;
         return $this;
     }
 

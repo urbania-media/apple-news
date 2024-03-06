@@ -12,13 +12,13 @@
             "parallax_scale": "ParallaxScaleHeader"
         }
     },
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/scene",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/scene.json",
     "properties": [
         {
             "name": "type",
             "type": "enum:string",
             "required": true,
-            "description": "The type of scene. For example, parallax_scale for a Parallax Scale Header scene or fading_sticky_header for a Fading Sticky Header.",
+            "description": "The type of scene. For example, parallax_scale for a Parallax Scale Header scene or fading_sticky_header for a Fading Sticky Header.\nVersion 1.0",
             "enum_values": [
                 "fading_sticky_header",
                 "parallax_scale"

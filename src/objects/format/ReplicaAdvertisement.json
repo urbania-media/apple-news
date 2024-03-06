@@ -1,0 +1,132 @@
+{
+    "name": "Format\\ReplicaAdvertisement",
+    "description": "The component for delivering digital versions of print advertisements. ",
+    "version": "1.9.1+",
+    "deprecated": false,
+    "from_class": null,
+    "extends": "Format\\Component",
+    "typed": null,
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/replicaadvertisement.json",
+    "properties": [
+        {
+            "name": "role",
+            "type": "string",
+            "required": true,
+            "description": "Always replica_advertisement for this component.",
+            "value": "replica_advertisement",
+            "read_only": true,
+            "typed": false
+        },
+        {
+            "name": "URL",
+            "type": "uri",
+            "required": true,
+            "description": "The URL of the digital version of the print advertisement.\nThe URL can begin with http:\/\/, https:\/\/, or bundle:\/\/. If it begins with bundle:\/\/, the digital version of the print advertisement file must be in the same directory as the document.\nDigital version of the print advertisement filenames should be properly encoded as URLs. \nSee .",
+            "typed": false
+        },
+        {
+            "name": "accessibilityCaption",
+            "type": "string",
+            "required": false,
+            "description": "A caption that describes the digital version of the print advertisement. The text is used for VoiceOver. For more information about VoiceOver, see the  page in Accessibility.  If accessibilityCaption is not provided, the caption value is used for VoiceOver for iOS, VoiceOver for iPadOS, and VoiceOver for macOS.",
+            "typed": false
+        },
+        {
+            "name": "additions",
+            "type": "array:Format\\ComponentLink",
+            "required": false,
+            "description": "An array of ComponentLink objects. This can be used to create a ComponentLink, allowing a link to anywhere in News.",
+            "typed": false
+        },
+        {
+            "name": "anchor",
+            "type": "Format\\Anchor",
+            "required": false,
+            "description": "An object that defines vertical alignment with another component.",
+            "typed": false
+        },
+        {
+            "name": "animation",
+            "type": [
+                "Format\\ComponentAnimation",
+                "none"
+            ],
+            "required": false,
+            "description": "An object that defines an animation to be applied to the component.\nThe none value is used for conditional design elements. Adding it here has no effect.",
+            "typed": true
+        },
+        {
+            "name": "behavior",
+            "type": [
+                "Format\\Behavior",
+                "none"
+            ],
+            "required": false,
+            "description": "An object that defines behavior for a component, like  or .\nThe none value is used for conditional design elements. Adding it here has no effect.",
+            "typed": true
+        },
+        {
+            "name": "caption",
+            "type": [
+                "Format\\CaptionDescriptor",
+                "string"
+            ],
+            "required": false,
+            "description": "A caption that describes the digital version of the print advertisement. The article displays this text when the digital version of the print advertisement is full screen, and VoiceOver uses this text if you don\u2019t provide accessibilityCaption text. For more information about VoiceOver, see the  page in Accessibility. The caption text doesn\u2019t appear in the main article view. To display a caption in the main article view, use the  component.  ",
+            "typed": false
+        },
+        {
+            "name": "conditional",
+            "type": [
+                "Format\\ConditionalComponent",
+                "array:Format\\ConditionalComponent"
+            ],
+            "required": false,
+            "description": "An instance or array of component properties that can be applied conditionally, and the conditions that cause them to be applied.",
+            "typed": false
+        },
+        {
+            "name": "explicitContent",
+            "type": "boolean",
+            "required": false,
+            "description": "A Boolean value that indicates the digital version of the print advertisement may contain explicit content.",
+            "typed": false
+        },
+        {
+            "name": "hidden",
+            "type": "boolean",
+            "required": false,
+            "description": "A Boolean value that determines whether the component is hidden.",
+            "default": true,
+            "typed": false
+        },
+        {
+            "name": "identifier",
+            "type": "string",
+            "required": false,
+            "description": "An optional unique identifier for this component. If used, this identifier must be unique across the entire document. You will need an identifier for your component if you want to anchor other components to it.",
+            "typed": false
+        },
+        {
+            "name": "layout",
+            "type": [
+                "Format\\ComponentLayout",
+                "string"
+            ],
+            "required": false,
+            "description": "An inline ComponentLayout object that contains layout information, or a string reference to a ComponentLayout object that is defined at the top level of the document. \nIf layout is not defined, size and position are based on various factors, such as the device type, the length of the content, and the role of this component.",
+            "typed": false
+        },
+        {
+            "name": "style",
+            "type": [
+                "Format\\ComponentStyle",
+                "string",
+                "none"
+            ],
+            "required": false,
+            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle object that is defined at the top level of the document.\nThe none value is used for conditional design elements. Adding it here has no effect.",
+            "typed": false
+        }
+    ]
+}

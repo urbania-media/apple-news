@@ -1,25 +1,25 @@
 {
     "name": "Format\\GalleryItem",
-    "description": "An object used in a gallery or mosaic component for displaying an individual image.",
+    "description": " An object used in a gallery or mosaic component for displaying an individual image.",
     "version": "1.7+",
     "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/galleryitem",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/galleryitem.json",
     "properties": [
         {
             "name": "URL",
             "type": "uri",
             "required": true,
-            "description": "The URL of an image to display in a gallery or mosaic.",
+            "description": "The URL of an image to display in a gallery or mosaic.\nImage URLs can begin with http:\/\/, https:\/\/, or bundle:\/\/. If the image URL begins with bundle:\/\/, the image file must be in the same directory as the document.\nImage filenames should be properly encoded as URLs.\nSee .",
             "typed": false
         },
         {
             "name": "accessibilityCaption",
             "type": "string",
             "required": false,
-            "description": "A caption that describes the image. The text is used for  and . If accessibilityCaption is not provided, the caption value is used for VoiceOver for iOS and VoiceOver for macOS.",
+            "description": "A caption that describes the image. The text is used for VoiceOver. For more information about VoiceOver, see the  page in Accessibility.  If accessibilityCaption is not provided, the caption value is used for VoiceOver for iOS, VoiceOver for iPadOS, and VoiceOver for macOS. ",
             "typed": false
         },
         {
@@ -29,7 +29,7 @@
                 "string"
             ],
             "required": false,
-            "description": "A caption that describes the image. The text is seen when the image is in full screen. This text is also used by  and , if accessibilityCaption text is not provided. The caption text does not appear in the main article view. To display a caption in the main article view, use the  component.",
+            "description": "A caption that describes the image. The article displays this text when the image is full screen, and VoiceOver uses this text if you don\u2019t provide accessibilityCaption text. For more information about VoiceOver, see the  page in Accessibility. The caption text doesn\u2019t appear in the main article view. To display a caption in the main article view, use the  component. ",
             "typed": false
         },
         {

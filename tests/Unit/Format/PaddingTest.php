@@ -30,7 +30,7 @@ class PaddingTest extends TestCase
      */
     public static function bottomProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**
@@ -53,7 +53,7 @@ class PaddingTest extends TestCase
      */
     public static function leftProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**
@@ -76,7 +76,7 @@ class PaddingTest extends TestCase
      */
     public static function rightProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**
@@ -99,6 +99,6 @@ class PaddingTest extends TestCase
      */
     public static function topProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 }

@@ -5,18 +5,19 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for defining the margin above and below advertising
  * components.
  *
- * @see https://developer.apple.com/documentation/apple_news/autoplacementlayout
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/autoplacementlayout.json
  */
 class AutoPlacementLayout extends BaseSdkObject
 {
     /**
      * The top and bottom margin in points, or in any other unit of measure
-     * for components. See Specifying Measurements for Components.
+     * for components. See .
      * @var \Urbania\AppleNews\Format\Margin|integer
      */
     protected $margin;
@@ -49,13 +50,13 @@ class AutoPlacementLayout extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($margin) || is_array($margin)) {
+        if (is_object($margin) || Utils::isAssociativeArray($margin)) {
             Assert::isSdkObject($margin, Margin::class);
         } else {
             Assert::integer($margin);
         }
 
-        $this->margin = is_array($margin) ? new Margin($margin) : $margin;
+        $this->margin = Utils::isAssociativeArray($margin) ? new Margin($margin) : $margin;
         return $this;
     }
 
@@ -68,9 +69,7 @@ class AutoPlacementLayout extends BaseSdkObject
         $data = [];
         if (isset($this->margin)) {
             $data['margin'] =
-                $this->margin instanceof Arrayable
-                    ? $this->margin->toArray()
-                    : $this->margin;
+                $this->margin instanceof Arrayable ? $this->margin->toArray() : $this->margin;
         }
         return $data;
     }

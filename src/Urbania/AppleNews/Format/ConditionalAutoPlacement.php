@@ -5,19 +5,20 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for defining conditional properties for an automatically
  * placed component, and when the conditional properties are in effect.
  *
- * @see https://developer.apple.com/documentation/apple_news/conditionalautoplacement
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/conditionalautoplacement.json
  */
 class ConditionalAutoPlacement extends BaseSdkObject
 {
     /**
-     * An array of conditions that, when met, cause the conditional automatic
-     * placement properties to be in effect.
-     * @var Format\Condition[]
+     * An instance or array of conditions that, when met, cause the
+     * conditional automatic placement properties to take effect.
+     * @var Format\Condition[]|\Urbania\AppleNews\Format\Condition
      */
     protected $conditions;
 
@@ -50,37 +51,8 @@ class ConditionalAutoPlacement extends BaseSdkObject
     }
 
     /**
-     * Add an item to conditions
-     * @param \Urbania\AppleNews\Format\Condition|array $item
-     * @return $this
-     */
-    public function addCondition($item)
-    {
-        return $this->setConditions(
-            !is_null($this->conditions)
-                ? array_merge($this->conditions, [$item])
-                : [$item]
-        );
-    }
-
-    /**
-     * Add items to conditions
-     * @param array $items
-     * @return $this
-     */
-    public function addConditions($items)
-    {
-        Assert::isArray($items);
-        return $this->setConditions(
-            !is_null($this->conditions)
-                ? array_merge($this->conditions, $items)
-                : $items
-        );
-    }
-
-    /**
      * Get the conditions
-     * @return Format\Condition[]
+     * @return Format\Condition[]|\Urbania\AppleNews\Format\Condition
      */
     public function getConditions()
     {
@@ -89,23 +61,21 @@ class ConditionalAutoPlacement extends BaseSdkObject
 
     /**
      * Set the conditions
-     * @param Format\Condition[] $conditions
+     * @param Format\Condition[]|\Urbania\AppleNews\Format\Condition|array $conditions
      * @return $this
      */
     public function setConditions($conditions)
     {
-        Assert::isArray($conditions);
-        Assert::allIsSdkObject($conditions, Condition::class);
+        if (is_object($conditions) || Utils::isAssociativeArray($conditions)) {
+            Assert::isSdkObject($conditions, Condition::class);
+        } else {
+            Assert::isArray($conditions);
+            Assert::allIsSdkObject($conditions, Condition::class);
+        }
 
-        $this->conditions = array_reduce(
-            array_keys($conditions),
-            function ($array, $key) use ($conditions) {
-                $item = $conditions[$key];
-                $array[$key] = is_array($item) ? new Condition($item) : $item;
-                return $array;
-            },
-            []
-        );
+        $this->conditions = Utils::isAssociativeArray($conditions)
+            ? new Condition($conditions)
+            : $conditions;
         return $this;
     }
 
@@ -159,7 +129,7 @@ class ConditionalAutoPlacement extends BaseSdkObject
 
         Assert::isSdkObject($layout, AutoPlacementLayout::class);
 
-        $this->layout = is_array($layout)
+        $this->layout = Utils::isAssociativeArray($layout)
             ? new AutoPlacementLayout($layout)
             : $layout;
         return $this;
@@ -173,28 +143,17 @@ class ConditionalAutoPlacement extends BaseSdkObject
     {
         $data = [];
         if (isset($this->conditions)) {
-            $data['conditions'] = !is_null($this->conditions)
-                ? array_reduce(
-                    array_keys($this->conditions),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->conditions[$key] instanceof Arrayable
-                                ? $this->conditions[$key]->toArray()
-                                : $this->conditions[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->conditions;
+            $data['conditions'] =
+                $this->conditions instanceof Arrayable
+                    ? $this->conditions->toArray()
+                    : $this->conditions;
         }
         if (isset($this->enabled)) {
             $data['enabled'] = $this->enabled;
         }
         if (isset($this->layout)) {
             $data['layout'] =
-                $this->layout instanceof Arrayable
-                    ? $this->layout->toArray()
-                    : $this->layout;
+                $this->layout instanceof Arrayable ? $this->layout->toArray() : $this->layout;
         }
         return $data;
     }

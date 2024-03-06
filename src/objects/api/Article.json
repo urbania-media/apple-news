@@ -1,18 +1,18 @@
 {
     "name": "Api\\Objects\\Article",
-    "description": "See the fields returned by the article endpoints.",
+    "description": "See the fields the article endpoints returned.",
     "version": "1.0.0+",
     "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/article",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/article.json",
     "properties": [
         {
             "name": "accessoryText",
             "type": "string",
             "required": false,
-            "description": "Text that appears alongside article headlines \u2014 author name, channel name, subtitle, and so on.",
+            "description": "Text that appears alongside article headlines \u2014 author name, channel name, subtitle, and so on. \nMaximum length: 100 characters.\nDefault value: metadata.authors from the Apple News Format article.",
             "typed": false
         },
         {
@@ -43,28 +43,35 @@
             "name": "isCandidateToBeFeatured",
             "type": "boolean",
             "required": false,
-            "description": "Indicates whether or not this article should be considered for featuring in News. See (To be Deleted) Submitting Articles with Cover Art for Featured Stories.",
+            "description": "A Boolean value that indicates whether this article should be considered for featuring in Apple News. \nDefault value: false",
             "typed": false
         },
         {
             "name": "isPreview",
             "type": "boolean",
             "required": false,
-            "description": "Indicates whether this article should be public (live) or should be a preview that is only visible to members of your channel. Set isPreview to false to publish the article right away and make it visible to all News users.",
+            "description": "A Boolean value that indicates whether this article should be public (live) or should be a preview that\u2019s only visible to members of your channel. Set isPreview to false to publish the article immediately and make it visible to all News users.\nIf your channel hasn\u2019t been approved to publish articles in Apple News Format, setting isPreview to false results in an ONLY_PREVIEW_ALLOWED error. \nDefault value: true if your channel hasn\u2019t yet been approved to publish articles in Apple News Format; false if your channel has been approved.",
             "typed": false
         },
         {
             "name": "isSponsored",
             "type": "boolean",
             "required": false,
-            "description": "Indicates whether this article consists of sponsored content for promotional purposes. Sponsored content must be marked as such; channels that do not follow this policy may be suspended.",
+            "description": "A Boolean value that indicates whether this article consists of sponsored content for promotional purposes. You must mark sponsored content as such; channels that don\u2019t follow this policy may be suspended.\nWhen using isSponsored, if you don\u2019t want the sponsored article to appear in your channel\u2019s feed, set sections to [] (an empty array).\nDefault value: false",
+            "typed": false
+        },
+        {
+            "name": "links",
+            "type": "Api\\Objects\\ArticleLinksResponse",
+            "required": false,
+            "description": "The URL of the channel in which the article appears.",
             "typed": false
         },
         {
             "name": "maturityRating",
             "type": "enum:string",
             "required": false,
-            "description": "Indicates the viewing audience for the content. The types of audiences or ratings are KIDS, MATURE, and GENERAL or null if unspecified. Note that a MATURE rating indicates explicit content that is only appropriate for a specific audience.",
+            "description": "A string value that indicates the viewing audience for the content. The types of audiences or ratings are KIDS, MATURE, and GENERAL, or null if unspecified. A MATURE rating indicates explicit content that\u2019s only appropriate for a specific audience.\nDefault value: null",
             "enum_values": [
                 "KIDS",
                 "MATURE",
@@ -83,28 +90,29 @@
             "name": "revision",
             "type": "string",
             "required": false,
-            "description": "The current revision token for the article.",
+            "description": "The current revision token for the article. \nYou must send the latest revision when issuing a request to . \nThe value of this field must match the latest revision from an earlier Create, Read, or Update Article call. This field prevents multiple users from updating an article simultaneously, which results in data loss.\nRequired: Yes",
             "typed": false
         },
         {
             "name": "shareUrl",
             "type": "string",
             "required": false,
-            "description": "The URL to the article within the News app. The shareUrl field applies only on devices with iOS 9 installed.",
+            "description": "The URL to the article within the News app.",
             "typed": false
         },
         {
             "name": "state",
             "type": "enum:string",
             "required": false,
-            "description": "The current state of the article which can be one of the following:",
+            "description": "The current state of the article, which can be one of the following:",
             "enum_values": [
                 "PROCESSING",
                 "LIVE",
                 "PROCESSING_UPDATE",
                 "TAKEN_DOWN",
                 "FAILED_PROCESSING",
-                "FAILED_PROCESSING_UPDATE"
+                "FAILED_PROCESSING_UPDATE",
+                "DUPLICATE"
             ],
             "typed": false
         },
@@ -119,20 +127,14 @@
             "name": "type",
             "type": "string",
             "required": false,
-            "description": "Article",
+            "description": "The article.",
             "typed": false
         },
         {
             "name": "warnings",
             "type": "array:Api\\Objects\\Warning",
             "required": false,
-            "description": "A list of warning messages indicating problems with the article that are not fatal.",
-            "typed": false
-        },
-        {
-            "name": "links",
-            "type": "Api\\Objects\\ArticleLinks",
-            "required": false,
+            "description": "A list of warning messages indicating nonfatal problems with the article.",
             "typed": false
         }
     ]

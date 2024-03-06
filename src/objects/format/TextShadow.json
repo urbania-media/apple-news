@@ -1,44 +1,44 @@
 {
-    "name": "Format\\Shadow",
-    "description": "The object for creating a text shadow.",
-    "version": "1.7+",
+    "name": "Format\\TextShadow",
+    "description": "The object for creating a text shadow. ",
+    "version": "1.10.0+",
     "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/shadow",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/textshadow.json",
     "properties": [
         {
             "name": "color",
             "type": "Color",
             "required": true,
-            "description": "The stroke color.",
+            "description": "The text shadow color.",
             "typed": false
         },
         {
             "name": "radius",
             "type": "number",
             "required": true,
-            "description": "The shadow\u2019s radius as a value between 0 and 100 in points.",
-            "minimum": 0,
-            "maximum": 100,
+            "description": "The shadow\u2019s radius as a value, in points, between  and 100.",
+            "maximum": "100",
+            "minimum": "0",
             "typed": false
         },
         {
             "name": "offset",
-            "type": "Format\\Offset",
+            "type": "Format\\TextShadowOffset",
             "required": false,
             "description": "The shadow\u2019s offset.",
             "typed": false
         },
         {
             "name": "opacity",
-            "type": "number",
+            "type": "float",
             "required": false,
-            "description": "The opacity of the shadow as a value between 0 and 1.",
+            "description": "The opacity of the shadow as a value between  and 1.",
             "default": 1,
-            "minimum": 0,
             "maximum": 1,
+            "minimum": 0,
             "typed": false
         }
     ]

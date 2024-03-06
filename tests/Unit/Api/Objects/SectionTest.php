@@ -53,7 +53,7 @@ class SectionTest extends TestCase
      */
     public static function idProvider()
     {
-        return [["9d6a4ac0-607e-11e9-a492-f45c899bcb9d"]];
+        return [['5a07f304-dbd5-11ee-9d8e-ca53fbc83398']];
     }
 
     /**
@@ -122,7 +122,7 @@ class SectionTest extends TestCase
      */
     public static function nameProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -145,7 +145,7 @@ class SectionTest extends TestCase
      */
     public static function shareUrlProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -168,6 +168,6 @@ class SectionTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 }

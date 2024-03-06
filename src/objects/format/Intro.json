@@ -6,7 +6,7 @@
     "from_class": null,
     "extends": "Format\\Text",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/intro",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/intro.json",
     "properties": [
         {
             "name": "role",
@@ -21,14 +21,14 @@
             "name": "text",
             "type": "string",
             "required": true,
-            "description": "The text to display in the article, including any formatting tags depending on the format property.",
+            "description": "The text to display in the article, including any formatting tags depending on the format property. \nYou can also use a subset of HTML tags or Markdown syntax by setting format to html or markdown, respectively. See . Alternatively, you can style ranges of text individually using the  object.",
             "typed": false
         },
         {
             "name": "additions",
             "type": "array:Format\\Addition",
             "required": false,
-            "description": "An array of all the additions that should be applied to ranges of the component's text.",
+            "description": "An array of all the additions that should be applied to ranges of the component's text.\nAdditions are ignored when format is set to html or markdown.",
             "typed": false
         },
         {
@@ -40,30 +40,39 @@
         },
         {
             "name": "animation",
-            "type": "Format\\ComponentAnimation",
+            "type": [
+                "Format\\ComponentAnimation",
+                "none"
+            ],
             "required": false,
-            "description": "An object that defines an animation to be applied to the component.",
+            "description": "An object that defines an animation to be applied to the component.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": true
         },
         {
             "name": "behavior",
-            "type": "Format\\Behavior",
+            "type": [
+                "Format\\Behavior",
+                "none"
+            ],
             "required": false,
-            "description": "An object that defines behavior for a component, like Parallax or Springy.",
+            "description": "An object that defines behavior for a component, like  or .\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": true
         },
         {
             "name": "conditional",
-            "type": "array:Format\\ConditionalText",
+            "type": [
+                "Format\\ConditionalText",
+                "array:Format\\ConditionalText"
+            ],
             "required": false,
-            "description": "An array of text components that can be applied conditionally, and the conditions that cause them to be applied.",
+            "description": "An instance or array of text components that can be applied conditionally, and the conditions that cause them to be applied.",
             "typed": false
         },
         {
             "name": "format",
             "type": "enum:string",
             "required": false,
-            "description": "The formatting or markup method applied to the text.",
+            "description": "The formatting or markup method applied to the text. \nIf format is set to html or markdown, neither Additions nor InlineTextStyles are supported.",
             "default": "none",
             "enum_values": [
                 "markdown",
@@ -77,7 +86,7 @@
             "type": "boolean",
             "required": false,
             "description": "A Boolean value that determines whether the component is hidden.",
-            "default": "false",
+            "default": true,
             "typed": false
         },
         {
@@ -89,9 +98,12 @@
         },
         {
             "name": "inlineTextStyles",
-            "type": "array:Format\\InlineTextStyle",
+            "type": [
+                "array:Format\\InlineTextStyle",
+                "none"
+            ],
             "required": false,
-            "description": "An array of InlineTextStyle objects that you can use to apply different text styles to ranges of text. For each InlineTextStyle, you should supply a rangeStart, a rangeLength, and either a TextStyle object or the identifier of a TextStyle that is defined at the top level of the document.",
+            "description": "An array of InlineTextStyle objects that you can use to apply different text styles to ranges of text. For each InlineTextStyle, you should supply a rangeStart, a rangeLength, and either a TextStyle object or the identifier of a TextStyle that is defined at the top level of the document.\nInline text styles are ignored when format is set to markdown or html.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {
@@ -101,17 +113,18 @@
                 "string"
             ],
             "required": false,
-            "description": "An inline ComponentLayout object that contains layout information, or a string reference to a ComponentLayout object that is defined at the top level of the document.",
+            "description": "An inline ComponentLayout object that contains layout information, or a string reference to a ComponentLayout object that is defined at the top level of the document. \nIf layout is not defined, size and position are based on various factors, such as the device type, the length of the content, and the role of this component.",
             "typed": false
         },
         {
             "name": "style",
             "type": [
                 "Format\\ComponentStyle",
-                "string"
+                "string",
+                "none"
             ],
             "required": false,
-            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle object that is defined at the top level of the document.",
+            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle object that is defined at the top level of the document.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {

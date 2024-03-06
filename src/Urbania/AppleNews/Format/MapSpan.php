@@ -5,12 +5,13 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * An object used in a map or place component for defining the visible
  * area of the map.
  *
- * @see https://developer.apple.com/documentation/apple_news/mapspan
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/mapspan.json
  */
 class MapSpan extends BaseSdkObject
 {

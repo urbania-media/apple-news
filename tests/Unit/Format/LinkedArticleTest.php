@@ -30,7 +30,7 @@ class LinkedArticleTest extends TestCase
      */
     public static function relationshipProvider()
     {
-        return [["related"], ["promoted"]];
+        return [['related'], ['promoted']];
     }
 
     /**
@@ -53,6 +53,6 @@ class LinkedArticleTest extends TestCase
      */
     public static function URLProvider()
     {
-        return [["http://example.com"], ["https://example.com"]];
+        return [['http://example.com'], ['https://example.com']];
     }
 }

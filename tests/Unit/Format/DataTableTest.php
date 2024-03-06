@@ -51,7 +51,7 @@ class DataTableTest extends TestCase
      */
     public static function roleProvider()
     {
-        return [["datatable"]];
+        return [['datatable']];
     }
 
     /**
@@ -97,7 +97,7 @@ class DataTableTest extends TestCase
      */
     public static function animationProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentAnimation()]];
+        return [[new \Urbania\AppleNews\Format\ComponentAnimation()], ['none']];
     }
 
     /**
@@ -120,7 +120,7 @@ class DataTableTest extends TestCase
      */
     public static function behaviorProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Behavior()]];
+        return [[new \Urbania\AppleNews\Format\Behavior()], ['none']];
     }
 
     /**
@@ -143,7 +143,10 @@ class DataTableTest extends TestCase
      */
     public static function conditionalProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\ConditionalComponent()]]];
+        return [
+            [new \Urbania\AppleNews\Format\ConditionalComponent()],
+            [[new \Urbania\AppleNews\Format\ConditionalComponent()]],
+        ];
     }
 
     /**
@@ -166,7 +169,7 @@ class DataTableTest extends TestCase
      */
     public static function dataOrientationProvider()
     {
-        return [["horizontal"], ["vertical"]];
+        return [['horizontal'], ['vertical']];
     }
 
     /**
@@ -212,7 +215,7 @@ class DataTableTest extends TestCase
      */
     public static function identifierProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -235,10 +238,7 @@ class DataTableTest extends TestCase
      */
     public static function layoutProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\ComponentLayout()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\ComponentLayout()], ['a string']];
     }
 
     /**
@@ -307,6 +307,6 @@ class DataTableTest extends TestCase
      */
     public static function styleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
+        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ['a string'], ['none']];
     }
 }

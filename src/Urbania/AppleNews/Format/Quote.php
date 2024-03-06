@@ -5,11 +5,12 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The component for including a quote.
  *
- * @see https://developer.apple.com/documentation/apple_news/quote
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/quote.json
  */
 class Quote extends Text
 {
@@ -22,6 +23,9 @@ class Quote extends Text
     /**
      * The text to display in the article, including any formatting tags
      * depending on the format property.
+     * You can also use a subset of HTML tags or Markdown syntax by setting
+     * format to html or markdown, respectively. See . Alternatively, you can
+     * style ranges of text individually using the  object.
      * @var string
      */
     protected $text;
@@ -29,6 +33,7 @@ class Quote extends Text
     /**
      * An array of all the additions that should be applied to ranges of the
      * component's text.
+     * Additions are ignored when format is set to html or markdown.
      * @var Format\Addition[]
      */
     protected $additions;
@@ -41,26 +46,31 @@ class Quote extends Text
 
     /**
      * An object that defines an animation to be applied to the component.
-     * @var \Urbania\AppleNews\Format\ComponentAnimation
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\ComponentAnimation|none
      */
     protected $animation;
 
     /**
-     * An object that defines behavior for a component, like Parallax or
-     * Springy.
-     * @var \Urbania\AppleNews\Format\Behavior
+     * An object that defines behavior for a component, like  or .
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\Behavior|none
      */
     protected $behavior;
 
     /**
-     * An array of text components that can be applied conditionally and the
-     * conditions that cause them to be applied.
-     * @var Format\ConditionalText[]
+     * An instance or array of text components that can be applied
+     * conditionally and the conditions that cause them to be applied.
+     * @var Format\ConditionalText[]|\Urbania\AppleNews\Format\ConditionalText
      */
     protected $conditional;
 
     /**
      * The formatting or markup method applied to the text.
+     * If format is set to html or markdown, neither Additions nor
+     * InlineTextStyles are supported.
      * @var string
      */
     protected $format;
@@ -86,7 +96,10 @@ class Quote extends Text
      * should supply a rangeStart, rangeLength, and either a TextStyle object
      * or the identifier of a TextStyle that is defined at the top level of
      * the document.
-     * @var Format\InlineTextStyle[]
+     * Inline text styles are ignored when format is set to markdown or html.
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var Format\InlineTextStyle[]|none
      */
     protected $inlineTextStyles;
 
@@ -94,6 +107,9 @@ class Quote extends Text
      * An inline ComponentLayout object that contains layout information, or
      * a string reference to a ComponentLayout object that is defined at the
      * top level of the document.
+     * If layout is not defined, size and position are based on various
+     * factors, such as the device type, the length of the content, and the
+     * role of this component.
      * @var \Urbania\AppleNews\Format\ComponentLayout|string
      */
     protected $layout;
@@ -102,7 +118,9 @@ class Quote extends Text
      * An inline ComponentStyle object that defines the appearance of this
      * component, or a string reference to a ComponentStyle object that is
      * defined at the top level of the document.
-     * @var \Urbania\AppleNews\Format\ComponentStyle|string
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\ComponentStyle|string|none
      */
     protected $style;
 
@@ -179,9 +197,7 @@ class Quote extends Text
     public function addAddition($item)
     {
         return $this->setAdditions(
-            !is_null($this->additions)
-                ? array_merge($this->additions, [$item])
-                : [$item]
+            !is_null($this->additions) ? array_merge($this->additions, [$item]) : [$item]
         );
     }
 
@@ -194,9 +210,7 @@ class Quote extends Text
     {
         Assert::isArray($items);
         return $this->setAdditions(
-            !is_null($this->additions)
-                ? array_merge($this->additions, $items)
-                : $items
+            !is_null($this->additions) ? array_merge($this->additions, $items) : $items
         );
     }
 
@@ -224,15 +238,17 @@ class Quote extends Text
         Assert::isArray($additions);
         Assert::allIsSdkObject($additions, Addition::class);
 
-        $this->additions = array_reduce(
-            array_keys($additions),
-            function ($array, $key) use ($additions) {
-                $item = $additions[$key];
-                $array[$key] = is_array($item) ? new Addition($item) : $item;
-                return $array;
-            },
-            []
-        );
+        $this->additions = is_array($additions)
+            ? array_reduce(
+                array_keys($additions),
+                function ($array, $key) use ($additions) {
+                    $item = $additions[$key];
+                    $array[$key] = Utils::isAssociativeArray($item) ? new Addition($item) : $item;
+                    return $array;
+                },
+                []
+            )
+            : $additions;
         return $this;
     }
 
@@ -259,13 +275,13 @@ class Quote extends Text
 
         Assert::isSdkObject($anchor, Anchor::class);
 
-        $this->anchor = is_array($anchor) ? new Anchor($anchor) : $anchor;
+        $this->anchor = Utils::isAssociativeArray($anchor) ? new Anchor($anchor) : $anchor;
         return $this;
     }
 
     /**
      * Get the animation
-     * @return \Urbania\AppleNews\Format\ComponentAnimation
+     * @return \Urbania\AppleNews\Format\ComponentAnimation|none
      */
     public function getAnimation()
     {
@@ -274,7 +290,7 @@ class Quote extends Text
 
     /**
      * Set the animation
-     * @param \Urbania\AppleNews\Format\ComponentAnimation|array $animation
+     * @param \Urbania\AppleNews\Format\ComponentAnimation|array|none $animation
      * @return $this
      */
     public function setAnimation($animation)
@@ -284,9 +300,13 @@ class Quote extends Text
             return $this;
         }
 
-        Assert::isSdkObject($animation, ComponentAnimation::class);
+        if (is_object($animation) || Utils::isAssociativeArray($animation)) {
+            Assert::isSdkObject($animation, ComponentAnimation::class);
+        } else {
+            Assert::eq($animation, 'none');
+        }
 
-        $this->animation = is_array($animation)
+        $this->animation = Utils::isAssociativeArray($animation)
             ? ComponentAnimation::createTyped($animation)
             : $animation;
         return $this;
@@ -294,7 +314,7 @@ class Quote extends Text
 
     /**
      * Get the behavior
-     * @return \Urbania\AppleNews\Format\Behavior
+     * @return \Urbania\AppleNews\Format\Behavior|none
      */
     public function getBehavior()
     {
@@ -303,7 +323,7 @@ class Quote extends Text
 
     /**
      * Set the behavior
-     * @param \Urbania\AppleNews\Format\Behavior|array $behavior
+     * @param \Urbania\AppleNews\Format\Behavior|array|none $behavior
      * @return $this
      */
     public function setBehavior($behavior)
@@ -313,31 +333,21 @@ class Quote extends Text
             return $this;
         }
 
-        Assert::isSdkObject($behavior, Behavior::class);
+        if (is_object($behavior) || Utils::isAssociativeArray($behavior)) {
+            Assert::isSdkObject($behavior, Behavior::class);
+        } else {
+            Assert::eq($behavior, 'none');
+        }
 
-        $this->behavior = is_array($behavior)
+        $this->behavior = Utils::isAssociativeArray($behavior)
             ? Behavior::createTyped($behavior)
             : $behavior;
         return $this;
     }
 
     /**
-     * Add an item to conditional
-     * @param \Urbania\AppleNews\Format\ConditionalText|array $item
-     * @return $this
-     */
-    public function addConditional($item)
-    {
-        return $this->setConditional(
-            !is_null($this->conditional)
-                ? array_merge($this->conditional, [$item])
-                : [$item]
-        );
-    }
-
-    /**
      * Get the conditional
-     * @return Format\ConditionalText[]
+     * @return Format\ConditionalText[]|\Urbania\AppleNews\Format\ConditionalText
      */
     public function getConditional()
     {
@@ -346,7 +356,7 @@ class Quote extends Text
 
     /**
      * Set the conditional
-     * @param Format\ConditionalText[] $conditional
+     * @param Format\ConditionalText[]|\Urbania\AppleNews\Format\ConditionalText|array $conditional
      * @return $this
      */
     public function setConditional($conditional)
@@ -356,20 +366,16 @@ class Quote extends Text
             return $this;
         }
 
-        Assert::isArray($conditional);
-        Assert::allIsSdkObject($conditional, ConditionalText::class);
+        if (is_object($conditional) || Utils::isAssociativeArray($conditional)) {
+            Assert::isSdkObject($conditional, ConditionalText::class);
+        } else {
+            Assert::isArray($conditional);
+            Assert::allIsSdkObject($conditional, ConditionalText::class);
+        }
 
-        $this->conditional = array_reduce(
-            array_keys($conditional),
-            function ($array, $key) use ($conditional) {
-                $item = $conditional[$key];
-                $array[$key] = is_array($item)
-                    ? new ConditionalText($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->conditional = Utils::isAssociativeArray($conditional)
+            ? new ConditionalText($conditional)
+            : $conditional;
         return $this;
     }
 
@@ -394,7 +400,7 @@ class Quote extends Text
             return $this;
         }
 
-        Assert::oneOf($format, ["markdown", "html", "none"]);
+        Assert::oneOf($format, ['markdown', 'html', 'none']);
 
         $this->format = $format;
         return $this;
@@ -455,37 +461,8 @@ class Quote extends Text
     }
 
     /**
-     * Add an item to inlineTextStyles
-     * @param \Urbania\AppleNews\Format\InlineTextStyle|array $item
-     * @return $this
-     */
-    public function addInlineTextStyle($item)
-    {
-        return $this->setInlineTextStyles(
-            !is_null($this->inlineTextStyles)
-                ? array_merge($this->inlineTextStyles, [$item])
-                : [$item]
-        );
-    }
-
-    /**
-     * Add items to inlineTextStyles
-     * @param array $items
-     * @return $this
-     */
-    public function addInlineTextStyles($items)
-    {
-        Assert::isArray($items);
-        return $this->setInlineTextStyles(
-            !is_null($this->inlineTextStyles)
-                ? array_merge($this->inlineTextStyles, $items)
-                : $items
-        );
-    }
-
-    /**
      * Get the inlineTextStyles
-     * @return Format\InlineTextStyle[]
+     * @return Format\InlineTextStyle[]|none
      */
     public function getInlineTextStyles()
     {
@@ -494,7 +471,7 @@ class Quote extends Text
 
     /**
      * Set the inlineTextStyles
-     * @param Format\InlineTextStyle[] $inlineTextStyles
+     * @param Format\InlineTextStyle[]|none $inlineTextStyles
      * @return $this
      */
     public function setInlineTextStyles($inlineTextStyles)
@@ -504,20 +481,26 @@ class Quote extends Text
             return $this;
         }
 
-        Assert::isArray($inlineTextStyles);
-        Assert::allIsSdkObject($inlineTextStyles, InlineTextStyle::class);
+        if (is_array($inlineTextStyles)) {
+            Assert::isArray($inlineTextStyles);
+            Assert::allIsSdkObject($inlineTextStyles, InlineTextStyle::class);
+        } else {
+            Assert::eq($inlineTextStyles, 'none');
+        }
 
-        $this->inlineTextStyles = array_reduce(
-            array_keys($inlineTextStyles),
-            function ($array, $key) use ($inlineTextStyles) {
-                $item = $inlineTextStyles[$key];
-                $array[$key] = is_array($item)
-                    ? new InlineTextStyle($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->inlineTextStyles = is_array($inlineTextStyles)
+            ? array_reduce(
+                array_keys($inlineTextStyles),
+                function ($array, $key) use ($inlineTextStyles) {
+                    $item = $inlineTextStyles[$key];
+                    $array[$key] = Utils::isAssociativeArray($item)
+                        ? new InlineTextStyle($item)
+                        : $item;
+                    return $array;
+                },
+                []
+            )
+            : $inlineTextStyles;
         return $this;
     }
 
@@ -542,15 +525,13 @@ class Quote extends Text
             return $this;
         }
 
-        if (is_object($layout) || is_array($layout)) {
+        if (is_object($layout) || Utils::isAssociativeArray($layout)) {
             Assert::isSdkObject($layout, ComponentLayout::class);
         } else {
             Assert::string($layout);
         }
 
-        $this->layout = is_array($layout)
-            ? new ComponentLayout($layout)
-            : $layout;
+        $this->layout = Utils::isAssociativeArray($layout) ? new ComponentLayout($layout) : $layout;
         return $this;
     }
 
@@ -565,7 +546,7 @@ class Quote extends Text
 
     /**
      * Get the style
-     * @return \Urbania\AppleNews\Format\ComponentStyle|string
+     * @return \Urbania\AppleNews\Format\ComponentStyle|string|none
      */
     public function getStyle()
     {
@@ -574,7 +555,7 @@ class Quote extends Text
 
     /**
      * Set the style
-     * @param \Urbania\AppleNews\Format\ComponentStyle|array|string $style
+     * @param \Urbania\AppleNews\Format\ComponentStyle|array|string|none $style
      * @return $this
      */
     public function setStyle($style)
@@ -584,13 +565,13 @@ class Quote extends Text
             return $this;
         }
 
-        if (is_object($style) || is_array($style)) {
+        if (is_object($style) || Utils::isAssociativeArray($style)) {
             Assert::isSdkObject($style, ComponentStyle::class);
         } else {
             Assert::string($style);
         }
 
-        $this->style = is_array($style) ? new ComponentStyle($style) : $style;
+        $this->style = Utils::isAssociativeArray($style) ? new ComponentStyle($style) : $style;
         return $this;
     }
 
@@ -637,13 +618,13 @@ class Quote extends Text
             return $this;
         }
 
-        if (is_object($textStyle) || is_array($textStyle)) {
+        if (is_object($textStyle) || Utils::isAssociativeArray($textStyle)) {
             Assert::isSdkObject($textStyle, ComponentTextStyle::class);
         } else {
             Assert::string($textStyle);
         }
 
-        $this->textStyle = is_array($textStyle)
+        $this->textStyle = Utils::isAssociativeArray($textStyle)
             ? new ComponentTextStyle($textStyle)
             : $textStyle;
         return $this;
@@ -679,9 +660,7 @@ class Quote extends Text
         }
         if (isset($this->anchor)) {
             $data['anchor'] =
-                $this->anchor instanceof Arrayable
-                    ? $this->anchor->toArray()
-                    : $this->anchor;
+                $this->anchor instanceof Arrayable ? $this->anchor->toArray() : $this->anchor;
         }
         if (isset($this->animation)) {
             $data['animation'] =
@@ -691,24 +670,13 @@ class Quote extends Text
         }
         if (isset($this->behavior)) {
             $data['behavior'] =
-                $this->behavior instanceof Arrayable
-                    ? $this->behavior->toArray()
-                    : $this->behavior;
+                $this->behavior instanceof Arrayable ? $this->behavior->toArray() : $this->behavior;
         }
         if (isset($this->conditional)) {
-            $data['conditional'] = !is_null($this->conditional)
-                ? array_reduce(
-                    array_keys($this->conditional),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->conditional[$key] instanceof Arrayable
-                                ? $this->conditional[$key]->toArray()
-                                : $this->conditional[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->conditional;
+            $data['conditional'] =
+                $this->conditional instanceof Arrayable
+                    ? $this->conditional->toArray()
+                    : $this->conditional;
         }
         if (isset($this->format)) {
             $data['format'] = $this->format;
@@ -720,31 +688,15 @@ class Quote extends Text
             $data['identifier'] = $this->identifier;
         }
         if (isset($this->inlineTextStyles)) {
-            $data['inlineTextStyles'] = !is_null($this->inlineTextStyles)
-                ? array_reduce(
-                    array_keys($this->inlineTextStyles),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->inlineTextStyles[$key] instanceof Arrayable
-                                ? $this->inlineTextStyles[$key]->toArray()
-                                : $this->inlineTextStyles[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->inlineTextStyles;
+            $data['inlineTextStyles'] = $this->inlineTextStyles;
         }
         if (isset($this->layout)) {
             $data['layout'] =
-                $this->layout instanceof Arrayable
-                    ? $this->layout->toArray()
-                    : $this->layout;
+                $this->layout instanceof Arrayable ? $this->layout->toArray() : $this->layout;
         }
         if (isset($this->style)) {
             $data['style'] =
-                $this->style instanceof Arrayable
-                    ? $this->style->toArray()
-                    : $this->style;
+                $this->style instanceof Arrayable ? $this->style->toArray() : $this->style;
         }
         if (isset($this->textStyle)) {
             $data['textStyle'] =

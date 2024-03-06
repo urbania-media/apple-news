@@ -5,22 +5,22 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for adding an image background fill to a component.
  *
- * @see https://developer.apple.com/documentation/apple_news/imagefill
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/imagefill.json
  */
 class ImageFill extends Fill
 {
     /**
-     * Always image for this object.
-     * @var string
-     */
-    protected $type = 'image';
-
-    /**
      * The URL of the image file to use for filling the component.
+     * Image URLs can begin with http://, https://, or bundle://. If the
+     * image URL begins with bundle://, the referenced image file must be in
+     * the same directory as the document.
+     * Image filenames should be properly encoded as URLs
+     * See .
      * @var string
      */
     protected $URL;
@@ -28,26 +28,48 @@ class ImageFill extends Fill
     /**
      * A string that indicates how the fill should behave when a user
      * scrolls.
+     * Valid values:
      * @var string
      */
     protected $attachment;
 
     /**
-     * A string that indicates how the image fill should be displayed.
+     * Indicates how the image fill should be displayed.
+     * Valid values:
      * @var string
      */
     protected $fillMode;
 
     /**
-     * A string that sets the horizontal alignment of the image fill within
-     * its component. Valid values:
+     * Sets the horizontal alignment of the image fill within its component.
+     * Valid values:
+     * You can use fillMode with horizontalAlignment to achieve the effect
+     * you want. For example, set fillMode to fit and horizontalAlignment to
+     * left to fit the image based on its aspect ratio and also align the
+     * left edge of the fill with the left edge of the component. Or set
+     * fillMode to cover and horizontalAlignment to right to scale the image
+     * horizontally and also align the right edge of the fill with the right
+     * edge of the component.
      * @var string
      */
     protected $horizontalAlignment;
 
     /**
-     * A string that sets the vertical alignment of the image fill within its
-     * component. Valid values:
+     * The type of fill to apply. This property should always be set to
+     * image.
+     * @var string
+     */
+    protected $type = 'image';
+
+    /**
+     * Sets the vertical alignment of the image fill within its component.
+     * Valid values:
+     * You can use fillMode with verticalAlignment to achieve the effect you
+     * want. For example, set fillMode to fit and verticalAlignment to top to
+     * fit the image based on its aspect ratio and also align the top of the
+     * fill with the top edge of the component. Or set fillMode to cover and
+     * verticalAlignment to top to scale the image vertically and also align
+     * the top of the fill with the top edge of the component.
      * @var string
      */
     protected $verticalAlignment;
@@ -98,7 +120,7 @@ class ImageFill extends Fill
             return $this;
         }
 
-        Assert::oneOf($attachment, ["fixed", "scroll"]);
+        Assert::oneOf($attachment, ['fixed', 'scroll']);
 
         $this->attachment = $attachment;
         return $this;
@@ -125,7 +147,7 @@ class ImageFill extends Fill
             return $this;
         }
 
-        Assert::oneOf($fillMode, ["fit", "cover"]);
+        Assert::oneOf($fillMode, ['fit', 'cover']);
 
         $this->fillMode = $fillMode;
         return $this;
@@ -152,7 +174,7 @@ class ImageFill extends Fill
             return $this;
         }
 
-        Assert::oneOf($horizontalAlignment, ["left", "center", "right"]);
+        Assert::oneOf($horizontalAlignment, ['left', 'center', 'right']);
 
         $this->horizontalAlignment = $horizontalAlignment;
         return $this;
@@ -210,7 +232,7 @@ class ImageFill extends Fill
             return $this;
         }
 
-        Assert::oneOf($verticalAlignment, ["top", "center", "bottom"]);
+        Assert::oneOf($verticalAlignment, ['top', 'center', 'bottom']);
 
         $this->verticalAlignment = $verticalAlignment;
         return $this;
@@ -223,9 +245,6 @@ class ImageFill extends Fill
     public function toArray()
     {
         $data = parent::toArray();
-        if (isset($this->type)) {
-            $data['type'] = $this->type;
-        }
         if (isset($this->URL)) {
             $data['URL'] = $this->URL;
         }
@@ -237,6 +256,9 @@ class ImageFill extends Fill
         }
         if (isset($this->horizontalAlignment)) {
             $data['horizontalAlignment'] = $this->horizontalAlignment;
+        }
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
         }
         if (isset($this->verticalAlignment)) {
             $data['verticalAlignment'] = $this->verticalAlignment;

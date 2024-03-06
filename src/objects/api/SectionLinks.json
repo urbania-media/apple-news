@@ -1,12 +1,12 @@
 {
     "name": "Api\\Objects\\SectionLinks",
-    "description": "See the links returned by the section endpoints.",
+    "description": "See the links the section endpoints returned.",
     "version": "1.0.0+",
     "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/sectionlinks",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/sectionlinks.json",
     "properties": [
         {
             "name": "channel",
@@ -19,7 +19,7 @@
             "name": "self",
             "type": "string",
             "required": false,
-            "description": "The URL at which this resource can be read.",
+            "description": "The URL at which you can read the article.",
             "typed": false
         }
     ]

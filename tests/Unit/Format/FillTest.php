@@ -30,12 +30,7 @@ class FillTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [
-            ["linear_gradient"],
-            ["image"],
-            ["repeatable_image"],
-            ["video"]
-        ];
+        return [['linear_gradient'], ['image'], ['repeatable_image'], ['video']];
     }
 
     /**
@@ -58,6 +53,6 @@ class FillTest extends TestCase
      */
     public static function attachmentProvider()
     {
-        return [["fixed"], ["scroll"]];
+        return [['fixed'], ['scroll']];
     }
 }

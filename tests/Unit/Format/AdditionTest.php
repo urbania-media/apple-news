@@ -30,7 +30,7 @@ class AdditionTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["a string"]];
+        return [['link'], ['calendar_event']];
     }
 
     /**

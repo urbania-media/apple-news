@@ -15,13 +15,13 @@
             "springy": "Springy"
         }
     },
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/behavior",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/behavior.json",
     "properties": [
         {
             "name": "type",
             "type": "enum:string",
             "required": true,
-            "description": "The type of behavior, for example, parallax.",
+            "description": "The type of behavior, for example, parallax for a Parallax behavior.",
             "enum_values": [
                 "background_motion",
                 "background_parallax",

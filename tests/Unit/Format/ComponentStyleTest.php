@@ -30,7 +30,10 @@ class ComponentStyleTest extends TestCase
      */
     public static function conditionalProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\ConditionalComponentStyle()]]];
+        return [
+            [new \Urbania\AppleNews\Format\ConditionalComponentStyle()],
+            [[new \Urbania\AppleNews\Format\ConditionalComponentStyle()]],
+        ];
     }
 
     /**
@@ -53,7 +56,7 @@ class ComponentStyleTest extends TestCase
      */
     public static function backgroundColorProvider()
     {
-        return [["#fff"], ["#000"]];
+        return [['#fff'], ['#000'], ['none']];
     }
 
     /**
@@ -76,7 +79,7 @@ class ComponentStyleTest extends TestCase
      */
     public static function borderProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Border()]];
+        return [[new \Urbania\AppleNews\Format\Border()], ['none']];
     }
 
     /**
@@ -99,7 +102,7 @@ class ComponentStyleTest extends TestCase
      */
     public static function fillProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Fill()]];
+        return [[new \Urbania\AppleNews\Format\Fill()], ['none']];
     }
 
     /**
@@ -122,7 +125,7 @@ class ComponentStyleTest extends TestCase
      */
     public static function maskProvider()
     {
-        return [[new \Urbania\AppleNews\Format\CornerMask()]];
+        return [[new \Urbania\AppleNews\Format\CornerMask()], ['none']];
     }
 
     /**
@@ -168,6 +171,29 @@ class ComponentStyleTest extends TestCase
      */
     public static function tableStyleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\TableStyle()]];
+        return [[new \Urbania\AppleNews\Format\TableStyle()], ['none']];
+    }
+
+    /**
+     * Test the property shadow
+     * @test
+     * @dataProvider shadowProvider
+     * @covers ::getShadow
+     * @covers ::setShadow
+     */
+    public function testPropertyShadow($value)
+    {
+        $object = new ComponentStyle();
+        $object->setShadow($value);
+
+        $this->assertEquals($value, $object->getShadow());
+    }
+
+    /**
+     * Data provider for property shadow
+     */
+    public static function shadowProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\ComponentShadow()]];
     }
 }

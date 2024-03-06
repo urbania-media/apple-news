@@ -6,26 +6,26 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/margin",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/margin.json",
     "properties": [
         {
             "name": "bottom",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The bottom margin in points, or with any of the units of measure for components. See Specifying Measurements for Components.",
+            "description": "The bottom margin in points, or with any of the units of measure for components. See .",
             "typed": false
         },
         {
             "name": "top",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The top margin in points, or with any of the units of measure for components. See Specifying Measurements for Components.",
+            "description": "The top margin in points, or with any of the units of measure for components. See .",
             "typed": false
         }
     ]

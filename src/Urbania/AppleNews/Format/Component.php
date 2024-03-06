@@ -5,11 +5,12 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * Properties shared by all component types.
  *
- * @see https://developer.apple.com/documentation/apple_news/component
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/component.json
  */
 class Component extends BaseSdkObject
 {
@@ -17,23 +18,15 @@ class Component extends BaseSdkObject
 
     protected static $types = [
         'audio' => 'Audio',
-        'divider' => 'Divider',
-        'banner_advertisement' => 'BannerAdvertisement',
-        'medium_rectangle_advertisement' => 'MediumRectangleAdvertisement',
-        'container' => 'Container',
+        'music' => 'Music',
+        'podcast' => 'Podcast',
         'video' => 'Video',
         'embedwebvideo' => 'EmbedWebVideo',
         'embedvideo' => 'EmbedWebVideo',
-        'music' => 'Music',
-        'aside' => 'Aside',
-        'section' => 'Section',
-        'header' => 'Header',
-        'spacer' => 'FlexibleSpacer',
-        'chapter' => 'Chapter',
-        'article_link' => 'ArticleLink',
-        'body' => 'Body',
+        'article_thumbnail' => 'ArticleThumbnail',
+        'text' => 'Text',
+        'author' => 'Author',
         'article_title' => 'ArticleTitle',
-        'pullquote' => 'PullQuote',
         'title' => 'Title',
         'heading' => 'Heading',
         'heading1' => 'Heading',
@@ -42,35 +35,56 @@ class Component extends BaseSdkObject
         'heading4' => 'Heading',
         'heading5' => 'Heading',
         'heading6' => 'Heading',
-        'intro' => 'Intro',
-        'caption' => 'Caption',
-        'photo' => 'Photo',
+        'body' => 'Body',
+        'image' => 'Image',
         'figure' => 'Figure',
+        'photo' => 'Photo',
         'portrait' => 'Portrait',
         'logo' => 'Logo',
-        'image' => 'Image',
-        'gallery' => 'Gallery',
-        'mosaic' => 'Mosaic',
-        'author' => 'Author',
+        'caption' => 'Caption',
         'byline' => 'Byline',
         'illustrator' => 'Illustrator',
         'photographer' => 'Photographer',
+        'intro' => 'Intro',
         'quote' => 'Quote',
-        'article_thumbnail' => 'ArticleThumbnail',
+        'pullquote' => 'PullQuote',
         'datatable' => 'DataTable',
         'htmltable' => 'HTMLTable',
+        'replica_advertisement' => 'ReplicaAdvertisement',
+        'gallery' => 'Gallery',
+        'mosaic' => 'Mosaic',
+        'divider' => 'Divider',
+        'container' => 'Container',
+        'aside' => 'Aside',
+        'chapter' => 'Chapter',
+        'section' => 'Section',
+        'article_link' => 'ArticleLink',
+        'spacer' => 'FlexibleSpacer',
+        'header' => 'Header',
+        'link_button' => 'LinkButton',
+        'banner_advertisement' => 'BannerAdvertisement',
+        'medium_rectangle_advertisement' => 'MediumRectangleAdvertisement',
+        'arkit' => 'ARKit',
         'map' => 'Map',
         'place' => 'Place',
-        'tweet' => 'Tweet',
-        'instagram' => 'Instagram',
         'facebook_post' => 'FacebookPost',
-        'arkit' => 'ARKit'
+        'instagram' => 'Instagram',
+        'tiktok' => 'TikTok',
+        'tweet' => 'Tweet',
     ];
 
     /**
      * The role of a component (for example, title, body, or pullquote)
      * conveys the semantic value of the content or its function within the
      * article.
+     * The value of the role property is simply the role name; it does not
+     * include the actual content that the role describes. For example, a
+     * role with the value pullquote would describe a text component whose
+     * value is the actual pull quote text.
+     * A role can have design significance: styling and layout can be derived
+     * from it. The role is also used by   and  to make Apple News content
+     * more accessible.
+     * For a list of valid component types, see .
      * @var string
      */
     protected $role;
@@ -83,21 +97,24 @@ class Component extends BaseSdkObject
 
     /**
      * An object that defines an animation to be applied to the component.
-     * @var \Urbania\AppleNews\Format\ComponentAnimation
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\ComponentAnimation|none
      */
     protected $animation;
 
     /**
-     * An object that defines behavior for a component, like Parallax or
-     * Springy.
-     * @var \Urbania\AppleNews\Format\Behavior
+     * An object that defines behavior for a component, like  or .
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\Behavior|none
      */
     protected $behavior;
 
     /**
-     * An array of component properties that can be applied conditionally,
-     * and the conditions that cause them to be applied.
-     * @var Format\ConditionalComponent[]
+     * An instance or array of component properties that can be applied
+     * conditionally, and the conditions that cause them to be applied.
+     * @var Format\ConditionalComponent[]|\Urbania\AppleNews\Format\ConditionalComponent
      */
     protected $conditional;
 
@@ -119,6 +136,9 @@ class Component extends BaseSdkObject
      * An inline ComponentLayout object that contains layout information, or
      * a string reference to a ComponentLayout that is defined at the top
      * level of the document.
+     * If layout is not defined, size and position are based on various
+     * factors, such as the device type, the length of the content, and the
+     * role of this component.
      * @var \Urbania\AppleNews\Format\ComponentLayout|string
      */
     protected $layout;
@@ -127,7 +147,9 @@ class Component extends BaseSdkObject
      * An inline ComponentStyle object that defines the appearance of this
      * component, or a string reference to a ComponentStyle that is defined
      * at the top level of the document.
-     * @var \Urbania\AppleNews\Format\ComponentStyle|string
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\ComponentStyle|string|none
      */
     protected $style;
 
@@ -174,14 +196,9 @@ class Component extends BaseSdkObject
     {
         if (isset($data[static::$typeProperty])) {
             $typeName = $data[static::$typeProperty];
-            $type = isset(static::$types[$typeName])
-                ? static::$types[$typeName]
-                : null;
+            $type = isset(static::$types[$typeName]) ? static::$types[$typeName] : null;
             if (!is_null($type)) {
-                $namespace = implode(
-                    '\\',
-                    array_slice(explode('\\', static::class), 0, -1)
-                );
+                $namespace = implode('\\', array_slice(explode('\\', static::class), 0, -1));
                 $typeClass = $namespace . '\\' . $type;
                 return new $typeClass($data);
             }
@@ -213,13 +230,13 @@ class Component extends BaseSdkObject
 
         Assert::isSdkObject($anchor, Anchor::class);
 
-        $this->anchor = is_array($anchor) ? new Anchor($anchor) : $anchor;
+        $this->anchor = Utils::isAssociativeArray($anchor) ? new Anchor($anchor) : $anchor;
         return $this;
     }
 
     /**
      * Get the animation
-     * @return \Urbania\AppleNews\Format\ComponentAnimation
+     * @return \Urbania\AppleNews\Format\ComponentAnimation|none
      */
     public function getAnimation()
     {
@@ -228,7 +245,7 @@ class Component extends BaseSdkObject
 
     /**
      * Set the animation
-     * @param \Urbania\AppleNews\Format\ComponentAnimation|array $animation
+     * @param \Urbania\AppleNews\Format\ComponentAnimation|array|none $animation
      * @return $this
      */
     public function setAnimation($animation)
@@ -238,9 +255,13 @@ class Component extends BaseSdkObject
             return $this;
         }
 
-        Assert::isSdkObject($animation, ComponentAnimation::class);
+        if (is_object($animation) || Utils::isAssociativeArray($animation)) {
+            Assert::isSdkObject($animation, ComponentAnimation::class);
+        } else {
+            Assert::eq($animation, 'none');
+        }
 
-        $this->animation = is_array($animation)
+        $this->animation = Utils::isAssociativeArray($animation)
             ? ComponentAnimation::createTyped($animation)
             : $animation;
         return $this;
@@ -248,7 +269,7 @@ class Component extends BaseSdkObject
 
     /**
      * Get the behavior
-     * @return \Urbania\AppleNews\Format\Behavior
+     * @return \Urbania\AppleNews\Format\Behavior|none
      */
     public function getBehavior()
     {
@@ -257,7 +278,7 @@ class Component extends BaseSdkObject
 
     /**
      * Set the behavior
-     * @param \Urbania\AppleNews\Format\Behavior|array $behavior
+     * @param \Urbania\AppleNews\Format\Behavior|array|none $behavior
      * @return $this
      */
     public function setBehavior($behavior)
@@ -267,31 +288,21 @@ class Component extends BaseSdkObject
             return $this;
         }
 
-        Assert::isSdkObject($behavior, Behavior::class);
+        if (is_object($behavior) || Utils::isAssociativeArray($behavior)) {
+            Assert::isSdkObject($behavior, Behavior::class);
+        } else {
+            Assert::eq($behavior, 'none');
+        }
 
-        $this->behavior = is_array($behavior)
+        $this->behavior = Utils::isAssociativeArray($behavior)
             ? Behavior::createTyped($behavior)
             : $behavior;
         return $this;
     }
 
     /**
-     * Add an item to conditional
-     * @param \Urbania\AppleNews\Format\ConditionalComponent|array $item
-     * @return $this
-     */
-    public function addConditional($item)
-    {
-        return $this->setConditional(
-            !is_null($this->conditional)
-                ? array_merge($this->conditional, [$item])
-                : [$item]
-        );
-    }
-
-    /**
      * Get the conditional
-     * @return Format\ConditionalComponent[]
+     * @return Format\ConditionalComponent[]|\Urbania\AppleNews\Format\ConditionalComponent
      */
     public function getConditional()
     {
@@ -300,7 +311,7 @@ class Component extends BaseSdkObject
 
     /**
      * Set the conditional
-     * @param Format\ConditionalComponent[] $conditional
+     * @param Format\ConditionalComponent[]|\Urbania\AppleNews\Format\ConditionalComponent|array $conditional
      * @return $this
      */
     public function setConditional($conditional)
@@ -310,20 +321,16 @@ class Component extends BaseSdkObject
             return $this;
         }
 
-        Assert::isArray($conditional);
-        Assert::allIsSdkObject($conditional, ConditionalComponent::class);
+        if (is_object($conditional) || Utils::isAssociativeArray($conditional)) {
+            Assert::isSdkObject($conditional, ConditionalComponent::class);
+        } else {
+            Assert::isArray($conditional);
+            Assert::allIsSdkObject($conditional, ConditionalComponent::class);
+        }
 
-        $this->conditional = array_reduce(
-            array_keys($conditional),
-            function ($array, $key) use ($conditional) {
-                $item = $conditional[$key];
-                $array[$key] = is_array($item)
-                    ? new ConditionalComponent($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->conditional = Utils::isAssociativeArray($conditional)
+            ? new ConditionalComponent($conditional)
+            : $conditional;
         return $this;
     }
 
@@ -402,15 +409,13 @@ class Component extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($layout) || is_array($layout)) {
+        if (is_object($layout) || Utils::isAssociativeArray($layout)) {
             Assert::isSdkObject($layout, ComponentLayout::class);
         } else {
             Assert::string($layout);
         }
 
-        $this->layout = is_array($layout)
-            ? new ComponentLayout($layout)
-            : $layout;
+        $this->layout = Utils::isAssociativeArray($layout) ? new ComponentLayout($layout) : $layout;
         return $this;
     }
 
@@ -438,7 +443,7 @@ class Component extends BaseSdkObject
 
     /**
      * Get the style
-     * @return \Urbania\AppleNews\Format\ComponentStyle|string
+     * @return \Urbania\AppleNews\Format\ComponentStyle|string|none
      */
     public function getStyle()
     {
@@ -447,7 +452,7 @@ class Component extends BaseSdkObject
 
     /**
      * Set the style
-     * @param \Urbania\AppleNews\Format\ComponentStyle|array|string $style
+     * @param \Urbania\AppleNews\Format\ComponentStyle|array|string|none $style
      * @return $this
      */
     public function setStyle($style)
@@ -457,13 +462,13 @@ class Component extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($style) || is_array($style)) {
+        if (is_object($style) || Utils::isAssociativeArray($style)) {
             Assert::isSdkObject($style, ComponentStyle::class);
         } else {
             Assert::string($style);
         }
 
-        $this->style = is_array($style) ? new ComponentStyle($style) : $style;
+        $this->style = Utils::isAssociativeArray($style) ? new ComponentStyle($style) : $style;
         return $this;
     }
 
@@ -479,9 +484,7 @@ class Component extends BaseSdkObject
         }
         if (isset($this->anchor)) {
             $data['anchor'] =
-                $this->anchor instanceof Arrayable
-                    ? $this->anchor->toArray()
-                    : $this->anchor;
+                $this->anchor instanceof Arrayable ? $this->anchor->toArray() : $this->anchor;
         }
         if (isset($this->animation)) {
             $data['animation'] =
@@ -491,24 +494,13 @@ class Component extends BaseSdkObject
         }
         if (isset($this->behavior)) {
             $data['behavior'] =
-                $this->behavior instanceof Arrayable
-                    ? $this->behavior->toArray()
-                    : $this->behavior;
+                $this->behavior instanceof Arrayable ? $this->behavior->toArray() : $this->behavior;
         }
         if (isset($this->conditional)) {
-            $data['conditional'] = !is_null($this->conditional)
-                ? array_reduce(
-                    array_keys($this->conditional),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->conditional[$key] instanceof Arrayable
-                                ? $this->conditional[$key]->toArray()
-                                : $this->conditional[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->conditional;
+            $data['conditional'] =
+                $this->conditional instanceof Arrayable
+                    ? $this->conditional->toArray()
+                    : $this->conditional;
         }
         if (isset($this->hidden)) {
             $data['hidden'] = $this->hidden;
@@ -518,15 +510,11 @@ class Component extends BaseSdkObject
         }
         if (isset($this->layout)) {
             $data['layout'] =
-                $this->layout instanceof Arrayable
-                    ? $this->layout->toArray()
-                    : $this->layout;
+                $this->layout instanceof Arrayable ? $this->layout->toArray() : $this->layout;
         }
         if (isset($this->style)) {
             $data['style'] =
-                $this->style instanceof Arrayable
-                    ? $this->style->toArray()
-                    : $this->style;
+                $this->style instanceof Arrayable ? $this->style->toArray() : $this->style;
         }
         return $data;
     }

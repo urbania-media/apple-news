@@ -6,13 +6,13 @@
     "from_class": null,
     "extends": "Format\\Behavior",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/parallax",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/parallax.json",
     "properties": [
         {
             "name": "type",
             "type": "string",
             "required": true,
-            "description": "Always parallax for this behavior.",
+            "description": "This behavior always has the type parallax.",
             "value": "parallax",
             "read_only": true,
             "typed": false
@@ -21,10 +21,10 @@
             "name": "factor",
             "type": "number",
             "required": false,
-            "description": "The speed of the component, as a factor of the scroll speed.The value of factor must be between 0.5 and 2.0. Values outside this range will be reset to the minimum or maximum value.",
-            "default": 0.9,
-            "minimum": 0.5,
-            "maximum": 2,
+            "description": "The speed of the component, as a factor of the scroll speed.The value of factor must be between 0.5 and 2.0. Values outside this range will be reset to the minimum or maximum value.\nThe parallax factor 1.0 is equal to the scroll speed. \nA factor lower than 1.0 makes the component move more slowly than the scrolling speed. \nA factor higher than 1.0 makes the component move more quickly than the scrolling speed. ",
+            "default": "0.9",
+            "maximum": "2",
+            "minimum": "0.5",
             "typed": false
         }
     ]

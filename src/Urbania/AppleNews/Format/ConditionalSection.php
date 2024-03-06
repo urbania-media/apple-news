@@ -5,21 +5,31 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for defining conditional properties for a section
  * component, and when the conditional properties are in effect.
  *
- * @see https://developer.apple.com/documentation/apple_news/conditionalsection
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/conditionalsection.json
  */
-class ConditionalSection extends BaseSdkObject
+class ConditionalSection extends ConditionalContainer
 {
     /**
-     * An array of conditions that, when met, cause the conditional section
-     * component properties to be applied.
-     * @var Format\Condition[]
+     * An instance or array of conditions that, when met, cause the
+     * conditional section component properties to take effect.
+     * @var Format\Condition[]|\Urbania\AppleNews\Format\Condition
      */
     protected $conditions;
+
+    /**
+     * A Boolean value that allows the placement of ad banners between
+     * components. Nested components inherit the value of the outermost
+     * container that explicitly sets allowAutoplacedAds. The default value
+     * is true.
+     * @var boolean
+     */
+    protected $allowAutoplacedAds;
 
     /**
      * An object that defines vertical alignment with another component.
@@ -29,16 +39,28 @@ class ConditionalSection extends BaseSdkObject
 
     /**
      * An object that defines an animation to be applied to the component.
-     * @var \Urbania\AppleNews\Format\ComponentAnimation
+     * To remove a previously set condition, use none.
+     * @var \Urbania\AppleNews\Format\ComponentAnimation|none
      */
     protected $animation;
 
     /**
-     * An object that defines behavior for a component, like Parallax or
-     * Springy.
-     * @var \Urbania\AppleNews\Format\Behavior
+     * An object that defines behavior for a component, like  or .
+     * To remove a previously set condition, use none.
+     * @var \Urbania\AppleNews\Format\Behavior|none
      */
     protected $behavior;
+
+    /**
+     * An object that defines how to position child components within this
+     * ConditionalSection component. A , for example, allows for displaying
+     * child components side by side.
+     * In versions of News prior to iOS 11, child components are positioned
+     * as if contentDisplay were not defined.
+     * To remove a previously set condition, use none.
+     * @var \Urbania\AppleNews\Format\CollectionDisplay|\Urbania\AppleNews\Format\HorizontalStackDisplay|none
+     */
+    protected $contentDisplay;
 
     /**
      * A Boolean value that determines whether the component is hidden.
@@ -47,9 +69,12 @@ class ConditionalSection extends BaseSdkObject
     protected $hidden;
 
     /**
-     * An inline ComponentLayout object that contains layout information, or
-     * a string reference to a ComponentLayout object that is defined at the
-     * top level of the document.
+     * An inline  object that contains layout information, or a string
+     * reference to a ComponentLayout object that is defined at the top level
+     * of the document.
+     * If layout is not defined, size and position are based on various
+     * factors, such as the device type, the length of the content, and the
+     * role of this component.
      * @var \Urbania\AppleNews\Format\ComponentLayout|string
      */
     protected $layout;
@@ -57,22 +82,30 @@ class ConditionalSection extends BaseSdkObject
     /**
      * A set of animations applied to any header component that is a child of
      * this section.
-     * @var \Urbania\AppleNews\Format\Scene
+     * To remove a previously set condition, use none.
+     * @var \Urbania\AppleNews\Format\Scene|none
      */
     protected $scene;
 
     /**
-     * An inline ComponentStyle object that defines the appearance of this
-     * component, or a string reference to a ComponentStyle object that is
-     * defined at the top level of the document.
-     * @var \Urbania\AppleNews\Format\ComponentStyle|string
+     * An inline  object that defines the appearance of this component, or a
+     * string reference to a ComponentStyle object that is defined at the top
+     * level of the document.
+     * To remove a previously set condition, use none.
+     * @var \Urbania\AppleNews\Format\ComponentStyle|string|none
      */
     protected $style;
 
     public function __construct(array $data = [])
     {
+        parent::__construct($data);
+
         if (isset($data['conditions'])) {
             $this->setConditions($data['conditions']);
+        }
+
+        if (isset($data['allowAutoplacedAds'])) {
+            $this->setAllowAutoplacedAds($data['allowAutoplacedAds']);
         }
 
         if (isset($data['anchor'])) {
@@ -85,6 +118,10 @@ class ConditionalSection extends BaseSdkObject
 
         if (isset($data['behavior'])) {
             $this->setBehavior($data['behavior']);
+        }
+
+        if (isset($data['contentDisplay'])) {
+            $this->setContentDisplay($data['contentDisplay']);
         }
 
         if (isset($data['hidden'])) {
@@ -102,6 +139,33 @@ class ConditionalSection extends BaseSdkObject
         if (isset($data['style'])) {
             $this->setStyle($data['style']);
         }
+    }
+
+    /**
+     * Get the allowAutoplacedAds
+     * @return boolean
+     */
+    public function getAllowAutoplacedAds()
+    {
+        return $this->allowAutoplacedAds;
+    }
+
+    /**
+     * Set the allowAutoplacedAds
+     * @param boolean $allowAutoplacedAds
+     * @return $this
+     */
+    public function setAllowAutoplacedAds($allowAutoplacedAds)
+    {
+        if (is_null($allowAutoplacedAds)) {
+            $this->allowAutoplacedAds = null;
+            return $this;
+        }
+
+        Assert::boolean($allowAutoplacedAds);
+
+        $this->allowAutoplacedAds = $allowAutoplacedAds;
+        return $this;
     }
 
     /**
@@ -127,13 +191,13 @@ class ConditionalSection extends BaseSdkObject
 
         Assert::isSdkObject($anchor, Anchor::class);
 
-        $this->anchor = is_array($anchor) ? new Anchor($anchor) : $anchor;
+        $this->anchor = Utils::isAssociativeArray($anchor) ? new Anchor($anchor) : $anchor;
         return $this;
     }
 
     /**
      * Get the animation
-     * @return \Urbania\AppleNews\Format\ComponentAnimation
+     * @return \Urbania\AppleNews\Format\ComponentAnimation|none
      */
     public function getAnimation()
     {
@@ -142,7 +206,7 @@ class ConditionalSection extends BaseSdkObject
 
     /**
      * Set the animation
-     * @param \Urbania\AppleNews\Format\ComponentAnimation|array $animation
+     * @param \Urbania\AppleNews\Format\ComponentAnimation|array|none $animation
      * @return $this
      */
     public function setAnimation($animation)
@@ -152,9 +216,13 @@ class ConditionalSection extends BaseSdkObject
             return $this;
         }
 
-        Assert::isSdkObject($animation, ComponentAnimation::class);
+        if (is_object($animation) || Utils::isAssociativeArray($animation)) {
+            Assert::isSdkObject($animation, ComponentAnimation::class);
+        } else {
+            Assert::eq($animation, 'none');
+        }
 
-        $this->animation = is_array($animation)
+        $this->animation = Utils::isAssociativeArray($animation)
             ? ComponentAnimation::createTyped($animation)
             : $animation;
         return $this;
@@ -162,7 +230,7 @@ class ConditionalSection extends BaseSdkObject
 
     /**
      * Get the behavior
-     * @return \Urbania\AppleNews\Format\Behavior
+     * @return \Urbania\AppleNews\Format\Behavior|none
      */
     public function getBehavior()
     {
@@ -171,7 +239,7 @@ class ConditionalSection extends BaseSdkObject
 
     /**
      * Set the behavior
-     * @param \Urbania\AppleNews\Format\Behavior|array $behavior
+     * @param \Urbania\AppleNews\Format\Behavior|array|none $behavior
      * @return $this
      */
     public function setBehavior($behavior)
@@ -181,46 +249,21 @@ class ConditionalSection extends BaseSdkObject
             return $this;
         }
 
-        Assert::isSdkObject($behavior, Behavior::class);
+        if (is_object($behavior) || Utils::isAssociativeArray($behavior)) {
+            Assert::isSdkObject($behavior, Behavior::class);
+        } else {
+            Assert::eq($behavior, 'none');
+        }
 
-        $this->behavior = is_array($behavior)
+        $this->behavior = Utils::isAssociativeArray($behavior)
             ? Behavior::createTyped($behavior)
             : $behavior;
         return $this;
     }
 
     /**
-     * Add an item to conditions
-     * @param \Urbania\AppleNews\Format\Condition|array $item
-     * @return $this
-     */
-    public function addCondition($item)
-    {
-        return $this->setConditions(
-            !is_null($this->conditions)
-                ? array_merge($this->conditions, [$item])
-                : [$item]
-        );
-    }
-
-    /**
-     * Add items to conditions
-     * @param array $items
-     * @return $this
-     */
-    public function addConditions($items)
-    {
-        Assert::isArray($items);
-        return $this->setConditions(
-            !is_null($this->conditions)
-                ? array_merge($this->conditions, $items)
-                : $items
-        );
-    }
-
-    /**
      * Get the conditions
-     * @return Format\Condition[]
+     * @return Format\Condition[]|\Urbania\AppleNews\Format\Condition
      */
     public function getConditions()
     {
@@ -229,23 +272,57 @@ class ConditionalSection extends BaseSdkObject
 
     /**
      * Set the conditions
-     * @param Format\Condition[] $conditions
+     * @param Format\Condition[]|\Urbania\AppleNews\Format\Condition|array $conditions
      * @return $this
      */
     public function setConditions($conditions)
     {
-        Assert::isArray($conditions);
-        Assert::allIsSdkObject($conditions, Condition::class);
+        if (is_object($conditions) || Utils::isAssociativeArray($conditions)) {
+            Assert::isSdkObject($conditions, Condition::class);
+        } else {
+            Assert::isArray($conditions);
+            Assert::allIsSdkObject($conditions, Condition::class);
+        }
 
-        $this->conditions = array_reduce(
-            array_keys($conditions),
-            function ($array, $key) use ($conditions) {
-                $item = $conditions[$key];
-                $array[$key] = is_array($item) ? new Condition($item) : $item;
-                return $array;
-            },
-            []
-        );
+        $this->conditions = Utils::isAssociativeArray($conditions)
+            ? new Condition($conditions)
+            : $conditions;
+        return $this;
+    }
+
+    /**
+     * Get the contentDisplay
+     * @return \Urbania\AppleNews\Format\CollectionDisplay|\Urbania\AppleNews\Format\HorizontalStackDisplay|none
+     */
+    public function getContentDisplay()
+    {
+        return $this->contentDisplay;
+    }
+
+    /**
+     * Set the contentDisplay
+     * @param \Urbania\AppleNews\Format\CollectionDisplay|array|\Urbania\AppleNews\Format\HorizontalStackDisplay|none $contentDisplay
+     * @return $this
+     */
+    public function setContentDisplay($contentDisplay)
+    {
+        if (is_null($contentDisplay)) {
+            $this->contentDisplay = null;
+            return $this;
+        }
+
+        if (is_object($contentDisplay) || Utils::isAssociativeArray($contentDisplay)) {
+            Assert::isAnySdkObject($contentDisplay, [
+                CollectionDisplay::class,
+                HorizontalStackDisplay::class,
+            ]);
+        } else {
+            Assert::eq($contentDisplay, 'none');
+        }
+
+        $this->contentDisplay = Utils::isAssociativeArray($contentDisplay)
+            ? new CollectionDisplay($contentDisplay)
+            : $contentDisplay;
         return $this;
     }
 
@@ -297,21 +374,19 @@ class ConditionalSection extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($layout) || is_array($layout)) {
+        if (is_object($layout) || Utils::isAssociativeArray($layout)) {
             Assert::isSdkObject($layout, ComponentLayout::class);
         } else {
             Assert::string($layout);
         }
 
-        $this->layout = is_array($layout)
-            ? new ComponentLayout($layout)
-            : $layout;
+        $this->layout = Utils::isAssociativeArray($layout) ? new ComponentLayout($layout) : $layout;
         return $this;
     }
 
     /**
      * Get the scene
-     * @return \Urbania\AppleNews\Format\Scene
+     * @return \Urbania\AppleNews\Format\Scene|none
      */
     public function getScene()
     {
@@ -320,7 +395,7 @@ class ConditionalSection extends BaseSdkObject
 
     /**
      * Set the scene
-     * @param \Urbania\AppleNews\Format\Scene|array $scene
+     * @param \Urbania\AppleNews\Format\Scene|array|none $scene
      * @return $this
      */
     public function setScene($scene)
@@ -330,15 +405,19 @@ class ConditionalSection extends BaseSdkObject
             return $this;
         }
 
-        Assert::isSdkObject($scene, Scene::class);
+        if (is_object($scene) || Utils::isAssociativeArray($scene)) {
+            Assert::isSdkObject($scene, Scene::class);
+        } else {
+            Assert::eq($scene, 'none');
+        }
 
-        $this->scene = is_array($scene) ? Scene::createTyped($scene) : $scene;
+        $this->scene = Utils::isAssociativeArray($scene) ? Scene::createTyped($scene) : $scene;
         return $this;
     }
 
     /**
      * Get the style
-     * @return \Urbania\AppleNews\Format\ComponentStyle|string
+     * @return \Urbania\AppleNews\Format\ComponentStyle|string|none
      */
     public function getStyle()
     {
@@ -347,7 +426,7 @@ class ConditionalSection extends BaseSdkObject
 
     /**
      * Set the style
-     * @param \Urbania\AppleNews\Format\ComponentStyle|array|string $style
+     * @param \Urbania\AppleNews\Format\ComponentStyle|array|string|none $style
      * @return $this
      */
     public function setStyle($style)
@@ -357,13 +436,13 @@ class ConditionalSection extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($style) || is_array($style)) {
+        if (is_object($style) || Utils::isAssociativeArray($style)) {
             Assert::isSdkObject($style, ComponentStyle::class);
         } else {
             Assert::string($style);
         }
 
-        $this->style = is_array($style) ? new ComponentStyle($style) : $style;
+        $this->style = Utils::isAssociativeArray($style) ? new ComponentStyle($style) : $style;
         return $this;
     }
 
@@ -373,27 +452,19 @@ class ConditionalSection extends BaseSdkObject
      */
     public function toArray()
     {
-        $data = [];
+        $data = parent::toArray();
         if (isset($this->conditions)) {
-            $data['conditions'] = !is_null($this->conditions)
-                ? array_reduce(
-                    array_keys($this->conditions),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->conditions[$key] instanceof Arrayable
-                                ? $this->conditions[$key]->toArray()
-                                : $this->conditions[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->conditions;
+            $data['conditions'] =
+                $this->conditions instanceof Arrayable
+                    ? $this->conditions->toArray()
+                    : $this->conditions;
+        }
+        if (isset($this->allowAutoplacedAds)) {
+            $data['allowAutoplacedAds'] = $this->allowAutoplacedAds;
         }
         if (isset($this->anchor)) {
             $data['anchor'] =
-                $this->anchor instanceof Arrayable
-                    ? $this->anchor->toArray()
-                    : $this->anchor;
+                $this->anchor instanceof Arrayable ? $this->anchor->toArray() : $this->anchor;
         }
         if (isset($this->animation)) {
             $data['animation'] =
@@ -403,30 +474,28 @@ class ConditionalSection extends BaseSdkObject
         }
         if (isset($this->behavior)) {
             $data['behavior'] =
-                $this->behavior instanceof Arrayable
-                    ? $this->behavior->toArray()
-                    : $this->behavior;
+                $this->behavior instanceof Arrayable ? $this->behavior->toArray() : $this->behavior;
+        }
+        if (isset($this->contentDisplay)) {
+            $data['contentDisplay'] =
+                $this->contentDisplay instanceof Arrayable
+                    ? $this->contentDisplay->toArray()
+                    : $this->contentDisplay;
         }
         if (isset($this->hidden)) {
             $data['hidden'] = $this->hidden;
         }
         if (isset($this->layout)) {
             $data['layout'] =
-                $this->layout instanceof Arrayable
-                    ? $this->layout->toArray()
-                    : $this->layout;
+                $this->layout instanceof Arrayable ? $this->layout->toArray() : $this->layout;
         }
         if (isset($this->scene)) {
             $data['scene'] =
-                $this->scene instanceof Arrayable
-                    ? $this->scene->toArray()
-                    : $this->scene;
+                $this->scene instanceof Arrayable ? $this->scene->toArray() : $this->scene;
         }
         if (isset($this->style)) {
             $data['style'] =
-                $this->style instanceof Arrayable
-                    ? $this->style->toArray()
-                    : $this->style;
+                $this->style instanceof Arrayable ? $this->style->toArray() : $this->style;
         }
         return $data;
     }

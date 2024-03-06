@@ -6,7 +6,7 @@
     "from_class": null,
     "extends": "Format\\Component",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/figure",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/figure.json",
     "properties": [
         {
             "name": "role",
@@ -21,14 +21,14 @@
             "name": "URL",
             "type": "uri",
             "required": true,
-            "description": "The URL of an image file.",
+            "description": "The URL of an image file.\nImage URLs can begin with http:\/\/, https:\/\/, or bundle:\/\/. If the image URL begins with bundle:\/\/, the image file must be in the same directory as the document.\nImage filenames should be properly encoded as URLs. \nSee .",
             "typed": false
         },
         {
             "name": "accessibilityCaption",
             "type": "string",
             "required": false,
-            "description": "A caption that describes the image. The text is used for VoiceOver for iOS and VoiceOver for macOS. If accessibilityCaption is not provided, the caption value is used for VoiceOver for iOS and VoiceOver for macOS.",
+            "description": "A caption that describes the image. The text is used for VoiceOver. For more information about VoiceOver, see the  page in Accessibility.  If accessibilityCaption is not provided, the caption value is used for VoiceOver for iOS, VoiceOver for iPadOS, and VoiceOver for macOS.",
             "typed": false
         },
         {
@@ -47,16 +47,22 @@
         },
         {
             "name": "animation",
-            "type": "Format\\ComponentAnimation",
+            "type": [
+                "Format\\ComponentAnimation",
+                "none"
+            ],
             "required": false,
-            "description": "An object that defines an animation to be applied to the component.",
+            "description": "An object that defines an animation to be applied to the component.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": true
         },
         {
             "name": "behavior",
-            "type": "Format\\Behavior",
+            "type": [
+                "Format\\Behavior",
+                "none"
+            ],
             "required": false,
-            "description": "An object that defines behavior for a component, like Parallax or Springy.",
+            "description": "An object that defines behavior for a component, like  or .\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": true
         },
         {
@@ -66,14 +72,17 @@
                 "string"
             ],
             "required": false,
-            "description": "A caption that describes the image. The text is seen when the image is in full screen. This text is also used by VoiceOver for iOS and VoiceOver for macOS, if accessibilityCaption text is not provided. The caption text does not appear in the main article view. To display a caption in the main article view, use the Caption component.",
+            "description": "A caption that describes the image. The article displays this text when the image is full screen, and VoiceOver uses this text if you don\u2019t provide accessibilityCaption text. For more information about VoiceOver, see the  page in Accessibility. The caption text doesn\u2019t appear in the main article view. To display a caption in the main article view, use the  component.  ",
             "typed": false
         },
         {
             "name": "conditional",
-            "type": "array:Format\\ConditionalComponent",
+            "type": [
+                "Format\\ConditionalComponent",
+                "array:Format\\ConditionalComponent"
+            ],
             "required": false,
-            "description": "An array of component properties that can be applied conditionally, and the conditions that cause them to be applied.",
+            "description": "An instance or array of component properties that can be applied conditionally, and the conditions that cause them to be applied.",
             "typed": false
         },
         {
@@ -88,7 +97,7 @@
             "type": "boolean",
             "required": false,
             "description": "A Boolean value that determines whether the component is hidden.",
-            "default": "false",
+            "default": true,
             "typed": false
         },
         {
@@ -105,17 +114,18 @@
                 "string"
             ],
             "required": false,
-            "description": "An inline ComponentLayout object that contains layout information, or a string reference to a ComponentLayout that is defined at the top level of the document.",
+            "description": "An inline  object that contains layout information, or a string reference to a ComponentLayout that is defined at the top level of the document. \nIf layout is not defined, size and position are based on various factors, such as the device type, the length of the content, and the role of this component.",
             "typed": false
         },
         {
             "name": "style",
             "type": [
                 "Format\\ComponentStyle",
-                "string"
+                "string",
+                "none"
             ],
             "required": false,
-            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle object that is defined at the top level of the document.",
+            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle object that is defined at the top level of the document.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         }
     ]

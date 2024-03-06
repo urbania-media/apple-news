@@ -30,7 +30,7 @@ class GalleryItemTest extends TestCase
      */
     public static function URLProvider()
     {
-        return [["http://example.com"], ["https://example.com"]];
+        return [['http://example.com'], ['https://example.com']];
     }
 
     /**
@@ -53,7 +53,7 @@ class GalleryItemTest extends TestCase
      */
     public static function accessibilityCaptionProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -76,10 +76,7 @@ class GalleryItemTest extends TestCase
      */
     public static function captionProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\CaptionDescriptor()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\CaptionDescriptor()], ['a string']];
     }
 
     /**

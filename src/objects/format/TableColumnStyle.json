@@ -6,13 +6,13 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/tablecolumnstyle",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/tablecolumnstyle.json",
     "properties": [
         {
             "name": "backgroundColor",
             "type": "Color",
             "required": false,
-            "description": "The background color for the table column.",
+            "description": "The background color for the table column.\nIf this property is omitted, the background is transparent.\nThe cell background color is highest priority, followed by the column, and finally the row. All three colors are applied, meaning that non-opaque values can cause combined colors. For example, using a red row together with a blue column, both with 50% opacity, creates a purple cell.",
             "typed": false
         },
         {
@@ -33,17 +33,17 @@
             "name": "minimumWidth",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The minimum width of the columns, as an integer in points or using the available units of measure for components. See Specifying Measurements for Components.",
+            "description": "The minimum width of the columns, as a number in points or using the available units of measure for components. See .",
             "typed": false
         },
         {
             "name": "width",
             "type": "integer",
             "required": false,
-            "description": "The relative column width. This value influences the distribution of column width but does not dictate any exact values. To set an exact minimum width, use minimumWidth instead.",
+            "description": "The relative column width. This value influences the distribution of column width but does not dictate any exact values. To set an exact minimum width, use minimumWidth instead.\nIt might be useful to think of the value of width as a percentage of the component\u2019s width. For example, if you know that one column\u2019s width should be about half that of the whole component, and another should be about a quarter of the component width, use values of 50 and 25.",
             "typed": false
         }
     ]

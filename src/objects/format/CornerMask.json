@@ -6,14 +6,14 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/cornermask",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/cornermask.json",
     "properties": [
         {
             "name": "bottomLeft",
             "type": "boolean",
             "required": false,
             "description": "A Boolean that indicates whether the bottom-left corner should be masked.",
-            "default": "true",
+            "default": true,
             "typed": false
         },
         {
@@ -21,17 +21,29 @@
             "type": "boolean",
             "required": false,
             "description": "A Boolean that indicates whether the bottom-right corner should be masked.",
-            "default": "true",
+            "default": true,
+            "typed": false
+        },
+        {
+            "name": "curve",
+            "type": "enum:string",
+            "required": false,
+            "description": "The type of curve to use for rendering the mask\u2019s corner. \nValid values:",
+            "default": "circular",
+            "enum_values": [
+                "circular",
+                "continuous"
+            ],
             "typed": false
         },
         {
             "name": "radius",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "A supported unit or integer that describes the radius of the corners in points. Corner radius cannot exceed half the component width or height, whichever is smaller.",
+            "description": "A supported unit or number that describes the radius of the corners in points. Corner radius cannot exceed half the component width or height, whichever is smaller.",
             "typed": false
         },
         {
@@ -39,7 +51,7 @@
             "type": "boolean",
             "required": false,
             "description": "A Boolean that indicates whether the top-left corner should be masked.",
-            "default": "true",
+            "default": true,
             "typed": false
         },
         {
@@ -47,14 +59,17 @@
             "type": "boolean",
             "required": false,
             "description": "A Boolean that indicates whether the top-right corner should be masked.",
-            "default": "true",
+            "default": true,
             "typed": false
         },
         {
             "name": "type",
-            "type": "string",
+            "type": "enum:string",
             "required": false,
             "description": "The type of mask. The value is always corners.",
+            "enum_values": [
+                "corners"
+            ],
             "typed": false
         }
     ]

@@ -28,7 +28,7 @@ class EmbedWebVideoTest extends TestCase
      */
     public static function roleProvider()
     {
-        return [["embedwebvideo"]];
+        return [['embedwebvideo']];
     }
 
     /**
@@ -51,7 +51,7 @@ class EmbedWebVideoTest extends TestCase
      */
     public static function URLProvider()
     {
-        return [["http://example.com"], ["https://example.com"]];
+        return [['http://example.com'], ['https://example.com']];
     }
 
     /**
@@ -74,7 +74,7 @@ class EmbedWebVideoTest extends TestCase
      */
     public static function accessibilityCaptionProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -120,7 +120,7 @@ class EmbedWebVideoTest extends TestCase
      */
     public static function animationProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentAnimation()]];
+        return [[new \Urbania\AppleNews\Format\ComponentAnimation()], ['none']];
     }
 
     /**
@@ -166,7 +166,7 @@ class EmbedWebVideoTest extends TestCase
      */
     public static function behaviorProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Behavior()]];
+        return [[new \Urbania\AppleNews\Format\Behavior()], ['none']];
     }
 
     /**
@@ -189,7 +189,7 @@ class EmbedWebVideoTest extends TestCase
      */
     public static function captionProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -212,7 +212,10 @@ class EmbedWebVideoTest extends TestCase
      */
     public static function conditionalProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\ConditionalComponent()]]];
+        return [
+            [new \Urbania\AppleNews\Format\ConditionalComponent()],
+            [[new \Urbania\AppleNews\Format\ConditionalComponent()]],
+        ];
     }
 
     /**
@@ -281,7 +284,7 @@ class EmbedWebVideoTest extends TestCase
      */
     public static function identifierProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -304,10 +307,7 @@ class EmbedWebVideoTest extends TestCase
      */
     public static function layoutProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\ComponentLayout()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\ComponentLayout()], ['a string']];
     }
 
     /**
@@ -330,6 +330,6 @@ class EmbedWebVideoTest extends TestCase
      */
     public static function styleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
+        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ['a string'], ['none']];
     }
 }

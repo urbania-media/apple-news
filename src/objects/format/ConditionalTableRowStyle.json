@@ -1,25 +1,18 @@
 {
     "name": "Format\\ConditionalTableRowStyle",
-    "description": "The object for applying styles to table rows that meet certain conditions.",
+    "description": " The object for applying styles to table rows that meet certain conditions.",
     "version": "1.7+",
     "deprecated": false,
     "from_class": null,
     "extends": "Format\\TableRowStyle",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/conditionaltablerowstyle",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/conditionaltablerowstyle.json",
     "properties": [
-        {
-            "name": "selectors",
-            "type": "array:Format\\TableRowSelector",
-            "required": true,
-            "description": "An array of one or more selectors, each of which specifies one or more conditions.",
-            "typed": false
-        },
         {
             "name": "backgroundColor",
             "type": "Color",
             "required": false,
-            "description": "The background color for the row.",
+            "description": "The background color for the row.\nIf this property is omitted, the background is transparent.\nThe cell\u2019s background color is highest priority, followed by column, and finally row. All three colors are applied, meaning that non-opaque values can cause combined colors. For example, using a red row together with a blue column, both with 50% opacity, creates a purple cell.",
             "typed": false
         },
         {
@@ -33,10 +26,17 @@
             "name": "height",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The height of the row, as an integer in points, or using one of the available units of measure for components. See Specifying Measurements for Components.",
+            "description": "The height of the row, as a number in points, or using one of the available units of measure for components. See .\nBy default, the height of each row is determined by the height of the content in that row.",
+            "typed": false
+        },
+        {
+            "name": "selectors",
+            "type": "array:Format\\TableRowSelector",
+            "required": true,
+            "description": "An array of one or more selectors, each of which specifies one or more conditions.\nThis conditional table row style will be applied to rows that meet all of the conditions of at least one of these selectors.",
             "typed": false
         }
     ]

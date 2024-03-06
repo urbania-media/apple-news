@@ -5,38 +5,39 @@ namespace Urbania\AppleNews\Api\Objects;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
- * See the properties of a warning returned by the Apple News API.
+ * See the properties of a warning the Apple News API returned.
  *
- * @see https://developer.apple.com/documentation/apple_news/warning
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/warning.json
  */
 class Warning extends BaseSdkObject
 {
     /**
      * An array of field names that uniquely identifies a field in the JSON
      * input of the request.
-     * @var string[]
+     * @var array
      */
-    protected $keyPath;
+    protected $keypath;
 
     /**
-     * A user friendly, detailed explanation of the non-fatal warning.
+     * A user-friendly, detailed explanation of the nonfatal warning.
      * @var string
      */
     protected $message;
 
     /**
-     * If applicable, the value supplied in the request for the field
-     * specified by keyPath.
+     * If applicable, the value supplied in the request for the field that
+     * keyPath specifies.
      * @var string
      */
     protected $value;
 
     public function __construct(array $data = [])
     {
-        if (isset($data['keyPath'])) {
-            $this->setKeyPath($data['keyPath']);
+        if (isset($data['keypath'])) {
+            $this->setKeypath($data['keypath']);
         }
 
         if (isset($data['message'])) {
@@ -49,44 +50,41 @@ class Warning extends BaseSdkObject
     }
 
     /**
-     * Add an item to keyPath
-     * @param string $item
+     * Add an item to keypath
+     * @param array $item
      * @return $this
      */
-    public function addKeyPath($item)
+    public function addKeypath($item)
     {
-        return $this->setKeyPath(
-            !is_null($this->keyPath)
-                ? array_merge($this->keyPath, [$item])
-                : [$item]
+        return $this->setKeypath(
+            !is_null($this->keypath) ? array_merge($this->keypath, [$item]) : [$item]
         );
     }
 
     /**
-     * Get the keyPath
-     * @return string[]
+     * Get the keypath
+     * @return array
      */
-    public function getKeyPath()
+    public function getKeypath()
     {
-        return $this->keyPath;
+        return $this->keypath;
     }
 
     /**
-     * Set the keyPath
-     * @param string[] $keyPath
+     * Set the keypath
+     * @param array $keypath
      * @return $this
      */
-    public function setKeyPath($keyPath)
+    public function setKeypath($keypath)
     {
-        if (is_null($keyPath)) {
-            $this->keyPath = null;
+        if (is_null($keypath)) {
+            $this->keypath = null;
             return $this;
         }
 
-        Assert::isArray($keyPath);
-        Assert::allString($keyPath);
+        Assert::isArray($keypath);
 
-        $this->keyPath = $keyPath;
+        $this->keypath = $keypath;
         return $this;
     }
 
@@ -151,8 +149,8 @@ class Warning extends BaseSdkObject
     public function toArray()
     {
         $data = [];
-        if (isset($this->keyPath)) {
-            $data['keyPath'] = $this->keyPath;
+        if (isset($this->keypath)) {
+            $data['keypath'] = $this->keypath;
         }
         if (isset($this->message)) {
             $data['message'] = $this->message;

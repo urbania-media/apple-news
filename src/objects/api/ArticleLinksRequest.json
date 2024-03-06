@@ -1,0 +1,19 @@
+{
+    "name": "Api\\Objects\\ArticleLinksRequest",
+    "description": "See the required field for the Create an Article request.",
+    "version": "2.2.0+",
+    "deprecated": false,
+    "from_class": null,
+    "extends": null,
+    "typed": null,
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/articlelinksrequest.json",
+    "properties": [
+        {
+            "name": "sections",
+            "type": "array:string",
+            "required": false,
+            "description": "The URL of the sections, if any, in which this article appears.",
+            "typed": false
+        }
+    ]
+}

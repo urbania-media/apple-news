@@ -6,48 +6,57 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/textstyle",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/textstyle.json",
     "properties": [
         {
             "name": "backgroundColor",
-            "type": "Color",
+            "type": [
+                "Color",
+                "none"
+            ],
             "required": false,
-            "description": "The background color for text lines. The value defaults to transparent.",
+            "description": "The background color for text lines. The value defaults to transparent.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {
             "name": "conditional",
-            "type": "array:Format\\ConditionalTextStyle",
+            "type": [
+                "Format\\ConditionalTextStyle",
+                "array:Format\\ConditionalTextStyle"
+            ],
             "required": false,
-            "description": "An array of text style properties that can be applied conditionally, and the conditions that cause them to be applied.",
+            "description": "An instance or array of text style properties that can be applied conditionally, and the conditions that cause them to be applied.",
             "typed": false
         },
         {
             "name": "fontFamily",
-            "type": "string",
+            "type": "enum:string|string",
             "required": false,
-            "description": "The font family to use for text rendering, for example Gill Sans. Using a combination of fontFamily, fontWeight, fontWidth and fontStyle you can define the appearance of the text. News automatically selects the appropriate font variant from the available variants in that family.",
+            "description": "The font family to use for text rendering, for example Gill Sans. Using a combination of fontFamily, fontWeight, fontWidth and fontStyle, you can define the appearance of the text. News automatically selects the appropriate font variant from the available variants in that family.\nSee .",
+            "enum_values": [
+                "system"
+            ],
             "typed": false
         },
         {
             "name": "fontName",
             "type": "string",
             "required": false,
-            "description": "The fontName to refer to an explicit font variant\u2019s PostScript name, such as GillSans-Bold. Alternatively, you can use a combination of fontFamily, fontWeight, fontWidth and\/or fontStyle to have News automatically select the appropriate variant depending on the text formatting used.",
+            "description": "The fontName to refer to an explicit font variant\u2019s PostScript name, such as GillSans-Bold. Alternatively, you can use a combination of fontFamily, fontWeight, fontWidth and\/or fontStyle to have News automatically select the appropriate variant depending on the text formatting used.\nSee .",
             "typed": false
         },
         {
             "name": "fontSize",
             "type": "integer",
             "required": false,
-            "description": "The size of the font, in points. By default, the font size will be inherited from a parent component or a default style. As a best practice, try not to go below 16 points for body text. The fontSize may be automatically resized for different device sizes or for iOS devices with Larger Accessibility Sizes enabled.",
+            "description": "The size of the font, in points. By default, the font size is inherited from a parent component or a default style. As a best practice, try not to go below 16 points for body text. The fontSize may be automatically resized for different device sizes or for iOS and iPadOS devices with Larger Accessibility Sizes enabled.",
             "typed": false
         },
         {
             "name": "fontStyle",
             "type": "enum:string",
             "required": false,
-            "description": "The font style to apply for the selected font.",
+            "description": "The font style to apply for the selected font. \nValid values:",
             "enum_values": [
                 "normal",
                 "italic",
@@ -59,7 +68,7 @@
             "name": "fontWeight",
             "type": "enum:integer|string",
             "required": false,
-            "description": "The font weight to apply for font selection. In addition to explicit weights (named or numerical), lighter and bolder are available, to set text in a lighter or bolder font as compared to its surrounding text.",
+            "description": "The font weight to apply for font selection. In addition to explicit weights (named or numerical), lighter and bolder are available, to set text in a lighter or bolder font as compared to its surrounding text.\nIf a font variant with the given specifications cannot be found in the provided font family, the system selects an alternative that has the closest match. If no bold\/bolder font is found, News doesn't create a bold alternative, but falls back to the closest match. Similarly, if there's no italic or oblique font variant, the system won't slant text to make text appear italicized.\nValid values:",
             "enum_values": [
                 100,
                 200,
@@ -100,8 +109,11 @@
             "name": "fontWidth",
             "type": "enum:string",
             "required": false,
-            "description": "The font width for font selection (known in CSS as font-stretch). Defines the width characteristics of a font variant between normal, condensed and expanded. Some font families have separate families assigned for different widths (for example, Avenir Next and Avenir Next Condensed), so make sure that the fontFamily you select supports the specified fontWidth.",
+            "description": "The font width for font selection (known in CSS as font-stretch). Defines the width characteristics of a font variant between normal, condensed, and expanded. Some font families have separate families assigned for different widths (for example, Avenir Next and Avenir Next Condensed), so make sure that the fontFamily you select supports the specified fontWidth.\nValid values:",
             "enum_values": [
+                "ultra-compressed",
+                "extra-compressed",
+                "compressed",
                 "ultra-condensed",
                 "extra-condensed",
                 "condensed",
@@ -116,9 +128,12 @@
         },
         {
             "name": "orderedListItems",
-            "type": "Format\\ListItemStyle",
+            "type": [
+                "Format\\ListItemStyle",
+                "none"
+            ],
             "required": false,
-            "description": "An object for use with text components with HTML markup. You can create text styles containing an orderedListItems definition to configure how list items inside <ol> tags should be displayed.",
+            "description": "An object for use with text components with HTML markup. You can create text styles containing an orderedListItems definition to configure how list items inside <ol> tags should be displayed.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {
@@ -133,9 +148,12 @@
         },
         {
             "name": "stroke",
-            "type": "Format\\TextStrokeStyle",
+            "type": [
+                "Format\\TextStrokeStyle",
+                "none"
+            ],
             "required": false,
-            "description": "The stroke style for the text outline. By default, stroke will be omitted.",
+            "description": "The stroke style for the text outline. By default, stroke is  omitted.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {
@@ -147,20 +165,24 @@
         },
         {
             "name": "textShadow",
-            "type": "Format\\Shadow",
+            "type": [
+                "Format\\TextShadow",
+                "none"
+            ],
             "required": false,
-            "description": "The text shadow for this style.",
+            "description": "The text shadow for this style.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {
             "name": "textTransform",
             "type": "enum:string",
             "required": false,
-            "description": "The transform to apply to the text.",
+            "description": "The transform to apply to the text. \nValid values:",
             "enum_values": [
                 "uppercase",
                 "lowercase",
                 "capitalize",
+                "smallcaps",
                 "none"
             ],
             "typed": false
@@ -169,8 +191,8 @@
             "name": "tracking",
             "type": "number",
             "required": false,
-            "description": "The amount of tracking (spacing between characters) in text, as a percentage of the fontSize. The actual spacing between letters is determined by combining information from the font and font size.",
-            "default": 0,
+            "description": "The amount of tracking (spacing between characters) in text, as a percentage of the fontSize. The actual spacing between letters is determined by combining information from the font and font size. \nExample: Set tracking to 0.5 to make the distance between characters increase by 50 percent of the fontSize. With a font size of 10, the additional space between characters is 5 points.",
+            "default": "0",
             "typed": false
         },
         {
@@ -185,16 +207,19 @@
         },
         {
             "name": "unorderedListItems",
-            "type": "Format\\ListItemStyle",
+            "type": [
+                "Format\\ListItemStyle",
+                "none"
+            ],
             "required": false,
-            "description": "An object for use with text components with HTML markup. You can create text styles containing an unorderedListItems definition to configure how list items inside <ul> tags should be displayed.",
+            "description": "An object for use with text components with HTML markup. You can create text styles containing an unorderedListItems definition to configure how list items inside <ul> tags should be displayed.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {
             "name": "verticalAlignment",
             "type": "enum:string",
             "required": false,
-            "description": "The vertical alignment of the text. You can use this property for superscripts and subscripts.",
+            "description": "The vertical alignment of the text. You can use this property for superscripts and subscripts. \nOverrides values specified in parent text styles. \nDefault value: baseline when unspecified, or the value specified in a TextStyle object applied to the same range.\nThe values superscript and subscript also adjust the font size to two-thirds of the size defined for that character range.",
             "enum_values": [
                 "superscript",
                 "subscript",

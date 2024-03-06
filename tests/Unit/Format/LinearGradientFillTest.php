@@ -51,7 +51,7 @@ class LinearGradientFillTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["linear_gradient"]];
+        return [['linear_gradient']];
     }
 
     /**

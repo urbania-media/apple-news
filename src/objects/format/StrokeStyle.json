@@ -6,7 +6,7 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/strokestyle",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/strokestyle.json",
     "properties": [
         {
             "name": "color",
@@ -19,7 +19,7 @@
             "name": "style",
             "type": "enum:string",
             "required": false,
-            "description": "A string that defines the style of the stroke. Valid values:",
+            "description": "Defines the style of the stroke. Valid values:",
             "default": "solid",
             "enum_values": [
                 "solid",
@@ -32,11 +32,11 @@
             "name": "width",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The width of the stroke line. Can be either an integer value in points, or a string according to Specifying Measurements for Components.",
-            "default": 1,
+            "description": "The width of the stroke line. Can be either a number in points, or a string according to . ",
+            "default": "1",
             "typed": false
         }
     ]

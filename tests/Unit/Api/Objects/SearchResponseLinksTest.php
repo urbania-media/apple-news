@@ -30,7 +30,7 @@ class SearchResponseLinksTest extends TestCase
      */
     public static function selfProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -53,6 +53,6 @@ class SearchResponseLinksTest extends TestCase
      */
     public static function nextProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 }

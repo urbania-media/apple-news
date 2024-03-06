@@ -11,6 +11,27 @@ use Urbania\AppleNews\Tests\TestCase;
 class TweetTest extends TestCase
 {
     /**
+     * Test the property role
+     * @test
+     * @dataProvider roleProvider
+     * @covers ::getRole
+     */
+    public function testPropertyRole($value)
+    {
+        $object = new Tweet();
+
+        $this->assertEquals($value, $object->getRole());
+    }
+
+    /**
+     * Data provider for property role
+     */
+    public static function roleProvider()
+    {
+        return [['tweet']];
+    }
+
+    /**
      * Test the property URL
      * @test
      * @dataProvider URLProvider
@@ -30,28 +51,7 @@ class TweetTest extends TestCase
      */
     public static function URLProvider()
     {
-        return [["http://example.com"], ["https://example.com"]];
-    }
-
-    /**
-     * Test the property role
-     * @test
-     * @dataProvider roleProvider
-     * @covers ::getRole
-     */
-    public function testPropertyRole($value)
-    {
-        $object = new Tweet();
-
-        $this->assertEquals($value, $object->getRole());
-    }
-
-    /**
-     * Data provider for property role
-     */
-    public static function roleProvider()
-    {
-        return [["tweet"]];
+        return [['http://example.com'], ['https://example.com']];
     }
 
     /**
@@ -97,7 +97,7 @@ class TweetTest extends TestCase
      */
     public static function animationProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentAnimation()]];
+        return [[new \Urbania\AppleNews\Format\ComponentAnimation()], ['none']];
     }
 
     /**
@@ -120,7 +120,7 @@ class TweetTest extends TestCase
      */
     public static function behaviorProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Behavior()]];
+        return [[new \Urbania\AppleNews\Format\Behavior()], ['none']];
     }
 
     /**
@@ -143,7 +143,10 @@ class TweetTest extends TestCase
      */
     public static function conditionalProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\ConditionalComponent()]]];
+        return [
+            [new \Urbania\AppleNews\Format\ConditionalComponent()],
+            [[new \Urbania\AppleNews\Format\ConditionalComponent()]],
+        ];
     }
 
     /**
@@ -189,7 +192,7 @@ class TweetTest extends TestCase
      */
     public static function identifierProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -212,10 +215,7 @@ class TweetTest extends TestCase
      */
     public static function layoutProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\ComponentLayout()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\ComponentLayout()], ['a string']];
     }
 
     /**
@@ -238,6 +238,6 @@ class TweetTest extends TestCase
      */
     public static function styleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
+        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ['a string'], ['none']];
     }
 }

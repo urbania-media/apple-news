@@ -6,13 +6,13 @@
     "from_class": null,
     "extends": "Format\\ComponentAnimation",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/moveinanimation",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/moveinanimation.json",
     "properties": [
         {
             "name": "type",
             "type": "string",
             "required": true,
-            "description": "Always move_in for this animation type.",
+            "description": "This animation always has the type move_in.",
             "value": "move_in",
             "read_only": true,
             "typed": false
@@ -21,7 +21,7 @@
             "name": "preferredStartingPosition",
             "type": "enum:string",
             "required": false,
-            "description": "A string that indicates which side of the screen should be the starting point of the animation.",
+            "description": "Indicates which side of the screen should be the starting point of the animation. Valid values:\nBy default, the animation will start on the side that is closest to the component.",
             "enum_values": [
                 "left",
                 "right"
@@ -32,8 +32,8 @@
             "name": "userControllable",
             "type": "boolean",
             "required": false,
-            "description": "A Boolean value that indicates whether the animation occurs in response to user action (true) or happens automatically (false).",
-            "default": "false",
+            "description": "Indicates whether the animation is controlled by (is in response to) user action (true) or happens automatically (false).",
+            "default": true,
             "typed": false
         }
     ]

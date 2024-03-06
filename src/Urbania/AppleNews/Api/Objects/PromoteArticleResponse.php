@@ -5,16 +5,17 @@ namespace Urbania\AppleNews\Api\Objects;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
- * See the field returned by the promote article response.
+ * See the field the Promote an Article response returned.
  *
- * @see https://developer.apple.com/documentation/apple_news/promotearticleresponse
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/promotearticleresponse.json
  */
 class PromoteArticleResponse extends BaseSdkObject
 {
     /**
-     * List of URLs for the promoted articles.
+     * The list of URLs for the promoted articles.
      * @var string[]
      */
     protected $promotedArticles;

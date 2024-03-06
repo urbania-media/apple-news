@@ -30,7 +30,7 @@ class ErrorTest extends TestCase
      */
     public static function codeProvider()
     {
-        return [["a code"]];
+        return [['a code']];
     }
 
     /**
@@ -76,7 +76,7 @@ class ErrorTest extends TestCase
      */
     public static function messageProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -122,6 +122,6 @@ class ErrorTest extends TestCase
      */
     public static function valueProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 }

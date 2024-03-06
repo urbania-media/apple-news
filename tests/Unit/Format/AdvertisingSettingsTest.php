@@ -30,7 +30,7 @@ class AdvertisingSettingsTest extends TestCase
      */
     public static function bannerTypeProvider()
     {
-        return [["any"], ["standard"], ["double_height"], ["large"]];
+        return [['any'], ['standard'], ['double_height'], ['large']];
     }
 
     /**
@@ -53,7 +53,7 @@ class AdvertisingSettingsTest extends TestCase
      */
     public static function distanceFromMediaProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1]];
     }
 
     /**

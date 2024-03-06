@@ -5,24 +5,21 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * Properties shared by all data format obejct types.
  *
- * @see https://developer.apple.com/documentation/apple_news/dataformat
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/dataformat.json
  */
 class DataFormat extends BaseSdkObject
 {
     protected static $typeProperty = 'type';
-
-    protected static $types = [
-        'float' => 'FloatDataFormat',
-        'image' => 'ImageDataFormat'
-    ];
+    protected static $types = ['float' => 'FloatDataFormat', 'image' => 'ImageDataFormat'];
 
     /**
-     * The type of format. This must be float for a FloatDataFormat object or
-     * image for an ImageDataFormat object.
+     * The type of format. This must be float for a  object or image for an
+     * object.
      * @var string
      */
     protected $type = 'float';
@@ -35,14 +32,9 @@ class DataFormat extends BaseSdkObject
     {
         if (isset($data[static::$typeProperty])) {
             $typeName = $data[static::$typeProperty];
-            $type = isset(static::$types[$typeName])
-                ? static::$types[$typeName]
-                : null;
+            $type = isset(static::$types[$typeName]) ? static::$types[$typeName] : null;
             if (!is_null($type)) {
-                $namespace = implode(
-                    '\\',
-                    array_slice(explode('\\', static::class), 0, -1)
-                );
+                $namespace = implode('\\', array_slice(explode('\\', static::class), 0, -1));
                 $typeClass = $namespace . '\\' . $type;
                 return new $typeClass($data);
             }

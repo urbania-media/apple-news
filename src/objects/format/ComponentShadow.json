@@ -1,0 +1,47 @@
+{
+    "name": "Format\\ComponentShadow",
+    "description": "The object for creating a component shadow. ",
+    "version": "1.10+",
+    "deprecated": false,
+    "from_class": null,
+    "extends": null,
+    "typed": null,
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/componentshadow.json",
+    "properties": [
+        {
+            "name": "color",
+            "type": "Color",
+            "required": true,
+            "description": "The component shadow color.",
+            "typed": false
+        },
+        {
+            "name": "radius",
+            "type": [
+                "SupportedUnits",
+                "number"
+            ],
+            "required": true,
+            "description": "The shadow\u2019s radius.",
+            "default": "0",
+            "typed": false
+        },
+        {
+            "name": "offset",
+            "type": "Format\\ComponentShadowOffset",
+            "required": false,
+            "description": "The shadow\u2019s offset.",
+            "typed": false
+        },
+        {
+            "name": "opacity",
+            "type": "float",
+            "required": false,
+            "description": "The opacity of the shadow as a value between  and 1.",
+            "default": 1,
+            "maximum": 1,
+            "minimum": 0,
+            "typed": false
+        }
+    ]
+}

@@ -6,13 +6,13 @@
     "from_class": null,
     "extends": "Format\\Behavior",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/motion",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/motion.json",
     "properties": [
         {
             "name": "type",
             "type": "string",
             "required": true,
-            "description": "Always motion for this behavior.",
+            "description": "This behavior always has the type motion.",
             "value": "motion",
             "read_only": true,
             "typed": false

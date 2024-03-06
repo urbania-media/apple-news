@@ -5,33 +5,41 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * An object used in a gallery or mosaic component for displaying an
  * individual image.
  *
- * @see https://developer.apple.com/documentation/apple_news/galleryitem
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/galleryitem.json
  */
 class GalleryItem extends BaseSdkObject
 {
     /**
      * The URL of an image to display in a gallery or mosaic.
+     * Image URLs can begin with http://, https://, or bundle://. If the
+     * image URL begins with bundle://, the image file must be in the same
+     * directory as the document.
+     * Image filenames should be properly encoded as URLs.
+     * See .
      * @var string
      */
     protected $URL;
 
     /**
-     * A caption that describes the image. The text is used for  and . If
-     * accessibilityCaption is not provided, the caption value is used for
-     * VoiceOver for iOS and VoiceOver for macOS.
+     * A caption that describes the image. The text is used for VoiceOver.
+     * For more information about VoiceOver, see the  page in Accessibility.
+     * If accessibilityCaption is not provided, the caption value is used for
+     * VoiceOver for iOS, VoiceOver for iPadOS, and VoiceOver for macOS.
      * @var string
      */
     protected $accessibilityCaption;
 
     /**
-     * A caption that describes the image. The text is seen when the image is
-     * in full screen. This text is also used by  and , if
-     * accessibilityCaption text is not provided. The caption text does not
+     * A caption that describes the image. The article displays this text
+     * when the image is full screen, and VoiceOver uses this text if you
+     * don’t provide accessibilityCaption text. For more information about
+     * VoiceOver, see the  page in Accessibility. The caption text doesn’t
      * appear in the main article view. To display a caption in the main
      * article view, use the  component.
      * @var \Urbania\AppleNews\Format\CaptionDescriptor|string
@@ -111,13 +119,13 @@ class GalleryItem extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($caption) || is_array($caption)) {
+        if (is_object($caption) || Utils::isAssociativeArray($caption)) {
             Assert::isSdkObject($caption, CaptionDescriptor::class);
         } else {
             Assert::string($caption);
         }
 
-        $this->caption = is_array($caption)
+        $this->caption = Utils::isAssociativeArray($caption)
             ? new CaptionDescriptor($caption)
             : $caption;
         return $this;
@@ -187,9 +195,7 @@ class GalleryItem extends BaseSdkObject
         }
         if (isset($this->caption)) {
             $data['caption'] =
-                $this->caption instanceof Arrayable
-                    ? $this->caption->toArray()
-                    : $this->caption;
+                $this->caption instanceof Arrayable ? $this->caption->toArray() : $this->caption;
         }
         if (isset($this->explicitContent)) {
             $data['explicitContent'] = $this->explicitContent;

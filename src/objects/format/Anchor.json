@@ -6,13 +6,13 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/anchor",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/anchor.json",
     "properties": [
         {
             "name": "targetAnchorPosition",
             "type": "enum:string",
             "required": true,
-            "description": "A value that sets the anchor point in the target component, relative to the originAnchorPosition.",
+            "description": "Sets the anchor point in the target component, relative to the originAnchorPosition. Valid values:\nIf a component is anchored to a range of text in a body component and is full-width (such as on an iPhone), the following rules are used to determine the spacing before and after the anchored component:\n Note the following:\nExample: To align the bottom of a component with the bottom of another component, both originAnchorPosition and targetAnchorPosition should be set to bottom.",
             "enum_values": [
                 "top",
                 "center",
@@ -24,7 +24,7 @@
             "name": "originAnchorPosition",
             "type": "enum:string",
             "required": false,
-            "description": "A string value that sets which point in the origin component gets anchored to the target component. The originating anchor is positioned as closely as possible to the intended targetAnchorPosition. If this property is omitted, the value of targetAnchorPosition is used.",
+            "description": "Sets which point in the origin component will get anchored to the target component. The originating anchor will be positioned as closely as possible to the intended targetAnchorPosition. If this property is omitted, the value of targetAnchorPosition is used.",
             "enum_values": [
                 "top",
                 "center",
@@ -36,14 +36,14 @@
             "name": "rangeLength",
             "type": "integer",
             "required": false,
-            "description": "The length of the range of text the component should be anchored to. If rangeLength is specified, rangeStart is required.",
+            "description": "The length of the range of text the component should be anchored to. If rangeLength is specified, rangeStart is required. \nMaximum value: (textLength - rangeStart) \u2028where textLength is the number of characters in the component, including spaces. \nThe length of a text range cannot exceed the length of the text.",
             "typed": false
         },
         {
             "name": "rangeStart",
             "type": "integer",
             "required": false,
-            "description": "The start index of the range of text the component should be anchored to. When a component is anchored to a component with a role of body, the text might be flowed around the component.",
+            "description": "The start index of the range of text the component should be anchored to. When a component is anchored to a component with a role of body, the text might be flowed around the component.\nIf rangeStart is specified, rangeLength is required.",
             "typed": false
         },
         {
@@ -57,7 +57,7 @@
             "name": "targetComponentIdentifier",
             "type": "string",
             "required": false,
-            "description": "The identifier of the component to anchor to. targetComponentIdentifier cannot refer to the current component\u2019s parent, child components, or components in another container. When this property is omitted, the anchor is applied to the parent component, if one exists.",
+            "description": "The identifier of the component to anchor to. targetComponentIdentifier cannot refer to the current component's parent, child components, or components in another container. When this property is omitted, the anchor will be applied to the parent component, if one exists.\nIf a parent component does not exist and targetComponentIdentifier is not specified, the anchor is ignored.",
             "typed": false
         }
     ]

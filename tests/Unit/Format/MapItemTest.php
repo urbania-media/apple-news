@@ -76,6 +76,6 @@ class MapItemTest extends TestCase
      */
     public static function captionProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 }

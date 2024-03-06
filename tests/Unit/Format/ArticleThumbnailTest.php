@@ -28,7 +28,7 @@ class ArticleThumbnailTest extends TestCase
      */
     public static function roleProvider()
     {
-        return [["article_thumbnail"]];
+        return [['article_thumbnail']];
     }
 
     /**
@@ -51,7 +51,7 @@ class ArticleThumbnailTest extends TestCase
      */
     public static function accessibilityCaptionProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -120,7 +120,30 @@ class ArticleThumbnailTest extends TestCase
      */
     public static function animationProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentAnimation()]];
+        return [[new \Urbania\AppleNews\Format\ComponentAnimation()], ['none']];
+    }
+
+    /**
+     * Test the property articleIdentifier
+     * @test
+     * @dataProvider articleIdentifierProvider
+     * @covers ::getArticleIdentifier
+     * @covers ::setArticleIdentifier
+     */
+    public function testPropertyArticleIdentifier($value)
+    {
+        $object = new ArticleThumbnail();
+        $object->setArticleIdentifier($value);
+
+        $this->assertEquals($value, $object->getArticleIdentifier());
+    }
+
+    /**
+     * Data provider for property articleIdentifier
+     */
+    public static function articleIdentifierProvider()
+    {
+        return [['a string']];
     }
 
     /**
@@ -166,7 +189,7 @@ class ArticleThumbnailTest extends TestCase
      */
     public static function behaviorProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Behavior()]];
+        return [[new \Urbania\AppleNews\Format\Behavior()], ['none']];
     }
 
     /**
@@ -189,10 +212,7 @@ class ArticleThumbnailTest extends TestCase
      */
     public static function captionProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\CaptionDescriptor()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\CaptionDescriptor()], ['a string']];
     }
 
     /**
@@ -215,7 +235,10 @@ class ArticleThumbnailTest extends TestCase
      */
     public static function conditionalProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\ConditionalComponent()]]];
+        return [
+            [new \Urbania\AppleNews\Format\ConditionalComponent()],
+            [[new \Urbania\AppleNews\Format\ConditionalComponent()]],
+        ];
     }
 
     /**
@@ -261,7 +284,7 @@ class ArticleThumbnailTest extends TestCase
      */
     public static function fillModeProvider()
     {
-        return [["cover"], ["fit"]];
+        return [['cover'], ['fit']];
     }
 
     /**
@@ -307,7 +330,7 @@ class ArticleThumbnailTest extends TestCase
      */
     public static function horizontalAlignmentProvider()
     {
-        return [["left"], ["center"], ["right"]];
+        return [['left'], ['center'], ['right']];
     }
 
     /**
@@ -330,7 +353,7 @@ class ArticleThumbnailTest extends TestCase
      */
     public static function identifierProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -353,10 +376,7 @@ class ArticleThumbnailTest extends TestCase
      */
     public static function layoutProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\ComponentLayout()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\ComponentLayout()], ['a string']];
     }
 
     /**
@@ -379,7 +399,7 @@ class ArticleThumbnailTest extends TestCase
      */
     public static function styleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
+        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ['a string'], ['none']];
     }
 
     /**
@@ -402,7 +422,7 @@ class ArticleThumbnailTest extends TestCase
      */
     public static function URLProvider()
     {
-        return [["http://example.com"], ["https://example.com"]];
+        return [['http://example.com'], ['https://example.com']];
     }
 
     /**
@@ -425,6 +445,6 @@ class ArticleThumbnailTest extends TestCase
      */
     public static function verticalAlignmentProvider()
     {
-        return [["top"], ["center"], ["bottom"]];
+        return [['top'], ['center'], ['bottom']];
     }
 }

@@ -30,6 +30,32 @@ class DocumentStyleTest extends TestCase
      */
     public static function backgroundColorProvider()
     {
-        return [["#fff"], ["#000"]];
+        return [['#fff'], ['#000']];
+    }
+
+    /**
+     * Test the property conditional
+     * @test
+     * @dataProvider conditionalProvider
+     * @covers ::getConditional
+     * @covers ::setConditional
+     */
+    public function testPropertyConditional($value)
+    {
+        $object = new DocumentStyle();
+        $object->setConditional($value);
+
+        $this->assertEquals($value, $object->getConditional());
+    }
+
+    /**
+     * Data provider for property conditional
+     */
+    public static function conditionalProvider()
+    {
+        return [
+            [new \Urbania\AppleNews\Format\ConditionalDocumentStyle()],
+            [[new \Urbania\AppleNews\Format\ConditionalDocumentStyle()]],
+        ];
     }
 }

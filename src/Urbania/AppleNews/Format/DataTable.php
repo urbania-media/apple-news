@@ -5,11 +5,12 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The component for adding a JSON data table.
  *
- * @see https://developer.apple.com/documentation/apple_news/datatable
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/datatable.json
  */
 class DataTable extends Component
 {
@@ -35,26 +36,30 @@ class DataTable extends Component
 
     /**
      * An object that defines an animation to be applied to the component.
-     * @var \Urbania\AppleNews\Format\ComponentAnimation
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\ComponentAnimation|none
      */
     protected $animation;
 
     /**
-     * An object that defines behavior for a component, like Parallax or
-     * Springy.
-     * @var \Urbania\AppleNews\Format\Behavior
+     * An object that defines behavior for a component, like  or .
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\Behavior|none
      */
     protected $behavior;
 
     /**
-     * An array of component properties that can be applied conditionally,
-     * and the conditions that cause them to be applied.
-     * @var Format\ConditionalComponent[]
+     * An instance or array of component properties that can be applied
+     * conditionally, and the conditions that cause them to be applied.
+     * @var Format\ConditionalComponent[]|\Urbania\AppleNews\Format\ConditionalComponent
      */
     protected $conditional;
 
     /**
      * A string value that determines the table orientation.
+     * Valid values:
      * @var string
      */
     protected $dataOrientation;
@@ -78,14 +83,17 @@ class DataTable extends Component
      * An inline ComponentLayout object that contains layout information, or
      * a string reference to a ComponentLayout object that is defined at the
      * top level of the document.
+     * If layout is not defined, size and position will be based on various
+     * factors, such as the device type, the length of the content, and the
+     * role of this component.
      * @var \Urbania\AppleNews\Format\ComponentLayout|string
      */
     protected $layout;
 
     /**
      * A Boolean value that determines whether the headers are shown. If
-     * true, the headers are visible, with the labels defined in the
-     * RecordStore. If false, the headers are not visible.
+     * true, the headers are visible, with the labels defined in the . If
+     * false, the headers are not visible.
      * @var boolean
      */
     protected $showDescriptorLabels;
@@ -93,6 +101,8 @@ class DataTable extends Component
     /**
      * An array that determines how table data is sorted. Rules are applied
      * in the order in which they are provided in the array.
+     * If this property is not defined, data records are displayed in the
+     * order in which they are provided in the data .
      * @var Format\DataTableSorting[]
      */
     protected $sortBy;
@@ -101,7 +111,15 @@ class DataTable extends Component
      * An inline ComponentStyle object that defines the appearance of this
      * component or a string reference to a ComponentStyle object that is
      * defined at the top level of the document.
-     * @var \Urbania\AppleNews\Format\ComponentStyle|string
+     * If this property is omitted, the table is styled according to a
+     * component style called default-datatable. If default-datatable
+     * doesn’t exist or doesn’t define table styling, the table is styled
+     * according to a component style called default. If no table styling is
+     * defined in any of these places, Apple News uses its built-in default
+     * table styling.
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\ComponentStyle|string|none
      */
     protected $style;
 
@@ -181,13 +199,13 @@ class DataTable extends Component
 
         Assert::isSdkObject($anchor, Anchor::class);
 
-        $this->anchor = is_array($anchor) ? new Anchor($anchor) : $anchor;
+        $this->anchor = Utils::isAssociativeArray($anchor) ? new Anchor($anchor) : $anchor;
         return $this;
     }
 
     /**
      * Get the animation
-     * @return \Urbania\AppleNews\Format\ComponentAnimation
+     * @return \Urbania\AppleNews\Format\ComponentAnimation|none
      */
     public function getAnimation()
     {
@@ -196,7 +214,7 @@ class DataTable extends Component
 
     /**
      * Set the animation
-     * @param \Urbania\AppleNews\Format\ComponentAnimation|array $animation
+     * @param \Urbania\AppleNews\Format\ComponentAnimation|array|none $animation
      * @return $this
      */
     public function setAnimation($animation)
@@ -206,9 +224,13 @@ class DataTable extends Component
             return $this;
         }
 
-        Assert::isSdkObject($animation, ComponentAnimation::class);
+        if (is_object($animation) || Utils::isAssociativeArray($animation)) {
+            Assert::isSdkObject($animation, ComponentAnimation::class);
+        } else {
+            Assert::eq($animation, 'none');
+        }
 
-        $this->animation = is_array($animation)
+        $this->animation = Utils::isAssociativeArray($animation)
             ? ComponentAnimation::createTyped($animation)
             : $animation;
         return $this;
@@ -216,7 +238,7 @@ class DataTable extends Component
 
     /**
      * Get the behavior
-     * @return \Urbania\AppleNews\Format\Behavior
+     * @return \Urbania\AppleNews\Format\Behavior|none
      */
     public function getBehavior()
     {
@@ -225,7 +247,7 @@ class DataTable extends Component
 
     /**
      * Set the behavior
-     * @param \Urbania\AppleNews\Format\Behavior|array $behavior
+     * @param \Urbania\AppleNews\Format\Behavior|array|none $behavior
      * @return $this
      */
     public function setBehavior($behavior)
@@ -235,31 +257,21 @@ class DataTable extends Component
             return $this;
         }
 
-        Assert::isSdkObject($behavior, Behavior::class);
+        if (is_object($behavior) || Utils::isAssociativeArray($behavior)) {
+            Assert::isSdkObject($behavior, Behavior::class);
+        } else {
+            Assert::eq($behavior, 'none');
+        }
 
-        $this->behavior = is_array($behavior)
+        $this->behavior = Utils::isAssociativeArray($behavior)
             ? Behavior::createTyped($behavior)
             : $behavior;
         return $this;
     }
 
     /**
-     * Add an item to conditional
-     * @param \Urbania\AppleNews\Format\ConditionalComponent|array $item
-     * @return $this
-     */
-    public function addConditional($item)
-    {
-        return $this->setConditional(
-            !is_null($this->conditional)
-                ? array_merge($this->conditional, [$item])
-                : [$item]
-        );
-    }
-
-    /**
      * Get the conditional
-     * @return Format\ConditionalComponent[]
+     * @return Format\ConditionalComponent[]|\Urbania\AppleNews\Format\ConditionalComponent
      */
     public function getConditional()
     {
@@ -268,7 +280,7 @@ class DataTable extends Component
 
     /**
      * Set the conditional
-     * @param Format\ConditionalComponent[] $conditional
+     * @param Format\ConditionalComponent[]|\Urbania\AppleNews\Format\ConditionalComponent|array $conditional
      * @return $this
      */
     public function setConditional($conditional)
@@ -278,20 +290,16 @@ class DataTable extends Component
             return $this;
         }
 
-        Assert::isArray($conditional);
-        Assert::allIsSdkObject($conditional, ConditionalComponent::class);
+        if (is_object($conditional) || Utils::isAssociativeArray($conditional)) {
+            Assert::isSdkObject($conditional, ConditionalComponent::class);
+        } else {
+            Assert::isArray($conditional);
+            Assert::allIsSdkObject($conditional, ConditionalComponent::class);
+        }
 
-        $this->conditional = array_reduce(
-            array_keys($conditional),
-            function ($array, $key) use ($conditional) {
-                $item = $conditional[$key];
-                $array[$key] = is_array($item)
-                    ? new ConditionalComponent($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->conditional = Utils::isAssociativeArray($conditional)
+            ? new ConditionalComponent($conditional)
+            : $conditional;
         return $this;
     }
 
@@ -313,7 +321,7 @@ class DataTable extends Component
     {
         Assert::isSdkObject($data, RecordStore::class);
 
-        $this->data = is_array($data) ? new RecordStore($data) : $data;
+        $this->data = Utils::isAssociativeArray($data) ? new RecordStore($data) : $data;
         return $this;
     }
 
@@ -338,7 +346,7 @@ class DataTable extends Component
             return $this;
         }
 
-        Assert::oneOf($dataOrientation, ["horizontal", "vertical"]);
+        Assert::oneOf($dataOrientation, ['horizontal', 'vertical']);
 
         $this->dataOrientation = $dataOrientation;
         return $this;
@@ -419,15 +427,13 @@ class DataTable extends Component
             return $this;
         }
 
-        if (is_object($layout) || is_array($layout)) {
+        if (is_object($layout) || Utils::isAssociativeArray($layout)) {
             Assert::isSdkObject($layout, ComponentLayout::class);
         } else {
             Assert::string($layout);
         }
 
-        $this->layout = is_array($layout)
-            ? new ComponentLayout($layout)
-            : $layout;
+        $this->layout = Utils::isAssociativeArray($layout) ? new ComponentLayout($layout) : $layout;
         return $this;
     }
 
@@ -475,9 +481,7 @@ class DataTable extends Component
     public function addSortBy($item)
     {
         return $this->setSortBy(
-            !is_null($this->sortBy)
-                ? array_merge($this->sortBy, [$item])
-                : [$item]
+            !is_null($this->sortBy) ? array_merge($this->sortBy, [$item]) : [$item]
         );
     }
 
@@ -505,23 +509,25 @@ class DataTable extends Component
         Assert::isArray($sortBy);
         Assert::allIsSdkObject($sortBy, DataTableSorting::class);
 
-        $this->sortBy = array_reduce(
-            array_keys($sortBy),
-            function ($array, $key) use ($sortBy) {
-                $item = $sortBy[$key];
-                $array[$key] = is_array($item)
-                    ? new DataTableSorting($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->sortBy = is_array($sortBy)
+            ? array_reduce(
+                array_keys($sortBy),
+                function ($array, $key) use ($sortBy) {
+                    $item = $sortBy[$key];
+                    $array[$key] = Utils::isAssociativeArray($item)
+                        ? new DataTableSorting($item)
+                        : $item;
+                    return $array;
+                },
+                []
+            )
+            : $sortBy;
         return $this;
     }
 
     /**
      * Get the style
-     * @return \Urbania\AppleNews\Format\ComponentStyle|string
+     * @return \Urbania\AppleNews\Format\ComponentStyle|string|none
      */
     public function getStyle()
     {
@@ -530,7 +536,7 @@ class DataTable extends Component
 
     /**
      * Set the style
-     * @param \Urbania\AppleNews\Format\ComponentStyle|array|string $style
+     * @param \Urbania\AppleNews\Format\ComponentStyle|array|string|none $style
      * @return $this
      */
     public function setStyle($style)
@@ -540,13 +546,13 @@ class DataTable extends Component
             return $this;
         }
 
-        if (is_object($style) || is_array($style)) {
+        if (is_object($style) || Utils::isAssociativeArray($style)) {
             Assert::isSdkObject($style, ComponentStyle::class);
         } else {
             Assert::string($style);
         }
 
-        $this->style = is_array($style) ? new ComponentStyle($style) : $style;
+        $this->style = Utils::isAssociativeArray($style) ? new ComponentStyle($style) : $style;
         return $this;
     }
 
@@ -558,19 +564,14 @@ class DataTable extends Component
     {
         $data = parent::toArray();
         if (isset($this->data)) {
-            $data['data'] =
-                $this->data instanceof Arrayable
-                    ? $this->data->toArray()
-                    : $this->data;
+            $data['data'] = $this->data instanceof Arrayable ? $this->data->toArray() : $this->data;
         }
         if (isset($this->role)) {
             $data['role'] = $this->role;
         }
         if (isset($this->anchor)) {
             $data['anchor'] =
-                $this->anchor instanceof Arrayable
-                    ? $this->anchor->toArray()
-                    : $this->anchor;
+                $this->anchor instanceof Arrayable ? $this->anchor->toArray() : $this->anchor;
         }
         if (isset($this->animation)) {
             $data['animation'] =
@@ -580,24 +581,13 @@ class DataTable extends Component
         }
         if (isset($this->behavior)) {
             $data['behavior'] =
-                $this->behavior instanceof Arrayable
-                    ? $this->behavior->toArray()
-                    : $this->behavior;
+                $this->behavior instanceof Arrayable ? $this->behavior->toArray() : $this->behavior;
         }
         if (isset($this->conditional)) {
-            $data['conditional'] = !is_null($this->conditional)
-                ? array_reduce(
-                    array_keys($this->conditional),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->conditional[$key] instanceof Arrayable
-                                ? $this->conditional[$key]->toArray()
-                                : $this->conditional[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->conditional;
+            $data['conditional'] =
+                $this->conditional instanceof Arrayable
+                    ? $this->conditional->toArray()
+                    : $this->conditional;
         }
         if (isset($this->dataOrientation)) {
             $data['dataOrientation'] = $this->dataOrientation;
@@ -610,9 +600,7 @@ class DataTable extends Component
         }
         if (isset($this->layout)) {
             $data['layout'] =
-                $this->layout instanceof Arrayable
-                    ? $this->layout->toArray()
-                    : $this->layout;
+                $this->layout instanceof Arrayable ? $this->layout->toArray() : $this->layout;
         }
         if (isset($this->showDescriptorLabels)) {
             $data['showDescriptorLabels'] = $this->showDescriptorLabels;
@@ -634,9 +622,7 @@ class DataTable extends Component
         }
         if (isset($this->style)) {
             $data['style'] =
-                $this->style instanceof Arrayable
-                    ? $this->style->toArray()
-                    : $this->style;
+                $this->style instanceof Arrayable ? $this->style->toArray() : $this->style;
         }
         return $data;
     }

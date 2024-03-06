@@ -6,7 +6,7 @@
     "from_class": null,
     "extends": "Api\\Objects\\Channel",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/channelresponse",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/channelresponse.json",
     "properties": [
         {
             "name": "links",

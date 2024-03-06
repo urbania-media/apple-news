@@ -5,12 +5,13 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * An object used in a map component for specifying the location of a map
  * pin.
  *
- * @see https://developer.apple.com/documentation/apple_news/mapitem
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/mapitem.json
  */
 class MapItem extends BaseSdkObject
 {
@@ -27,8 +28,8 @@ class MapItem extends BaseSdkObject
     protected $longitude;
 
     /**
-     * The caption for the map item. This caption is displayed when a user
-     * taps on a map pin.
+     * The name of the map item. This caption is  displayed when a user taps
+     * on a map pin.
      * @var string
      */
     protected $caption;

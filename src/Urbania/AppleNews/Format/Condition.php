@@ -5,15 +5,23 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for defining a condition that, when met, causes conditional
  * properties to go into effect.
  *
- * @see https://developer.apple.com/documentation/apple_news/condition
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/condition.json
  */
 class Condition extends BaseSdkObject
 {
+    /**
+     * The application in which the user views the Apple News article.
+     * Valid values:
+     * @var string
+     */
+    protected $app;
+
     /**
      * A string describing the width at which the article is displayed. The
      * value indicates whether the article width is considered constrained
@@ -28,7 +36,7 @@ class Condition extends BaseSdkObject
      * The maximum number of columns in which the article is displayed. When
      * the article is viewed with the specified number of columns or fewer,
      * the conditional properties are in effect. For more information about
-     * the column system, see Planning the Layout for Your Article.
+     * the column system, see .
      * @var integer
      */
     protected $maxColumns;
@@ -71,7 +79,7 @@ class Condition extends BaseSdkObject
      * The minimum number of columns in which the article is displayed. When
      * the article is viewed with the specified number of columns or more,
      * the conditional properties are in effect. For more information about
-     * the column system, see Planning the Layout for Your Article.
+     * the column system, see .
      * @var integer
      */
     protected $minColumns;
@@ -112,11 +120,18 @@ class Condition extends BaseSdkObject
 
     /**
      * A platform on which an article can be viewed. When the article is
-     * viewed on the specfied platform, the conditional properties are in
+     * viewed on the specified platform, the conditional properties are in
      * effect.
      * @var string
      */
     protected $platform;
+
+    /**
+     * A string describing the user's preferred color theme for the system.
+     * Valid values:
+     * @var string
+     */
+    protected $preferredColorScheme;
 
     /**
      * The type of subscription the user has. When the subscription is of the
@@ -136,6 +151,13 @@ class Condition extends BaseSdkObject
     protected $verticalSizeClass;
 
     /**
+     * The territory of the user. When the value is specified, the
+     * conditional properties are in effect.
+     * @var string
+     */
+    protected $territory;
+
+    /**
      * The context of the article. When the context is of the specified type,
      * the conditional properties are in effect.
      * @var string
@@ -144,6 +166,10 @@ class Condition extends BaseSdkObject
 
     public function __construct(array $data = [])
     {
+        if (isset($data['app'])) {
+            $this->setApp($data['app']);
+        }
+
         if (isset($data['horizontalSizeClass'])) {
             $this->setHorizontalSizeClass($data['horizontalSizeClass']);
         }
@@ -192,6 +218,10 @@ class Condition extends BaseSdkObject
             $this->setPlatform($data['platform']);
         }
 
+        if (isset($data['preferredColorScheme'])) {
+            $this->setPreferredColorScheme($data['preferredColorScheme']);
+        }
+
         if (isset($data['subscriptionStatus'])) {
             $this->setSubscriptionStatus($data['subscriptionStatus']);
         }
@@ -200,9 +230,40 @@ class Condition extends BaseSdkObject
             $this->setVerticalSizeClass($data['verticalSizeClass']);
         }
 
+        if (isset($data['territory'])) {
+            $this->setTerritory($data['territory']);
+        }
+
         if (isset($data['viewLocation'])) {
             $this->setViewLocation($data['viewLocation']);
         }
+    }
+
+    /**
+     * Get the app
+     * @return string
+     */
+    public function getApp()
+    {
+        return $this->app;
+    }
+
+    /**
+     * Set the app
+     * @param string $app
+     * @return $this
+     */
+    public function setApp($app)
+    {
+        if (is_null($app)) {
+            $this->app = null;
+            return $this;
+        }
+
+        Assert::oneOf($app, ['any', 'news', 'stocks']);
+
+        $this->app = $app;
+        return $this;
     }
 
     /**
@@ -226,7 +287,7 @@ class Condition extends BaseSdkObject
             return $this;
         }
 
-        Assert::oneOf($horizontalSizeClass, ["any", "regular", "compact"]);
+        Assert::oneOf($horizontalSizeClass, ['any', 'regular', 'compact']);
 
         $this->horizontalSizeClass = $horizontalSizeClass;
         return $this;
@@ -281,18 +342,18 @@ class Condition extends BaseSdkObject
         }
 
         Assert::oneOf($maxContentSizeCategory, [
-            "XS",
-            "S",
-            "M",
-            "L",
-            "XL",
-            "XXL",
-            "XXXL",
-            "AX-M",
-            "AX-L",
-            "AX-XL",
-            "AX-XXL",
-            "AX-XXXL"
+            'XS',
+            'S',
+            'M',
+            'L',
+            'XL',
+            'XXL',
+            'XXXL',
+            'AX-M',
+            'AX-L',
+            'AX-XL',
+            'AX-XXL',
+            'AX-XXXL',
         ]);
 
         $this->maxContentSizeCategory = $maxContentSizeCategory;
@@ -429,18 +490,18 @@ class Condition extends BaseSdkObject
         }
 
         Assert::oneOf($minContentSizeCategory, [
-            "XS",
-            "S",
-            "M",
-            "L",
-            "XL",
-            "XXL",
-            "XXXL",
-            "AX-M",
-            "AX-L",
-            "AX-XL",
-            "AX-XXL",
-            "AX-XXXL"
+            'XS',
+            'S',
+            'M',
+            'L',
+            'XL',
+            'XXL',
+            'XXXL',
+            'AX-M',
+            'AX-L',
+            'AX-XL',
+            'AX-XXL',
+            'AX-XXXL',
         ]);
 
         $this->minContentSizeCategory = $minContentSizeCategory;
@@ -549,9 +610,36 @@ class Condition extends BaseSdkObject
             return $this;
         }
 
-        Assert::oneOf($platform, ["any", "ios", "macos"]);
+        Assert::oneOf($platform, ['any', 'ios', 'macos', 'web']);
 
         $this->platform = $platform;
+        return $this;
+    }
+
+    /**
+     * Get the preferredColorScheme
+     * @return string
+     */
+    public function getPreferredColorScheme()
+    {
+        return $this->preferredColorScheme;
+    }
+
+    /**
+     * Set the preferredColorScheme
+     * @param string $preferredColorScheme
+     * @return $this
+     */
+    public function setPreferredColorScheme($preferredColorScheme)
+    {
+        if (is_null($preferredColorScheme)) {
+            $this->preferredColorScheme = null;
+            return $this;
+        }
+
+        Assert::oneOf($preferredColorScheme, ['any', 'light', 'dark']);
+
+        $this->preferredColorScheme = $preferredColorScheme;
         return $this;
     }
 
@@ -576,9 +664,36 @@ class Condition extends BaseSdkObject
             return $this;
         }
 
-        Assert::oneOf($subscriptionStatus, ["bundle", "subscribed"]);
+        Assert::oneOf($subscriptionStatus, ['bundle', 'subscribed']);
 
         $this->subscriptionStatus = $subscriptionStatus;
+        return $this;
+    }
+
+    /**
+     * Get the territory
+     * @return string
+     */
+    public function getTerritory()
+    {
+        return $this->territory;
+    }
+
+    /**
+     * Set the territory
+     * @param string $territory
+     * @return $this
+     */
+    public function setTerritory($territory)
+    {
+        if (is_null($territory)) {
+            $this->territory = null;
+            return $this;
+        }
+
+        Assert::oneOf($territory, ['US', 'AU', 'GB', 'CA']);
+
+        $this->territory = $territory;
         return $this;
     }
 
@@ -603,7 +718,7 @@ class Condition extends BaseSdkObject
             return $this;
         }
 
-        Assert::oneOf($verticalSizeClass, ["any", "regular", "compact"]);
+        Assert::oneOf($verticalSizeClass, ['any', 'regular', 'compact']);
 
         $this->verticalSizeClass = $verticalSizeClass;
         return $this;
@@ -630,12 +745,7 @@ class Condition extends BaseSdkObject
             return $this;
         }
 
-        Assert::oneOf($viewLocation, [
-            "any",
-            "article",
-            "issue_table_of_contents",
-            "issue"
-        ]);
+        Assert::oneOf($viewLocation, ['any', 'article', 'issue_table_of_contents', 'issue']);
 
         $this->viewLocation = $viewLocation;
         return $this;
@@ -648,6 +758,9 @@ class Condition extends BaseSdkObject
     public function toArray()
     {
         $data = [];
+        if (isset($this->app)) {
+            $data['app'] = $this->app;
+        }
         if (isset($this->horizontalSizeClass)) {
             $data['horizontalSizeClass'] = $this->horizontalSizeClass;
         }
@@ -684,11 +797,17 @@ class Condition extends BaseSdkObject
         if (isset($this->platform)) {
             $data['platform'] = $this->platform;
         }
+        if (isset($this->preferredColorScheme)) {
+            $data['preferredColorScheme'] = $this->preferredColorScheme;
+        }
         if (isset($this->subscriptionStatus)) {
             $data['subscriptionStatus'] = $this->subscriptionStatus;
         }
         if (isset($this->verticalSizeClass)) {
             $data['verticalSizeClass'] = $this->verticalSizeClass;
+        }
+        if (isset($this->territory)) {
+            $data['territory'] = $this->territory;
         }
         if (isset($this->viewLocation)) {
             $data['viewLocation'] = $this->viewLocation;

@@ -5,18 +5,18 @@ namespace Urbania\AppleNews\Api\Objects;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * See the object that wraps the throttling information that's returned
- * for the publish article and read article endpoints.
+ * for the Create an Article and Read an Article endpoints.
  *
- * @see https://developer.apple.com/documentation/apple_news/meta
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/meta.json
  */
 class Meta extends BaseSdkObject
 {
     /**
-     * Indicates the process responsible for regulating the rate at which
-     * requests are processed.
+     * The rate at which the server processes the requests.
      * @var \Urbania\AppleNews\Api\Objects\Throttling
      */
     protected $throttling;
@@ -51,7 +51,7 @@ class Meta extends BaseSdkObject
 
         Assert::isSdkObject($throttling, Throttling::class);
 
-        $this->throttling = is_array($throttling)
+        $this->throttling = Utils::isAssociativeArray($throttling)
             ? new Throttling($throttling)
             : $throttling;
         return $this;

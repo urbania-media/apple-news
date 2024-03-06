@@ -5,30 +5,33 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The animation whereby a component fades into view.
  *
- * @see https://developer.apple.com/documentation/apple_news/fadeinanimation
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/fadeinanimation.json
  */
 class FadeInAnimation extends ComponentAnimation
 {
     /**
-     * Always fade_in for this animation type.
+     * This animation always has the type fade_in.
      * @var string
      */
     protected $type = 'fade_in';
 
     /**
-     * The initial transparency of the component. Set initialAlpha to a value
-     * between 0 (completely transparent) and 1 (completely opaque).
+     * The initial transparency of the component (and the animation). Set
+     * initialAlpha to a value between  (completely transparent) and 1
+     * (completely visible).
      * @var integer|float
      */
     protected $initialAlpha;
 
     /**
-     * A Boolean value that indicates whether the animation occurs in
-     * response to user action (true) or happens automatically (false).
+     * Indicates whether the animation is controlled by  user action (true)
+     * like scrolling, or happens when the component is within the visible
+     * area of the document (false).
      * @var boolean
      */
     protected $userControllable;

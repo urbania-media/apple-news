@@ -16,16 +16,14 @@ class ObjectDocument extends Document
         'Format\\Scene' => 'type',
         'Format\\DataFormat' => 'type',
         'Format\\Behavior' => 'type',
-        'Format\\ComponentAnimation' => 'type'
+        'Format\\ComponentAnimation' => 'type',
     ];
 
     protected $typedChildClasses;
 
     public function getName()
     {
-        $name = $this->document
-            ->find('#main .topic-title .topic-heading')[0]
-            ->text();
+        $name = data_get($this->data, 'metadata.title');
         return preg_replace('/\s/', '', $this->trim($name));
     }
 
@@ -34,168 +32,154 @@ class ObjectDocument extends Document
         return $this->getType($this->getName());
     }
 
-    public function getObjectsUrls()
-    {
-        $objects = parent::getObjectsUrls();
-        $symbols = $this->document->find('a.symbolref');
-        foreach ($symbols as $symbol) {
-            $href = $symbol->getAttribute('href');
-            $name = trim($symbol->text());
-            $objects[$name] = $this->getAbsoluteUrl($href);
-        }
-        return $objects;
-    }
-
     public function getProperties()
     {
+        $section = collect(data_get($this->data, 'primaryContentSections', []))->first(function (
+            $section
+        ) {
+            return $section['kind'] === 'properties';
+        });
+
         $objectName = $this->getName();
         $fromClass = $this->getFromClass();
-        $rows = $this->document->find('#properties .parametertable-row');
-        $properties = [];
-        foreach ($rows as $row) {
-            $nameCell = $row->child(0);
-            $descriptionCell = $row->child(1);
-            $property = $this->getPropertyFromNameCell($nameCell);
-            if (is_null($property)) {
-                continue;
-            }
-            $property = $this->mergeDescriptionCellProperty(
-                $descriptionCell,
-                $property
-            );
-            if (!is_null($fromClass) && ($property['name'] === '*' || $property['name'] === 'Any Key')) {
-                $property['name'] = strtolower($fromClass);
-                $property['type'] = 'map:' . $property['type'];
-            } elseif ($objectName === 'Heading' && $property['name'] === 'role' && !isset($property['value'])) {
-                $property['value'] = $property['enum_values'][0];
-            } elseif (in_array($objectName, ['Error', 'Warning']) && strtolower($property['name']) === 'keypath') {
-                $property['type'] = 'array';
-            }
-            if (is_array($property['type'])) {
-                $property['type'] = Utils::sortTypes($property['type']);
-            }
-            $property['typed'] = $this->isPropertyCreatesTyped($property);
-            $properties[] = $property;
-        }
+        $properties = collect(data_get($section, 'items', []))
+            ->map(function ($item) use ($objectName, $fromClass) {
+                $property = [
+                    'name' => data_get($item, 'name'),
+                    'type' => $this->getType(
+                        collect(data_get($item, 'type'))
+                            ->map(function ($item) {
+                                return data_get($item, 'text');
+                            })
+                            ->join('')
+                    ),
+                    'required' => data_get($item, 'required', false),
+                ];
 
-        if ($fromClass === 'Records' && sizeof($properties) === 0) {
-            $properties[] = [
-                'name' => 'data',
-                'type' => 'map'
+                $property['description'] = collect(data_get($item, 'content', []))
+                    ->map(function ($item) {
+                        return collect(data_get($item, 'inlineContent', []))
+                            ->map(function ($item) {
+                                return data_get($item, 'text', data_get($item, 'code'));
+                            })
+                            ->filter(function ($item) {
+                                return !empty($item);
+                            })
+                            ->join('');
+                    })
+                    ->filter(function ($item) {
+                        return !empty($item);
+                    })
+                    ->join(PHP_EOL);
+
+                if (
+                    $readOnlyValue = $this->getReadOnlyValueFromDescription(
+                        $property['description']
+                    )
+                ) {
+                    $property['value'] = $readOnlyValue;
+                    $property['read_only'] = true;
+                }
+
+                $property = collect(data_get($item, 'attributes', []))->reduce(function (
+                    $property,
+                    $attribute
+                ) {
+                    if (
+                        $attribute['kind'] === 'minimum' ||
+                        $attribute['kind'] === 'maximum' ||
+                        $attribute['kind'] === 'default'
+                    ) {
+                        if ($property['type'] === 'int') {
+                            $property[$attribute['kind']] = (int) data_get($attribute, 'value');
+                        } elseif ($property['type'] === 'float') {
+                            $property[$attribute['kind']] = (float) data_get($attribute, 'value');
+                        } elseif ($property['type'] === 'boolean') {
+                            $property[$attribute['kind']] = (bool) data_get($attribute, 'value');
+                        } else {
+                            $property[$attribute['kind']] = data_get($attribute, 'value');
+                        }
+                    } elseif ($attribute['kind'] === 'allowedValues') {
+                        $property = $this->mergePossibleValues($attribute, $property);
+                    } elseif ($attribute['kind'] === 'allowedTypes') {
+                        $property = $this->mergePossibleTypes($attribute, $property);
+                    }
+
+                    return $property;
+                }, $property);
+
+                if (
+                    !is_null($fromClass) &&
+                    ($property['name'] === '*' || $property['name'] === 'Any Key')
+                ) {
+                    $property['name'] = strtolower($fromClass);
+                    $property['type'] = 'map:' . $property['type'];
+                } elseif (
+                    $objectName === 'Heading' &&
+                    $property['name'] === 'role' &&
+                    !isset($property['value'])
+                ) {
+                    $property['value'] = $property['enum_values'][0];
+                } elseif (
+                    in_array($objectName, ['Error', 'Warning']) &&
+                    strtolower($property['name']) === 'keypath'
+                ) {
+                    $property['type'] = 'array';
+                }
+                if (is_array($property['type'])) {
+                    $property['type'] = Utils::sortTypes(
+                        collect($property['type'])
+                            ->unique()
+                            ->toArray()
+                    );
+                    if (sizeof($property['type']) === 1) {
+                        $property['type'] = $property['type'][0];
+                    }
+                }
+                $property['typed'] = $this->isPropertyCreatesTyped($property);
+
+                return $property;
+            })
+            ->toArray();
+
+        if ($fromClass === 'Records' && sizeof($properties) <= 1) {
+            $properties = [
+                [
+                    'name' => 'data',
+                    'type' => 'map',
+                ],
             ];
         } elseif (preg_match('/ArticleMetadataFields$/', $objectName) === 1) {
             $properties[] = [
                 'name' => 'links',
-                'type' => $this->getType('ArticleLinks')
+                'type' => $this->getType('ArticleLinks'),
             ];
         }
 
         return $properties;
     }
 
-    protected function getPropertyFromNameCell($cell)
-    {
-        $property = [];
-        $children = $cell->children();
-        foreach ($children as $child) {
-            if ($child->isTextNode()) {
-                continue;
-            }
-            $classes = $child->classes();
-            if ($classes->contains('parametertable-name')) {
-                $property['name'] = $this->trim($child->text());
-            } elseif ($classes->contains('parametertable-type')) {
-                $property['type'] = $this->getType($this->trim($child->text()));
-            }
-        }
-        return sizeof($property) ? $property : null;
-    }
-
-    protected function mergeDescriptionCellProperty($cell, $property)
-    {
-        $property = array_merge($property, [
-            'required' => false
-        ]);
-        $firstChild = $cell->firstChild();
-        $children = !is_null($firstChild) && $firstChild->classes()->contains('description-wrapper')
-            ? array_merge(
-                $firstChild->children(),
-                array_slice($cell->children(), 1)
-            )
-            : $cell->children();
-        foreach ($children as $child) {
-            if ($child->isTextNode()) {
-                continue;
-            }
-            $classes = $child->classes();
-            if ($classes->contains('parametertable-requirement')) {
-                $property['required'] =
-                    $this->trim($child->text()) === '(Required)';
-            } elseif ($classes->contains('parametertable-description')) {
-                $property = $this->mergeDescriptionProperty($child, $property);
-            } elseif ($classes->contains('parametertable-metadata')) {
-                $property = $this->mergeMetadataProperty($child, $property);
-            }
-        }
-        return $property;
-    }
-
-    protected function mergeDescriptionProperty($node, $property)
-    {
-        $property = array_merge($property, []);
-        $children = $node->firstChild()->children();
-        foreach ($children as $child) {
-            if ($child->isTextNode()) {
-                continue;
-            }
-            if ($child->tag === 'p') {
-                $text = $this->trim($child->text());
-                if (!isset($property['description'])) {
-                    $property['description'] = $text;
-                    if ($readOnlyValue = $this->getReadOnlyValueFromDescription(
-                        $text
-                    )) {
-                        $property['value'] = $readOnlyValue;
-                        $property['read_only'] = true;
-                    }
-                } elseif (preg_match('/^Version ([0-9]+\.[0-9])/', $text, $matches)
-                ) {
-                    $property['version'] = $matches[1];
-                }
-            }
-        }
-
-        return $property;
-    }
-
     protected function getReadOnlyValueFromDescription($text)
     {
-        if (preg_match('/type is always ([a-zA-Z0-9_-]+)\./', $text, $matches)
+        if (preg_match('/type is always ([a-zA-Z0-9_-]+)\./', $text, $matches)) {
+            return $matches[1];
+        } elseif (preg_match('/Should be set to ([a-zA-Z0-9_-]+)\./', $text, $matches)) {
+            return $matches[1];
+        } elseif (preg_match('/should be ([a-zA-Z0-9_-]+) for a/', $text, $matches)) {
+            return $matches[1];
+        } elseif (preg_match('/This must be ([a-zA-Z0-9_-]+) for a/', $text, $matches)) {
+            return $matches[1];
+        } elseif (preg_match('/The type must be ([a-zA-Z0-9_-]+)./', $text, $matches)) {
+            return $matches[1];
+        } elseif (preg_match('/should always be set to ([a-zA-Z0-9_-]+)./', $text, $matches)) {
+            return $matches[1];
+        } elseif (
+            preg_match(
+                '/Always ([a-zA-Z0-9_-]+)( or [a-zA-Z0-9_-]+)? for (this|a|the)/',
+                $text,
+                $matches
+            )
         ) {
-            return $matches[1];
-        } elseif (preg_match('/Should be set to ([a-zA-Z0-9_-]+)\./', $text, $matches)
-        ) {
-            return $matches[1];
-        } elseif (preg_match('/should be ([a-zA-Z0-9_-]+) for a/', $text, $matches)
-        ) {
-            return $matches[1];
-        } elseif (preg_match('/This must be ([a-zA-Z0-9_-]+) for a/', $text, $matches)
-        ) {
-            return $matches[1];
-        } elseif (preg_match('/The type must be ([a-zA-Z0-9_-]+)./', $text, $matches)
-        ) {
-            return $matches[1];
-        } elseif (preg_match(
-            '/should always be set to ([a-zA-Z0-9_-]+)./',
-            $text,
-            $matches
-        )) {
-            return $matches[1];
-        } elseif (preg_match(
-            '/Always ([a-zA-Z0-9_-]+)( or [a-zA-Z0-9_-]+)? for (this|a|the)/',
-            $text,
-            $matches
-        )) {
             return $matches[1];
         }
 
@@ -208,85 +192,79 @@ class ObjectDocument extends Document
             : null;
     }
 
-    protected function mergeMetadataProperty($node, $property)
+    protected function mergePossibleTypes($attribute, $property)
     {
-        $property = array_merge($property, []);
-        $text = $this->trim($node->text());
-        if (preg_match('/^(Default|Minimum|Maximum)\: (.*)$/', $text, $matches)
-        ) {
-            if (is_numeric($matches[2])) {
-                if ($property['type'] === 'integer') {
-                    $property[strtolower($matches[1])] = (int) $matches[2];
-                } else {
-                    $property[strtolower($matches[1])] = (float) $matches[2];
-                }
-            } else {
-                $property[strtolower($matches[1])] = $matches[2];
-            }
-        } elseif (preg_match('/^Possible types\: /', $text)) {
-            $property = $this->mergePossibleTypes($node, $property);
-        } elseif (preg_match('/^Possible values\: /', $text)) {
-            $property = $this->mergePossibleValues($node, $property);
-        }
-        return $property;
-    }
-
-    protected function mergePossibleTypes($node, $property)
-    {
-        $children = $node->firstChild()->children();
-        $types = array_map(function ($type) {
-            return $this->getType($type);
-        }, $this->getMetadataValues($children));
+        $types = collect(data_get($attribute, 'values', []))
+            ->map(function ($value) {
+                return $this->getType(
+                    collect($value)
+                        ->map(function ($item) {
+                            return $item['text'];
+                        })
+                        ->join('')
+                );
+            })
+            ->unique()
+            ->values()
+            ->toArray();
 
         // If possible types is a string enum
-        $stringEnumValues = array_reduce($types, function ($stringListType, $type) {
-            if (preg_match('/string\(([^)]+)\)/i', $type, $matches)) {
-                return array_map(function ($value) {
-                    return json_decode(trim($value));
-                }, explode('|', $matches[1]));
-            }
-            return $stringListType;
-        }, null);
+        $stringEnumValues = array_reduce(
+            $types,
+            function ($stringListType, $type) {
+                if (preg_match('/string\(([^)]+)\)/i', $type, $matches)) {
+                    return array_map(function ($value) {
+                        return json_decode(trim($value));
+                    }, explode('|', $matches[1]));
+                }
+                return $stringListType;
+            },
+            null
+        );
         if (!is_null($stringEnumValues)) {
             $enumTypes = array_map(function ($type) {
                 return preg_match('/^string\([^)]+\)/', $type) === 1 ? 'string' : $type;
             }, $types);
-            $otherTypeEnumValues = array_reduce($enumTypes, function ($values, $type) {
-                if ($type === 'boolean') {
-                    return array_merge($values, [true, false]);
-                }
-                return $values;
-            }, []);
+            $otherTypeEnumValues = array_reduce(
+                $enumTypes,
+                function ($values, $type) {
+                    if ($type === 'boolean') {
+                        return array_merge($values, [true, false]);
+                    }
+                    return $values;
+                },
+                []
+            );
             return array_merge($property, [
-                'type' => 'enum:'.implode('|', $enumTypes),
-                'enum_values' => array_merge($stringEnumValues, $otherTypeEnumValues)
+                'type' => 'enum:' . implode('|', $enumTypes),
+                'enum_values' => array_merge($stringEnumValues, $otherTypeEnumValues),
             ]);
         }
 
         return array_merge($property, [
-            'type' => $types
+            'type' => $types,
         ]);
     }
 
-    protected function mergePossibleValues($node, $property)
+    protected function mergePossibleValues($attribute, $property)
     {
         $type = $property['type'] ?? null;
         $property = array_merge($property, [
             'type' => !is_null($type)
-                ? sprintf(
-                    'enum:%s',
-                    is_array($type) ? implode('|', $type) : $type
-                )
-                : 'enum'
+                ? sprintf('enum:%s', is_array($type) ? implode('|', $type) : $type)
+                : 'enum',
         ]);
 
-        $children = $node->firstChild()->children();
-        $values = $this->getMetadataValues($children);
+        $values = data_get($attribute, 'values', []);
+        if (sizeof($values) === 1 && $property['required']) {
+            $property['type'] = $type;
+            $property['value'] = $values[0];
+            $property['read_only'] = true;
+            return $property;
+        }
         $property['enum_values'] = array_map(function ($value) {
             if (is_numeric($value)) {
-                return strpos($value, '.') === false
-                    ? (int) $value
-                    : (float) $value;
+                return strpos($value, '.') === false ? (int) $value : (float) $value;
             } elseif ($value === 'true' || $value === 'false') {
                 return $value === 'true';
             }
@@ -316,8 +294,7 @@ class ObjectDocument extends Document
         $typedClasses = array_map(function ($class) {
             return preg_quote($class, '/');
         }, array_keys($this->typedClasses));
-        $typedPattern =
-            '/^(.*?\b)?(' . implode('|', $typedClasses) . ')(\b.*)?$/';
+        $typedPattern = '/^(.*?\b)?(' . implode('|', $typedClasses) . ')(\b.*)?$/';
         if (is_array($type)) {
             return array_reduce(
                 $type,
@@ -336,10 +313,17 @@ class ObjectDocument extends Document
             return 'array:' . $this->getType($matches[1]);
         } elseif (preg_match('/\.([a-z].*)$/', $type, $matches)) {
             return $this->getType(ucfirst($matches[1]));
+        } elseif (preg_match('/string\(\"none\"\)/i', $type, $matches)) {
+            return 'none';
         } elseif (preg_match('/^(Color|SupportedUnits|Code|Status)$/', $type)) {
             return $type;
-        } elseif (preg_match('/^([A-Z][^\.]+)\.([A-Z][^\.]+)$/', $type, $matches)
+        } elseif (
+            preg_match('/^(SupportedArticleIdentifier|PublisherArticleIdentifier)$/', $type)
         ) {
+            return 'string';
+        } elseif (preg_match('/^(SupportedInternalURLs|SupportedURLs)$/', $type)) {
+            return 'uri';
+        } elseif (preg_match('/^([A-Z][^\.]+)\.([A-Z][^\.]+)$/', $type, $matches)) {
             return $this->getType($matches[1] . $matches[2]);
         } elseif (preg_match('/^[A-Z]/', $type)) {
             return $this->namespace . '\\' . $type;
@@ -350,11 +334,7 @@ class ObjectDocument extends Document
     public function getFromClass()
     {
         $name = $this->getName();
-        if (preg_match(
-            '/^(.*?)\.[a-z][a-zA-Z]+(Layouts|Styles)$/',
-            $name,
-            $matches
-        )) {
+        if (preg_match('/^(.*?)\.[a-z][a-zA-Z]+(Layouts|Styles)$/', $name, $matches)) {
             return $matches[2];
         } elseif (preg_match('/^(.*?)\.(campaignData|records)$/', $name)) {
             return 'Records';
@@ -364,13 +344,28 @@ class ObjectDocument extends Document
 
     public function getInherits()
     {
-        if ($this->document->has('#inherits-from .symbol-name')) {
-            $nodes = $this->document->find('#inherits-from .symbol-name');
-            return array_map(function ($node) {
-                return $this->trim($node->text());
-            }, $nodes);
+        $section = collect(data_get($this->data, 'relationshipsSections', []))->first(function (
+            $section
+        ) {
+            return $section['type'] === 'inheritsFrom';
+        });
+
+        if (!isset($section)) {
+            return null;
         }
-        return null;
+
+        $inherits = collect(data_get($section, 'identifiers', []))
+            ->map(function ($id) {
+                $references = data_get($this->data, 'references');
+                return isset($references) ? data_get($references[$id], 'title') : null;
+            })
+            ->filter(function ($name) {
+                return !empty($name);
+            })
+            ->values()
+            ->toArray();
+
+        return $inherits;
     }
 
     public function hasMultipleInherits()
@@ -382,36 +377,23 @@ class ObjectDocument extends Document
     public function getExtends()
     {
         $ihnerits = $this->getInherits();
-        return !is_null($ihnerits) && sizeof($ihnerits)
-            ? $this->getType($ihnerits[0])
-            : null;
+
+        return !is_null($ihnerits) && sizeof($ihnerits) ? $this->getType($ihnerits[0]) : null;
     }
 
     public function getDescription()
     {
-        if ($this->document->has('#main .topic-description')) {
-            $node = $this->document->find('#main .topic-description');
-            return $this->trim($node[0]->text());
-        }
-        return null;
+        return data_get($this->data, 'abstract.0.text');
     }
 
     public function getVersion()
     {
-        if ($this->document->has('#main .topic-summary .sdk')) {
-            $node = $this->document->find('#main .topic-summary .sdk');
-            $text = $this->trim($node[0]->text());
-            if (preg_match($this->versionPattern, $text, $matches)) {
-                return $matches[1];
-            }
-            return '1.0+';
-        }
-        return '1.0+';
+        return data_get($this->data, 'metadata.platforms.0.introducedAt', '1.0') . '+';
     }
 
     public function getDeprecated()
     {
-        return $this->document->has('#main .topic-summary .sdk .violator-deprecated');
+        return data_get($this->data, 'metadata.platforms.0.deprecated', false);
     }
 
     public function isTyped()
@@ -473,11 +455,11 @@ class ObjectDocument extends Document
             'typed' => $this->isTyped()
                 ? [
                     'property' => $this->getTypedProperty(),
-                    'types' => $this->getTypedClassesMap()
+                    'types' => $this->getTypedClassesMap(),
                 ]
                 : null,
             'url' => $this->url,
-            'properties' => $this->getProperties()
+            'properties' => $this->getProperties(),
         ];
     }
 }

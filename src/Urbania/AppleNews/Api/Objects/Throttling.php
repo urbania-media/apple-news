@@ -5,12 +5,13 @@ namespace Urbania\AppleNews\Api\Objects;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * See the object that wraps the throttling information that's returned
- * for the create article and update article endpoints.
+ * for the Create an Article and Update an Article endpoints.
  *
- * @see https://developer.apple.com/documentation/apple_news/throttling
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/throttling.json
  */
 class Throttling extends BaseSdkObject
 {
@@ -22,22 +23,22 @@ class Throttling extends BaseSdkObject
     protected $estimatedDelayInSeconds;
 
     /**
-     * A boolean value that indicates whether requests to this channel are
-     * currently being throttled. If true, this request is added to the queue
-     * to be processed later rather than immediately.
+     * A Boolean value that indicates whether requests to this channel are
+     * currently being throttled. If true, the server adds this request to
+     * the queue to process later rather than immediately.
      * @var boolean
      */
     protected $isThrottled;
 
     /**
-     * Number of requests currently queued for later processing.
+     * The number of requests currently queued for later processing.
      * @var integer
      */
     protected $queueSize;
 
     /**
-     * Number of additional article publish or update requests which could be
-     * submitted now before the system will begin throttling.
+     * The number of additional article publish or update requests that you
+     * can submit now, before the system begins throttling.
      * @var integer
      */
     protected $quotaAvailable;

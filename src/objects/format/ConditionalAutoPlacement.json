@@ -2,17 +2,20 @@
     "name": "Format\\ConditionalAutoPlacement",
     "description": "The object for defining conditional properties for an automatically placed component, and when the conditional properties are in effect.",
     "version": "1.9+",
-    "deprecated": false,
+    "deprecated": true,
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/conditionalautoplacement",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/conditionalautoplacement.json",
     "properties": [
         {
             "name": "conditions",
-            "type": "array:Format\\Condition",
+            "type": [
+                "Format\\Condition",
+                "array:Format\\Condition"
+            ],
             "required": true,
-            "description": "An array of conditions that, when met, cause the conditional automatic placement properties to be in effect.",
+            "description": "An instance or array of conditions that, when met, cause the conditional automatic placement properties to take effect. ",
             "typed": false
         },
         {
@@ -20,7 +23,7 @@
             "type": "boolean",
             "required": false,
             "description": "A Boolean that defines whether placement of advertisements is enabled.",
-            "default": "false",
+            "default": true,
             "typed": false
         },
         {

@@ -5,11 +5,12 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for defining the automatic placement of advertisements.
  *
- * @see https://developer.apple.com/documentation/apple_news/advertisementautoplacement
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/advertisementautoplacement.json
  */
 class AdvertisementAutoPlacement extends AutoPlacement
 {
@@ -22,31 +23,41 @@ class AdvertisementAutoPlacement extends AutoPlacement
     protected $bannerType;
 
     /**
-     * An array of automatic placement properties that can be applied
-     * conditionally, and the conditions that cause them to be applied.
-     * @var Format\ConditionalAutoPlacement[]
+     * An instance or array of automatic placement properties that can be
+     * applied conditionally, and the conditions that cause them to take
+     * effect.
+     * @var Format\ConditionalAutoPlacement[]|\Urbania\AppleNews\Format\ConditionalAutoPlacement
      */
     protected $conditional;
 
     /**
      * The minimum required distance between automatically inserted
-     * advertisement components and media, such as Video and Photo. To
-     * maintain a minimum distance of half a screen height from your media
-     * content, use a value of around 50vh. For more information, see
-     * Specifying Measurements for Components.
-     * @var string|integer
+     * advertisement components and media, such as  and . Advertisements will
+     * show next to media if distanceFromMedia is not specified. To maintain
+     * a minimum distance of half a screen height from your media content,
+     * use a value of around 10vh. For more information, see .
+     * @var string|integer|float
      */
     protected $distanceFromMedia;
 
     /**
      * A Boolean that defines whether placement of advertisements is enabled.
+     *
      * @var boolean
      */
     protected $enabled;
 
     /**
-     * A number from 0 to 10, defining the frequency for automatically
-     * inserting BannerAdvertisement components into articles.
+     * A number from  to 10, defining the frequency for automatically
+     * inserting ads into articles.
+     * Setting this value to 1 automatically inserts a dynamic advertisement
+     * in the first possible location below the screen bounds.
+     * Setting this value to 2 inserts a dynamic advertisement in the first
+     * possible location below the screen bounds, and another between the
+     * first dynamic advertisement and the end of the article.
+     * Increasing the frequency value increases the frequency of dynamic
+     * advertisements below the first screen bounds.
+     * Setting this value to 0, or omitting it, results in no advertisements.
      * @var integer
      */
     protected $frequency;
@@ -107,34 +118,15 @@ class AdvertisementAutoPlacement extends AutoPlacement
             return $this;
         }
 
-        Assert::oneOf($bannerType, [
-            "any",
-            "standard",
-            "double_height",
-            "large"
-        ]);
+        Assert::oneOf($bannerType, ['any', 'standard', 'double_height', 'large']);
 
         $this->bannerType = $bannerType;
         return $this;
     }
 
     /**
-     * Add an item to conditional
-     * @param \Urbania\AppleNews\Format\ConditionalAutoPlacement|array $item
-     * @return $this
-     */
-    public function addConditional($item)
-    {
-        return $this->setConditional(
-            !is_null($this->conditional)
-                ? array_merge($this->conditional, [$item])
-                : [$item]
-        );
-    }
-
-    /**
      * Get the conditional
-     * @return Format\ConditionalAutoPlacement[]
+     * @return Format\ConditionalAutoPlacement[]|\Urbania\AppleNews\Format\ConditionalAutoPlacement
      */
     public function getConditional()
     {
@@ -143,7 +135,7 @@ class AdvertisementAutoPlacement extends AutoPlacement
 
     /**
      * Set the conditional
-     * @param Format\ConditionalAutoPlacement[] $conditional
+     * @param Format\ConditionalAutoPlacement[]|\Urbania\AppleNews\Format\ConditionalAutoPlacement|array $conditional
      * @return $this
      */
     public function setConditional($conditional)
@@ -153,26 +145,22 @@ class AdvertisementAutoPlacement extends AutoPlacement
             return $this;
         }
 
-        Assert::isArray($conditional);
-        Assert::allIsSdkObject($conditional, ConditionalAutoPlacement::class);
+        if (is_object($conditional) || Utils::isAssociativeArray($conditional)) {
+            Assert::isSdkObject($conditional, ConditionalAutoPlacement::class);
+        } else {
+            Assert::isArray($conditional);
+            Assert::allIsSdkObject($conditional, ConditionalAutoPlacement::class);
+        }
 
-        $this->conditional = array_reduce(
-            array_keys($conditional),
-            function ($array, $key) use ($conditional) {
-                $item = $conditional[$key];
-                $array[$key] = is_array($item)
-                    ? new ConditionalAutoPlacement($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->conditional = Utils::isAssociativeArray($conditional)
+            ? new ConditionalAutoPlacement($conditional)
+            : $conditional;
         return $this;
     }
 
     /**
      * Get the distanceFromMedia
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getDistanceFromMedia()
     {
@@ -181,7 +169,7 @@ class AdvertisementAutoPlacement extends AutoPlacement
 
     /**
      * Set the distanceFromMedia
-     * @param string|integer $distanceFromMedia
+     * @param string|integer|float $distanceFromMedia
      * @return $this
      */
     public function setDistanceFromMedia($distanceFromMedia)
@@ -274,7 +262,7 @@ class AdvertisementAutoPlacement extends AutoPlacement
 
         Assert::isSdkObject($layout, AutoPlacementLayout::class);
 
-        $this->layout = is_array($layout)
+        $this->layout = Utils::isAssociativeArray($layout)
             ? new AutoPlacementLayout($layout)
             : $layout;
         return $this;
@@ -291,19 +279,10 @@ class AdvertisementAutoPlacement extends AutoPlacement
             $data['bannerType'] = $this->bannerType;
         }
         if (isset($this->conditional)) {
-            $data['conditional'] = !is_null($this->conditional)
-                ? array_reduce(
-                    array_keys($this->conditional),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->conditional[$key] instanceof Arrayable
-                                ? $this->conditional[$key]->toArray()
-                                : $this->conditional[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->conditional;
+            $data['conditional'] =
+                $this->conditional instanceof Arrayable
+                    ? $this->conditional->toArray()
+                    : $this->conditional;
         }
         if (isset($this->distanceFromMedia)) {
             $data['distanceFromMedia'] =
@@ -319,9 +298,7 @@ class AdvertisementAutoPlacement extends AutoPlacement
         }
         if (isset($this->layout)) {
             $data['layout'] =
-                $this->layout instanceof Arrayable
-                    ? $this->layout->toArray()
-                    : $this->layout;
+                $this->layout instanceof Arrayable ? $this->layout->toArray() : $this->layout;
         }
         return $data;
     }

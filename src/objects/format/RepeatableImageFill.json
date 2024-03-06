@@ -6,13 +6,13 @@
     "from_class": null,
     "extends": "Format\\Fill",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/repeatableimagefill",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/repeatableimagefill.json",
     "properties": [
         {
             "name": "type",
             "type": "string",
             "required": true,
-            "description": "Always repeatable_image for this object.",
+            "description": "Always repeatable_image for this object. ",
             "value": "repeatable_image",
             "read_only": true,
             "typed": false
@@ -21,14 +21,14 @@
             "name": "URL",
             "type": "uri",
             "required": true,
-            "description": "The URL of the image file to use for filling the component.",
+            "description": "The URL of the image file to use for filling the component. \nImage URLs can begin with http:\/\/, https:\/\/, or bundle:\/\/. If the image URL begins with bundle:\/\/, the referenced image file must be in the same directory as the document.\nImage file names should be properly encoded as URLs. \nSee .",
             "typed": false
         },
         {
             "name": "attachment",
             "type": "enum:string",
             "required": false,
-            "description": "A string that indicates how the fill should behave when a user scrolls.",
+            "description": "A string that indicates how the fill should behave when a user scrolls. \nValid values:",
             "default": "scroll",
             "enum_values": [
                 "fixed",
@@ -40,7 +40,7 @@
             "name": "height",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
             "description": "The height of the image as it is repeated. When height is omitted, the width property is used to determine the size based on the aspect ratio of the provided image.",
@@ -50,7 +50,7 @@
             "name": "horizontalAlignment",
             "type": "enum:string",
             "required": false,
-            "description": "A string that sets the horizontal alignment of the image fill within its component.",
+            "description": "A string that sets the horizontal alignment of the image fill within its component. \nValid values:",
             "default": "center",
             "enum_values": [
                 "left",
@@ -63,7 +63,7 @@
             "name": "repeat",
             "type": "enum:string",
             "required": false,
-            "description": "A string that defines the direction in which the background image is repeated.",
+            "description": "A string that defines the direction in which the background image is repeated. \nValid values:",
             "default": "both",
             "enum_values": [
                 "none",
@@ -77,7 +77,7 @@
             "name": "verticalAlignment",
             "type": "enum:string",
             "required": false,
-            "description": "The vertical alignment of the repeatable image fill within its component.",
+            "description": "The vertical alignment of the repeatable image fill within its component. \nValid values:\nThis property has no effect when the repeat property is set to both or y.",
             "default": "center",
             "enum_values": [
                 "top",
@@ -90,7 +90,7 @@
             "name": "width",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
             "description": "The width of the image as it is repeated. When width is omitted, the height property is used to determine the size based on the aspect ratio of the provided image.",

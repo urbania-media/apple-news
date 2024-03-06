@@ -28,7 +28,7 @@ class ParallaxTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["parallax"]];
+        return [['parallax']];
     }
 
     /**

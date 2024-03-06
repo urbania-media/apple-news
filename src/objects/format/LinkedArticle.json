@@ -6,13 +6,13 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/linkedarticle",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/linkedarticle.json",
     "properties": [
         {
             "name": "relationship",
             "type": "enum:string",
             "required": true,
-            "description": "The type of relationship between the article and the linked document.",
+            "description": "The type of relationship between the article and the linked document. \nValid values:",
             "enum_values": [
                 "related",
                 "promoted"
@@ -23,7 +23,7 @@
             "name": "URL",
             "type": "uri",
             "required": true,
-            "description": "The URL for the link. This link can  either be an Apple News link, like https:\/\/apple.news\/[article_id], or a link to an article on your website, as long as the website link matches the canonicalURL metadata property of the linked article. For more information about canonicalURL, see Metadata.",
+            "description": "The URL for the link. Can be either an Apple News link, like https:\/\/apple.news\/[article_id], or a link to an article on your website, as long as the website link matches the canonicalURL metadata property of the linked article. For more information about canonicalURL, see .",
             "typed": false
         }
     ]

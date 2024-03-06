@@ -5,12 +5,13 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * Define and provide data records that fit within the structure defined
  * by descriptors for a data table.
  *
- * @see https://developer.apple.com/documentation/apple_news/recordstore/records
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/recordstore/records.json
  */
 class Records extends BaseSdkObject
 {

@@ -16,10 +16,7 @@ class ObjectPropertyTestMethodBuilder
         $method = $this->buildTestMethod($property, $object);
         $providerMethod = $this->buildProviderMethod($property, $object);
 
-        return [
-            $method,
-            $providerMethod
-        ];
+        return [$method, $providerMethod];
     }
 
     protected function buildTestMethod(array $property, array $object)
@@ -28,7 +25,7 @@ class ObjectPropertyTestMethodBuilder
         $type = $property['type'];
         $readOnly = $property['read_only'] ?? false;
 
-        $methodName = 'testProperty'.Utils::studlyCase($name);
+        $methodName = 'testProperty' . Utils::studlyCase($name);
         $method = new Method($methodName);
 
         $method->setVisibility('public');
@@ -47,9 +44,10 @@ class ObjectPropertyTestMethodBuilder
     protected function buildProviderMethod(array $property, array $object)
     {
         $name = $property['name'];
-        $methodName = $name.'Provider';
+        $methodName = $name . 'Provider';
         $method = new Method($methodName);
         $method->setVisibility('public');
+        $method->setStatic(true);
         $method->addComment(sprintf('Data provider for property %s', $name));
         $method->setBody($this->buildProviderBody($property, $object));
 
@@ -58,21 +56,19 @@ class ObjectPropertyTestMethodBuilder
 
     protected function buildProviderBody(array $property, array $object)
     {
-        $types = (array)$property['type'];
-        $values = array_reduce($types, function ($values, $type) use ($property) {
-            $newValues = (array)$this->getValuesFromType($type, $property);
-            return array_merge($values, $newValues);
-        }, []);
-        $values = array_map(function ($value) {
-            return sprintf(
-                '[%s]',
-                $value
-            );
-        }, $values);
-        return sprintf(
-            'return [%s];',
-            implode(',', $values)
+        $types = (array) $property['type'];
+        $values = array_reduce(
+            $types,
+            function ($values, $type) use ($property) {
+                $newValues = (array) $this->getValuesFromType($type, $property);
+                return array_merge($values, $newValues);
+            },
+            []
         );
+        $values = array_map(function ($value) {
+            return sprintf('[%s]', $value);
+        }, $values);
+        return sprintf('return [%s];', implode(',', $values));
     }
 
     protected function buildBody(array $property, array $object)
@@ -85,10 +81,12 @@ class ObjectPropertyTestMethodBuilder
             return $this->buildReadOnlyBody($property, $object);
         }
         return sprintf(
-            '$object = new %1$s();'.PHP_EOL.
-            '$object->set%2$s($value);'.PHP_EOL.
-            PHP_EOL.
-            '$this->assertEquals($value, $object->get%2$s());',
+            '$object = new %1$s();' .
+                PHP_EOL .
+                '$object->set%2$s($value);' .
+                PHP_EOL .
+                PHP_EOL .
+                '$this->assertEquals($value, $object->get%2$s());',
             $objectClassName,
             Utils::studlyCase($property['name'])
         );
@@ -99,9 +97,10 @@ class ObjectPropertyTestMethodBuilder
         $objectName = $object['name'];
         $objectClassName = $this->getClassBaseName($objectName);
         return sprintf(
-            '$object = new %1$s();'.PHP_EOL.
-            PHP_EOL.
-            '$this->assertEquals($value, $object->get%2$s());',
+            '$object = new %1$s();' .
+                PHP_EOL .
+                PHP_EOL .
+                '$this->assertEquals($value, $object->get%2$s());',
             $objectClassName,
             Utils::studlyCase($property['name'])
         );
@@ -136,6 +135,9 @@ class ObjectPropertyTestMethodBuilder
             case 'uri':
                 return $this->getSafeValues(['http://example.com', 'https://example.com']);
                 break;
+            case 'none':
+                return $this->getSafeValues(['none']);
+                break;
             case 'integer':
                 return $this->getSafeValue(1);
                 break;
@@ -146,10 +148,7 @@ class ObjectPropertyTestMethodBuilder
             case 'array':
                 $itemType = last(explode(':', $type));
                 if (preg_match('/^[A-Z]/', $itemType)) {
-                    return sprintf(
-                        '[new %s()]',
-                        $this->getFullClassPath($itemType)
-                    );
+                    return sprintf('[new %s()]', $this->getFullClassPath($itemType));
                 }
                 return $this->getSafeValues([[]]);
                 break;
@@ -171,10 +170,7 @@ class ObjectPropertyTestMethodBuilder
                 break;
             default:
                 if (preg_match('/^[A-Z]/', $mainType)) {
-                    return sprintf(
-                        'new %s()',
-                        $this->getFullClassPath($mainType)
-                    );
+                    return sprintf('new %s()', $this->getFullClassPath($mainType));
                 }
                 break;
         }
@@ -191,6 +187,9 @@ class ObjectPropertyTestMethodBuilder
 
     public function getSafeValue($value)
     {
-        return json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_LINE_TERMINATORS | JSON_UNESCAPED_UNICODE);
+        return json_encode(
+            $value,
+            JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_LINE_TERMINATORS | JSON_UNESCAPED_UNICODE
+        );
     }
 }

@@ -5,52 +5,50 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for defining a style for rows, columns, cells, and headers
  * in a table.
  *
- * @see https://developer.apple.com/documentation/apple_news/tablestyle
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/tablestyle.json
  */
 class TableStyle extends BaseSdkObject
 {
     /**
-     * The object that defines the styling for individual cells in a table.
+     * Defines the styling for individual cells in a table.
      * @var \Urbania\AppleNews\Format\TableCellStyle
      */
     protected $cells;
 
     /**
-     * The object that defines the styling for table columns.
+     * Defines the styling for table columns.
      * @var \Urbania\AppleNews\Format\TableColumnStyle
      */
     protected $columns;
 
     /**
-     * The object that defines the styling for individual cells in table
-     * headers.
+     * Defines the styling for individual cells in table headers.
      * @var \Urbania\AppleNews\Format\TableCellStyle
      */
     protected $headerCells;
 
     /**
-     * The object that defines the styling for the table header columns,
-     * which are present if dataOrientation is set to vertical, which is the
-     * default.
+     * Defines the styling for the table header columns, which are present if
+     * dataOrientation is set to vertical, which is the default.
      * @var \Urbania\AppleNews\Format\TableColumnStyle
      */
     protected $headerColumns;
 
     /**
-     * The object that defines the styling for table header rows, which are
-     * present if dataOrientation is set to horizontal, which is not the
-     * default.
+     * Defines the styling for table header rows, which are present if
+     * dataOrientation is set to horizontal, which is not the default
      * @var \Urbania\AppleNews\Format\TableRowStyle
      */
     protected $headerRows;
 
     /**
-     * The object that defines the styling for table rows.
+     * Defines the styling for table rows.
      * @var \Urbania\AppleNews\Format\TableRowStyle
      */
     protected $rows;
@@ -105,7 +103,7 @@ class TableStyle extends BaseSdkObject
 
         Assert::isSdkObject($cells, TableCellStyle::class);
 
-        $this->cells = is_array($cells) ? new TableCellStyle($cells) : $cells;
+        $this->cells = Utils::isAssociativeArray($cells) ? new TableCellStyle($cells) : $cells;
         return $this;
     }
 
@@ -132,7 +130,7 @@ class TableStyle extends BaseSdkObject
 
         Assert::isSdkObject($columns, TableColumnStyle::class);
 
-        $this->columns = is_array($columns)
+        $this->columns = Utils::isAssociativeArray($columns)
             ? new TableColumnStyle($columns)
             : $columns;
         return $this;
@@ -161,7 +159,7 @@ class TableStyle extends BaseSdkObject
 
         Assert::isSdkObject($headerCells, TableCellStyle::class);
 
-        $this->headerCells = is_array($headerCells)
+        $this->headerCells = Utils::isAssociativeArray($headerCells)
             ? new TableCellStyle($headerCells)
             : $headerCells;
         return $this;
@@ -190,7 +188,7 @@ class TableStyle extends BaseSdkObject
 
         Assert::isSdkObject($headerColumns, TableColumnStyle::class);
 
-        $this->headerColumns = is_array($headerColumns)
+        $this->headerColumns = Utils::isAssociativeArray($headerColumns)
             ? new TableColumnStyle($headerColumns)
             : $headerColumns;
         return $this;
@@ -219,7 +217,7 @@ class TableStyle extends BaseSdkObject
 
         Assert::isSdkObject($headerRows, TableRowStyle::class);
 
-        $this->headerRows = is_array($headerRows)
+        $this->headerRows = Utils::isAssociativeArray($headerRows)
             ? new TableRowStyle($headerRows)
             : $headerRows;
         return $this;
@@ -248,7 +246,7 @@ class TableStyle extends BaseSdkObject
 
         Assert::isSdkObject($rows, TableRowStyle::class);
 
-        $this->rows = is_array($rows) ? new TableRowStyle($rows) : $rows;
+        $this->rows = Utils::isAssociativeArray($rows) ? new TableRowStyle($rows) : $rows;
         return $this;
     }
 
@@ -261,15 +259,11 @@ class TableStyle extends BaseSdkObject
         $data = [];
         if (isset($this->cells)) {
             $data['cells'] =
-                $this->cells instanceof Arrayable
-                    ? $this->cells->toArray()
-                    : $this->cells;
+                $this->cells instanceof Arrayable ? $this->cells->toArray() : $this->cells;
         }
         if (isset($this->columns)) {
             $data['columns'] =
-                $this->columns instanceof Arrayable
-                    ? $this->columns->toArray()
-                    : $this->columns;
+                $this->columns instanceof Arrayable ? $this->columns->toArray() : $this->columns;
         }
         if (isset($this->headerCells)) {
             $data['headerCells'] =
@@ -290,10 +284,7 @@ class TableStyle extends BaseSdkObject
                     : $this->headerRows;
         }
         if (isset($this->rows)) {
-            $data['rows'] =
-                $this->rows instanceof Arrayable
-                    ? $this->rows->toArray()
-                    : $this->rows;
+            $data['rows'] = $this->rows instanceof Arrayable ? $this->rows->toArray() : $this->rows;
         }
         return $data;
     }

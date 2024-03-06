@@ -6,8 +6,21 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/condition",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/condition.json",
     "properties": [
+        {
+            "name": "app",
+            "type": "enum:string",
+            "required": false,
+            "description": "The application in which the user views the Apple News article. \nValid values:",
+            "default": "any",
+            "enum_values": [
+                "any",
+                "news",
+                "stocks"
+            ],
+            "typed": false
+        },
         {
             "name": "horizontalSizeClass",
             "type": "enum:string",
@@ -24,8 +37,8 @@
             "name": "maxColumns",
             "type": "integer",
             "required": false,
-            "description": "The maximum number of columns in which the article is displayed. When the article is viewed with the specified number of columns or fewer, the conditional properties are in effect. For more information about the column system, see Planning the Layout for Your Article.",
-            "minimum": 1,
+            "description": "The maximum number of columns in which the article is displayed. When the article is viewed with the specified number of columns or fewer, the conditional properties are in effect. For more information about the column system, see .",
+            "minimum": "1",
             "typed": false
         },
         {
@@ -54,7 +67,7 @@
             "name": "maxSpecVersion",
             "type": "string",
             "required": false,
-            "description": "An Apple News Format version that can be used by an Apple News client that is displaying an article. When the Apple News Format version is equal to or less than the specified value, the conditional properties are in effect.",
+            "description": "An Apple News Format version that can be used by an Apple News client that is displaying an article. When the Apple News Format version is equal to or less than the specified value, the conditional properties are in effect. ",
             "typed": false
         },
         {
@@ -76,8 +89,8 @@
             "name": "minColumns",
             "type": "integer",
             "required": false,
-            "description": "The minimum number of columns in which the article is displayed. When the article is viewed with the specified number of columns or more, the conditional properties are in effect. For more information about the column system, see Planning the Layout for Your Article.",
-            "minimum": 0,
+            "description": "The minimum number of columns in which the article is displayed. When the article is viewed with the specified number of columns or more, the conditional properties are in effect. For more information about the column system, see .",
+            "minimum": "0",
             "typed": false
         },
         {
@@ -106,7 +119,7 @@
             "name": "minSpecVersion",
             "type": "string",
             "required": false,
-            "description": "An Apple News Format version that can be used by an Apple News client that is displaying an article. When the Apple News Format version is equal to or greater than the specified value, the conditional properties are in effect.",
+            "description": "An Apple News Format version that can be used by an Apple News client that is displaying an article. When the Apple News Format version is equal to or greater than the specified value, the conditional properties are in effect. ",
             "typed": false
         },
         {
@@ -128,11 +141,24 @@
             "name": "platform",
             "type": "enum:string",
             "required": false,
-            "description": "A platform on which an article can be viewed. When the article is viewed on the specfied platform, the conditional properties are in effect.",
+            "description": "A platform on which an article can be viewed. When the article is viewed on the specified platform, the conditional properties are in effect.",
             "enum_values": [
                 "any",
                 "ios",
-                "macos"
+                "macos",
+                "web"
+            ],
+            "typed": false
+        },
+        {
+            "name": "preferredColorScheme",
+            "type": "enum:string",
+            "required": false,
+            "description": "A string describing the user's preferred color theme for the system. \nValid values:",
+            "enum_values": [
+                "any",
+                "light",
+                "dark"
             ],
             "typed": false
         },
@@ -156,6 +182,19 @@
                 "any",
                 "regular",
                 "compact"
+            ],
+            "typed": false
+        },
+        {
+            "name": "territory",
+            "type": "enum:string",
+            "required": false,
+            "description": "The territory of the user. When the value is specified, the conditional properties are in effect. ",
+            "enum_values": [
+                "US",
+                "AU",
+                "GB",
+                "CA"
             ],
             "typed": false
         },

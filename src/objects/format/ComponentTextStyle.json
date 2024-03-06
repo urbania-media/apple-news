@@ -6,27 +6,36 @@
     "from_class": null,
     "extends": "Format\\TextStyle",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/componenttextstyle",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/componenttextstyle.json",
     "properties": [
         {
             "name": "backgroundColor",
-            "type": "Color",
+            "type": [
+                "Color",
+                "none"
+            ],
             "required": false,
-            "description": "The background color for text lines. The value defaults to transparent.",
+            "description": "The background color for text lines. The value defaults to transparent.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {
             "name": "conditional",
-            "type": "array:Format\\ConditionalComponentTextStyle",
+            "type": [
+                "Format\\ConditionalComponentTextStyle",
+                "array:Format\\ConditionalComponentTextStyle"
+            ],
             "required": false,
-            "description": "An array of component text style properties that can be applied conditionally, and the conditions that cause them to be applied.",
+            "description": "An instance or array of component text style properties that can be applied conditionally, and the conditions that cause them to be applied.",
             "typed": false
         },
         {
             "name": "dropCapStyle",
-            "type": "Format\\DropCapStyle",
+            "type": [
+                "Format\\DropCapStyle",
+                "none"
+            ],
             "required": false,
-            "description": "The style of drop cap to apply to the first paragraph of the component.",
+            "description": "The style of drop cap to apply to the first paragraph of the component.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {
@@ -38,30 +47,41 @@
         },
         {
             "name": "fontFamily",
-            "type": "string",
+            "type": "enum:string|string",
             "required": false,
-            "description": "The font family to use for text rendering, for example Gill Sans. Using a combination of fontFamily, fontWidth, fontWeight, and fontStyle you can define the appearance of the text. News automatically selects the appropriate font variant from the available variants in that family.",
+            "description": "The font family to use for text rendering; for example, Gill Sans. Using a combination of fontFamily, fontWidth, fontWeight, and fontStyle, you can define the appearance of the text. Apple News automatically selects the appropriate font variant from the available variants in that family. See . \nIn iOS 13, iPadOS 13, and macOS 10.15, you can use the value system to show text in the default font used by the operating system.",
+            "enum_values": [
+                "system"
+            ],
             "typed": false
         },
         {
             "name": "fontName",
             "type": "string",
             "required": false,
-            "description": "The fontName to refer to an explicit font variant\u2019s Postscript name, such as GillSans-Bold. Alternatively, you can use a combination of fontFamily, fontWeight, fontWidth and\/or fontStyle to have News automatically select the appropriate variant depending on the text formatting used.",
+            "description": "The fontName to refer to an explicit font variant\u2019s Postscript name, such as GillSans-Bold. Alternatively, you can use a combination of fontFamily, fontWeight, fontWidth and\/or fontStyle to have News automatically select the appropriate variant depending on the text formatting used.\nSee .",
+            "typed": false
+        },
+        {
+            "name": "fontScaling",
+            "type": "boolean",
+            "required": false,
+            "description": "A Boolean value that indicates whether scaling of font sizes for various screen sizes is enabled.\nBy default, text in Apple News Format articles is  scaled down when viewed on devices with screens that are narrower than the width specified in the document layout. This scaling effect occurs at a faster rate for heading roles (, , and so on) than for body roles (, , , and so on). \nTo disable this effect, set fontScaling to false. When doing so, be mindful of how larger text appears on smaller devices and make use of conditions as appropriate. See .",
+            "default": true,
             "typed": false
         },
         {
             "name": "fontSize",
             "type": "integer",
             "required": false,
-            "description": "The size of the font, in points. By default, the font size will be inherited from a parent component or a default style. As a best practice, try not to go below 16 points for body text. The fontSize may be automatically resized for different device sizes or for iOS devices with Larger Accessibility Sizes enabled.",
+            "description": "The size of the font, in points. By default, the font size will be inherited from a parent component or a default style. As a best practice, try not to go below 16 points for body text. The fontSize may be automatically resized for different device sizes or for iOS and iPadOS devices with Larger Accessibility Sizes enabled.",
             "typed": false
         },
         {
             "name": "fontStyle",
             "type": "enum:string",
             "required": false,
-            "description": "The font style to apply.",
+            "description": "The font style to apply. \nValid values:",
             "enum_values": [
                 "normal",
                 "italic",
@@ -73,7 +93,7 @@
             "name": "fontWeight",
             "type": "enum:integer|string",
             "required": false,
-            "description": "The font weight to apply for font selection. In addition to explicit weights (named or numerical), lighter and bolder are available, to set text in a lighter or bolder font as compared to its surrounding text.",
+            "description": "The font weight to apply for font selection. In addition to explicit weights (named or numerical), lighter and bolder are available, to set text in a lighter or bolder font as compared to its surrounding text.\nIf a font variant with the given specifications cannot be found in the provided font family, an alternative is selected that has the closest match. If no bold\/bolder font is found, News will not create a faux-bold alternative, but will fall back to the closest match. Similarly, if no italic or oblique font variant is found, text will not be slanted to make text appear italicized.\nValid values:",
             "enum_values": [
                 100,
                 200,
@@ -114,8 +134,11 @@
             "name": "fontWidth",
             "type": "enum:string",
             "required": false,
-            "description": "The font width to apply for font selection (known in CSS as font-stretch) defines the width characteristics of a font variant between normal, condensed and expanded. Some font families have separate families assigned for different widths (for example, Avenir Next and Avenir Next Condensed), so make sure that the fontFamily you select supports the specified fontWidth.",
+            "description": "The font width to apply for font selection (known in CSS as font-stretch) defines the width characteristics of a font variant between normal, condensed and expanded. Some font families have separate families assigned for different widths (for example, Avenir Next and Avenir Next Condensed), so make sure that the fontFamily you select supports the specified fontWidth. \nValid values:",
             "enum_values": [
+                "ultra-compressed",
+                "extra-compressed",
+                "compressed",
                 "ultra-condensed",
                 "extra-condensed",
                 "condensed",
@@ -133,7 +156,7 @@
             "type": "boolean",
             "required": false,
             "description": "A Boolean value that defines whether punctuation should be positioned outside the margins of the text.",
-            "default": "false",
+            "default": true,
             "typed": false
         },
         {
@@ -141,6 +164,46 @@
             "type": "boolean",
             "required": false,
             "description": "A Boolean value that indicates whether text should be hyphenated when necessary. By default, only components with a role of body or intro have hyphenation enabled. All other components default to false.",
+            "typed": false
+        },
+        {
+            "name": "hyphenationMinimumCharactersAfter",
+            "type": "integer",
+            "required": false,
+            "description": "The minimum number of characters required after the hyphen to enable hyphenation. ",
+            "default": "3",
+            "typed": false
+        },
+        {
+            "name": "hyphenationMinimumCharactersBefore",
+            "type": "integer",
+            "required": false,
+            "description": "The minimum number of characters required before the hyphen to enable hyphenation. ",
+            "default": "3",
+            "typed": false
+        },
+        {
+            "name": "hyphenationMinimumWordLength",
+            "type": "integer",
+            "required": false,
+            "description": "The minimum number of characters required for a word to be hyphenated. ",
+            "default": "0",
+            "typed": false
+        },
+        {
+            "name": "hyphenationZone",
+            "type": "integer",
+            "required": false,
+            "description": "The area in points from the right edge of the text component before which a word needs to start to enable hyphenation. \nBy default, the value is set to 18 points.\nA larger value reduces the allowable hyphenation area of a word, which can result in a more ragged appearance of the text along the right margin.",
+            "default": "18",
+            "typed": false
+        },
+        {
+            "name": "lineBalancing",
+            "type": "boolean",
+            "required": false,
+            "description": "A Boolean value that defines whether the system should enable line balancing for the text component.",
+            "default": true,
             "typed": false
         },
         {
@@ -152,16 +215,22 @@
         },
         {
             "name": "linkStyle",
-            "type": "Format\\TextStyle",
+            "type": [
+                "Format\\TextStyle",
+                "none"
+            ],
             "required": false,
-            "description": "An object that provides text styling for all links within a text component.",
+            "description": "An object that provides text styling for all links within a text component.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {
             "name": "orderedListItems",
-            "type": "Format\\ListItemStyle",
+            "type": [
+                "Format\\ListItemStyle",
+                "none"
+            ],
             "required": false,
-            "description": "An object for use with text components with HTML markup. You can create text styles containing an orderedListItems definition to configure how list items inside <ol> tags should be displayed.",
+            "description": "An object for use with text components with HTML markup. You can create text styles containing an orderedListItems definition to configure how list items inside <ol> tags should be displayed.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {
@@ -190,16 +259,19 @@
         },
         {
             "name": "stroke",
-            "type": "Format\\TextStrokeStyle",
+            "type": [
+                "Format\\TextStrokeStyle",
+                "none"
+            ],
             "required": false,
-            "description": "The stroke style for the text outline. By default, stroke will be omitted.",
+            "description": "The stroke style for the text outline. By default, stroke will be omitted.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {
             "name": "textAlignment",
             "type": "enum:string",
             "required": false,
-            "description": "The justification for all text within the component.",
+            "description": "The justification for all text within the component. \nIf textAlignment is omitted or set to none, the justification will be determined by the text direction (left-to-right text will be aligned to the left and right-to-left text will be aligned to the right).",
             "default": "none",
             "enum_values": [
                 "left",
@@ -219,20 +291,24 @@
         },
         {
             "name": "textShadow",
-            "type": "Format\\Shadow",
+            "type": [
+                "Format\\TextShadow",
+                "none"
+            ],
             "required": false,
-            "description": "The text shadow for this style.",
+            "description": "The text shadow for this style.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {
             "name": "textTransform",
             "type": "enum:string",
             "required": false,
-            "description": "The transform to apply to the text.",
+            "description": "The transform to apply to the text.\n Valid values: ",
             "enum_values": [
                 "uppercase",
                 "lowercase",
                 "capitalize",
+                "smallcaps",
                 "none"
             ],
             "typed": false
@@ -241,8 +317,8 @@
             "name": "tracking",
             "type": "number",
             "required": false,
-            "description": "The amount of tracking (spacing between characters) in text, as a percentage of the fontSize. The actual spacing between letters is determined by combining information from the font and font size.",
-            "default": 0,
+            "description": "The amount of tracking (spacing between characters) in text, as a percentage of the fontSize. The actual spacing between letters is determined by combining information from the font and font size. \nExample: Set tracking to 0.5 to make the distance between characters increase by 50% of the fontSize. With a font size of 10, the additional space between characters is 5 points.",
+            "default": "0",
             "typed": false
         },
         {
@@ -252,21 +328,24 @@
                 "boolean"
             ],
             "required": false,
-            "description": "The text underlining. This style can be used for links. Set underline to true to use the text color as the underline color, or provide a text decoration with a different color.",
+            "description": "The text underlining. This style can be used for links. Set underline to true to use the text color as the underline color, or provide a text decoration with a different color. ",
             "typed": false
         },
         {
             "name": "unorderedListItems",
-            "type": "Format\\ListItemStyle",
+            "type": [
+                "Format\\ListItemStyle",
+                "none"
+            ],
             "required": false,
-            "description": "The object for use with text components with HTML markup. You can create text styles containing an unorderedListItems definition to configure how list items inside <ul> tags should be displayed.",
+            "description": "The object for use with text components with HTML markup. You can create text styles containing an unorderedListItems definition to configure how list items inside <ul> tags should be displayed.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {
             "name": "verticalAlignment",
             "type": "enum:string",
             "required": false,
-            "description": "The vertical alignment of the text. You can use this property for superscripts and subscripts.",
+            "description": "The vertical alignment of the text. You can use this property for superscripts and subscripts. \nTo override values specified in parent text styles, use baseline.\nDefaults to baseline when unspecified, and inherits the value specified in a TextStyle applied to the same range.\nThe values superscript and subscript also adjust the font size to 2\/3 of the size defined for that character range.",
             "enum_values": [
                 "superscript",
                 "subscript",

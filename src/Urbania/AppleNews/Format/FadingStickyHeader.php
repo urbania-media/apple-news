@@ -5,18 +5,20 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The scene that briefly keeps a header at the top of the screen as the
  * user scrolls through the article.
  *
- * @see https://developer.apple.com/documentation/apple_news/fadingstickyheader
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/fadingstickyheader.json
  */
 class FadingStickyHeader extends Scene
 {
     /**
      * The color the header background will fade to, defined as a 3- to
      * 8-character hexadecimal string or a color name string.
+     * Default value: #000000 (black)
      * @var string
      */
     protected $fadeColor;

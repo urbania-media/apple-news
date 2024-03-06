@@ -5,25 +5,26 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for defining the space above and below a component.
  *
- * @see https://developer.apple.com/documentation/apple_news/margin
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/margin.json
  */
 class Margin extends BaseSdkObject
 {
     /**
      * The bottom margin in points, or with any of the units of measure for
-     * components. See Specifying Measurements for Components.
-     * @var string|integer
+     * components. See .
+     * @var string|integer|float
      */
     protected $bottom;
 
     /**
      * The top margin in points, or with any of the units of measure for
-     * components. See Specifying Measurements for Components.
-     * @var string|integer
+     * components. See .
+     * @var string|integer|float
      */
     protected $top;
 
@@ -40,7 +41,7 @@ class Margin extends BaseSdkObject
 
     /**
      * Get the bottom
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getBottom()
     {
@@ -49,7 +50,7 @@ class Margin extends BaseSdkObject
 
     /**
      * Set the bottom
-     * @param string|integer $bottom
+     * @param string|integer|float $bottom
      * @return $this
      */
     public function setBottom($bottom)
@@ -67,7 +68,7 @@ class Margin extends BaseSdkObject
 
     /**
      * Get the top
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getTop()
     {
@@ -76,7 +77,7 @@ class Margin extends BaseSdkObject
 
     /**
      * Set the top
-     * @param string|integer $top
+     * @param string|integer|float $top
      * @return $this
      */
     public function setTop($top)
@@ -101,15 +102,10 @@ class Margin extends BaseSdkObject
         $data = [];
         if (isset($this->bottom)) {
             $data['bottom'] =
-                $this->bottom instanceof Arrayable
-                    ? $this->bottom->toArray()
-                    : $this->bottom;
+                $this->bottom instanceof Arrayable ? $this->bottom->toArray() : $this->bottom;
         }
         if (isset($this->top)) {
-            $data['top'] =
-                $this->top instanceof Arrayable
-                    ? $this->top->toArray()
-                    : $this->top;
+            $data['top'] = $this->top instanceof Arrayable ? $this->top->toArray() : $this->top;
         }
         return $data;
     }

@@ -6,46 +6,46 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/padding",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/padding.json",
     "properties": [
         {
             "name": "bottom",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The amount of padding between the bottom of the cell and the content, as an integer in points or using the available units for components. See Specifying Measurements for Components.",
+            "description": "The amount of padding between the bottom of the cell and the content, as a number in points or using the available units for components. See .",
             "typed": false
         },
         {
             "name": "left",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The amount of padding between the left side of the cell and the content, as an integer in points or using the available units for components.See Specifying Measurements for Components.",
+            "description": "The amount of padding between the left side of the cell and the content, as a number in points or using the available units for components.See .",
             "typed": false
         },
         {
             "name": "right",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The amount of padding between the right side of the cell and the content, as an integer in points or using the available units for components. See Specifying Measurements for Components.",
+            "description": "The amount of padding between the right side of the cell and the content, as as a number in points or using the available units for components.See .",
             "typed": false
         },
         {
             "name": "top",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The amount of padding between the top of the cell and the content, as an integer in points or using the available units for components. See Specifying Measurements for Components",
+            "description": "The amount of padding between the top of the cell and the content, as as a number in points or using the available units for components. See .",
             "typed": false
         }
     ]

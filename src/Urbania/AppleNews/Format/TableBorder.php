@@ -5,46 +5,43 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for setting borders for tables.
  *
- * @see https://developer.apple.com/documentation/apple_news/tableborder
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/tableborder.json
  */
 class TableBorder extends BaseSdkObject
 {
     /**
-     * The object that defines the stroke properties of the border. Stroke
-     * properties cannot be set for each side; the border can only be
-     * disabled or enabled for each side.
+     * Defines the stroke properties of the border. Stroke properties cannot
+     * be set for each side; the border can only be disabled or enabled for
+     * each side.
      * @var \Urbania\AppleNews\Format\TableStrokeStyle
      */
     protected $all;
 
     /**
-     * A Boolean that indicates whether the border should be applied to the
-     * bottom.
+     * Indicates whether the border should be applied to the bottom.
      * @var boolean
      */
     protected $bottom;
 
     /**
-     * A Boolean that indicates whether the border should be applied to the
-     * left side.
+     * Indicates whether the border should be applied to the left side.
      * @var boolean
      */
     protected $left;
 
     /**
-     * A Boolean that indicates whether the border should be applied to the
-     * right side.
+     * Indicates whether the border should be applied to the right side.
      * @var boolean
      */
     protected $right;
 
     /**
-     * A Boolean that indicates whether the border should be applied to the
-     * top.
+     * Indicates whether the border should be applied to the top.
      * @var boolean
      */
     protected $top;
@@ -95,7 +92,7 @@ class TableBorder extends BaseSdkObject
 
         Assert::isSdkObject($all, TableStrokeStyle::class);
 
-        $this->all = is_array($all) ? new TableStrokeStyle($all) : $all;
+        $this->all = Utils::isAssociativeArray($all) ? new TableStrokeStyle($all) : $all;
         return $this;
     }
 
@@ -215,10 +212,7 @@ class TableBorder extends BaseSdkObject
     {
         $data = [];
         if (isset($this->all)) {
-            $data['all'] =
-                $this->all instanceof Arrayable
-                    ? $this->all->toArray()
-                    : $this->all;
+            $data['all'] = $this->all instanceof Arrayable ? $this->all->toArray() : $this->all;
         }
         if (isset($this->bottom)) {
             $data['bottom'] = $this->bottom;

@@ -5,11 +5,12 @@ namespace Urbania\AppleNews\Api\Objects;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
- * See the links returned by the read channel endpoint.
+ * See the links the read channel endpoint returned.
  *
- * @see https://developer.apple.com/documentation/apple_news/channellinks
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/channellinks.json
  */
 class ChannelLinks extends BaseSdkObject
 {
@@ -21,7 +22,7 @@ class ChannelLinks extends BaseSdkObject
     protected $defaultSection;
 
     /**
-     * The URL at which this resource can be read.
+     * The URL at which you can read the article.
      * @var string
      */
     protected $self;

@@ -6,27 +6,37 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/metadata",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/metadata.json",
     "properties": [
         {
             "name": "authors",
             "type": "array:string",
             "required": false,
-            "description": "The authors of this article, who may or may not be shown in the byline component.",
+            "description": "The authors of this article. The value may or may not be the same string provided in the\u00a0\u00a0or\u00a0\u00a0component.\n Note the following:\nNote that the byline or author component in the article body does not have these same requirements.\nThis value appears in the article tile in channel feeds and section feeds.",
             "typed": false
         },
         {
             "name": "campaignData",
             "type": "Format\\CampaignData",
             "required": false,
-            "description": "A set of key-value pairs that can be leveraged to target your advertising campaigns to specific articles or groups of articles. See Targeting in the Advertising Guide for News Publishers.",
+            "description": "A set of key-value pairs, where the value is an array of at least one item that you can leverage to target your advertising campaigns to specific articles or groups of articles.\u00a0See  in the .",
             "typed": false
         },
         {
             "name": "canonicalURL",
             "type": "uri",
             "required": false,
-            "description": "The canonical URL of a web version of this article. If this Apple News Format document corresponds to a web version of this article, set this property to the URL of the web article. This property can be used to point to one version of the article as well as to redirect devices that do not support News content.",
+            "description": "The canonical URL of a web version of this article. If this Apple  News Format document corresponds to a web version of this article, set this property to the URL of the web article. This property can be used to point to one version of the article as well as to redirect devices that do not support News content.\nIf canonicalURL is omitted, devices that do not support News cannot display the article.",
+            "typed": false
+        },
+        {
+            "name": "contentGenerationType",
+            "type": "enum:string",
+            "required": false,
+            "description": "An optional string value indicating the usage of artificial intelligence (AI) tools to generate content for this article.\nUse the AI value to indicate that the content is AI-generated.",
+            "enum_values": [
+                "AI"
+            ],
             "typed": false
         },
         {
@@ -40,7 +50,7 @@
             "name": "dateModified",
             "type": "date-time",
             "required": false,
-            "description": "The UTC date in ISO 8601 format (YYYY-MM-DDTHH:mm:ss\u00b1ZZ:ZZ) on which this article was last modified after it was published.",
+            "description": "The UTC date in ISO 8601 format (YYYY-MM-DDTHH:mm:ss\u00b1ZZ:ZZ) on which this article was last modified after it was published.\nThis date is used instead of datePublished in the article tile if it is later than datePublished by less than 48 hours. dateModified does not affect the feed order.   See .",
             "typed": false
         },
         {
@@ -54,7 +64,7 @@
             "name": "excerpt",
             "type": "string",
             "required": false,
-            "description": "Some text representing your article. Typically it matches the first portion of the article content. It can also be an article summary. Although this property is optional, it\u2019s best to define it in all of your Apple News Format documents.",
+            "description": "Some text representing your article. It can also be an article summary or subheadline. Although this property is optional, it\u2019s best to define it in all of your Apple News Format documents. Your excerpt should be within the recommended 80\u2013300 character range.\nThis text may appear in the article tile in feeds. It can also appear when an article is shared.\nSee .\nDo not use HTML tags or Markdown syntax for this property.",
             "typed": false
         },
         {
@@ -79,6 +89,13 @@
             "typed": false
         },
         {
+            "name": "issue",
+            "type": "Format\\Issue",
+            "required": false,
+            "description": "The object for defining information about an issue.",
+            "typed": false
+        },
+        {
             "name": "keywords",
             "type": "array:string",
             "required": false,
@@ -96,22 +113,22 @@
             "name": "thumbnailURL",
             "type": "string",
             "required": false,
-            "description": "The URL of an image that can represent this article in a News feed view (channel, topic, or For You). For best results, provide a high-resolution image. The image is automatically scaled down to the correct size.",
+            "description": "The URL of an image that can represent this article in a News feed view (channel, topic, or For You). For best results, provide a high-resolution image. The image is automatically scaled down to the correct size.\nSupported image types are JPEG, (.jpeg or .jpg) WebP, GIF, or PNG. \nWebP and GIF images provided as thumbnailURL are converted to JPEG for use as an article thumbnail. Note that animations are removed from WebP and GIF images.\nThe minimum size of the image must be 300 px wide x 300 px high. \nThe aspect ratio (width \u00f7 height) must be between 0.5 and 3.0. \nTo improve the loading time of the article, use one of the images in the article as the thumbnail image. If you use the same images in both places and the image appears on the first screen of the article, the image moves with an animated effect from the feed to the article. See .",
             "typed": false
         },
         {
             "name": "transparentToolbar",
             "type": "boolean",
             "required": false,
-            "description": "A boolean value that indicates whether this article should be shown with a transparent top toolbar that is overlaid on the the top portion of the article.",
-            "default": "false",
+            "description": "A Boolean value that indicates whether this article should be shown with a transparent top toolbar that is overlaid on the top portion of the article.\nIf you set this property to true, make sure to leave some room between the top of the article and the first readable component, and make sure the top portion of the article is predominantly dark or predominantly light.",
+            "default": true,
             "typed": false
         },
         {
             "name": "videoURL",
             "type": "uri",
             "required": false,
-            "description": "The URL for the video that represents this article. A glyph appears on the thumbnail of the article tile, allowing the video to be playable from For You, topic, and channel feeds.",
+            "description": " The URL for the video that represents this article. A glyph appears on the thumbnail of the article tile, allowing the video to be playable from For You, topic, and channel feeds.\nThe videoURL should be the same as the URL for one of the  components in the article. For the best results or continuous playback for an opened article with a videoURL, make sure that the thumbnailURL property in metadata uses the same image file as the video component\u2019s stillURL.\nVideo URL must begin with http:\/\/ or preferably https:\/\/. The video must be in one of the supported HTTP Live Streaming (HLS) formats. Streaming using the M3U playlist format is highly recommended. See .\nFor more information about HLS, see .",
             "typed": false
         }
     ]

@@ -76,7 +76,7 @@ class ArticleDocumentTest extends TestCase
      */
     public static function identifierProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -99,7 +99,7 @@ class ArticleDocumentTest extends TestCase
      */
     public static function languageProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -145,7 +145,7 @@ class ArticleDocumentTest extends TestCase
      */
     public static function titleProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -168,7 +168,7 @@ class ArticleDocumentTest extends TestCase
      */
     public static function versionProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -215,6 +215,29 @@ class ArticleDocumentTest extends TestCase
     public static function autoplacementProvider()
     {
         return [[new \Urbania\AppleNews\Format\AutoPlacement()]];
+    }
+
+    /**
+     * Test the property colorScheme
+     * @test
+     * @dataProvider colorSchemeProvider
+     * @covers ::getColorScheme
+     * @covers ::setColorScheme
+     */
+    public function testPropertyColorScheme($value)
+    {
+        $object = new ArticleDocument();
+        $object->setColorScheme($value);
+
+        $this->assertEquals($value, $object->getColorScheme());
+    }
+
+    /**
+     * Data provider for property colorScheme
+     */
+    public static function colorSchemeProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\ColorScheme()]];
     }
 
     /**
@@ -329,7 +352,30 @@ class ArticleDocumentTest extends TestCase
      */
     public static function subtitleProvider()
     {
-        return [["a string"]];
+        return [['a string']];
+    }
+
+    /**
+     * Test the property textFormat
+     * @test
+     * @dataProvider textFormatProvider
+     * @covers ::getTextFormat
+     * @covers ::setTextFormat
+     */
+    public function testPropertyTextFormat($value)
+    {
+        $object = new ArticleDocument();
+        $object->setTextFormat($value);
+
+        $this->assertEquals($value, $object->getTextFormat());
+    }
+
+    /**
+     * Data provider for property textFormat
+     */
+    public static function textFormatProvider()
+    {
+        return [['markdown'], ['html'], ['none']];
     }
 
     /**

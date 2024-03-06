@@ -30,28 +30,7 @@ class VideoFillTest extends TestCase
      */
     public static function stillURLProvider()
     {
-        return [["http://example.com"], ["https://example.com"]];
-    }
-
-    /**
-     * Test the property type
-     * @test
-     * @dataProvider typeProvider
-     * @covers ::getType
-     */
-    public function testPropertyType($value)
-    {
-        $object = new VideoFill();
-
-        $this->assertEquals($value, $object->getType());
-    }
-
-    /**
-     * Data provider for property type
-     */
-    public static function typeProvider()
-    {
-        return [["video"]];
+        return [['http://example.com'], ['https://example.com']];
     }
 
     /**
@@ -74,7 +53,7 @@ class VideoFillTest extends TestCase
      */
     public static function URLProvider()
     {
-        return [["http://example.com"], ["https://example.com"]];
+        return [['http://example.com'], ['https://example.com']];
     }
 
     /**
@@ -97,7 +76,7 @@ class VideoFillTest extends TestCase
      */
     public static function attachmentProvider()
     {
-        return [["fixed"], ["scroll"]];
+        return [['fixed'], ['scroll']];
     }
 
     /**
@@ -120,7 +99,7 @@ class VideoFillTest extends TestCase
      */
     public static function fillModeProvider()
     {
-        return [["fit"], ["cover"]];
+        return [['fit'], ['cover']];
     }
 
     /**
@@ -143,7 +122,7 @@ class VideoFillTest extends TestCase
      */
     public static function horizontalAlignmentProvider()
     {
-        return [["left"], ["center"], ["right"]];
+        return [['left'], ['center'], ['right']];
     }
 
     /**
@@ -170,6 +149,27 @@ class VideoFillTest extends TestCase
     }
 
     /**
+     * Test the property type
+     * @test
+     * @dataProvider typeProvider
+     * @covers ::getType
+     */
+    public function testPropertyType($value)
+    {
+        $object = new VideoFill();
+
+        $this->assertEquals($value, $object->getType());
+    }
+
+    /**
+     * Data provider for property type
+     */
+    public static function typeProvider()
+    {
+        return [['video']];
+    }
+
+    /**
      * Test the property verticalAlignment
      * @test
      * @dataProvider verticalAlignmentProvider
@@ -189,6 +189,6 @@ class VideoFillTest extends TestCase
      */
     public static function verticalAlignmentProvider()
     {
-        return [["top"], ["center"], ["bottom"]];
+        return [['top'], ['center'], ['bottom']];
     }
 }

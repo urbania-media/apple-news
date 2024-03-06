@@ -6,11 +6,12 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
- * See the fields returned by the read channel endpoint.
+ * See the fields the read channel endpoint returned.
  *
- * @see https://developer.apple.com/documentation/apple_news/channel
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/channel.json
  */
 class Channel extends BaseSdkObject
 {
@@ -19,6 +20,12 @@ class Channel extends BaseSdkObject
      * @var \Carbon\Carbon
      */
     protected $createdAt;
+
+    /**
+     * The list of custom fonts used in the channel. This list may be empty.
+     * @var string[]
+     */
+    protected $fonts;
 
     /**
      * The unique identifier of the channel.
@@ -39,8 +46,7 @@ class Channel extends BaseSdkObject
     protected $name;
 
     /**
-     * The URL to the channel within the News app. The shareUrl field applies
-     * only on devices with iOS 9 installed.
+     * The URL to the channel within the News app.
      * @var string
      */
     protected $shareUrl;
@@ -61,6 +67,10 @@ class Channel extends BaseSdkObject
     {
         if (isset($data['createdAt'])) {
             $this->setCreatedAt($data['createdAt']);
+        }
+
+        if (isset($data['fonts'])) {
+            $this->setFonts($data['fonts']);
         }
 
         if (isset($data['id'])) {
@@ -111,9 +121,58 @@ class Channel extends BaseSdkObject
 
         Assert::isDate($createdAt);
 
-        $this->createdAt = is_string($createdAt)
-            ? Carbon::parse($createdAt)
-            : $createdAt;
+        $this->createdAt = is_string($createdAt) ? Carbon::parse($createdAt) : $createdAt;
+        return $this;
+    }
+
+    /**
+     * Add an item to fonts
+     * @param string $item
+     * @return $this
+     */
+    public function addFont($item)
+    {
+        return $this->setFonts(
+            !is_null($this->fonts) ? array_merge($this->fonts, [$item]) : [$item]
+        );
+    }
+
+    /**
+     * Add items to fonts
+     * @param array $items
+     * @return $this
+     */
+    public function addFonts($items)
+    {
+        Assert::isArray($items);
+        return $this->setFonts(!is_null($this->fonts) ? array_merge($this->fonts, $items) : $items);
+    }
+
+    /**
+     * Get the fonts
+     * @return string[]
+     */
+    public function getFonts()
+    {
+        return $this->fonts;
+    }
+
+    /**
+     * Set the fonts
+     * @param string[] $fonts
+     * @return $this
+     */
+    public function setFonts($fonts)
+    {
+        if (is_null($fonts)) {
+            $this->fonts = null;
+            return $this;
+        }
+
+        Assert::isArray($fonts);
+        Assert::allString($fonts);
+
+        $this->fonts = $fonts;
         return $this;
     }
 
@@ -167,9 +226,7 @@ class Channel extends BaseSdkObject
 
         Assert::isDate($modifiedAt);
 
-        $this->modifiedAt = is_string($modifiedAt)
-            ? Carbon::parse($modifiedAt)
-            : $modifiedAt;
+        $this->modifiedAt = is_string($modifiedAt) ? Carbon::parse($modifiedAt) : $modifiedAt;
         return $this;
     }
 
@@ -292,6 +349,9 @@ class Channel extends BaseSdkObject
             $data['createdAt'] = !is_null($this->createdAt)
                 ? $this->createdAt->toIso8601String()
                 : null;
+        }
+        if (isset($this->fonts)) {
+            $data['fonts'] = $this->fonts;
         }
         if (isset($this->id)) {
             $data['id'] = $this->id;

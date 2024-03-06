@@ -30,7 +30,7 @@ class CaptionDescriptorTest extends TestCase
      */
     public static function textProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -76,7 +76,7 @@ class CaptionDescriptorTest extends TestCase
      */
     public static function formatProvider()
     {
-        return [["markdown"], ["html"], ["none"]];
+        return [['markdown'], ['html'], ['none']];
     }
 
     /**
@@ -122,9 +122,6 @@ class CaptionDescriptorTest extends TestCase
      */
     public static function textStyleProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\ComponentTextStyle()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\ComponentTextStyle()], ['a string']];
     }
 }

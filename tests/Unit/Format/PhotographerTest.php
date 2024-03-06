@@ -28,7 +28,7 @@ class PhotographerTest extends TestCase
      */
     public static function roleProvider()
     {
-        return [["photographer"]];
+        return [['photographer']];
     }
 
     /**
@@ -51,7 +51,7 @@ class PhotographerTest extends TestCase
      */
     public static function textProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -120,7 +120,7 @@ class PhotographerTest extends TestCase
      */
     public static function animationProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentAnimation()]];
+        return [[new \Urbania\AppleNews\Format\ComponentAnimation()], ['none']];
     }
 
     /**
@@ -143,7 +143,7 @@ class PhotographerTest extends TestCase
      */
     public static function behaviorProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Behavior()]];
+        return [[new \Urbania\AppleNews\Format\Behavior()], ['none']];
     }
 
     /**
@@ -166,7 +166,10 @@ class PhotographerTest extends TestCase
      */
     public static function conditionalProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\ConditionalText()]]];
+        return [
+            [new \Urbania\AppleNews\Format\ConditionalText()],
+            [[new \Urbania\AppleNews\Format\ConditionalText()]],
+        ];
     }
 
     /**
@@ -189,7 +192,7 @@ class PhotographerTest extends TestCase
      */
     public static function formatProvider()
     {
-        return [["markdown"], ["html"], ["none"]];
+        return [['markdown'], ['html'], ['none']];
     }
 
     /**
@@ -235,7 +238,7 @@ class PhotographerTest extends TestCase
      */
     public static function identifierProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -258,7 +261,7 @@ class PhotographerTest extends TestCase
      */
     public static function inlineTextStylesProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\InlineTextStyle()]]];
+        return [[[new \Urbania\AppleNews\Format\InlineTextStyle()]], ['none']];
     }
 
     /**
@@ -281,10 +284,7 @@ class PhotographerTest extends TestCase
      */
     public static function layoutProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\ComponentLayout()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\ComponentLayout()], ['a string']];
     }
 
     /**
@@ -307,7 +307,7 @@ class PhotographerTest extends TestCase
      */
     public static function styleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
+        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ['a string'], ['none']];
     }
 
     /**
@@ -330,9 +330,6 @@ class PhotographerTest extends TestCase
      */
     public static function textStyleProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\ComponentTextStyle()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\ComponentTextStyle()], ['a string']];
     }
 }

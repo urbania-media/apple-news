@@ -5,12 +5,13 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * Properties shared by all the behaviors you can use to affect how
  * components react to device motion and scrolling.
  *
- * @see https://developer.apple.com/documentation/apple_news/behavior
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/behavior.json
  */
 class Behavior extends BaseSdkObject
 {
@@ -21,11 +22,11 @@ class Behavior extends BaseSdkObject
         'background_parallax' => 'BackgroundParallax',
         'motion' => 'Motion',
         'parallax' => 'Parallax',
-        'springy' => 'Springy'
+        'springy' => 'Springy',
     ];
 
     /**
-     * The type of behavior, for example, parallax.
+     * The type of behavior, for example, parallax for a Parallax behavior.
      * @var string
      */
     protected $type;
@@ -41,14 +42,9 @@ class Behavior extends BaseSdkObject
     {
         if (isset($data[static::$typeProperty])) {
             $typeName = $data[static::$typeProperty];
-            $type = isset(static::$types[$typeName])
-                ? static::$types[$typeName]
-                : null;
+            $type = isset(static::$types[$typeName]) ? static::$types[$typeName] : null;
             if (!is_null($type)) {
-                $namespace = implode(
-                    '\\',
-                    array_slice(explode('\\', static::class), 0, -1)
-                );
+                $namespace = implode('\\', array_slice(explode('\\', static::class), 0, -1));
                 $typeClass = $namespace . '\\' . $type;
                 return new $typeClass($data);
             }
@@ -74,11 +70,11 @@ class Behavior extends BaseSdkObject
     public function setType($type)
     {
         Assert::oneOf($type, [
-            "background_motion",
-            "background_parallax",
-            "motion",
-            "parallax",
-            "springy"
+            'background_motion',
+            'background_parallax',
+            'motion',
+            'parallax',
+            'springy',
         ]);
 
         $this->type = $type;

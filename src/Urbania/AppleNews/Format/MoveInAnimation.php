@@ -5,31 +5,34 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The animation whereby a component moves in from the side of the
  * screen.
  *
- * @see https://developer.apple.com/documentation/apple_news/moveinanimation
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/moveinanimation.json
  */
 class MoveInAnimation extends ComponentAnimation
 {
     /**
-     * Always move_in for this animation type.
+     * This animation always has the type move_in.
      * @var string
      */
     protected $type = 'move_in';
 
     /**
-     * A string that indicates which side of the screen should be the
-     * starting point of the animation.
+     * Indicates which side of the screen should be the starting point of the
+     * animation. Valid values:
+     * By default, the animation will start on the side that is closest to
+     * the component.
      * @var string
      */
     protected $preferredStartingPosition;
 
     /**
-     * A Boolean value that indicates whether the animation occurs in
-     * response to user action (true) or happens automatically (false).
+     * Indicates whether the animation is controlled by (is in response to)
+     * user action (true) or happens automatically (false).
      * @var boolean
      */
     protected $userControllable;
@@ -39,9 +42,7 @@ class MoveInAnimation extends ComponentAnimation
         parent::__construct($data);
 
         if (isset($data['preferredStartingPosition'])) {
-            $this->setPreferredStartingPosition(
-                $data['preferredStartingPosition']
-            );
+            $this->setPreferredStartingPosition($data['preferredStartingPosition']);
         }
 
         if (isset($data['userControllable'])) {
@@ -70,7 +71,7 @@ class MoveInAnimation extends ComponentAnimation
             return $this;
         }
 
-        Assert::oneOf($preferredStartingPosition, ["left", "right"]);
+        Assert::oneOf($preferredStartingPosition, ['left', 'right']);
 
         $this->preferredStartingPosition = $preferredStartingPosition;
         return $this;
@@ -123,8 +124,7 @@ class MoveInAnimation extends ComponentAnimation
             $data['type'] = $this->type;
         }
         if (isset($this->preferredStartingPosition)) {
-            $data['preferredStartingPosition'] =
-                $this->preferredStartingPosition;
+            $data['preferredStartingPosition'] = $this->preferredStartingPosition;
         }
         if (isset($this->userControllable)) {
             $data['userControllable'] = $this->userControllable;

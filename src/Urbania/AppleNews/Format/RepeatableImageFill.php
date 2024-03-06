@@ -5,11 +5,12 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for adding a background image that can be repeated.
  *
- * @see https://developer.apple.com/documentation/apple_news/repeatableimagefill
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/repeatableimagefill.json
  */
 class RepeatableImageFill extends Fill
 {
@@ -21,6 +22,11 @@ class RepeatableImageFill extends Fill
 
     /**
      * The URL of the image file to use for filling the component.
+     * Image URLs can begin with http://, https://, or bundle://. If the
+     * image URL begins with bundle://, the referenced image file must be in
+     * the same directory as the document.
+     * Image file names should be properly encoded as URLs.
+     * See .
      * @var string
      */
     protected $URL;
@@ -28,6 +34,7 @@ class RepeatableImageFill extends Fill
     /**
      * A string that indicates how the fill should behave when a user
      * scrolls.
+     * Valid values:
      * @var string
      */
     protected $attachment;
@@ -36,13 +43,14 @@ class RepeatableImageFill extends Fill
      * The height of the image as it is repeated. When height is omitted, the
      * width property is used to determine the size based on the aspect ratio
      * of the provided image.
-     * @var string|integer
+     * @var string|integer|float
      */
     protected $height;
 
     /**
      * A string that sets the horizontal alignment of the image fill within
      * its component.
+     * Valid values:
      * @var string
      */
     protected $horizontalAlignment;
@@ -50,6 +58,7 @@ class RepeatableImageFill extends Fill
     /**
      * A string that defines the direction in which the background image is
      * repeated.
+     * Valid values:
      * @var string
      */
     protected $repeat;
@@ -57,6 +66,9 @@ class RepeatableImageFill extends Fill
     /**
      * The vertical alignment of the repeatable image fill within its
      * component.
+     * Valid values:
+     * This property has no effect when the repeat property is set to both or
+     * y.
      * @var string
      */
     protected $verticalAlignment;
@@ -65,7 +77,7 @@ class RepeatableImageFill extends Fill
      * The width of the image as it is repeated. When width is omitted, the
      * height property is used to determine the size based on the aspect
      * ratio of the provided image.
-     * @var string|integer
+     * @var string|integer|float
      */
     protected $width;
 
@@ -123,7 +135,7 @@ class RepeatableImageFill extends Fill
             return $this;
         }
 
-        Assert::oneOf($attachment, ["fixed", "scroll"]);
+        Assert::oneOf($attachment, ['fixed', 'scroll']);
 
         $this->attachment = $attachment;
         return $this;
@@ -131,7 +143,7 @@ class RepeatableImageFill extends Fill
 
     /**
      * Get the height
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getHeight()
     {
@@ -140,7 +152,7 @@ class RepeatableImageFill extends Fill
 
     /**
      * Set the height
-     * @param string|integer $height
+     * @param string|integer|float $height
      * @return $this
      */
     public function setHeight($height)
@@ -177,7 +189,7 @@ class RepeatableImageFill extends Fill
             return $this;
         }
 
-        Assert::oneOf($horizontalAlignment, ["left", "center", "right"]);
+        Assert::oneOf($horizontalAlignment, ['left', 'center', 'right']);
 
         $this->horizontalAlignment = $horizontalAlignment;
         return $this;
@@ -204,7 +216,7 @@ class RepeatableImageFill extends Fill
             return $this;
         }
 
-        Assert::oneOf($repeat, ["none", "x", "y", "both"]);
+        Assert::oneOf($repeat, ['none', 'x', 'y', 'both']);
 
         $this->repeat = $repeat;
         return $this;
@@ -262,7 +274,7 @@ class RepeatableImageFill extends Fill
             return $this;
         }
 
-        Assert::oneOf($verticalAlignment, ["top", "center", "bottom"]);
+        Assert::oneOf($verticalAlignment, ['top', 'center', 'bottom']);
 
         $this->verticalAlignment = $verticalAlignment;
         return $this;
@@ -270,7 +282,7 @@ class RepeatableImageFill extends Fill
 
     /**
      * Get the width
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getWidth()
     {
@@ -279,7 +291,7 @@ class RepeatableImageFill extends Fill
 
     /**
      * Set the width
-     * @param string|integer $width
+     * @param string|integer|float $width
      * @return $this
      */
     public function setWidth($width)
@@ -313,9 +325,7 @@ class RepeatableImageFill extends Fill
         }
         if (isset($this->height)) {
             $data['height'] =
-                $this->height instanceof Arrayable
-                    ? $this->height->toArray()
-                    : $this->height;
+                $this->height instanceof Arrayable ? $this->height->toArray() : $this->height;
         }
         if (isset($this->horizontalAlignment)) {
             $data['horizontalAlignment'] = $this->horizontalAlignment;
@@ -328,9 +338,7 @@ class RepeatableImageFill extends Fill
         }
         if (isset($this->width)) {
             $data['width'] =
-                $this->width instanceof Arrayable
-                    ? $this->width->toArray()
-                    : $this->width;
+                $this->width instanceof Arrayable ? $this->width->toArray() : $this->width;
         }
         return $data;
     }

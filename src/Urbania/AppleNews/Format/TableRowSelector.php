@@ -5,29 +5,30 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for defining conditions that will cause a conditional style
  * to be applied to a row.
  *
- * @see https://developer.apple.com/documentation/apple_news/tablerowselector
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/tablerowselector.json
  */
 class TableRowSelector extends BaseSdkObject
 {
     /**
      * A string that specifies the identifier of a specific data descriptor.
-     * All rows for this data descriptor will be selected. See
-     * DataDescriptor.
+     * All rows for this data descriptor will be selected. See .
+     * When dataOrientation is set to horizontal, which is not the default
+     * each row displays data for one data descriptor. See .
      * @var string
      */
     protected $descriptor;
 
     /**
-     * A number that specifies a row index. The topmost row of data has an
-     * index of 0. The specified column is selected.
-     * @var integer
+     * A Boolean value when true, selects the even rows.
+     * @var boolean
      */
-    protected $rowIndex;
+    protected $even;
 
     /**
      * A Boolean value when true, selects the odd rows.
@@ -36,10 +37,11 @@ class TableRowSelector extends BaseSdkObject
     protected $odd;
 
     /**
-     * A Boolean value when true, selects the even rows.
-     * @var boolean
+     * A number that specifies a row index. The topmost row of data has an
+     * index of . The specified column is selected.
+     * @var integer
      */
-    protected $even;
+    protected $rowIndex;
 
     public function __construct(array $data = [])
     {
@@ -47,16 +49,16 @@ class TableRowSelector extends BaseSdkObject
             $this->setDescriptor($data['descriptor']);
         }
 
-        if (isset($data['rowIndex'])) {
-            $this->setRowIndex($data['rowIndex']);
+        if (isset($data['even'])) {
+            $this->setEven($data['even']);
         }
 
         if (isset($data['odd'])) {
             $this->setOdd($data['odd']);
         }
 
-        if (isset($data['even'])) {
-            $this->setEven($data['even']);
+        if (isset($data['rowIndex'])) {
+            $this->setRowIndex($data['rowIndex']);
         }
     }
 
@@ -178,14 +180,14 @@ class TableRowSelector extends BaseSdkObject
         if (isset($this->descriptor)) {
             $data['descriptor'] = $this->descriptor;
         }
-        if (isset($this->rowIndex)) {
-            $data['rowIndex'] = $this->rowIndex;
+        if (isset($this->even)) {
+            $data['even'] = $this->even;
         }
         if (isset($this->odd)) {
             $data['odd'] = $this->odd;
         }
-        if (isset($this->even)) {
-            $data['even'] = $this->even;
+        if (isset($this->rowIndex)) {
+            $data['rowIndex'] = $this->rowIndex;
         }
         return $data;
     }

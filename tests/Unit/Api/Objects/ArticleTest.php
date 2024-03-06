@@ -30,7 +30,7 @@ class ArticleTest extends TestCase
      */
     public static function accessoryTextProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -76,10 +76,7 @@ class ArticleTest extends TestCase
      */
     public static function documentProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\ArticleDocument()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\ArticleDocument()], ['a string']];
     }
 
     /**
@@ -102,7 +99,7 @@ class ArticleTest extends TestCase
      */
     public static function idProvider()
     {
-        return [["9d6ab046-607e-11e9-8625-f45c899bcb9d"]];
+        return [['5a08115e-dbd5-11ee-ac6c-ca53fbc83398']];
     }
 
     /**
@@ -175,6 +172,29 @@ class ArticleTest extends TestCase
     }
 
     /**
+     * Test the property links
+     * @test
+     * @dataProvider linksProvider
+     * @covers ::getLinks
+     * @covers ::setLinks
+     */
+    public function testPropertyLinks($value)
+    {
+        $object = new Article();
+        $object->setLinks($value);
+
+        $this->assertEquals($value, $object->getLinks());
+    }
+
+    /**
+     * Data provider for property links
+     */
+    public static function linksProvider()
+    {
+        return [[new \Urbania\AppleNews\Api\Objects\ArticleLinksResponse()]];
+    }
+
+    /**
      * Test the property maturityRating
      * @test
      * @dataProvider maturityRatingProvider
@@ -194,7 +214,7 @@ class ArticleTest extends TestCase
      */
     public static function maturityRatingProvider()
     {
-        return [["KIDS"], ["MATURE"], ["GENERAL"]];
+        return [['KIDS'], ['MATURE'], ['GENERAL']];
     }
 
     /**
@@ -240,7 +260,7 @@ class ArticleTest extends TestCase
      */
     public static function revisionProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -263,7 +283,7 @@ class ArticleTest extends TestCase
      */
     public static function shareUrlProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -287,12 +307,13 @@ class ArticleTest extends TestCase
     public static function stateProvider()
     {
         return [
-            ["PROCESSING"],
-            ["LIVE"],
-            ["PROCESSING_UPDATE"],
-            ["TAKEN_DOWN"],
-            ["FAILED_PROCESSING"],
-            ["FAILED_PROCESSING_UPDATE"]
+            ['PROCESSING'],
+            ['LIVE'],
+            ['PROCESSING_UPDATE'],
+            ['TAKEN_DOWN'],
+            ['FAILED_PROCESSING'],
+            ['FAILED_PROCESSING_UPDATE'],
+            ['DUPLICATE'],
         ];
     }
 
@@ -316,7 +337,7 @@ class ArticleTest extends TestCase
      */
     public static function titleProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -339,7 +360,7 @@ class ArticleTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -363,28 +384,5 @@ class ArticleTest extends TestCase
     public static function warningsProvider()
     {
         return [[[new \Urbania\AppleNews\Api\Objects\Warning()]]];
-    }
-
-    /**
-     * Test the property links
-     * @test
-     * @dataProvider linksProvider
-     * @covers ::getLinks
-     * @covers ::setLinks
-     */
-    public function testPropertyLinks($value)
-    {
-        $object = new Article();
-        $object->setLinks($value);
-
-        $this->assertEquals($value, $object->getLinks());
-    }
-
-    /**
-     * Data provider for property links
-     */
-    public static function linksProvider()
-    {
-        return [[new \Urbania\AppleNews\Api\Objects\ArticleLinks()]];
     }
 }

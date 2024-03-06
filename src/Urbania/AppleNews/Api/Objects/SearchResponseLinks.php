@@ -5,11 +5,12 @@ namespace Urbania\AppleNews\Api\Objects;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
- * See the links returned by the search article endpoints.
+ * See the links the search article endpoints returned.
  *
- * @see https://developer.apple.com/documentation/apple_news/searchresponse/links
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/searchresponse/links.json
  */
 class SearchResponseLinks extends BaseSdkObject
 {
@@ -22,8 +23,7 @@ class SearchResponseLinks extends BaseSdkObject
     /**
      * The URL for the next page of search results. If next is null, there
      * are no more pages. The next link may occasionally return an empty page
-     * of results (if, for example, an article in the original set of search
-     * results has been deleted since the results were obtained).
+     * of results.
      * @var string
      */
     protected $next;

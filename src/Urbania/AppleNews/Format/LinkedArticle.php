@@ -5,26 +5,28 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * A relationship between your article and another Apple News article.
  *
- * @see https://developer.apple.com/documentation/apple_news/linkedarticle
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/linkedarticle.json
  */
 class LinkedArticle extends BaseSdkObject
 {
     /**
      * The type of relationship between the article and the linked document.
+     * Valid values:
      * @var string
      */
     protected $relationship;
 
     /**
-     * The URL for the link. This link can  either be an Apple News link,
-     * like https://apple.news/[article_id], or a link to an article on your
+     * The URL for the link. Can be either an Apple News link, like
+     * https://apple.news/[article_id], or a link to an article on your
      * website, as long as the website link matches the canonicalURL metadata
      * property of the linked article. For more information about
-     * canonicalURL, see Metadata.
+     * canonicalURL, see .
      * @var string
      */
     protected $URL;
@@ -56,7 +58,7 @@ class LinkedArticle extends BaseSdkObject
      */
     public function setRelationship($relationship)
     {
-        Assert::oneOf($relationship, ["related", "promoted"]);
+        Assert::oneOf($relationship, ['related', 'promoted']);
 
         $this->relationship = $relationship;
         return $this;

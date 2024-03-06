@@ -76,6 +76,6 @@ class SearchResponseTest extends TestCase
      */
     public static function metaProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 }

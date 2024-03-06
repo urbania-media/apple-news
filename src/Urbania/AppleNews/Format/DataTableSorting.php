@@ -5,18 +5,19 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * A data category by which to sort the table in descending or ascending
  * order.
  *
- * @see https://developer.apple.com/documentation/apple_news/datatablesorting
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/datatablesorting.json
  */
 class DataTableSorting extends BaseSdkObject
 {
     /**
      * The identifier property of one of the table’s data descriptors. See
-     * DataDescriptor.
+     * .
      * @var string
      */
     protected $descriptor;
@@ -76,7 +77,7 @@ class DataTableSorting extends BaseSdkObject
      */
     public function setDirection($direction)
     {
-        Assert::oneOf($direction, ["ascending", "descending"]);
+        Assert::oneOf($direction, ['ascending', 'descending']);
 
         $this->direction = $direction;
         return $this;

@@ -1,12 +1,12 @@
 {
     "name": "Api\\Objects\\Section",
-    "description": "See the fields returned by the section endpoints.",
+    "description": "See the fields the section endpoints returned.",
     "version": "1.0.0+",
     "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/section",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/section.json",
     "properties": [
         {
             "name": "createdAt",
@@ -19,7 +19,7 @@
             "name": "id",
             "type": "uuid",
             "required": false,
-            "description": "The unique identifier of the specified section.",
+            "description": "The unique identifier of the specified section. ",
             "typed": false
         },
         {
@@ -27,14 +27,14 @@
             "type": "boolean",
             "required": false,
             "description": "A Boolean value that indicates whether this is the default section for the channel.",
-            "default": "false",
+            "default": true,
             "typed": false
         },
         {
             "name": "modifiedAt",
             "type": "date-time",
             "required": false,
-            "description": "The date and time this section was last modified.",
+            "description": "The date and time this section was last modified. ",
             "typed": false
         },
         {
@@ -55,7 +55,7 @@
             "name": "type",
             "type": "string",
             "required": false,
-            "description": "Section",
+            "description": "The section.",
             "typed": false
         }
     ]

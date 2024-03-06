@@ -1,12 +1,12 @@
 {
     "name": "Api\\Objects\\Throttling",
-    "description": "See the object that wraps the throttling information that's returned for the create article and update article endpoints.",
+    "description": "See the object that wraps the throttling information that's returned for the Create an Article and Update an Article endpoints.",
     "version": "1.0.0+",
     "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/throttling",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/throttling.json",
     "properties": [
         {
             "name": "estimatedDelayInSeconds",
@@ -19,23 +19,23 @@
             "name": "isThrottled",
             "type": "boolean",
             "required": false,
-            "description": "A boolean value that indicates whether requests to this channel are currently being throttled. If true, this request is added to the queue to be processed later rather than immediately.",
-            "default": "false",
+            "description": "A Boolean value that indicates whether requests to this channel are currently being throttled. If true, the server adds this request to the queue to process later rather than immediately.",
+            "default": true,
             "typed": false
         },
         {
             "name": "queueSize",
             "type": "integer",
             "required": false,
-            "description": "Number of requests currently queued for later processing.",
-            "minimum": 0,
+            "description": "The number of requests currently queued for later processing.",
+            "minimum": "0",
             "typed": false
         },
         {
             "name": "quotaAvailable",
             "type": "integer",
             "required": false,
-            "description": "Number of additional article publish or update requests which could be submitted now before the system will begin throttling.",
+            "description": "The number of additional article publish or update requests that you can submit now, before the system begins throttling.",
             "typed": false
         }
     ]

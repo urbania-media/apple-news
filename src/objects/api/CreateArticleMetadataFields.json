@@ -1,65 +1,79 @@
 {
     "name": "Api\\Objects\\CreateArticleMetadataFields",
-    "description": "See the optional metadata fields for the create article request.",
+    "description": "See the optional metadata fields for the Create an Article Request.",
     "version": "1.0.0+",
     "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/create_article_metadata_fields",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/create_article_metadata_fields.json",
     "properties": [
         {
             "name": "accessoryText",
             "type": "string",
             "required": false,
-            "description": "Text to include below the article excerpt in the channel view, such as a byline or category label.",
+            "description": "The text to include below the article excerpt in the channel view, such as a byline or category label.",
             "default": "metadata.authors",
-            "maximum": 100,
+            "maximum": "100",
             "typed": false
         },
         {
             "name": "isCandidateToBeFeatured",
             "type": "boolean",
             "required": false,
-            "description": "Indicates whether or not this article should be considered for featuring in News. See (To be Deleted) Submitting Articles with Cover Art for Featured Stories.",
-            "default": "false",
+            "description": "A Boolean that indicates whether this article should be considered for featuring in Apple News. ",
+            "default": true,
             "typed": false
         },
         {
             "name": "isHidden",
             "type": "boolean",
             "required": false,
-            "description": "Indicates whether or not the article should be temporarily hidden from display in the News feed.",
-            "default": "false",
+            "description": "A Boolean that indicates whether the article should be temporarily hidden from display in feeds in Apple News. Note that a hidden article is accessible if you have a direct link to the article.",
+            "default": true,
             "typed": false
         },
         {
             "name": "isPreview",
             "type": "boolean",
             "required": false,
-            "description": "Indicates whether this article should be public (live) or should be a preview that is only visible to members of your channel. Set isPreview to false to publish the article right away and make it visible to all News users. \nIf your channel has not yet been approved to publish articles in Apple News Format, setting isPreview to false will result in an ONLY_PREVIEW_ALLOWED error.",
-            "default": "false",
+            "description": "A Boolean that indicates whether this article should be public (live) or should be a preview that\u2019s only visible to members of your channel. Set isPreview to false to publish the article immediately and make it visible to all News users. \nIf your channel hasn\u2019t yet been approved to publish articles in Apple News Format, setting isPreview to false results in an ONLY_PREVIEW_ALLOWED error. ",
+            "default": true,
             "typed": false
         },
         {
             "name": "isSponsored",
             "type": "boolean",
             "required": false,
-            "description": "Indicates whether this article consists of sponsored content for promotional purposes. Sponsored content must be marked as such; channels that do not follow this policy may be suspended.",
-            "default": "false",
+            "description": "A Boolean that indicates whether this article consists of sponsored content for promotional purposes. You must mark sponsored content as such; channels that don\u2019t follow this policy may be suspended.\nWhen using isSponsored, if you don\u2019t want the sponsored article to appear in your channel\u2019s feed, set sections to [] (an empty array).",
+            "default": true,
+            "typed": false
+        },
+        {
+            "name": "links",
+            "type": "Api\\Objects\\ArticleLinksRequest",
+            "required": false,
+            "description": "The section links for the article.",
             "typed": false
         },
         {
             "name": "maturityRating",
             "type": "enum:string",
             "required": false,
-            "description": "Indicates the viewing audience for the content. Note that a MATURE rating indicates explicit content that is only appropriate for a specific audience.",
+            "description": "A string that indicates the viewing audience for the content. \nMATURE indicates explicit content that\u2019s only appropriate for a specific audience. \nBy default, the article inherits the value you set for your channel in News Publisher. ",
             "default": "null",
             "enum_values": [
                 "KIDS",
                 "MATURE",
                 "GENERAL"
             ],
+            "typed": false
+        },
+        {
+            "name": "targetTerritoryCountryCodes",
+            "type": "array:string",
+            "required": false,
+            "description": "The target country codes required for publishing the article. You must enable the specified country codes in your channel. For example, to publish an article only in the United Kingdom and Australia, specify GB and AU. By default, an article inherits the channel's territories. \nCountry codes must be in ISO 3166-1 alpha-2 code format; for example, AU for Australia. For a complete list of ISO country codes, see .\nIf you specify a country code that isn\u2019t defined in your channel, the  ARTICLE_TERRITORY_NOT_ALLOWED error is generated. If you specify an invalid country code, the server generates an INVALID_ARTICLE_TERRITORY error.",
             "typed": false
         },
         {

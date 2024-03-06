@@ -5,17 +5,18 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The behavior whereby a component moves at a speed different from the
  * scroll speed.
  *
- * @see https://developer.apple.com/documentation/apple_news/parallax
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/parallax.json
  */
 class Parallax extends Behavior
 {
     /**
-     * Always parallax for this behavior.
+     * This behavior always has the type parallax.
      * @var string
      */
     protected $type = 'parallax';
@@ -24,6 +25,11 @@ class Parallax extends Behavior
      * The speed of the component, as a factor of the scroll speed.The value
      * of factor must be between 0.5 and 2.0. Values outside this range will
      * be reset to the minimum or maximum value.
+     * The parallax factor 1.0 is equal to the scroll speed.
+     * A factor lower than 1.0 makes the component move more slowly than the
+     * scrolling speed.
+     * A factor higher than 1.0 makes the component move more quickly than
+     * the scrolling speed.
      * @var integer|float
      */
     protected $factor;

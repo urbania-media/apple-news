@@ -1,25 +1,18 @@
 {
     "name": "Format\\ConditionalTableCellStyle",
-    "description": "The object for applying a style to table cells that meet certain conditions.",
+    "description": "The object for applying a style to table cells that meet certain conditions. ",
     "version": "1.7+",
     "deprecated": false,
     "from_class": null,
     "extends": "Format\\TableCellStyle",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/conditionaltablecellstyle",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/conditionaltablecellstyle.json",
     "properties": [
-        {
-            "name": "selectors",
-            "type": "array:Format\\TableCellSelector",
-            "required": true,
-            "description": "An array of one or more selectors, each of which specifies one or more conditions.",
-            "typed": false
-        },
         {
             "name": "backgroundColor",
             "type": "Color",
             "required": false,
-            "description": "The background color for the cell.",
+            "description": "The background color for the cell.\nIf this property is omitted, the background is transparent.\nThe cell background color is highest priority, followed by the column, and finally the row. All three colors are applied, meaning that non-opaque values can cause combined colors. For example, using a red row together with a blue column, both with 50% opacity, creates a purple cell.",
             "typed": false
         },
         {
@@ -33,17 +26,17 @@
             "name": "height",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The height of the cell and its row, as an integer in points, or using one of the available units of measure for components.",
+            "description": "The height of the cell and its row, as a number in points, or using one of the available units of measure for components.\nBy default, the height of each row is determined by the height of the content in that row. See .",
             "typed": false
         },
         {
             "name": "horizontalAlignment",
             "type": "enum:string",
             "required": false,
-            "description": "The horizontal alignment of content inside cells.",
+            "description": "The horizontal alignment of content inside cells. ",
             "default": "left",
             "enum_values": [
                 "left",
@@ -56,10 +49,10 @@
             "name": "minimumWidth",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The minimum width of the cell and its column, as an integer in points or using one of the available units of measure for components.",
+            "description": "The minimum width of the cell and its column, as a number in points or using one of the available units of measure for components.",
             "typed": false
         },
         {
@@ -67,10 +60,17 @@
             "type": [
                 "Format\\Padding",
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The space around the content in a table cell in points, supported units, or a Padding object that specifies padding for each side separately.",
+            "description": "The space around the content in a table cell in points, supported units, or a  object that specifies padding for each side separately.",
+            "typed": false
+        },
+        {
+            "name": "selectors",
+            "type": "array:Format\\TableCellSelector",
+            "required": true,
+            "description": "An array of one or more selectors, each of which specifies one or more conditions.\nThis conditional table cell style is applied to cells that meet all of the conditions of at least one of the selectors.",
             "typed": false
         },
         {
@@ -80,14 +80,14 @@
                 "string"
             ],
             "required": false,
-            "description": "The name string of one of your styles in the Article ArticleDocument.componentTextStyles object.",
+            "description": "The name string of one of your styles in the Article  object.",
             "typed": false
         },
         {
             "name": "verticalAlignment",
             "type": "enum:string",
             "required": false,
-            "description": "A string that defines the vertical alignment of content inside cells.",
+            "description": "Defines the vertical alignment of content inside cells. ",
             "default": "center",
             "enum_values": [
                 "top",

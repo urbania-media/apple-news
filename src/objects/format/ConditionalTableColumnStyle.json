@@ -1,25 +1,18 @@
 {
     "name": "Format\\ConditionalTableColumnStyle",
-    "description": "The object for applying styles to table columns that meet certain conditions.",
+    "description": "The object for applying styles to table columns that meet certain conditions. ",
     "version": "1.7+",
     "deprecated": false,
     "from_class": null,
     "extends": "Format\\TableColumnStyle",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/conditionaltablecolumnstyle",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/conditionaltablecolumnstyle.json",
     "properties": [
-        {
-            "name": "selectors",
-            "type": "array:Format\\TableColumnSelector",
-            "required": true,
-            "description": "An array of one or more selectors, each of which specifies one or more conditions.",
-            "typed": false
-        },
         {
             "name": "backgroundColor",
             "type": "Color",
             "required": false,
-            "description": "The background color for the column.",
+            "description": "The background color for the column.\nIf this property is omitted, the background is transparent.\nThe cell\u2019s background color is highest priority, followed by column, and finally row. All three colors are applied, meaning that non-opaque values can cause combined colors. For example, using a red row together with a blue column, both with 50% opacity, creates a purple cell.",
             "typed": false
         },
         {
@@ -33,17 +26,24 @@
             "name": "minimumWidth",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The minimum width of the column as an integer in points  or in one of the available units of measure for components. See Specifying Measurements for Components.",
+            "description": "The minimum width of the column as a number in points, or in one of the available units of measure for components. See .",
+            "typed": false
+        },
+        {
+            "name": "selectors",
+            "type": "array:Format\\TableColumnSelector",
+            "required": true,
+            "description": "An array of one or more selectors, each of which specifies one or more conditions.\nThis conditional table column style will be applied to columns that meet all of the conditions of at least one of the selectors.",
             "typed": false
         },
         {
             "name": "width",
             "type": "integer",
             "required": false,
-            "description": "The relative column width. This value influences the distribution of column width but does not dictate any exact values. To set an exact minimum width, use minimumWidth instead.",
+            "description": "The relative column width. This value influences the distribution of column width but does not dictate any exact values. To set an exact minimum width, use minimumWidth instead.\nIt might be useful to think of the value of width as a percentage of the component\u2019s width. For example, if you know that one column\u2019s width should be about half that of the whole component, and another should be about a quarter of the component width, use values of 50 and 25.",
             "typed": false
         }
     ]

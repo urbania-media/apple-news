@@ -6,13 +6,17 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/componentaddition",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/componentaddition.json",
     "properties": [
         {
             "name": "type",
-            "type": "string",
+            "type": "enum:string",
             "required": true,
-            "description": "The type of componentAddition. For example ComponentLink.",
+            "description": "The type of component addition. For example .",
+            "enum_values": [
+                "link",
+                "calendar_event"
+            ],
             "typed": false
         }
     ]

@@ -76,33 +76,9 @@ class ComponentLayoutTest extends TestCase
      */
     public static function conditionalProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\ConditionalComponentLayout()]]];
-    }
-
-    /**
-     * Test the property contentInset
-     * @test
-     * @dataProvider contentInsetProvider
-     * @covers ::getContentInset
-     * @covers ::setContentInset
-     */
-    public function testPropertyContentInset($value)
-    {
-        $object = new ComponentLayout();
-        $object->setContentInset($value);
-
-        $this->assertEquals($value, $object->getContentInset());
-    }
-
-    /**
-     * Data provider for property contentInset
-     */
-    public static function contentInsetProvider()
-    {
         return [
-            [new \Urbania\AppleNews\Format\ContentInset()],
-            [true],
-            [false]
+            [new \Urbania\AppleNews\Format\ConditionalComponentLayout()],
+            [[new \Urbania\AppleNews\Format\ConditionalComponentLayout()]],
         ];
     }
 
@@ -126,7 +102,7 @@ class ComponentLayoutTest extends TestCase
      */
     public static function horizontalContentAlignmentProvider()
     {
-        return [["left"], ["center"], ["right"]];
+        return [['left'], ['center'], ['right']];
     }
 
     /**
@@ -149,7 +125,7 @@ class ComponentLayoutTest extends TestCase
      */
     public static function ignoreDocumentGutterProvider()
     {
-        return [["none"], ["left"], ["right"], ["both"], [true], [false]];
+        return [['none'], ['left'], ['right'], ['both'], [true], [false]];
     }
 
     /**
@@ -172,7 +148,30 @@ class ComponentLayoutTest extends TestCase
      */
     public static function ignoreDocumentMarginProvider()
     {
-        return [["none"], ["left"], ["right"], ["both"], [true], [false]];
+        return [['none'], ['left'], ['right'], ['both'], [true], [false]];
+    }
+
+    /**
+     * Test the property ignoreViewportPadding
+     * @test
+     * @dataProvider ignoreViewportPaddingProvider
+     * @covers ::getIgnoreViewportPadding
+     * @covers ::setIgnoreViewportPadding
+     */
+    public function testPropertyIgnoreViewportPadding($value)
+    {
+        $object = new ComponentLayout();
+        $object->setIgnoreViewportPadding($value);
+
+        $this->assertEquals($value, $object->getIgnoreViewportPadding());
+    }
+
+    /**
+     * Data provider for property ignoreViewportPadding
+     */
+    public static function ignoreViewportPaddingProvider()
+    {
+        return [['none'], ['left'], ['right'], ['both'], [true], [false]];
     }
 
     /**
@@ -218,7 +217,7 @@ class ComponentLayoutTest extends TestCase
      */
     public static function maximumContentWidthProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**
@@ -241,7 +240,7 @@ class ComponentLayoutTest extends TestCase
      */
     public static function minimumHeightProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**
@@ -264,7 +263,7 @@ class ComponentLayoutTest extends TestCase
      */
     public static function minimumWidthProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**
@@ -287,7 +286,7 @@ class ComponentLayoutTest extends TestCase
      */
     public static function maximumWidthProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**
@@ -310,12 +309,6 @@ class ComponentLayoutTest extends TestCase
      */
     public static function paddingProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\Padding()],
-            ["1vh"],
-            [1],
-            ["1vmin"],
-            [1]
-        ];
+        return [[new \Urbania\AppleNews\Format\Padding()], ['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 }

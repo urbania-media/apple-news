@@ -5,16 +5,17 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The animation whereby a component appears on the screen.
  *
- * @see https://developer.apple.com/documentation/apple_news/appearanimation
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/appearanimation.json
  */
 class AppearAnimation extends ComponentAnimation
 {
     /**
-     * Always appear for this animation type.
+     * This animation always has the type appear.
      * @var string
      */
     protected $type = 'appear';

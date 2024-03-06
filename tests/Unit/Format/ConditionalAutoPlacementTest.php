@@ -30,7 +30,10 @@ class ConditionalAutoPlacementTest extends TestCase
      */
     public static function conditionsProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\Condition()]]];
+        return [
+            [new \Urbania\AppleNews\Format\Condition()],
+            [[new \Urbania\AppleNews\Format\Condition()]],
+        ];
     }
 
     /**

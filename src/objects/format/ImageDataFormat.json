@@ -6,56 +6,56 @@
     "from_class": null,
     "extends": "Format\\DataFormat",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/imagedataformat",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/imagedataformat.json",
     "properties": [
-        {
-            "name": "type",
-            "type": "string",
-            "required": true,
-            "description": "Always image for an ImageDataFormat object.",
-            "value": "image",
-            "read_only": true,
-            "typed": false
-        },
         {
             "name": "maximumHeight",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The maximum height of an image in a cell as an integer in points or as one of the available units for components.",
+            "description": "The maximum height of an image in a cell as a number in points or as one of the available units for components.\nIf this property is omitted, the maximum height will be determined by the image\u2019s aspect ratio.",
             "typed": false
         },
         {
             "name": "maximumWidth",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The maximum width of an image in a cell as an integer in points or as one of the available units for components.",
+            "description": "The maximum width of an image in a cell as a number in points or as one of the available units for components. The maximum width cannot be smaller than the minimum width.\nIf this property is omitted, the maximum width will be determined by the column width.",
             "typed": false
         },
         {
             "name": "minimumHeight",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The minimum height of an image in a cell as an integer in points or as one of the available units for components.",
+            "description": "The minimum height of an image in a cell as a number in points or as one of the available units for components.\nIf this property is omitted, the height will be determined by the image\u2019s aspect ratio.",
             "typed": false
         },
         {
             "name": "minimumWidth",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The minimum width of an image in a cell as an integer in points or as one of the available units for components.",
+            "description": "The minimum width of an image in a cell as as a number in points or as one of the available units for components.\nDefault value: 20cw, or 20% of the component\u2019s width. See  .",
             "default": "20cw",
+            "typed": false
+        },
+        {
+            "name": "type",
+            "type": "string",
+            "required": true,
+            "description": "The type of data format for this object. This must be image for an image format object.",
+            "value": "image",
+            "read_only": true,
             "typed": false
         }
     ]

@@ -1,0 +1,29 @@
+{
+    "name": "Format\\ConditionalDocumentStyle",
+    "description": "The object for defining conditional properties for a document style, and when the conditional properties are in effect.",
+    "version": "1.10.1+",
+    "deprecated": false,
+    "from_class": null,
+    "extends": "Format\\DocumentStyle",
+    "typed": null,
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/conditionaldocumentstyle.json",
+    "properties": [
+        {
+            "name": "conditions",
+            "type": [
+                "Format\\Condition",
+                "array:Format\\Condition"
+            ],
+            "required": true,
+            "description": "An instance or array of conditions that, when met, cause the conditional document style properties to take effect.",
+            "typed": false
+        },
+        {
+            "name": "backgroundColor",
+            "type": "Color",
+            "required": false,
+            "description": "The document's background color. The value defaults to white.",
+            "typed": false
+        }
+    ]
+}

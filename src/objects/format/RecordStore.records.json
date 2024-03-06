@@ -6,7 +6,7 @@
     "from_class": "Records",
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/recordstore\/records",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/recordstore\/records.json",
     "properties": [
         {
             "name": "data",

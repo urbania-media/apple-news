@@ -11,29 +11,6 @@ use Urbania\AppleNews\Tests\TestCase;
 class FormattedTextTest extends TestCase
 {
     /**
-     * Test the property text
-     * @test
-     * @dataProvider textProvider
-     * @covers ::getText
-     * @covers ::setText
-     */
-    public function testPropertyText($value)
-    {
-        $object = new FormattedText();
-        $object->setText($value);
-
-        $this->assertEquals($value, $object->getText());
-    }
-
-    /**
-     * Data provider for property text
-     */
-    public static function textProvider()
-    {
-        return [["a string"]];
-    }
-
-    /**
      * Test the property type
      * @test
      * @dataProvider typeProvider
@@ -51,7 +28,7 @@ class FormattedTextTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["formatted_text"]];
+        return [['formatted_text']];
     }
 
     /**
@@ -97,7 +74,7 @@ class FormattedTextTest extends TestCase
      */
     public static function formatProvider()
     {
-        return [["html"], ["none"]];
+        return [['html'], ['none']];
     }
 
     /**
@@ -124,6 +101,29 @@ class FormattedTextTest extends TestCase
     }
 
     /**
+     * Test the property text
+     * @test
+     * @dataProvider textProvider
+     * @covers ::getText
+     * @covers ::setText
+     */
+    public function testPropertyText($value)
+    {
+        $object = new FormattedText();
+        $object->setText($value);
+
+        $this->assertEquals($value, $object->getText());
+    }
+
+    /**
+     * Data provider for property text
+     */
+    public static function textProvider()
+    {
+        return [['a string']];
+    }
+
+    /**
      * Test the property textStyle
      * @test
      * @dataProvider textStyleProvider
@@ -143,9 +143,6 @@ class FormattedTextTest extends TestCase
      */
     public static function textStyleProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\ComponentTextStyle()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\ComponentTextStyle()], ['a string']];
     }
 }

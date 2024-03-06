@@ -5,11 +5,12 @@ namespace Urbania\AppleNews\Api\Objects;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
- * See the fields returned by the search article endpoints.
+ * See the fields the search article endpoints returned.
  *
- * @see https://developer.apple.com/documentation/apple_news/searchresponse
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/searchresponse.json
  */
 class SearchResponse extends BaseSdkObject
 {
@@ -20,17 +21,16 @@ class SearchResponse extends BaseSdkObject
     protected $articles;
 
     /**
-     * A list of fields returned by the Search Articles in a Section and
-     * Search Articles in a Channel endpoints.
+     * A list of fields the  and  endpoints return.
      * @var \Urbania\AppleNews\Api\Objects\SearchResponseLinks
      */
     protected $links;
 
     /**
-     * The value that should be set for the pageToken parameter as well as
-     * the parameters that were previously sent to get the next page of
-     * results. This field is automatically filled in with the next URL in
-     * the links section.
+     * The value you want to set for the pageToken parameter and the
+     * parameters that were previously sent to get the next page of results.
+     * This field is automatically filled in with the next URL in the links
+     * section.
      * @var string
      */
     protected $meta;
@@ -58,9 +58,7 @@ class SearchResponse extends BaseSdkObject
     public function addArticle($item)
     {
         return $this->setArticles(
-            !is_null($this->articles)
-                ? array_merge($this->articles, [$item])
-                : [$item]
+            !is_null($this->articles) ? array_merge($this->articles, [$item]) : [$item]
         );
     }
 
@@ -73,9 +71,7 @@ class SearchResponse extends BaseSdkObject
     {
         Assert::isArray($items);
         return $this->setArticles(
-            !is_null($this->articles)
-                ? array_merge($this->articles, $items)
-                : $items
+            !is_null($this->articles) ? array_merge($this->articles, $items) : $items
         );
     }
 
@@ -103,15 +99,17 @@ class SearchResponse extends BaseSdkObject
         Assert::isArray($articles);
         Assert::allIsSdkObject($articles, Article::class);
 
-        $this->articles = array_reduce(
-            array_keys($articles),
-            function ($array, $key) use ($articles) {
-                $item = $articles[$key];
-                $array[$key] = is_array($item) ? new Article($item) : $item;
-                return $array;
-            },
-            []
-        );
+        $this->articles = is_array($articles)
+            ? array_reduce(
+                array_keys($articles),
+                function ($array, $key) use ($articles) {
+                    $item = $articles[$key];
+                    $array[$key] = Utils::isAssociativeArray($item) ? new Article($item) : $item;
+                    return $array;
+                },
+                []
+            )
+            : $articles;
         return $this;
     }
 
@@ -138,9 +136,7 @@ class SearchResponse extends BaseSdkObject
 
         Assert::isSdkObject($links, SearchResponseLinks::class);
 
-        $this->links = is_array($links)
-            ? new SearchResponseLinks($links)
-            : $links;
+        $this->links = Utils::isAssociativeArray($links) ? new SearchResponseLinks($links) : $links;
         return $this;
     }
 
@@ -195,9 +191,7 @@ class SearchResponse extends BaseSdkObject
         }
         if (isset($this->links)) {
             $data['links'] =
-                $this->links instanceof Arrayable
-                    ? $this->links->toArray()
-                    : $this->links;
+                $this->links instanceof Arrayable ? $this->links->toArray() : $this->links;
         }
         if (isset($this->meta)) {
             $data['meta'] = $this->meta;

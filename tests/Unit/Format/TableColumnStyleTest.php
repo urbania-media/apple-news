@@ -30,7 +30,7 @@ class TableColumnStyleTest extends TestCase
      */
     public static function backgroundColorProvider()
     {
-        return [["#fff"], ["#000"]];
+        return [['#fff'], ['#000']];
     }
 
     /**
@@ -53,9 +53,7 @@ class TableColumnStyleTest extends TestCase
      */
     public static function conditionalProvider()
     {
-        return [
-            [[new \Urbania\AppleNews\Format\ConditionalTableColumnStyle()]]
-        ];
+        return [[[new \Urbania\AppleNews\Format\ConditionalTableColumnStyle()]]];
     }
 
     /**
@@ -101,7 +99,7 @@ class TableColumnStyleTest extends TestCase
      */
     public static function minimumWidthProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**

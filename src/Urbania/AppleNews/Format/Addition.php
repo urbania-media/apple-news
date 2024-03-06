@@ -5,30 +5,31 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * Properties shared by all addition types.
  *
- * @see https://developer.apple.com/documentation/apple_news/addition
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/addition.json
  */
 class Addition extends BaseSdkObject
 {
     /**
-     * The type of addition. For example, Link.
+     * The type of addition. For example, .
      * @var string
      */
     protected $type;
 
     /**
-     * The length of the range of text the component should be anchored to.
+     * The number of text characters that will be highlighted as the link.
      * @var integer
      */
     protected $rangeLength;
 
     /**
-     * The start index of the range of text the component should be anchored
-     * to. When a component is anchored to a component with role of body, the
-     * text might be flowed around the component.
+     * The starting character index for which the addition is meant. A range
+     * starts at  for the first character.
+     * If rangeStart is specified, rangeLength is required.
      * @var integer
      */
     protected $rangeStart;
@@ -118,7 +119,7 @@ class Addition extends BaseSdkObject
      */
     public function setType($type)
     {
-        Assert::string($type);
+        Assert::oneOf($type, ['link', 'calendar_event']);
 
         $this->type = $type;
         return $this;

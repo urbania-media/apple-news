@@ -5,43 +5,49 @@ namespace Urbania\AppleNews\Api\Objects;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
- * See the properties of an error returned by the Apple News API.
+ * See the properties of an error the Apple News API returned.
  *
- * @see https://developer.apple.com/documentation/apple_news/error
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/error.json
  */
 class Error extends BaseSdkObject
 {
     /**
-     * An error code that, in combination with the keyPath, uniquely
+     * An error code that, in combination with the key path, uniquely
      * identifies the error for the specified endpoint.
+     * Returned: Always
      * @var string
      */
     protected $code;
 
     /**
      * An array of field names that uniquely identifies a field in the JSON
-     * input of the request. See Understanding the keyPath Array.
+     * input of the request. See .
+     * Returned: Sometimes
      * @var array
      */
     protected $keyPath;
 
     /**
-     * A user friendly detailed explanation of the error code.
+     * A user-friendly, detailed explanation of the error code.
+     * Returned: Sometimes
      * @var string
      */
     protected $message;
 
     /**
-     * A code issued by the server in response to a request.
+     * A code the server issues in response to a request.
+     * Returned: Always
      * @var string
      */
     protected $status;
 
     /**
-     * If applicable, the value supplied in the request for the field that is
-     * specified by keyPath.
+     * If applicable, the value supplied in the request for the field that
+     * keyPath specifies.
+     * ReturnedSometimes
      * @var string
      */
     protected $value;
@@ -104,9 +110,7 @@ class Error extends BaseSdkObject
     public function addKeyPath($item)
     {
         return $this->setKeyPath(
-            !is_null($this->keyPath)
-                ? array_merge($this->keyPath, [$item])
-                : [$item]
+            !is_null($this->keyPath) ? array_merge($this->keyPath, [$item]) : [$item]
         );
     }
 
@@ -226,10 +230,7 @@ class Error extends BaseSdkObject
     {
         $data = [];
         if (isset($this->code)) {
-            $data['code'] =
-                $this->code instanceof Arrayable
-                    ? $this->code->toArray()
-                    : $this->code;
+            $data['code'] = $this->code instanceof Arrayable ? $this->code->toArray() : $this->code;
         }
         if (isset($this->keyPath)) {
             $data['keyPath'] = $this->keyPath;
@@ -239,9 +240,7 @@ class Error extends BaseSdkObject
         }
         if (isset($this->status)) {
             $data['status'] =
-                $this->status instanceof Arrayable
-                    ? $this->status->toArray()
-                    : $this->status;
+                $this->status instanceof Arrayable ? $this->status->toArray() : $this->status;
         }
         if (isset($this->value)) {
             $data['value'] = $this->value;

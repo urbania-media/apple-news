@@ -6,13 +6,23 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/documentstyle",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/documentstyle.json",
     "properties": [
         {
             "name": "backgroundColor",
             "type": "Color",
             "required": false,
             "description": "The article\u2019s background color. The value defaults to white.",
+            "typed": false
+        },
+        {
+            "name": "conditional",
+            "type": [
+                "Format\\ConditionalDocumentStyle",
+                "array:Format\\ConditionalDocumentStyle"
+            ],
+            "required": false,
+            "description": "An instance or array of document style properties that can be applied conditionally, and the conditions that cause them to be applied.",
             "typed": false
         }
     ]

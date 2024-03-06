@@ -30,6 +30,6 @@ class CampaignDataTest extends TestCase
      */
     public static function dataProvider()
     {
-        return [[["test" => "value"]]];
+        return [[['test' => 'value']]];
     }
 }

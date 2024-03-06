@@ -5,25 +5,30 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object that contains JSON data for a data table.
  *
- * @see https://developer.apple.com/documentation/apple_news/recordstore
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/recordstore.json
  */
 class RecordStore extends BaseSdkObject
 {
     /**
-     * An object that provides information about the data that can be in each
-     * data record.
+     * Provides information about the data that can be in each data record.
+     * The order of the descriptors determines the order of the columns (or
+     * the rows if the table’s dataOrientation is set to horizontal.)
+     * Version 1.5
      * @var Format\DataDescriptor[]
      */
     protected $descriptors;
 
     /**
-     * An object that provides data records that fit within the structure
-     * defined by descriptors. Each descriptor can be used only once per
-     * record.
+     * Provides data records that fit within the structure defined by
+     * descriptors. Each descriptor can be used only once per record.
+     * You can choose not to include all values from a given record in a data
+     * table. Only data that corresponds to a data descriptor will be
+     * included in your data table.
      * @var Format\Records[]
      */
     protected $records;
@@ -47,9 +52,7 @@ class RecordStore extends BaseSdkObject
     public function addDescriptor($item)
     {
         return $this->setDescriptors(
-            !is_null($this->descriptors)
-                ? array_merge($this->descriptors, [$item])
-                : [$item]
+            !is_null($this->descriptors) ? array_merge($this->descriptors, [$item]) : [$item]
         );
     }
 
@@ -62,9 +65,7 @@ class RecordStore extends BaseSdkObject
     {
         Assert::isArray($items);
         return $this->setDescriptors(
-            !is_null($this->descriptors)
-                ? array_merge($this->descriptors, $items)
-                : $items
+            !is_null($this->descriptors) ? array_merge($this->descriptors, $items) : $items
         );
     }
 
@@ -87,17 +88,19 @@ class RecordStore extends BaseSdkObject
         Assert::isArray($descriptors);
         Assert::allIsSdkObject($descriptors, DataDescriptor::class);
 
-        $this->descriptors = array_reduce(
-            array_keys($descriptors),
-            function ($array, $key) use ($descriptors) {
-                $item = $descriptors[$key];
-                $array[$key] = is_array($item)
-                    ? new DataDescriptor($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->descriptors = is_array($descriptors)
+            ? array_reduce(
+                array_keys($descriptors),
+                function ($array, $key) use ($descriptors) {
+                    $item = $descriptors[$key];
+                    $array[$key] = Utils::isAssociativeArray($item)
+                        ? new DataDescriptor($item)
+                        : $item;
+                    return $array;
+                },
+                []
+            )
+            : $descriptors;
         return $this;
     }
 
@@ -109,9 +112,7 @@ class RecordStore extends BaseSdkObject
     public function addRecord($item)
     {
         return $this->setRecords(
-            !is_null($this->records)
-                ? array_merge($this->records, [$item])
-                : [$item]
+            !is_null($this->records) ? array_merge($this->records, [$item]) : [$item]
         );
     }
 
@@ -124,9 +125,7 @@ class RecordStore extends BaseSdkObject
     {
         Assert::isArray($items);
         return $this->setRecords(
-            !is_null($this->records)
-                ? array_merge($this->records, $items)
-                : $items
+            !is_null($this->records) ? array_merge($this->records, $items) : $items
         );
     }
 
@@ -149,15 +148,17 @@ class RecordStore extends BaseSdkObject
         Assert::isArray($records);
         Assert::allIsSdkObject($records, Records::class);
 
-        $this->records = array_reduce(
-            array_keys($records),
-            function ($array, $key) use ($records) {
-                $item = $records[$key];
-                $array[$key] = is_array($item) ? new Records($item) : $item;
-                return $array;
-            },
-            []
-        );
+        $this->records = is_array($records)
+            ? array_reduce(
+                array_keys($records),
+                function ($array, $key) use ($records) {
+                    $item = $records[$key];
+                    $array[$key] = Utils::isAssociativeArray($item) ? new Records($item) : $item;
+                    return $array;
+                },
+                []
+            )
+            : $records;
         return $this;
     }
 

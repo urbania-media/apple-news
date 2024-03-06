@@ -5,12 +5,13 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for displaying components side by side in a Container
  * component.
  *
- * @see https://developer.apple.com/documentation/apple_news/horizontalstackdisplay
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/horizontalstackdisplay.json
  */
 class HorizontalStackDisplay extends BaseSdkObject
 {

@@ -28,6 +28,6 @@ class SpringyTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["springy"]];
+        return [['springy']];
     }
 }

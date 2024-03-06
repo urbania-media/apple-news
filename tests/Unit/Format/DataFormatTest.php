@@ -28,6 +28,6 @@ class DataFormatTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["float"]];
+        return [['float']];
     }
 }

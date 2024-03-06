@@ -14,13 +14,13 @@
             "scale_fade": "ScaleFadeAnimation"
         }
     },
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/componentanimation",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/componentanimation.json",
     "properties": [
         {
             "name": "type",
             "type": "enum:string",
             "required": true,
-            "description": "The type of animation, for example, move_in.",
+            "description": "The type of animation, for example, move_in for a Move-In Animation.",
             "enum_values": [
                 "appear",
                 "fade_in",

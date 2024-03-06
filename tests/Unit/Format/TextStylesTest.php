@@ -30,6 +30,6 @@ class TextStylesTest extends TestCase
      */
     public static function stylesProvider()
     {
-        return [[["test" => new \Urbania\AppleNews\Format\TextStyle()]]];
+        return [[['test' => new \Urbania\AppleNews\Format\TextStyle()]]];
     }
 }

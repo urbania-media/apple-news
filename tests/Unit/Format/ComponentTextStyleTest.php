@@ -30,7 +30,7 @@ class ComponentTextStyleTest extends TestCase
      */
     public static function backgroundColorProvider()
     {
-        return [["#fff"], ["#000"]];
+        return [['#fff'], ['#000'], ['none']];
     }
 
     /**
@@ -54,7 +54,8 @@ class ComponentTextStyleTest extends TestCase
     public static function conditionalProvider()
     {
         return [
-            [[new \Urbania\AppleNews\Format\ConditionalComponentTextStyle()]]
+            [new \Urbania\AppleNews\Format\ConditionalComponentTextStyle()],
+            [[new \Urbania\AppleNews\Format\ConditionalComponentTextStyle()]],
         ];
     }
 
@@ -78,7 +79,7 @@ class ComponentTextStyleTest extends TestCase
      */
     public static function dropCapStyleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\DropCapStyle()]];
+        return [[new \Urbania\AppleNews\Format\DropCapStyle()], ['none']];
     }
 
     /**
@@ -124,7 +125,7 @@ class ComponentTextStyleTest extends TestCase
      */
     public static function fontFamilyProvider()
     {
-        return [["a string"]];
+        return [['system']];
     }
 
     /**
@@ -147,7 +148,30 @@ class ComponentTextStyleTest extends TestCase
      */
     public static function fontNameProvider()
     {
-        return [["a string"]];
+        return [['a string']];
+    }
+
+    /**
+     * Test the property fontScaling
+     * @test
+     * @dataProvider fontScalingProvider
+     * @covers ::getFontScaling
+     * @covers ::setFontScaling
+     */
+    public function testPropertyFontScaling($value)
+    {
+        $object = new ComponentTextStyle();
+        $object->setFontScaling($value);
+
+        $this->assertEquals($value, $object->getFontScaling());
+    }
+
+    /**
+     * Data provider for property fontScaling
+     */
+    public static function fontScalingProvider()
+    {
+        return [[true], [false]];
     }
 
     /**
@@ -193,7 +217,7 @@ class ComponentTextStyleTest extends TestCase
      */
     public static function fontStyleProvider()
     {
-        return [["normal"], ["italic"], ["oblique"]];
+        return [['normal'], ['italic'], ['oblique']];
     }
 
     /**
@@ -226,29 +250,29 @@ class ComponentTextStyleTest extends TestCase
             [700],
             [800],
             [900],
-            ["thin"],
-            ["extra-light"],
-            ["extralight"],
-            ["ultra-light"],
-            ["light"],
-            ["regular"],
-            ["normal"],
-            ["book"],
-            ["roman"],
-            ["medium"],
-            ["semi-bold"],
-            ["semibold"],
-            ["demi-bold"],
-            ["demibold"],
-            ["bold"],
-            ["extra-bold"],
-            ["extrabold"],
-            ["ultra-bold"],
-            ["ultrabold"],
-            ["black"],
-            ["heavy"],
-            ["lighter"],
-            ["bolder"]
+            ['thin'],
+            ['extra-light'],
+            ['extralight'],
+            ['ultra-light'],
+            ['light'],
+            ['regular'],
+            ['normal'],
+            ['book'],
+            ['roman'],
+            ['medium'],
+            ['semi-bold'],
+            ['semibold'],
+            ['demi-bold'],
+            ['demibold'],
+            ['bold'],
+            ['extra-bold'],
+            ['extrabold'],
+            ['ultra-bold'],
+            ['ultrabold'],
+            ['black'],
+            ['heavy'],
+            ['lighter'],
+            ['bolder'],
         ];
     }
 
@@ -273,15 +297,18 @@ class ComponentTextStyleTest extends TestCase
     public static function fontWidthProvider()
     {
         return [
-            ["ultra-condensed"],
-            ["extra-condensed"],
-            ["condensed"],
-            ["semi-condensed"],
-            ["normal"],
-            ["semi-expanded"],
-            ["expanded"],
-            ["extra-expanded"],
-            ["ultra-expanded"]
+            ['ultra-compressed'],
+            ['extra-compressed'],
+            ['compressed'],
+            ['ultra-condensed'],
+            ['extra-condensed'],
+            ['condensed'],
+            ['semi-condensed'],
+            ['normal'],
+            ['semi-expanded'],
+            ['expanded'],
+            ['extra-expanded'],
+            ['ultra-expanded'],
         ];
     }
 
@@ -332,6 +359,121 @@ class ComponentTextStyleTest extends TestCase
     }
 
     /**
+     * Test the property hyphenationMinimumCharactersAfter
+     * @test
+     * @dataProvider hyphenationMinimumCharactersAfterProvider
+     * @covers ::getHyphenationMinimumCharactersAfter
+     * @covers ::setHyphenationMinimumCharactersAfter
+     */
+    public function testPropertyHyphenationMinimumCharactersAfter($value)
+    {
+        $object = new ComponentTextStyle();
+        $object->setHyphenationMinimumCharactersAfter($value);
+
+        $this->assertEquals($value, $object->getHyphenationMinimumCharactersAfter());
+    }
+
+    /**
+     * Data provider for property hyphenationMinimumCharactersAfter
+     */
+    public static function hyphenationMinimumCharactersAfterProvider()
+    {
+        return [[1]];
+    }
+
+    /**
+     * Test the property hyphenationMinimumCharactersBefore
+     * @test
+     * @dataProvider hyphenationMinimumCharactersBeforeProvider
+     * @covers ::getHyphenationMinimumCharactersBefore
+     * @covers ::setHyphenationMinimumCharactersBefore
+     */
+    public function testPropertyHyphenationMinimumCharactersBefore($value)
+    {
+        $object = new ComponentTextStyle();
+        $object->setHyphenationMinimumCharactersBefore($value);
+
+        $this->assertEquals($value, $object->getHyphenationMinimumCharactersBefore());
+    }
+
+    /**
+     * Data provider for property hyphenationMinimumCharactersBefore
+     */
+    public static function hyphenationMinimumCharactersBeforeProvider()
+    {
+        return [[1]];
+    }
+
+    /**
+     * Test the property hyphenationMinimumWordLength
+     * @test
+     * @dataProvider hyphenationMinimumWordLengthProvider
+     * @covers ::getHyphenationMinimumWordLength
+     * @covers ::setHyphenationMinimumWordLength
+     */
+    public function testPropertyHyphenationMinimumWordLength($value)
+    {
+        $object = new ComponentTextStyle();
+        $object->setHyphenationMinimumWordLength($value);
+
+        $this->assertEquals($value, $object->getHyphenationMinimumWordLength());
+    }
+
+    /**
+     * Data provider for property hyphenationMinimumWordLength
+     */
+    public static function hyphenationMinimumWordLengthProvider()
+    {
+        return [[1]];
+    }
+
+    /**
+     * Test the property hyphenationZone
+     * @test
+     * @dataProvider hyphenationZoneProvider
+     * @covers ::getHyphenationZone
+     * @covers ::setHyphenationZone
+     */
+    public function testPropertyHyphenationZone($value)
+    {
+        $object = new ComponentTextStyle();
+        $object->setHyphenationZone($value);
+
+        $this->assertEquals($value, $object->getHyphenationZone());
+    }
+
+    /**
+     * Data provider for property hyphenationZone
+     */
+    public static function hyphenationZoneProvider()
+    {
+        return [[1]];
+    }
+
+    /**
+     * Test the property lineBalancing
+     * @test
+     * @dataProvider lineBalancingProvider
+     * @covers ::getLineBalancing
+     * @covers ::setLineBalancing
+     */
+    public function testPropertyLineBalancing($value)
+    {
+        $object = new ComponentTextStyle();
+        $object->setLineBalancing($value);
+
+        $this->assertEquals($value, $object->getLineBalancing());
+    }
+
+    /**
+     * Data provider for property lineBalancing
+     */
+    public static function lineBalancingProvider()
+    {
+        return [[true], [false]];
+    }
+
+    /**
      * Test the property lineHeight
      * @test
      * @dataProvider lineHeightProvider
@@ -374,7 +516,7 @@ class ComponentTextStyleTest extends TestCase
      */
     public static function linkStyleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\TextStyle()]];
+        return [[new \Urbania\AppleNews\Format\TextStyle()], ['none']];
     }
 
     /**
@@ -397,7 +539,7 @@ class ComponentTextStyleTest extends TestCase
      */
     public static function orderedListItemsProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ListItemStyle()]];
+        return [[new \Urbania\AppleNews\Format\ListItemStyle()], ['none']];
     }
 
     /**
@@ -466,11 +608,7 @@ class ComponentTextStyleTest extends TestCase
      */
     public static function strikethroughProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\TextDecoration()],
-            [true],
-            [false]
-        ];
+        return [[new \Urbania\AppleNews\Format\TextDecoration()], [true], [false]];
     }
 
     /**
@@ -493,7 +631,7 @@ class ComponentTextStyleTest extends TestCase
      */
     public static function strokeProvider()
     {
-        return [[new \Urbania\AppleNews\Format\TextStrokeStyle()]];
+        return [[new \Urbania\AppleNews\Format\TextStrokeStyle()], ['none']];
     }
 
     /**
@@ -516,7 +654,7 @@ class ComponentTextStyleTest extends TestCase
      */
     public static function textAlignmentProvider()
     {
-        return [["left"], ["center"], ["right"], ["justified"], ["none"]];
+        return [['left'], ['center'], ['right'], ['justified'], ['none']];
     }
 
     /**
@@ -539,7 +677,7 @@ class ComponentTextStyleTest extends TestCase
      */
     public static function textColorProvider()
     {
-        return [["#fff"], ["#000"]];
+        return [['#fff'], ['#000']];
     }
 
     /**
@@ -562,7 +700,7 @@ class ComponentTextStyleTest extends TestCase
      */
     public static function textShadowProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Shadow()]];
+        return [[new \Urbania\AppleNews\Format\TextShadow()], ['none']];
     }
 
     /**
@@ -585,7 +723,7 @@ class ComponentTextStyleTest extends TestCase
      */
     public static function textTransformProvider()
     {
-        return [["uppercase"], ["lowercase"], ["capitalize"], ["none"]];
+        return [['uppercase'], ['lowercase'], ['capitalize'], ['smallcaps'], ['none']];
     }
 
     /**
@@ -631,11 +769,7 @@ class ComponentTextStyleTest extends TestCase
      */
     public static function underlineProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\TextDecoration()],
-            [true],
-            [false]
-        ];
+        return [[new \Urbania\AppleNews\Format\TextDecoration()], [true], [false]];
     }
 
     /**
@@ -658,7 +792,7 @@ class ComponentTextStyleTest extends TestCase
      */
     public static function unorderedListItemsProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ListItemStyle()]];
+        return [[new \Urbania\AppleNews\Format\ListItemStyle()], ['none']];
     }
 
     /**
@@ -681,6 +815,6 @@ class ComponentTextStyleTest extends TestCase
      */
     public static function verticalAlignmentProvider()
     {
-        return [["superscript"], ["subscript"], ["baseline"]];
+        return [['superscript'], ['subscript'], ['baseline']];
     }
 }

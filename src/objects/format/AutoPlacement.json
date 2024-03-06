@@ -2,11 +2,11 @@
     "name": "Format\\AutoPlacement",
     "description": "The object for automatically placing components within Apple News Format articles.",
     "version": "1.9+",
-    "deprecated": false,
+    "deprecated": true,
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/autoplacement",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/autoplacement.json",
     "properties": [
         {
             "name": "advertisement",

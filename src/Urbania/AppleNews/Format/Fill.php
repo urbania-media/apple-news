@@ -5,22 +5,23 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for setting a fill type and attachment for a component’s
  * background fill.
  *
- * @see https://developer.apple.com/documentation/apple_news/fill
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/fill.json
  */
 class Fill extends BaseSdkObject
 {
     protected static $typeProperty = 'type';
 
     protected static $types = [
-        'video' => 'VideoFill',
         'image' => 'ImageFill',
+        'repeatable_image' => 'RepeatableImageFill',
+        'video' => 'VideoFill',
         'linear_gradient' => 'LinearGradientFill',
-        'repeatable_image' => 'RepeatableImageFill'
     ];
 
     /**
@@ -30,8 +31,8 @@ class Fill extends BaseSdkObject
     protected $type;
 
     /**
-     * A string that indicates how the fill should behave when a user
-     * scrolls.
+     * Indicates how the fill should behave when a user scrolls.
+     * Valid values:
      * @var string
      */
     protected $attachment;
@@ -51,14 +52,9 @@ class Fill extends BaseSdkObject
     {
         if (isset($data[static::$typeProperty])) {
             $typeName = $data[static::$typeProperty];
-            $type = isset(static::$types[$typeName])
-                ? static::$types[$typeName]
-                : null;
+            $type = isset(static::$types[$typeName]) ? static::$types[$typeName] : null;
             if (!is_null($type)) {
-                $namespace = implode(
-                    '\\',
-                    array_slice(explode('\\', static::class), 0, -1)
-                );
+                $namespace = implode('\\', array_slice(explode('\\', static::class), 0, -1));
                 $typeClass = $namespace . '\\' . $type;
                 return new $typeClass($data);
             }
@@ -88,7 +84,7 @@ class Fill extends BaseSdkObject
             return $this;
         }
 
-        Assert::oneOf($attachment, ["fixed", "scroll"]);
+        Assert::oneOf($attachment, ['fixed', 'scroll']);
 
         $this->attachment = $attachment;
         return $this;
@@ -110,12 +106,7 @@ class Fill extends BaseSdkObject
      */
     public function setType($type)
     {
-        Assert::oneOf($type, [
-            "linear_gradient",
-            "image",
-            "repeatable_image",
-            "video"
-        ]);
+        Assert::oneOf($type, ['linear_gradient', 'image', 'repeatable_image', 'video']);
 
         $this->type = $type;
         return $this;

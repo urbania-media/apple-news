@@ -6,13 +6,13 @@
     "from_class": null,
     "extends": "Format\\Scene",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/fadingstickyheader",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/fadingstickyheader.json",
     "properties": [
         {
             "name": "fadeColor",
             "type": "Color",
             "required": false,
-            "description": "The color the header background will fade to, defined as a 3- to 8-character hexadecimal string or a color name string.",
+            "description": "The color the header background will fade to, defined as a 3- to 8-character hexadecimal string or a color name string.\nDefault value: #000000 (black)",
             "typed": false
         },
         {

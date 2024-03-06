@@ -1,18 +1,18 @@
 {
     "name": "Api\\Objects\\PromoteArticleResponse",
-    "description": "See the field returned by the promote article response.",
+    "description": "See the field the Promote an Article response returned.",
     "version": "1.0.0+",
     "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/promotearticleresponse",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/promotearticleresponse.json",
     "properties": [
         {
             "name": "promotedArticles",
             "type": "array:string",
             "required": false,
-            "description": "List of URLs for the promoted articles.",
+            "description": "The list of URLs for the promoted articles.",
             "typed": false
         }
     ]

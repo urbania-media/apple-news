@@ -1,46 +1,46 @@
 {
     "name": "Api\\Objects\\Error",
-    "description": "See the properties of an error returned by the Apple News API.",
+    "description": "See the properties of an error the Apple News API returned.",
     "version": "1.0.0+",
     "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/error",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/error.json",
     "properties": [
         {
             "name": "code",
             "type": "Code",
             "required": false,
-            "description": "An error code that, in combination with the keyPath, uniquely identifies the error for the specified endpoint.",
+            "description": "An error code that, in combination with the key path, uniquely identifies the error for the specified endpoint.\nReturned: Always",
             "typed": false
         },
         {
             "name": "keyPath",
             "type": "array",
             "required": false,
-            "description": "An array of field names that uniquely identifies a field in the JSON input of the request. See Understanding the keyPath Array.",
+            "description": "An array of field names that uniquely identifies a field in the JSON input of the request. See .\nReturned: Sometimes",
             "typed": false
         },
         {
             "name": "message",
             "type": "string",
             "required": false,
-            "description": "A user friendly detailed explanation of the error code.",
+            "description": "A user-friendly, detailed explanation of the error code.\nReturned: Sometimes",
             "typed": false
         },
         {
             "name": "status",
             "type": "Status",
             "required": false,
-            "description": "A code issued by the server in response to a request.",
+            "description": "A code the server issues in response to a request.\nReturned: Always",
             "typed": false
         },
         {
             "name": "value",
             "type": "string",
             "required": false,
-            "description": "If applicable, the value supplied in the request for the field that is specified by keyPath.",
+            "description": "If applicable, the value supplied in the request for the field that keyPath specifies.\nReturnedSometimes",
             "typed": false
         }
     ]

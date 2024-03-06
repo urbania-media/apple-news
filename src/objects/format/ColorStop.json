@@ -6,7 +6,7 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/colorstop",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/colorstop.json",
     "properties": [
         {
             "name": "color",
@@ -20,8 +20,8 @@
             "type": "number",
             "required": false,
             "description": "An optional location of the color stop within the gradient, as a percentage of the gradient size. If location is omitted, the length of the stop is calculated by first subtracting color stops with specified locations from the full length, then equally distributing the remaining length.",
-            "minimum": 0,
-            "maximum": 100,
+            "maximum": "100",
+            "minimum": "0",
             "typed": false
         }
     ]

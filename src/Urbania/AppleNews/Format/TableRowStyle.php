@@ -5,16 +5,23 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for applying styles to rows in a table.
  *
- * @see https://developer.apple.com/documentation/apple_news/tablerowstyle
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/tablerowstyle.json
  */
 class TableRowStyle extends BaseSdkObject
 {
     /**
      * The background color for the table row.
+     * If this property is omitted, the background is transparent.
+     * The cell background color is highest priority, followed by the column,
+     * and finally the row. All three colors are applied, meaning that
+     * non-opaque values can cause combined colors. For example, using a red
+     * row together with a blue column, both with 50% opacity, creates a
+     * purple cell.
      * @var string
      */
     protected $backgroundColor;
@@ -34,9 +41,11 @@ class TableRowStyle extends BaseSdkObject
     protected $divider;
 
     /**
-     * The height of the table row, as an integer in points, or using the
+     * The height of the table row, as a number in points, or using the
      * available units for components.
-     * @var string|integer
+     * By default, the height of each row is determined by the height of the
+     * content in that row. See
+     * @var string|integer|float
      */
     protected $height;
 
@@ -94,9 +103,7 @@ class TableRowStyle extends BaseSdkObject
     public function addConditional($item)
     {
         return $this->setConditional(
-            !is_null($this->conditional)
-                ? array_merge($this->conditional, [$item])
-                : [$item]
+            !is_null($this->conditional) ? array_merge($this->conditional, [$item]) : [$item]
         );
     }
 
@@ -124,17 +131,19 @@ class TableRowStyle extends BaseSdkObject
         Assert::isArray($conditional);
         Assert::allIsSdkObject($conditional, ConditionalTableRowStyle::class);
 
-        $this->conditional = array_reduce(
-            array_keys($conditional),
-            function ($array, $key) use ($conditional) {
-                $item = $conditional[$key];
-                $array[$key] = is_array($item)
-                    ? new ConditionalTableRowStyle($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->conditional = is_array($conditional)
+            ? array_reduce(
+                array_keys($conditional),
+                function ($array, $key) use ($conditional) {
+                    $item = $conditional[$key];
+                    $array[$key] = Utils::isAssociativeArray($item)
+                        ? new ConditionalTableRowStyle($item)
+                        : $item;
+                    return $array;
+                },
+                []
+            )
+            : $conditional;
         return $this;
     }
 
@@ -161,7 +170,7 @@ class TableRowStyle extends BaseSdkObject
 
         Assert::isSdkObject($divider, TableStrokeStyle::class);
 
-        $this->divider = is_array($divider)
+        $this->divider = Utils::isAssociativeArray($divider)
             ? new TableStrokeStyle($divider)
             : $divider;
         return $this;
@@ -169,7 +178,7 @@ class TableRowStyle extends BaseSdkObject
 
     /**
      * Get the height
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getHeight()
     {
@@ -178,7 +187,7 @@ class TableRowStyle extends BaseSdkObject
 
     /**
      * Set the height
-     * @param string|integer $height
+     * @param string|integer|float $height
      * @return $this
      */
     public function setHeight($height)
@@ -224,15 +233,11 @@ class TableRowStyle extends BaseSdkObject
         }
         if (isset($this->divider)) {
             $data['divider'] =
-                $this->divider instanceof Arrayable
-                    ? $this->divider->toArray()
-                    : $this->divider;
+                $this->divider instanceof Arrayable ? $this->divider->toArray() : $this->divider;
         }
         if (isset($this->height)) {
             $data['height'] =
-                $this->height instanceof Arrayable
-                    ? $this->height->toArray()
-                    : $this->height;
+                $this->height instanceof Arrayable ? $this->height->toArray() : $this->height;
         }
         return $data;
     }

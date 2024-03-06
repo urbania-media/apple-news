@@ -5,43 +5,44 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for defining space around the content in a table cell.
  *
- * @see https://developer.apple.com/documentation/apple_news/padding
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/padding.json
  */
 class Padding extends BaseSdkObject
 {
     /**
      * The amount of padding between the bottom of the cell and the content,
-     * as an integer in points or using the available units for components.
-     * See Specifying Measurements for Components.
-     * @var string|integer
+     * as a number in points or using the available units for components. See
+     * .
+     * @var string|integer|float
      */
     protected $bottom;
 
     /**
      * The amount of padding between the left side of the cell and the
-     * content, as an integer in points or using the available units for
-     * components.See Specifying Measurements for Components.
-     * @var string|integer
+     * content, as a number in points or using the available units for
+     * components.See .
+     * @var string|integer|float
      */
     protected $left;
 
     /**
      * The amount of padding between the right side of the cell and the
-     * content, as an integer in points or using the available units for
-     * components. See Specifying Measurements for Components.
-     * @var string|integer
+     * content, as as a number in points or using the available units for
+     * components.See .
+     * @var string|integer|float
      */
     protected $right;
 
     /**
      * The amount of padding between the top of the cell and the content, as
-     * an integer in points or using the available units for components. See
-     * Specifying Measurements for Components
-     * @var string|integer
+     * as a number in points or using the available units for components. See
+     * .
+     * @var string|integer|float
      */
     protected $top;
 
@@ -66,7 +67,7 @@ class Padding extends BaseSdkObject
 
     /**
      * Get the bottom
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getBottom()
     {
@@ -75,7 +76,7 @@ class Padding extends BaseSdkObject
 
     /**
      * Set the bottom
-     * @param string|integer $bottom
+     * @param string|integer|float $bottom
      * @return $this
      */
     public function setBottom($bottom)
@@ -93,7 +94,7 @@ class Padding extends BaseSdkObject
 
     /**
      * Get the left
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getLeft()
     {
@@ -102,7 +103,7 @@ class Padding extends BaseSdkObject
 
     /**
      * Set the left
-     * @param string|integer $left
+     * @param string|integer|float $left
      * @return $this
      */
     public function setLeft($left)
@@ -120,7 +121,7 @@ class Padding extends BaseSdkObject
 
     /**
      * Get the right
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getRight()
     {
@@ -129,7 +130,7 @@ class Padding extends BaseSdkObject
 
     /**
      * Set the right
-     * @param string|integer $right
+     * @param string|integer|float $right
      * @return $this
      */
     public function setRight($right)
@@ -147,7 +148,7 @@ class Padding extends BaseSdkObject
 
     /**
      * Get the top
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getTop()
     {
@@ -156,7 +157,7 @@ class Padding extends BaseSdkObject
 
     /**
      * Set the top
-     * @param string|integer $top
+     * @param string|integer|float $top
      * @return $this
      */
     public function setTop($top)
@@ -181,27 +182,17 @@ class Padding extends BaseSdkObject
         $data = [];
         if (isset($this->bottom)) {
             $data['bottom'] =
-                $this->bottom instanceof Arrayable
-                    ? $this->bottom->toArray()
-                    : $this->bottom;
+                $this->bottom instanceof Arrayable ? $this->bottom->toArray() : $this->bottom;
         }
         if (isset($this->left)) {
-            $data['left'] =
-                $this->left instanceof Arrayable
-                    ? $this->left->toArray()
-                    : $this->left;
+            $data['left'] = $this->left instanceof Arrayable ? $this->left->toArray() : $this->left;
         }
         if (isset($this->right)) {
             $data['right'] =
-                $this->right instanceof Arrayable
-                    ? $this->right->toArray()
-                    : $this->right;
+                $this->right instanceof Arrayable ? $this->right->toArray() : $this->right;
         }
         if (isset($this->top)) {
-            $data['top'] =
-                $this->top instanceof Arrayable
-                    ? $this->top->toArray()
-                    : $this->top;
+            $data['top'] = $this->top instanceof Arrayable ? $this->top->toArray() : $this->top;
         }
         return $data;
     }

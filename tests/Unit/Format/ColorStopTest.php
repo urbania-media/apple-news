@@ -30,7 +30,7 @@ class ColorStopTest extends TestCase
      */
     public static function colorProvider()
     {
-        return [["#fff"], ["#000"]];
+        return [['#fff'], ['#000']];
     }
 
     /**

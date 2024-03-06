@@ -28,6 +28,6 @@ class MotionTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["motion"]];
+        return [['motion']];
     }
 }

@@ -5,17 +5,19 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
- * The object for providing the data type, data formatting, and label for
- * a field in a table.
+ * The object for providing the data type, data formatting, and label
+ * for a field in a table.
  *
- * @see https://developer.apple.com/documentation/apple_news/datadescriptor
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/datadescriptor.json
  */
 class DataDescriptor extends BaseSdkObject
 {
     /**
      * The data type.
+     * Valid values:
      * @var string
      */
     protected $dataType;
@@ -24,10 +26,17 @@ class DataDescriptor extends BaseSdkObject
      * The name of this data descriptor. In a data record, you use this name
      * as the key in a key-value pair, where the value is the data itself.
      * This key must be unique across data descriptors in this data record
-     * store. See RecordStore.
+     * store. See .
      * @var string
      */
     protected $key;
+
+    /**
+     * The text to appear in the table header for this data category. This
+     * text can be provided as a string or a  object.
+     * @var \Urbania\AppleNews\Format\FormattedText|string
+     */
+    protected $label;
 
     /**
      * The object that sets some additional formatting preferences if you are
@@ -46,13 +55,6 @@ class DataDescriptor extends BaseSdkObject
      */
     protected $identifier;
 
-    /**
-     * The text to appear in the table header for this data category. This
-     * text can be provided as a string or a FormattedText object.
-     * @var \Urbania\AppleNews\Format\FormattedText|string
-     */
-    protected $label;
-
     public function __construct(array $data = [])
     {
         if (isset($data['dataType'])) {
@@ -63,16 +65,16 @@ class DataDescriptor extends BaseSdkObject
             $this->setKey($data['key']);
         }
 
+        if (isset($data['label'])) {
+            $this->setLabel($data['label']);
+        }
+
         if (isset($data['format'])) {
             $this->setFormat($data['format']);
         }
 
         if (isset($data['identifier'])) {
             $this->setIdentifier($data['identifier']);
-        }
-
-        if (isset($data['label'])) {
-            $this->setLabel($data['label']);
         }
     }
 
@@ -92,14 +94,7 @@ class DataDescriptor extends BaseSdkObject
      */
     public function setDataType($dataType)
     {
-        Assert::oneOf($dataType, [
-            "string",
-            "text",
-            "image",
-            "number",
-            "integer",
-            "float"
-        ]);
+        Assert::oneOf($dataType, ['string', 'text', 'image', 'number', 'integer', 'float']);
 
         $this->dataType = $dataType;
         return $this;
@@ -128,7 +123,7 @@ class DataDescriptor extends BaseSdkObject
 
         Assert::isSdkObject($format, DataFormat::class);
 
-        $this->format = is_array($format)
+        $this->format = Utils::isAssociativeArray($format)
             ? DataFormat::createTyped($format)
             : $format;
         return $this;
@@ -199,13 +194,13 @@ class DataDescriptor extends BaseSdkObject
      */
     public function setLabel($label)
     {
-        if (is_object($label) || is_array($label)) {
+        if (is_object($label) || Utils::isAssociativeArray($label)) {
             Assert::isSdkObject($label, FormattedText::class);
         } else {
             Assert::string($label);
         }
 
-        $this->label = is_array($label) ? new FormattedText($label) : $label;
+        $this->label = Utils::isAssociativeArray($label) ? new FormattedText($label) : $label;
         return $this;
     }
 
@@ -222,20 +217,16 @@ class DataDescriptor extends BaseSdkObject
         if (isset($this->key)) {
             $data['key'] = $this->key;
         }
+        if (isset($this->label)) {
+            $data['label'] =
+                $this->label instanceof Arrayable ? $this->label->toArray() : $this->label;
+        }
         if (isset($this->format)) {
             $data['format'] =
-                $this->format instanceof Arrayable
-                    ? $this->format->toArray()
-                    : $this->format;
+                $this->format instanceof Arrayable ? $this->format->toArray() : $this->format;
         }
         if (isset($this->identifier)) {
             $data['identifier'] = $this->identifier;
-        }
-        if (isset($this->label)) {
-            $data['label'] =
-                $this->label instanceof Arrayable
-                    ? $this->label->toArray()
-                    : $this->label;
         }
         return $data;
     }

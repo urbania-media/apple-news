@@ -6,13 +6,13 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/listitemstyle",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/listitemstyle.json",
     "properties": [
         {
             "name": "type",
             "type": "enum:string",
             "required": true,
-            "description": "The type of list item indicator to use.",
+            "description": "The type of list item indicator to use. \nAllowed options are:",
             "enum_values": [
                 "bullet",
                 "decimal",
@@ -29,8 +29,8 @@
             "name": "character",
             "type": "string",
             "required": false,
-            "description": "A string, when type is set to character, provides the character to use as the list item indicator. Only a single character is supported.",
-            "maximum": 1,
+            "description": "If type is set to character, provide the character to use as the list item indicator. Only a single character is supported.",
+            "maximum": "1",
             "typed": false
         }
     ]

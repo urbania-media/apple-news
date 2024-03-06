@@ -31,14 +31,14 @@ class ListItemStyleTest extends TestCase
     public static function typeProvider()
     {
         return [
-            ["bullet"],
-            ["decimal"],
-            ["lower_roman"],
-            ["upper_roman"],
-            ["lower_alphabetical"],
-            ["upper_alphabetical"],
-            ["character"],
-            ["none"]
+            ['bullet'],
+            ['decimal'],
+            ['lower_roman'],
+            ['upper_roman'],
+            ['lower_alphabetical'],
+            ['upper_alphabetical'],
+            ['character'],
+            ['none'],
         ];
     }
 
@@ -62,6 +62,6 @@ class ListItemStyleTest extends TestCase
      */
     public static function characterProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 }

@@ -5,12 +5,13 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for defining the color, width, and style of a border or
  * divider.
  *
- * @see https://developer.apple.com/documentation/apple_news/strokestyle
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/strokestyle.json
  */
 class StrokeStyle extends BaseSdkObject
 {
@@ -21,16 +22,15 @@ class StrokeStyle extends BaseSdkObject
     protected $color;
 
     /**
-     * A string that defines the style of the stroke. Valid values:
+     * Defines the style of the stroke. Valid values:
      * @var string
      */
     protected $style;
 
     /**
-     * The width of the stroke line. Can be either an integer value in
-     * points, or a string according to Specifying Measurements for
-     * Components.
-     * @var string|integer
+     * The width of the stroke line. Can be either a number in points, or a
+     * string according to .
+     * @var string|integer|float
      */
     protected $width;
 
@@ -97,7 +97,7 @@ class StrokeStyle extends BaseSdkObject
             return $this;
         }
 
-        Assert::oneOf($style, ["solid", "dashed", "dotted"]);
+        Assert::oneOf($style, ['solid', 'dashed', 'dotted']);
 
         $this->style = $style;
         return $this;
@@ -105,7 +105,7 @@ class StrokeStyle extends BaseSdkObject
 
     /**
      * Get the width
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getWidth()
     {
@@ -114,7 +114,7 @@ class StrokeStyle extends BaseSdkObject
 
     /**
      * Set the width
-     * @param string|integer $width
+     * @param string|integer|float $width
      * @return $this
      */
     public function setWidth($width)
@@ -139,18 +139,14 @@ class StrokeStyle extends BaseSdkObject
         $data = [];
         if (isset($this->color)) {
             $data['color'] =
-                $this->color instanceof Arrayable
-                    ? $this->color->toArray()
-                    : $this->color;
+                $this->color instanceof Arrayable ? $this->color->toArray() : $this->color;
         }
         if (isset($this->style)) {
             $data['style'] = $this->style;
         }
         if (isset($this->width)) {
             $data['width'] =
-                $this->width instanceof Arrayable
-                    ? $this->width->toArray()
-                    : $this->width;
+                $this->width instanceof Arrayable ? $this->width->toArray() : $this->width;
         }
         return $data;
     }

@@ -6,20 +6,20 @@
     "from_class": null,
     "extends": "Format\\Component",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/map",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/map.json",
     "properties": [
         {
             "name": "latitude",
             "type": "number",
             "required": true,
-            "description": "The latitude of the map\u2019s center. Provide both a latitude and longitude, or an array of items.",
+            "description": "The latitude of the map\u2019s center. Provide both a latitude and longitude, or an array of items.\nIf no center latitude\/longitude has been provided, but one or more map items have been provided, the map automatically determines the center location of the map from the map items.",
             "typed": false
         },
         {
             "name": "longitude",
             "type": "number",
             "required": true,
-            "description": "The longitude of the map\u2019s center. Provide both a latitude and longitude, or an array of items.",
+            "description": "The longitude of the map\u2019s center. Provide both a latitude and longitude, or an array of items.\nIf no center latitude\/longitude has been provided, but one or more map items have been provided, the map automatically determines the center location of the map from the map items.",
             "typed": false
         },
         {
@@ -35,7 +35,7 @@
             "name": "accessibilityCaption",
             "type": "string",
             "required": false,
-            "description": "The caption that describes what is visible on the map. The text is used for  and . The value in this property should describe the contents of the map for non-sighted users. If accessibilityCaption is not provided the caption value is used for VoiceOver for iOS and VoiceOver for macOS.",
+            "description": "The caption that describes what is visible on the map. The text is used for VoiceOver. For more information about VoiceOver, see the  page in Accessibility.  If accessibilityCaption is not provided, the caption value is used for VoiceOver for iOS, VoiceOver for iPadOS, and VoiceOver for macOS.",
             "typed": false
         },
         {
@@ -47,30 +47,39 @@
         },
         {
             "name": "animation",
-            "type": "Format\\ComponentAnimation",
+            "type": [
+                "Format\\ComponentAnimation",
+                "none"
+            ],
             "required": false,
-            "description": "An object that defines an animation to be applied to the component.",
+            "description": "An object that defines an animation to be applied to the component.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": true
         },
         {
             "name": "behavior",
-            "type": "Format\\Behavior",
+            "type": [
+                "Format\\Behavior",
+                "none"
+            ],
             "required": false,
-            "description": "An object that defines behavior for a component, like  or .",
+            "description": "An object that defines behavior for a component, like  or .\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": true
         },
         {
             "name": "caption",
             "type": "string",
             "required": false,
-            "description": "A string that describes what is displayed on the map. The caption is displayed in the full screen version of the map. This text is also used by  and , if accessibilityCaption text is not provided.",
+            "description": "A string that describes what is displayed on the map. The caption is displayed in the full screen version of the map. This text is used by VoiceOver if accessibilityCaption is not provided. For more information about VoiceOver, see the  page in Accessibility.",
             "typed": false
         },
         {
             "name": "conditional",
-            "type": "array:Format\\ConditionalComponent",
+            "type": [
+                "Format\\ConditionalComponent",
+                "array:Format\\ConditionalComponent"
+            ],
             "required": false,
-            "description": "An array of component properties that can be applied conditionally, and the conditions that cause them to be applied.",
+            "description": "An instance or array of component properties that can be applied conditionally, and the conditions that cause them to be applied.",
             "typed": false
         },
         {
@@ -78,7 +87,7 @@
             "type": "boolean",
             "required": false,
             "description": "A Boolean value that determines whether the component is hidden.",
-            "default": "false",
+            "default": true,
             "typed": false
         },
         {
@@ -102,14 +111,14 @@
                 "string"
             ],
             "required": false,
-            "description": "An inline ComponentLayout object that contains layout information, or a string reference to a ComponentLayout object that is defined at the top level of the document.",
+            "description": "An inline ComponentLayout object that contains layout information, or a string reference to a ComponentLayout object that is defined at the top level of the document. \nIf layout is not defined, size and position will be based on various factors, such as the device type, the length of the content, and the role of this component.",
             "typed": false
         },
         {
             "name": "mapType",
             "type": "enum:string",
             "required": false,
-            "description": "A string that defines the type of map to display by default.",
+            "description": "A string that defines the type of map to display by default. \nValid values:",
             "default": "standard",
             "enum_values": [
                 "standard",
@@ -129,10 +138,11 @@
             "name": "style",
             "type": [
                 "Format\\ComponentStyle",
-                "string"
+                "string",
+                "none"
             ],
             "required": false,
-            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle object that is defined at the top level of the document.",
+            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle object that is defined at the top level of the document.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         }
     ]

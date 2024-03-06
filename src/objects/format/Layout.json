@@ -6,40 +6,40 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/layout",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/layout.json",
     "properties": [
         {
             "name": "columns",
             "type": "integer",
             "required": true,
-            "description": "The number of columns this article was designed for. You must have at least one column.",
-            "minimum": 1,
+            "description": "The number of columns this article was designed for. You must have at least one column.\nUsing a 7-column design allows components to start in columns 0 to 6, and be between 1 and 7 columns wide. An article that is designed with 7 columns provides sufficient layout information to automatically resize for iPad, Mac, and iPhone sizes. An article designed with 20 columns provides more detail for the layout system and a better reading experience. Below 5 columns there may not be sufficient information for the layout system to automatically maintain your intended design when scaling down to smaller devices.",
+            "minimum": "1",
             "typed": false
         },
         {
             "name": "width",
             "type": "integer",
             "required": true,
-            "description": "The width (in points) this article was designed for. This property is used to calculate down-scaling scenarios for smaller devices.",
-            "minimum": 1,
+            "description": "The width (in points) this article was designed for. This property is used to calculate down-scaling scenarios for smaller devices.\nThe width of the document must be sufficient to fit two margin values and the gutter values that will be needed between each of the columns.\nThe width cannot be negative or . As a best practice, set the width to the width of the iPad device. This helps you see the effects of positioning components in different columns.\nThis property is used to automatically scale down article content for smaller devices. With a 7-column design and a width of 1024 points, the design is optimal for a landscape aspect ratio on an iPad device and will scale down on iPhones.",
+            "minimum": "1",
             "typed": false
         },
         {
             "name": "gutter",
             "type": "integer",
             "required": false,
-            "description": "The gutter size for the article (in points). The gutter provides spacing between columns. This property should always be an even number; odd numbers are rounded up to the next even number. If this property is omitted, a default gutter size of 20 is applied. If the gutter is negative, the number will be set to 0.",
-            "default": 20,
-            "minimum": 0,
+            "description": "The gutter size for the article (in points). The gutter provides spacing between columns. This property should always be an even number; odd numbers are rounded up to the next even number. If this property is omitted, a default gutter size of 20 is applied. If the gutter is negative, the number is set to 0.\nNote that the first column does not have a left gutter, and the last column does not have a right gutter.\nThe width of the document must be sufficient to fit two margin values and the gutter values that will be needed between each of the columns.\nNote that when using a width of 1024, a margin of 60, and 7 columns, the gutter cannot be greater than 150. ",
+            "default": "20",
+            "minimum": "0",
             "typed": false
         },
         {
             "name": "margin",
             "type": "integer",
             "required": false,
-            "description": "The outer (left and right) margins of the article, in points. If this property is omitted, a default article margin of 60 is applied. If the margin is negative, the number is set to 0. If the margin is greater than or equal to the width\/2, the article delivery fails.",
-            "default": 60,
-            "minimum": 0,
+            "description": "The outer (left and right) margins of the article, in points. If this property is omitted, a default article margin of 60 is applied. If the margin is negative, the number is set to 0. If the margin is greater than or equal to the width\/2, the article delivery will fail.\nThe margins is sized down slightly when the article is automatically scaled down for smaller devices.",
+            "default": "60",
+            "minimum": "0",
             "typed": false
         }
     ]

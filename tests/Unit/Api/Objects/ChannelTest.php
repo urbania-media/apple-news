@@ -34,6 +34,29 @@ class ChannelTest extends TestCase
     }
 
     /**
+     * Test the property fonts
+     * @test
+     * @dataProvider fontsProvider
+     * @covers ::getFonts
+     * @covers ::setFonts
+     */
+    public function testPropertyFonts($value)
+    {
+        $object = new Channel();
+        $object->setFonts($value);
+
+        $this->assertEquals($value, $object->getFonts());
+    }
+
+    /**
+     * Data provider for property fonts
+     */
+    public static function fontsProvider()
+    {
+        return [[[]]];
+    }
+
+    /**
      * Test the property id
      * @test
      * @dataProvider idProvider
@@ -53,7 +76,7 @@ class ChannelTest extends TestCase
      */
     public static function idProvider()
     {
-        return [["9d6aa4ac-607e-11e9-9aa6-f45c899bcb9d"]];
+        return [['5a080ace-dbd5-11ee-80d7-ca53fbc83398']];
     }
 
     /**
@@ -99,7 +122,7 @@ class ChannelTest extends TestCase
      */
     public static function nameProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -122,7 +145,7 @@ class ChannelTest extends TestCase
      */
     public static function shareUrlProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -145,7 +168,7 @@ class ChannelTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -168,6 +191,6 @@ class ChannelTest extends TestCase
      */
     public static function websiteProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 }

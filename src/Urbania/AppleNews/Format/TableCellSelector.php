@@ -5,57 +5,56 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for defining conditions that will cause a conditional style
  * to be applied to a cell.
  *
- * @see https://developer.apple.com/documentation/apple_news/tablecellselector
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/tablecellselector.json
  */
 class TableCellSelector extends BaseSdkObject
 {
     /**
-     * The number that specifies a column index. The leftmost column of data
-     * has an index of 0.
+     * Specifies a column index. The leftmost column of data has an index of
+     * .
      * @var integer
      */
     protected $columnIndex;
 
     /**
-     * A string that specifies the identifier of a specific data descriptor.
-     * All cells for this data descriptor will be selected. See
-     * DataDescriptor.
+     * Specifies the identifier of a specific data descriptor. All cells for
+     * this data descriptor will be selected. See .
      * @var string
      */
     protected $descriptor;
 
     /**
-     * A Boolean value when true, selects the cells in even columns.
+     * When true, selects the cells in even columns.
      * @var boolean
      */
     protected $evenColumns;
 
     /**
-     * A Boolean value when true, selects the cells in even rows.
+     * When true, selects the cells in even rows.
      * @var boolean
      */
     protected $evenRows;
 
     /**
-     * A Boolean value when true, selects the cells in odd columns.
+     * When true, selects the cells in odd columns.
      * @var boolean
      */
     protected $oddColumns;
 
     /**
-     * A Boolean value when true, selects the cells in odd rows.
+     * When true, selects the cells in odd rows.
      * @var boolean
      */
     protected $oddRows;
 
     /**
-     * A number that specifies a row index. The topmost row of data has an
-     * index of 0.
+     * Specifies a row index. The topmost row of data has an index of .
      * @var integer
      */
     protected $rowIndex;

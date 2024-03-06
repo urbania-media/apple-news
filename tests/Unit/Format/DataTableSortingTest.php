@@ -30,7 +30,7 @@ class DataTableSortingTest extends TestCase
      */
     public static function descriptorProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -53,6 +53,6 @@ class DataTableSortingTest extends TestCase
      */
     public static function directionProvider()
     {
-        return [["ascending"], ["descending"]];
+        return [['ascending'], ['descending']];
     }
 }

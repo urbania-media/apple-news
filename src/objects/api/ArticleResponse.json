@@ -1,17 +1,13 @@
 {
     "name": "Api\\Objects\\ArticleResponse",
-    "description": "See which objects make up the publish article, read article, and update article responses.",
+    "description": "See which objects make up the Create an Article, Read an Article, and Update an Article responses.",
     "version": "1.0.0+",
     "deprecated": false,
     "from_class": null,
     "extends": "Api\\Objects\\Article",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/articleresponse",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/articleresponse.json",
     "properties": [
-        {
-            "name": "links",
-            "type": "Api\\Objects\\ArticleLinks"
-        },
         {
             "name": "meta",
             "type": "Api\\Objects\\Meta"

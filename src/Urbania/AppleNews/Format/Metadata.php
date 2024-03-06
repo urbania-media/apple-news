@@ -6,39 +6,55 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * Information about your article, including author name, creation date,
  * publication date, keywords, and excerpt.
  *
- * @see https://developer.apple.com/documentation/apple_news/metadata
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/metadata.json
  */
 class Metadata extends BaseSdkObject
 {
     /**
-     * The authors of this article, who may or may not be shown in the byline
-     * component.
+     * The authors of this article. The value may or may not be the same
+     * string provided in the  or  component.
+     *  Note the following:
+     * Note that the byline or author component in the article body does not
+     * have these same requirements.
+     * This value appears in the article tile in channel feeds and section
+     * feeds.
      * @var string[]
      */
     protected $authors;
 
     /**
-     * A set of key-value pairs that can be leveraged to target your
-     * advertising campaigns to specific articles or groups of articles. See
-     * Targeting in the Advertising Guide for News Publishers.
+     * A set of key-value pairs, where the value is an array of at least one
+     * item that you can leverage to target your advertising campaigns to
+     * specific articles or groups of articles. See  in the .
      * @var \Urbania\AppleNews\Format\CampaignData
      */
     protected $campaignData;
 
     /**
-     * The canonical URL of a web version of this article. If this Apple News
-     * Format document corresponds to a web version of this article, set this
-     * property to the URL of the web article. This property can be used to
-     * point to one version of the article as well as to redirect devices
+     * The canonical URL of a web version of this article. If this Apple
+     * News Format document corresponds to a web version of this article, set
+     * this property to the URL of the web article. This property can be used
+     * to point to one version of the article as well as to redirect devices
      * that do not support News content.
+     * If canonicalURL is omitted, devices that do not support News cannot
+     * display the article.
      * @var string
      */
     protected $canonicalURL;
+
+    /**
+     * An optional string value indicating the usage of artificial
+     * intelligence (AI) tools to generate content for this article.
+     * Use the AI value to indicate that the content is AI-generated.
+     * @var string
+     */
+    protected $contentGenerationType;
 
     /**
      * The UTC date in ISO 8601 format (YYYY-MM-DDTHH:mm:ss±ZZ:ZZ) on which
@@ -51,6 +67,9 @@ class Metadata extends BaseSdkObject
     /**
      * The UTC date in ISO 8601 format (YYYY-MM-DDTHH:mm:ss±ZZ:ZZ) on which
      * this article was last modified after it was published.
+     * This date is used instead of datePublished in the article tile if it
+     * is later than datePublished by less than 48 hours. dateModified does
+     * not affect the feed order.   See .
      * @var \Carbon\Carbon
      */
     protected $dateModified;
@@ -65,10 +84,14 @@ class Metadata extends BaseSdkObject
     protected $datePublished;
 
     /**
-     * Some text representing your article. Typically it matches the first
-     * portion of the article content. It can also be an article summary.
-     * Although this property is optional, it’s best to define it in all of
-     * your Apple News Format documents.
+     * Some text representing your article. It can also be an article summary
+     * or subheadline. Although this property is optional, it’s best to
+     * define it in all of your Apple News Format documents. Your excerpt
+     * should be within the recommended 80–300 character range.
+     * This text may appear in the article tile in feeds. It can also appear
+     * when an article is shared.
+     * See .
+     * Do not use HTML tags or Markdown syntax for this property.
      * @var string
      */
     protected $excerpt;
@@ -95,6 +118,12 @@ class Metadata extends BaseSdkObject
     protected $generatorVersion = '1.0';
 
     /**
+     * The object for defining information about an issue.
+     * @var \Urbania\AppleNews\Format\Issue
+     */
+    protected $issue;
+
+    /**
      * The keywords that describe this article. You can define up to 50
      * keywords.
      * @var string[]
@@ -112,22 +141,46 @@ class Metadata extends BaseSdkObject
      * view (channel, topic, or For You). For best results, provide a
      * high-resolution image. The image is automatically scaled down to the
      * correct size.
+     * Supported image types are JPEG, (.jpeg or .jpg) WebP, GIF, or PNG.
+     * WebP and GIF images provided as thumbnailURL are converted to JPEG for
+     * use as an article thumbnail. Note that animations are removed from
+     * WebP and GIF images.
+     * The minimum size of the image must be 300 px wide x 300 px high.
+     * The aspect ratio (width ÷ height) must be between 0.5 and 3.0.
+     * To improve the loading time of the article, use one of the images in
+     * the article as the thumbnail image. If you use the same images in both
+     * places and the image appears on the first screen of the article, the
+     * image moves with an animated effect from the feed to the article. See
+     * .
      * @var string
      */
     protected $thumbnailURL;
 
     /**
-     * A boolean value that indicates whether this article should be shown
-     * with a transparent top toolbar that is overlaid on the the top portion
-     * of the article.
+     * A Boolean value that indicates whether this article should be shown
+     * with a transparent top toolbar that is overlaid on the top portion of
+     * the article.
+     * If you set this property to true, make sure to leave some room between
+     * the top of the article and the first readable component, and make sure
+     * the top portion of the article is predominantly dark or predominantly
+     * light.
      * @var boolean
      */
     protected $transparentToolbar;
 
     /**
-     * The URL for the video that represents this article. A glyph appears on
-     * the thumbnail of the article tile, allowing the video to be playable
-     * from For You, topic, and channel feeds.
+     * The URL for the video that represents this article. A glyph appears
+     * on the thumbnail of the article tile, allowing the video to be
+     * playable from For You, topic, and channel feeds.
+     * The videoURL should be the same as the URL for one of the  components
+     * in the article. For the best results or continuous playback for an
+     * opened article with a videoURL, make sure that the thumbnailURL
+     * property in metadata uses the same image file as the video
+     * component’s stillURL.
+     * Video URL must begin with http:// or preferably https://. The video
+     * must be in one of the supported HTTP Live Streaming (HLS) formats.
+     * Streaming using the M3U playlist format is highly recommended. See .
+     * For more information about HLS, see .
      * @var string
      */
     protected $videoURL;
@@ -144,6 +197,10 @@ class Metadata extends BaseSdkObject
 
         if (isset($data['canonicalURL'])) {
             $this->setCanonicalURL($data['canonicalURL']);
+        }
+
+        if (isset($data['contentGenerationType'])) {
+            $this->setContentGenerationType($data['contentGenerationType']);
         }
 
         if (isset($data['dateCreated'])) {
@@ -172,6 +229,10 @@ class Metadata extends BaseSdkObject
 
         if (isset($data['generatorVersion'])) {
             $this->setGeneratorVersion($data['generatorVersion']);
+        }
+
+        if (isset($data['issue'])) {
+            $this->setIssue($data['issue']);
         }
 
         if (isset($data['keywords'])) {
@@ -203,9 +264,7 @@ class Metadata extends BaseSdkObject
     public function addAuthor($item)
     {
         return $this->setAuthors(
-            !is_null($this->authors)
-                ? array_merge($this->authors, [$item])
-                : [$item]
+            !is_null($this->authors) ? array_merge($this->authors, [$item]) : [$item]
         );
     }
 
@@ -218,9 +277,7 @@ class Metadata extends BaseSdkObject
     {
         Assert::isArray($items);
         return $this->setAuthors(
-            !is_null($this->authors)
-                ? array_merge($this->authors, $items)
-                : $items
+            !is_null($this->authors) ? array_merge($this->authors, $items) : $items
         );
     }
 
@@ -275,7 +332,7 @@ class Metadata extends BaseSdkObject
 
         Assert::isSdkObject($campaignData, CampaignData::class);
 
-        $this->campaignData = is_array($campaignData)
+        $this->campaignData = Utils::isAssociativeArray($campaignData)
             ? new CampaignData($campaignData)
             : $campaignData;
         return $this;
@@ -309,6 +366,33 @@ class Metadata extends BaseSdkObject
     }
 
     /**
+     * Get the contentGenerationType
+     * @return string
+     */
+    public function getContentGenerationType()
+    {
+        return $this->contentGenerationType;
+    }
+
+    /**
+     * Set the contentGenerationType
+     * @param string $contentGenerationType
+     * @return $this
+     */
+    public function setContentGenerationType($contentGenerationType)
+    {
+        if (is_null($contentGenerationType)) {
+            $this->contentGenerationType = null;
+            return $this;
+        }
+
+        Assert::oneOf($contentGenerationType, ['AI']);
+
+        $this->contentGenerationType = $contentGenerationType;
+        return $this;
+    }
+
+    /**
      * Get the dateCreated
      * @return \Carbon\Carbon
      */
@@ -331,9 +415,7 @@ class Metadata extends BaseSdkObject
 
         Assert::isDate($dateCreated);
 
-        $this->dateCreated = is_string($dateCreated)
-            ? Carbon::parse($dateCreated)
-            : $dateCreated;
+        $this->dateCreated = is_string($dateCreated) ? Carbon::parse($dateCreated) : $dateCreated;
         return $this;
     }
 
@@ -504,6 +586,33 @@ class Metadata extends BaseSdkObject
     }
 
     /**
+     * Get the issue
+     * @return \Urbania\AppleNews\Format\Issue
+     */
+    public function getIssue()
+    {
+        return $this->issue;
+    }
+
+    /**
+     * Set the issue
+     * @param \Urbania\AppleNews\Format\Issue|array $issue
+     * @return $this
+     */
+    public function setIssue($issue)
+    {
+        if (is_null($issue)) {
+            $this->issue = null;
+            return $this;
+        }
+
+        Assert::isSdkObject($issue, Issue::class);
+
+        $this->issue = Utils::isAssociativeArray($issue) ? new Issue($issue) : $issue;
+        return $this;
+    }
+
+    /**
      * Add an item to keywords
      * @param string $item
      * @return $this
@@ -511,9 +620,7 @@ class Metadata extends BaseSdkObject
     public function addKeyword($item)
     {
         return $this->setKeywords(
-            !is_null($this->keywords)
-                ? array_merge($this->keywords, [$item])
-                : [$item]
+            !is_null($this->keywords) ? array_merge($this->keywords, [$item]) : [$item]
         );
     }
 
@@ -526,9 +633,7 @@ class Metadata extends BaseSdkObject
     {
         Assert::isArray($items);
         return $this->setKeywords(
-            !is_null($this->keywords)
-                ? array_merge($this->keywords, $items)
-                : $items
+            !is_null($this->keywords) ? array_merge($this->keywords, $items) : $items
         );
     }
 
@@ -568,9 +673,7 @@ class Metadata extends BaseSdkObject
     public function addLink($item)
     {
         return $this->setLinks(
-            !is_null($this->links)
-                ? array_merge($this->links, [$item])
-                : [$item]
+            !is_null($this->links) ? array_merge($this->links, [$item]) : [$item]
         );
     }
 
@@ -582,9 +685,7 @@ class Metadata extends BaseSdkObject
     public function addLinks($items)
     {
         Assert::isArray($items);
-        return $this->setLinks(
-            !is_null($this->links) ? array_merge($this->links, $items) : $items
-        );
+        return $this->setLinks(!is_null($this->links) ? array_merge($this->links, $items) : $items);
     }
 
     /**
@@ -611,17 +712,19 @@ class Metadata extends BaseSdkObject
         Assert::isArray($links);
         Assert::allIsSdkObject($links, LinkedArticle::class);
 
-        $this->links = array_reduce(
-            array_keys($links),
-            function ($array, $key) use ($links) {
-                $item = $links[$key];
-                $array[$key] = is_array($item)
-                    ? new LinkedArticle($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->links = is_array($links)
+            ? array_reduce(
+                array_keys($links),
+                function ($array, $key) use ($links) {
+                    $item = $links[$key];
+                    $array[$key] = Utils::isAssociativeArray($item)
+                        ? new LinkedArticle($item)
+                        : $item;
+                    return $array;
+                },
+                []
+            )
+            : $links;
         return $this;
     }
 
@@ -725,6 +828,9 @@ class Metadata extends BaseSdkObject
         if (isset($this->canonicalURL)) {
             $data['canonicalURL'] = $this->canonicalURL;
         }
+        if (isset($this->contentGenerationType)) {
+            $data['contentGenerationType'] = $this->contentGenerationType;
+        }
         if (isset($this->dateCreated)) {
             $data['dateCreated'] = !is_null($this->dateCreated)
                 ? $this->dateCreated->toIso8601String()
@@ -751,6 +857,10 @@ class Metadata extends BaseSdkObject
         }
         if (isset($this->generatorVersion)) {
             $data['generatorVersion'] = $this->generatorVersion;
+        }
+        if (isset($this->issue)) {
+            $data['issue'] =
+                $this->issue instanceof Arrayable ? $this->issue->toArray() : $this->issue;
         }
         if (isset($this->keywords)) {
             $data['keywords'] = $this->keywords;

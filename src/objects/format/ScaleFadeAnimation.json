@@ -6,13 +6,13 @@
     "from_class": null,
     "extends": "Format\\ComponentAnimation",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/scalefadeanimation",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/scalefadeanimation.json",
     "properties": [
         {
             "name": "type",
             "type": "string",
             "required": true,
-            "description": "Always scale_fade for this animation type.",
+            "description": "This animation always has the type scale_fade.",
             "value": "scale_fade",
             "read_only": true,
             "typed": false
@@ -21,28 +21,28 @@
             "name": "initialAlpha",
             "type": "number",
             "required": false,
-            "description": "The initial transparency of the component. Set initialAlpha to a value between 0 (completely transparent) and 1 (completely opaque).",
-            "default": 0.3,
-            "minimum": 0,
-            "maximum": 1,
+            "description": "The initial transparency of the component (and the animation). Set initialAlpha to a value between 0 (completely transparent) and 1 (completely visible).",
+            "default": "0.3",
+            "maximum": "1",
+            "minimum": "0",
             "typed": false
         },
         {
             "name": "initialScale",
             "type": "number",
             "required": false,
-            "description": "The initial scale of the component. Set initialScale to a value between 0 (completely scaled down) and 1 (the component\u2019s original size).",
-            "default": 0.75,
-            "minimum": 0,
-            "maximum": 1,
+            "description": "The initial scale of the component (and the animation). Set initialScale to a value between 0 (completely scaled down) and 1 (the component\u2019s original size).",
+            "default": "0.75",
+            "maximum": "1",
+            "minimum": "0",
             "typed": false
         },
         {
             "name": "userControllable",
             "type": "boolean",
             "required": false,
-            "description": "A Boolean value that indicates whether the animation occurs in response to user action (true) or happens automatically (false).",
-            "default": "false",
+            "description": "Indicates whether the animation is controlled by (is in response to) user action (true) or happens automatically (false).",
+            "default": true,
             "typed": false
         }
     ]

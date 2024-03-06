@@ -5,16 +5,18 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for displaying a linear gradient as a component background.
  *
- * @see https://developer.apple.com/documentation/apple_news/lineargradientfill
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/lineargradientfill.json
  */
 class LinearGradientFill extends GradientFill
 {
     /**
      * An array of color stops. Each stop sets a color and percentage.
+     * Provide at least 2 colorStop items.
      * @var Format\ColorStop[]
      */
     protected $colorStops;
@@ -30,6 +32,7 @@ class LinearGradientFill extends GradientFill
      * direction of the gradient. For example, a value of 180 defines a
      * gradient that changes color from top to bottom. An angle of 90 defines
      * a gradient that changes color from left to right.
+     * If angle is omitted, an angle of 180 (top to bottom) is used.
      * @var integer|float
      */
     protected $angle;
@@ -82,9 +85,7 @@ class LinearGradientFill extends GradientFill
     public function addColorStop($item)
     {
         return $this->setColorStops(
-            !is_null($this->colorStops)
-                ? array_merge($this->colorStops, [$item])
-                : [$item]
+            !is_null($this->colorStops) ? array_merge($this->colorStops, [$item]) : [$item]
         );
     }
 
@@ -97,9 +98,7 @@ class LinearGradientFill extends GradientFill
     {
         Assert::isArray($items);
         return $this->setColorStops(
-            !is_null($this->colorStops)
-                ? array_merge($this->colorStops, $items)
-                : $items
+            !is_null($this->colorStops) ? array_merge($this->colorStops, $items) : $items
         );
     }
 
@@ -122,15 +121,17 @@ class LinearGradientFill extends GradientFill
         Assert::isArray($colorStops);
         Assert::allIsSdkObject($colorStops, ColorStop::class);
 
-        $this->colorStops = array_reduce(
-            array_keys($colorStops),
-            function ($array, $key) use ($colorStops) {
-                $item = $colorStops[$key];
-                $array[$key] = is_array($item) ? new ColorStop($item) : $item;
-                return $array;
-            },
-            []
-        );
+        $this->colorStops = is_array($colorStops)
+            ? array_reduce(
+                array_keys($colorStops),
+                function ($array, $key) use ($colorStops) {
+                    $item = $colorStops[$key];
+                    $array[$key] = Utils::isAssociativeArray($item) ? new ColorStop($item) : $item;
+                    return $array;
+                },
+                []
+            )
+            : $colorStops;
         return $this;
     }
 

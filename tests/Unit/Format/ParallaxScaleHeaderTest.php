@@ -28,6 +28,6 @@ class ParallaxScaleHeaderTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["parallax_scale"]];
+        return [['parallax_scale']];
     }
 }

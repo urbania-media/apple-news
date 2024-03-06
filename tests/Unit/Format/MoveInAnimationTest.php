@@ -28,7 +28,7 @@ class MoveInAnimationTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["move_in"]];
+        return [['move_in']];
     }
 
     /**
@@ -51,7 +51,7 @@ class MoveInAnimationTest extends TestCase
      */
     public static function preferredStartingPositionProvider()
     {
-        return [["left"], ["right"]];
+        return [['left'], ['right']];
     }
 
     /**

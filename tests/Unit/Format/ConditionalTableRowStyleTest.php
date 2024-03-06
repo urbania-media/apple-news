@@ -11,29 +11,6 @@ use Urbania\AppleNews\Tests\TestCase;
 class ConditionalTableRowStyleTest extends TestCase
 {
     /**
-     * Test the property selectors
-     * @test
-     * @dataProvider selectorsProvider
-     * @covers ::getSelectors
-     * @covers ::setSelectors
-     */
-    public function testPropertySelectors($value)
-    {
-        $object = new ConditionalTableRowStyle();
-        $object->setSelectors($value);
-
-        $this->assertEquals($value, $object->getSelectors());
-    }
-
-    /**
-     * Data provider for property selectors
-     */
-    public static function selectorsProvider()
-    {
-        return [[[new \Urbania\AppleNews\Format\TableRowSelector()]]];
-    }
-
-    /**
      * Test the property backgroundColor
      * @test
      * @dataProvider backgroundColorProvider
@@ -53,7 +30,7 @@ class ConditionalTableRowStyleTest extends TestCase
      */
     public static function backgroundColorProvider()
     {
-        return [["#fff"], ["#000"]];
+        return [['#fff'], ['#000']];
     }
 
     /**
@@ -99,6 +76,29 @@ class ConditionalTableRowStyleTest extends TestCase
      */
     public static function heightProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
+    }
+
+    /**
+     * Test the property selectors
+     * @test
+     * @dataProvider selectorsProvider
+     * @covers ::getSelectors
+     * @covers ::setSelectors
+     */
+    public function testPropertySelectors($value)
+    {
+        $object = new ConditionalTableRowStyle();
+        $object->setSelectors($value);
+
+        $this->assertEquals($value, $object->getSelectors());
+    }
+
+    /**
+     * Data provider for property selectors
+     */
+    public static function selectorsProvider()
+    {
+        return [[[new \Urbania\AppleNews\Format\TableRowSelector()]]];
     }
 }

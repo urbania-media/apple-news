@@ -6,7 +6,7 @@
     "from_class": "Styles",
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/articledocument\/textstyles",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/articledocument\/textstyles.json",
     "properties": [
         {
             "name": "styles",

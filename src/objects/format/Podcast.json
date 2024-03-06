@@ -1,0 +1,126 @@
+{
+    "name": "Format\\Podcast",
+    "description": "The component for adding a Podcast show or episode.",
+    "version": "1.14+",
+    "deprecated": false,
+    "from_class": null,
+    "extends": "Format\\Component",
+    "typed": null,
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/podcast.json",
+    "properties": [
+        {
+            "name": "role",
+            "type": "string",
+            "required": true,
+            "description": "Always podcast for this component.",
+            "value": "podcast",
+            "read_only": true,
+            "typed": false
+        },
+        {
+            "name": "URL",
+            "type": "uri",
+            "required": true,
+            "description": "The URL of the podcast show or episode you want to embed. The show or episode must be available on Apple Podcasts. Note that a user cannot play the show or episode directly in the article. For more information, see .\nThe URL determines whether it is a show or an episode.\n The following is an example of a podcast show link: \nhttps:\/\/podcasts.apple.com\/us\/podcast\/apple-events\/id1473854035\nThe following is an example of a podcast episode link:\nhttps:\/\/podcasts.apple.com\/us\/podcast\/apple-events\/id1473854035?i=1000479125753",
+            "typed": false
+        },
+        {
+            "name": "anchor",
+            "type": "Format\\Anchor",
+            "required": false,
+            "description": "An object that defines vertical alignment with another component.",
+            "typed": false
+        },
+        {
+            "name": "animation",
+            "type": [
+                "Format\\ComponentAnimation",
+                "none"
+            ],
+            "required": false,
+            "description": "An object that defines an animation to apply to the component.\nThe none value is for conditional design elements. Adding it here has no effect.",
+            "typed": true
+        },
+        {
+            "name": "behavior",
+            "type": [
+                "Format\\Behavior",
+                "none"
+            ],
+            "required": false,
+            "description": "An object that defines behavior for a component, like  or .\nThe none value is for conditional design elements. Adding it here has no effect.",
+            "typed": true
+        },
+        {
+            "name": "conditional",
+            "type": [
+                "Format\\ConditionalComponent",
+                "array:Format\\ConditionalComponent"
+            ],
+            "required": false,
+            "description": "An instance or array of component properties that can be applied conditionally, and the conditions that cause them to be applied.",
+            "typed": false
+        },
+        {
+            "name": "hidden",
+            "type": "boolean",
+            "required": false,
+            "description": "A Boolean value that determines whether the component is hidden.",
+            "default": true,
+            "typed": false
+        },
+        {
+            "name": "identifier",
+            "type": "string",
+            "required": false,
+            "description": "An optional unique identifier for this component. If used, this identifier must be unique across the entire document. You will need an identifier for your component if you want to anchor other components to it.",
+            "typed": false
+        },
+        {
+            "name": "layout",
+            "type": [
+                "Format\\ComponentLayout",
+                "string"
+            ],
+            "required": false,
+            "description": "An inline ComponentLayout object that contains layout information, or a string reference to a ComponentLayout object that is defined at the top level of the document.\nIf layout is not defined, size and position will be based on various factors, such as the device type, the length of the content, and the role of this component.",
+            "typed": false
+        },
+        {
+            "name": "orientation",
+            "type": "enum:string",
+            "required": false,
+            "description": "The viewport layout of the component. \nValid values:",
+            "default": "automatic",
+            "enum_values": [
+                "horizontal",
+                "automatic"
+            ],
+            "typed": false
+        },
+        {
+            "name": "style",
+            "type": [
+                "Format\\ComponentStyle",
+                "string",
+                "none"
+            ],
+            "required": false,
+            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle object that is defined at the top level of the document.\nThe none value is used for conditional design elements. Adding it here has no effect.",
+            "typed": false
+        },
+        {
+            "name": "theme",
+            "type": "enum:string",
+            "required": false,
+            "description": "The color theme of the component. \nValid Values:",
+            "default": "automatic",
+            "enum_values": [
+                "light",
+                "dark",
+                "automatic"
+            ],
+            "typed": false
+        }
+    ]
+}

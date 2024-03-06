@@ -6,13 +6,13 @@
     "from_class": null,
     "extends": "Format\\Scene",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/parallaxscaleheader",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/parallaxscaleheader.json",
     "properties": [
         {
             "name": "type",
             "type": "string",
             "required": true,
-            "description": "Always parallax_scale for this scene type.",
+            "description": "This scene always has the type parallax_scale.\nVersion 1.0",
             "value": "parallax_scale",
             "read_only": true,
             "typed": false

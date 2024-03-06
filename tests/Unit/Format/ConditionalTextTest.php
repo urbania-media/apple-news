@@ -30,7 +30,10 @@ class ConditionalTextTest extends TestCase
      */
     public static function conditionsProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\Condition()]]];
+        return [
+            [new \Urbania\AppleNews\Format\Condition()],
+            [[new \Urbania\AppleNews\Format\Condition()]],
+        ];
     }
 
     /**
@@ -76,7 +79,7 @@ class ConditionalTextTest extends TestCase
      */
     public static function animationProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentAnimation()]];
+        return [[new \Urbania\AppleNews\Format\ComponentAnimation()], ['none']];
     }
 
     /**
@@ -99,7 +102,7 @@ class ConditionalTextTest extends TestCase
      */
     public static function behaviorProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Behavior()]];
+        return [[new \Urbania\AppleNews\Format\Behavior()], ['none']];
     }
 
     /**
@@ -145,7 +148,7 @@ class ConditionalTextTest extends TestCase
      */
     public static function inlineTextStylesProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\InlineTextStyle()]]];
+        return [[[new \Urbania\AppleNews\Format\InlineTextStyle()]], ['none']];
     }
 
     /**
@@ -168,10 +171,7 @@ class ConditionalTextTest extends TestCase
      */
     public static function layoutProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\ComponentLayout()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\ComponentLayout()], ['a string']];
     }
 
     /**
@@ -194,7 +194,7 @@ class ConditionalTextTest extends TestCase
      */
     public static function styleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
+        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ['a string'], ['none']];
     }
 
     /**
@@ -217,9 +217,6 @@ class ConditionalTextTest extends TestCase
      */
     public static function textStyleProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\ComponentTextStyle()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\ComponentTextStyle()], ['a string']];
     }
 }

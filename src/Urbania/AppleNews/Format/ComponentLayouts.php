@@ -5,12 +5,13 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * An object containing component layout objects that components in the
  * article can refer to.
  *
- * @see https://developer.apple.com/documentation/apple_news/articledocument/componentlayouts
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/articledocument/componentlayouts.json
  */
 class ComponentLayouts extends BaseSdkObject
 {
@@ -52,17 +53,19 @@ class ComponentLayouts extends BaseSdkObject
         }
         Assert::allIsSdkObject($layouts, ComponentLayout::class);
 
-        $this->layouts = array_reduce(
-            array_keys($layouts),
-            function ($array, $key) use ($layouts) {
-                $item = $layouts[$key];
-                $array[$key] = is_array($item)
-                    ? new ComponentLayout($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->layouts = is_array($layouts)
+            ? array_reduce(
+                array_keys($layouts),
+                function ($array, $key) use ($layouts) {
+                    $item = $layouts[$key];
+                    $array[$key] = Utils::isAssociativeArray($item)
+                        ? new ComponentLayout($item)
+                        : $item;
+                    return $array;
+                },
+                []
+            )
+            : $layouts;
         return $this;
     }
 

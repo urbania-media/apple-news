@@ -5,25 +5,29 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for defining conditional properties for a component layout,
  * and when the conditional properties are in effect.
  *
- * @see https://developer.apple.com/documentation/apple_news/conditionalcomponentlayout
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/conditionalcomponentlayout.json
  */
 class ConditionalComponentLayout extends ComponentLayout
 {
     /**
-     * An array of conditions that, when met, cause the conditional component
-     * layout properties to be in effect.
-     * @var Format\Condition[]
+     * An instance or array of conditions that, when met, cause the
+     * conditional component layout properties to take effect.
+     * @var Format\Condition[]|\Urbania\AppleNews\Format\Condition
      */
     protected $conditions;
 
     /**
      * A number that indicates how many columns the component spans, based on
-     * the number of columns in the document.
+     * the number of columns in the document. Note that for the columnSpan
+     * value to take effect, columnStart should also be specified.
+     * By default, the component spans the entire width of the document or
+     * the width of its container component.
      * @var integer
      */
     protected $columnSpan;
@@ -31,24 +35,20 @@ class ConditionalComponentLayout extends ComponentLayout
     /**
      * A number that indicates which column the component's start position is
      * in, based on the number of columns in the document or parent
-     * container.
+     * container. Note that for the columnStart value to take effect,
+     * columnSpan should also be specified.
+     * By default, the component starts in the first column (note that the
+     * first column is , not 1).
      * @var integer
      */
     protected $columnStart;
 
     /**
-     * A value that defines a content inset for the component. If applied,
-     * the inset is equivalent to half the document gutter. For example, if
-     * the article's layout sets the document gutter to 40pt, the content
-     * inset is 20 points.
-     * @var \Urbania\AppleNews\Format\ContentInset|boolean
-     */
-    protected $contentInset;
-
-    /**
      * The alignment of the content within the component. This property
      * applies only when the width of the content is less than the width of
      * the component.
+     * This property is supported for , , , and  components. All other
+     * components ignore this property.
      * @var string
      */
     protected $horizontalContentAlignment;
@@ -57,6 +57,15 @@ class ConditionalComponentLayout extends ComponentLayout
      * A value that indicates whether the gutters (if any) to the left and
      * right of the component should be ignored. The gutter size is defined
      * in the Layout object at the root level of the document.
+     * Use this option to position two components next to each other without
+     * a gutter between them. This property applies only when a gutter
+     * actually exists to the left or right of the component. The first
+     * column does not have a left gutter, and the last column does not have
+     * a right gutter.
+     * Valid values:
+     * You can also set this property to true to indicate that you want to
+     * ignore both gutters, or set it to false to ignore none of the gutters.
+     * By default, none of the gutters are ignored.
      * @var boolean|string
      */
     protected $ignoreDocumentGutter;
@@ -67,6 +76,11 @@ class ConditionalComponentLayout extends ComponentLayout
      * margins positions the component at the edge of the display. This
      * property affects the layout only if the component is in the first or
      * last column.
+     * Valid values:
+     * Instead of specifying margins, you can set this property to true to
+     * indicate that both margins should be ignored, or set it to false to
+     * ignore none of the gutters. By default, none of the document margins
+     * are ignored.
      * @var boolean|string
      */
     protected $ignoreDocumentMargin;
@@ -81,41 +95,70 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * The maximum width of the content within the component. Specify this
-     * value as an integer in points, or use one of the available units of
-     * measure for components. See Specifying Measurements for Components.
-     * @var string|integer
+     * value as a number in points, or use one of the available units of
+     * measure for components. See .
+     * This property is supported for , , , and  components. All other
+     * components ignore this property.
+     * @var string|integer|float
      */
     protected $maximumContentWidth;
 
     /**
-     * The maximum width of the layout when used within a Container with
-     * HorizontalStackDisplay as the specified contentDisplay type.
-     * @var string|integer
+     * The maximum width of the layout when used within a  with  as the
+     * specified contentDisplay type.
+     * @var string|integer|float
      */
     protected $maximumWidth;
 
     /**
      * The minimum height of the component. A component is taller than its
      * defined minimumHeight when the contents require it. Specify this value
-     * as an integer in points, or use one of the available units of measure
-     * for components. See Specifying Measurements for Components.
-     * @var string|integer
+     * as a number in points, or use one of the available units of measure
+     * for components. See .
+     * @var string|integer|float
      */
     protected $minimumHeight;
 
     /**
-     * The minimum width of the layout when used within a container with
-     * HorizontalStackDisplay as the specified contentDisplay type.
-     * @var string|integer
+     * The minimum width of the layout when used within a container with  as
+     * the specified contentDisplay type.
+     * @var string|integer|float
      */
     protected $minimumWidth;
 
     /**
      * The padding between the content of the component and the edges of the
      * component.
-     * @var \Urbania\AppleNews\Format\Padding|string|integer
+     * @var \Urbania\AppleNews\Format\Padding|string|integer|float
      */
     protected $padding;
+
+    /**
+     * A value that indicates whether the component should respect or ignore
+     * the viewport padding. Ignoring viewport padding positions the
+     * component at the edge of the display screen. This property affects the
+     * layout only if the component is in the first or last column.
+     * Valid values:
+     * Instead of specifying padding, you can set this property to true to
+     * indicate that paddings on both sides should be ignored, or set it to
+     * false to ignore neither padding. By default, neither padding is
+     * ignored.
+     * The layout of a parent component will always constrain any child
+     * components. Setting ignoreViewportPadding to true for a component will
+     * have no effect if it is inside of a container with
+     * ignoreViewportPadding set to false.
+     * If ignoreViewportPadding is set to true, left, right, or both it
+     * overrides the layout’s ignoreDocumentMargin value and spans the
+     * entire screen.
+     * If ignoreViewportPadding is set to none, the value of
+     * ignoreDocumentMargin is accepted.
+     * By default, components do not ignore the viewport padding, even if you
+     * previously specified ignoreDocumentMargin to span the entire width of
+     * the screen. To achieve the same functionality, you must update your
+     * article to use ignoreViewportPadding.
+     * @var boolean|string
+     */
+    protected $ignoreViewportPadding;
 
     public function __construct(array $data = [])
     {
@@ -133,14 +176,8 @@ class ConditionalComponentLayout extends ComponentLayout
             $this->setColumnStart($data['columnStart']);
         }
 
-        if (isset($data['contentInset'])) {
-            $this->setContentInset($data['contentInset']);
-        }
-
         if (isset($data['horizontalContentAlignment'])) {
-            $this->setHorizontalContentAlignment(
-                $data['horizontalContentAlignment']
-            );
+            $this->setHorizontalContentAlignment($data['horizontalContentAlignment']);
         }
 
         if (isset($data['ignoreDocumentGutter'])) {
@@ -173,6 +210,10 @@ class ConditionalComponentLayout extends ComponentLayout
 
         if (isset($data['padding'])) {
             $this->setPadding($data['padding']);
+        }
+
+        if (isset($data['ignoreViewportPadding'])) {
+            $this->setIgnoreViewportPadding($data['ignoreViewportPadding']);
         }
     }
 
@@ -231,37 +272,8 @@ class ConditionalComponentLayout extends ComponentLayout
     }
 
     /**
-     * Add an item to conditions
-     * @param \Urbania\AppleNews\Format\Condition|array $item
-     * @return $this
-     */
-    public function addCondition($item)
-    {
-        return $this->setConditions(
-            !is_null($this->conditions)
-                ? array_merge($this->conditions, [$item])
-                : [$item]
-        );
-    }
-
-    /**
-     * Add items to conditions
-     * @param array $items
-     * @return $this
-     */
-    public function addConditions($items)
-    {
-        Assert::isArray($items);
-        return $this->setConditions(
-            !is_null($this->conditions)
-                ? array_merge($this->conditions, $items)
-                : $items
-        );
-    }
-
-    /**
      * Get the conditions
-     * @return Format\Condition[]
+     * @return Format\Condition[]|\Urbania\AppleNews\Format\Condition
      */
     public function getConditions()
     {
@@ -270,56 +282,21 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Set the conditions
-     * @param Format\Condition[] $conditions
+     * @param Format\Condition[]|\Urbania\AppleNews\Format\Condition|array $conditions
      * @return $this
      */
     public function setConditions($conditions)
     {
-        Assert::isArray($conditions);
-        Assert::allIsSdkObject($conditions, Condition::class);
-
-        $this->conditions = array_reduce(
-            array_keys($conditions),
-            function ($array, $key) use ($conditions) {
-                $item = $conditions[$key];
-                $array[$key] = is_array($item) ? new Condition($item) : $item;
-                return $array;
-            },
-            []
-        );
-        return $this;
-    }
-
-    /**
-     * Get the contentInset
-     * @return \Urbania\AppleNews\Format\ContentInset|boolean
-     */
-    public function getContentInset()
-    {
-        return $this->contentInset;
-    }
-
-    /**
-     * Set the contentInset
-     * @param \Urbania\AppleNews\Format\ContentInset|array|boolean $contentInset
-     * @return $this
-     */
-    public function setContentInset($contentInset)
-    {
-        if (is_null($contentInset)) {
-            $this->contentInset = null;
-            return $this;
-        }
-
-        if (is_object($contentInset) || is_array($contentInset)) {
-            Assert::isSdkObject($contentInset, ContentInset::class);
+        if (is_object($conditions) || Utils::isAssociativeArray($conditions)) {
+            Assert::isSdkObject($conditions, Condition::class);
         } else {
-            Assert::boolean($contentInset);
+            Assert::isArray($conditions);
+            Assert::allIsSdkObject($conditions, Condition::class);
         }
 
-        $this->contentInset = is_array($contentInset)
-            ? new ContentInset($contentInset)
-            : $contentInset;
+        $this->conditions = Utils::isAssociativeArray($conditions)
+            ? new Condition($conditions)
+            : $conditions;
         return $this;
     }
 
@@ -344,7 +321,7 @@ class ConditionalComponentLayout extends ComponentLayout
             return $this;
         }
 
-        Assert::oneOf($horizontalContentAlignment, ["left", "center", "right"]);
+        Assert::oneOf($horizontalContentAlignment, ['left', 'center', 'right']);
 
         $this->horizontalContentAlignment = $horizontalContentAlignment;
         return $this;
@@ -371,14 +348,7 @@ class ConditionalComponentLayout extends ComponentLayout
             return $this;
         }
 
-        Assert::oneOf($ignoreDocumentGutter, [
-            "none",
-            "left",
-            "right",
-            "both",
-            true,
-            false
-        ]);
+        Assert::oneOf($ignoreDocumentGutter, ['none', 'left', 'right', 'both', true, false]);
 
         $this->ignoreDocumentGutter = $ignoreDocumentGutter;
         return $this;
@@ -405,16 +375,36 @@ class ConditionalComponentLayout extends ComponentLayout
             return $this;
         }
 
-        Assert::oneOf($ignoreDocumentMargin, [
-            "none",
-            "left",
-            "right",
-            "both",
-            true,
-            false
-        ]);
+        Assert::oneOf($ignoreDocumentMargin, ['none', 'left', 'right', 'both', true, false]);
 
         $this->ignoreDocumentMargin = $ignoreDocumentMargin;
+        return $this;
+    }
+
+    /**
+     * Get the ignoreViewportPadding
+     * @return boolean|string
+     */
+    public function getIgnoreViewportPadding()
+    {
+        return $this->ignoreViewportPadding;
+    }
+
+    /**
+     * Set the ignoreViewportPadding
+     * @param boolean|string $ignoreViewportPadding
+     * @return $this
+     */
+    public function setIgnoreViewportPadding($ignoreViewportPadding)
+    {
+        if (is_null($ignoreViewportPadding)) {
+            $this->ignoreViewportPadding = null;
+            return $this;
+        }
+
+        Assert::oneOf($ignoreViewportPadding, ['none', 'left', 'right', 'both', true, false]);
+
+        $this->ignoreViewportPadding = $ignoreViewportPadding;
         return $this;
     }
 
@@ -439,19 +429,19 @@ class ConditionalComponentLayout extends ComponentLayout
             return $this;
         }
 
-        if (is_object($margin) || is_array($margin)) {
+        if (is_object($margin) || Utils::isAssociativeArray($margin)) {
             Assert::isSdkObject($margin, Margin::class);
         } else {
             Assert::integer($margin);
         }
 
-        $this->margin = is_array($margin) ? new Margin($margin) : $margin;
+        $this->margin = Utils::isAssociativeArray($margin) ? new Margin($margin) : $margin;
         return $this;
     }
 
     /**
      * Get the maximumContentWidth
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getMaximumContentWidth()
     {
@@ -460,7 +450,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Set the maximumContentWidth
-     * @param string|integer $maximumContentWidth
+     * @param string|integer|float $maximumContentWidth
      * @return $this
      */
     public function setMaximumContentWidth($maximumContentWidth)
@@ -478,7 +468,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Get the maximumWidth
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getMaximumWidth()
     {
@@ -487,7 +477,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Set the maximumWidth
-     * @param string|integer $maximumWidth
+     * @param string|integer|float $maximumWidth
      * @return $this
      */
     public function setMaximumWidth($maximumWidth)
@@ -505,7 +495,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Get the minimumHeight
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getMinimumHeight()
     {
@@ -514,7 +504,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Set the minimumHeight
-     * @param string|integer $minimumHeight
+     * @param string|integer|float $minimumHeight
      * @return $this
      */
     public function setMinimumHeight($minimumHeight)
@@ -532,7 +522,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Get the minimumWidth
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getMinimumWidth()
     {
@@ -541,7 +531,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Set the minimumWidth
-     * @param string|integer $minimumWidth
+     * @param string|integer|float $minimumWidth
      * @return $this
      */
     public function setMinimumWidth($minimumWidth)
@@ -559,7 +549,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Get the padding
-     * @return \Urbania\AppleNews\Format\Padding|string|integer
+     * @return \Urbania\AppleNews\Format\Padding|string|integer|float
      */
     public function getPadding()
     {
@@ -568,7 +558,7 @@ class ConditionalComponentLayout extends ComponentLayout
 
     /**
      * Set the padding
-     * @param \Urbania\AppleNews\Format\Padding|array|string|integer $padding
+     * @param \Urbania\AppleNews\Format\Padding|array|string|integer|float $padding
      * @return $this
      */
     public function setPadding($padding)
@@ -584,7 +574,7 @@ class ConditionalComponentLayout extends ComponentLayout
             Assert::isSupportedUnits($padding);
         }
 
-        $this->padding = is_array($padding) ? new Padding($padding) : $padding;
+        $this->padding = Utils::isAssociativeArray($padding) ? new Padding($padding) : $padding;
         return $this;
     }
 
@@ -596,19 +586,10 @@ class ConditionalComponentLayout extends ComponentLayout
     {
         $data = parent::toArray();
         if (isset($this->conditions)) {
-            $data['conditions'] = !is_null($this->conditions)
-                ? array_reduce(
-                    array_keys($this->conditions),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->conditions[$key] instanceof Arrayable
-                                ? $this->conditions[$key]->toArray()
-                                : $this->conditions[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->conditions;
+            $data['conditions'] =
+                $this->conditions instanceof Arrayable
+                    ? $this->conditions->toArray()
+                    : $this->conditions;
         }
         if (isset($this->columnSpan)) {
             $data['columnSpan'] = $this->columnSpan;
@@ -616,15 +597,8 @@ class ConditionalComponentLayout extends ComponentLayout
         if (isset($this->columnStart)) {
             $data['columnStart'] = $this->columnStart;
         }
-        if (isset($this->contentInset)) {
-            $data['contentInset'] =
-                $this->contentInset instanceof Arrayable
-                    ? $this->contentInset->toArray()
-                    : $this->contentInset;
-        }
         if (isset($this->horizontalContentAlignment)) {
-            $data['horizontalContentAlignment'] =
-                $this->horizontalContentAlignment;
+            $data['horizontalContentAlignment'] = $this->horizontalContentAlignment;
         }
         if (isset($this->ignoreDocumentGutter)) {
             $data['ignoreDocumentGutter'] = $this->ignoreDocumentGutter;
@@ -634,9 +608,7 @@ class ConditionalComponentLayout extends ComponentLayout
         }
         if (isset($this->margin)) {
             $data['margin'] =
-                $this->margin instanceof Arrayable
-                    ? $this->margin->toArray()
-                    : $this->margin;
+                $this->margin instanceof Arrayable ? $this->margin->toArray() : $this->margin;
         }
         if (isset($this->maximumContentWidth)) {
             $data['maximumContentWidth'] =
@@ -664,9 +636,10 @@ class ConditionalComponentLayout extends ComponentLayout
         }
         if (isset($this->padding)) {
             $data['padding'] =
-                $this->padding instanceof Arrayable
-                    ? $this->padding->toArray()
-                    : $this->padding;
+                $this->padding instanceof Arrayable ? $this->padding->toArray() : $this->padding;
+        }
+        if (isset($this->ignoreViewportPadding)) {
+            $data['ignoreViewportPadding'] = $this->ignoreViewportPadding;
         }
         return $data;
     }

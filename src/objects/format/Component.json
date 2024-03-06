@@ -9,23 +9,15 @@
         "property": "role",
         "types": {
             "audio": "Audio",
-            "divider": "Divider",
-            "banner_advertisement": "BannerAdvertisement",
-            "medium_rectangle_advertisement": "MediumRectangleAdvertisement",
-            "container": "Container",
+            "music": "Music",
+            "podcast": "Podcast",
             "video": "Video",
             "embedwebvideo": "EmbedWebVideo",
             "embedvideo": "EmbedWebVideo",
-            "music": "Music",
-            "aside": "Aside",
-            "section": "Section",
-            "header": "Header",
-            "spacer": "FlexibleSpacer",
-            "chapter": "Chapter",
-            "article_link": "ArticleLink",
-            "body": "Body",
+            "article_thumbnail": "ArticleThumbnail",
+            "text": "Text",
+            "author": "Author",
             "article_title": "ArticleTitle",
-            "pullquote": "PullQuote",
             "title": "Title",
             "heading": "Heading",
             "heading1": "Heading",
@@ -34,38 +26,51 @@
             "heading4": "Heading",
             "heading5": "Heading",
             "heading6": "Heading",
-            "intro": "Intro",
-            "caption": "Caption",
-            "photo": "Photo",
+            "body": "Body",
+            "image": "Image",
             "figure": "Figure",
+            "photo": "Photo",
             "portrait": "Portrait",
             "logo": "Logo",
-            "image": "Image",
-            "gallery": "Gallery",
-            "mosaic": "Mosaic",
-            "author": "Author",
+            "caption": "Caption",
             "byline": "Byline",
             "illustrator": "Illustrator",
             "photographer": "Photographer",
+            "intro": "Intro",
             "quote": "Quote",
-            "article_thumbnail": "ArticleThumbnail",
+            "pullquote": "PullQuote",
             "datatable": "DataTable",
             "htmltable": "HTMLTable",
+            "replica_advertisement": "ReplicaAdvertisement",
+            "gallery": "Gallery",
+            "mosaic": "Mosaic",
+            "divider": "Divider",
+            "container": "Container",
+            "aside": "Aside",
+            "chapter": "Chapter",
+            "section": "Section",
+            "article_link": "ArticleLink",
+            "spacer": "FlexibleSpacer",
+            "header": "Header",
+            "link_button": "LinkButton",
+            "banner_advertisement": "BannerAdvertisement",
+            "medium_rectangle_advertisement": "MediumRectangleAdvertisement",
+            "arkit": "ARKit",
             "map": "Map",
             "place": "Place",
-            "tweet": "Tweet",
-            "instagram": "Instagram",
             "facebook_post": "FacebookPost",
-            "arkit": "ARKit"
+            "instagram": "Instagram",
+            "tiktok": "TikTok",
+            "tweet": "Tweet"
         }
     },
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/component",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/component.json",
     "properties": [
         {
             "name": "role",
             "type": "string",
             "required": true,
-            "description": "The role of a component (for example, title, body, or pullquote) conveys the semantic value of the content or its function within the article.",
+            "description": "The role of a component (for example, title, body, or pullquote) conveys the semantic value of the content or its function within the article.\nThe value of the role property is simply the role name; it does not include the actual content that the role describes. For example, a role with the value pullquote would describe a text component whose value is the actual pull quote text. \nA role can have design significance: styling and layout can be derived from it. The role is also used by   and  to make Apple News content more accessible. \nFor a list of valid component types, see .",
             "typed": false
         },
         {
@@ -77,23 +82,32 @@
         },
         {
             "name": "animation",
-            "type": "Format\\ComponentAnimation",
+            "type": [
+                "Format\\ComponentAnimation",
+                "none"
+            ],
             "required": false,
-            "description": "An object that defines an animation to be applied to the component.",
+            "description": "An object that defines an animation to be applied to the component.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": true
         },
         {
             "name": "behavior",
-            "type": "Format\\Behavior",
+            "type": [
+                "Format\\Behavior",
+                "none"
+            ],
             "required": false,
-            "description": "An object that defines behavior for a component, like Parallax or Springy.",
+            "description": "An object that defines behavior for a component, like  or .\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": true
         },
         {
             "name": "conditional",
-            "type": "array:Format\\ConditionalComponent",
+            "type": [
+                "Format\\ConditionalComponent",
+                "array:Format\\ConditionalComponent"
+            ],
             "required": false,
-            "description": "An array of component properties that can be applied conditionally, and the conditions that cause them to be applied.",
+            "description": "An instance or array of component properties that can be applied conditionally, and the conditions that cause them to be applied. ",
             "typed": false
         },
         {
@@ -101,14 +115,14 @@
             "type": "boolean",
             "required": false,
             "description": "A Boolean value that determines whether the component is hidden.",
-            "default": "false",
+            "default": true,
             "typed": false
         },
         {
             "name": "identifier",
             "type": "string",
             "required": false,
-            "description": "A unique identifier for this component. If used, identifier must be unique across the entire document. An identifier is required if you want to anchor other components to this component.",
+            "description": "A unique identifier for this component. If used, identifier must be unique across the entire document. An identifier is required if you want to anchor other components to this component. ",
             "typed": false
         },
         {
@@ -118,17 +132,18 @@
                 "string"
             ],
             "required": false,
-            "description": "An inline ComponentLayout object that contains layout information, or a string reference to a ComponentLayout that is defined at the top level of the document.",
+            "description": "An inline ComponentLayout object that contains layout information, or a string reference to a ComponentLayout that is defined at the top level of the document.\nIf layout is not defined, size and position are based on various factors, such as the device type, the length of the content, and the role of this component.",
             "typed": false
         },
         {
             "name": "style",
             "type": [
                 "Format\\ComponentStyle",
-                "string"
+                "string",
+                "none"
             ],
             "required": false,
-            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle that is defined at the top level of the document.",
+            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle that is defined at the top level of the document. \nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         }
     ]

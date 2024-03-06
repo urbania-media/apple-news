@@ -53,7 +53,7 @@ class TableCellSelectorTest extends TestCase
      */
     public static function descriptorProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**

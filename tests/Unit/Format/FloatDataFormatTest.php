@@ -11,27 +11,6 @@ use Urbania\AppleNews\Tests\TestCase;
 class FloatDataFormatTest extends TestCase
 {
     /**
-     * Test the property type
-     * @test
-     * @dataProvider typeProvider
-     * @covers ::getType
-     */
-    public function testPropertyType($value)
-    {
-        $object = new FloatDataFormat();
-
-        $this->assertEquals($value, $object->getType());
-    }
-
-    /**
-     * Data provider for property type
-     */
-    public static function typeProvider()
-    {
-        return [["float"]];
-    }
-
-    /**
      * Test the property decimals
      * @test
      * @dataProvider decimalsProvider
@@ -52,5 +31,26 @@ class FloatDataFormatTest extends TestCase
     public static function decimalsProvider()
     {
         return [[1]];
+    }
+
+    /**
+     * Test the property type
+     * @test
+     * @dataProvider typeProvider
+     * @covers ::getType
+     */
+    public function testPropertyType($value)
+    {
+        $object = new FloatDataFormat();
+
+        $this->assertEquals($value, $object->getType());
+    }
+
+    /**
+     * Data provider for property type
+     */
+    public static function typeProvider()
+    {
+        return [['float']];
     }
 }

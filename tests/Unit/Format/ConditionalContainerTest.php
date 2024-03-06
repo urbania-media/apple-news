@@ -30,7 +30,33 @@ class ConditionalContainerTest extends TestCase
      */
     public static function conditionsProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\Condition()]]];
+        return [
+            [new \Urbania\AppleNews\Format\Condition()],
+            [[new \Urbania\AppleNews\Format\Condition()]],
+        ];
+    }
+
+    /**
+     * Test the property allowAutoplacedAds
+     * @test
+     * @dataProvider allowAutoplacedAdsProvider
+     * @covers ::getAllowAutoplacedAds
+     * @covers ::setAllowAutoplacedAds
+     */
+    public function testPropertyAllowAutoplacedAds($value)
+    {
+        $object = new ConditionalContainer();
+        $object->setAllowAutoplacedAds($value);
+
+        $this->assertEquals($value, $object->getAllowAutoplacedAds());
+    }
+
+    /**
+     * Data provider for property allowAutoplacedAds
+     */
+    public static function allowAutoplacedAdsProvider()
+    {
+        return [[true], [false]];
     }
 
     /**
@@ -76,7 +102,7 @@ class ConditionalContainerTest extends TestCase
      */
     public static function animationProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentAnimation()]];
+        return [[new \Urbania\AppleNews\Format\ComponentAnimation()], ['none']];
     }
 
     /**
@@ -99,7 +125,34 @@ class ConditionalContainerTest extends TestCase
      */
     public static function behaviorProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Behavior()]];
+        return [[new \Urbania\AppleNews\Format\Behavior()], ['none']];
+    }
+
+    /**
+     * Test the property contentDisplay
+     * @test
+     * @dataProvider contentDisplayProvider
+     * @covers ::getContentDisplay
+     * @covers ::setContentDisplay
+     */
+    public function testPropertyContentDisplay($value)
+    {
+        $object = new ConditionalContainer();
+        $object->setContentDisplay($value);
+
+        $this->assertEquals($value, $object->getContentDisplay());
+    }
+
+    /**
+     * Data provider for property contentDisplay
+     */
+    public static function contentDisplayProvider()
+    {
+        return [
+            [new \Urbania\AppleNews\Format\CollectionDisplay()],
+            [new \Urbania\AppleNews\Format\HorizontalStackDisplay()],
+            ['none'],
+        ];
     }
 
     /**
@@ -145,10 +198,7 @@ class ConditionalContainerTest extends TestCase
      */
     public static function layoutProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\ComponentLayout()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\ComponentLayout()], ['a string']];
     }
 
     /**
@@ -171,6 +221,6 @@ class ConditionalContainerTest extends TestCase
      */
     public static function styleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
+        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ['a string'], ['none']];
     }
 }

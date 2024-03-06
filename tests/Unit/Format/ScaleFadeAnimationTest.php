@@ -28,7 +28,7 @@ class ScaleFadeAnimationTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["scale_fade"]];
+        return [['scale_fade']];
     }
 
     /**

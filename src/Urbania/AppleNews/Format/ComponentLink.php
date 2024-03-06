@@ -5,30 +5,27 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
- * The component addition object for making a component interactable and
- * making it open a link to elsewhere in News.
+ * The component addition object for making a component interactive and
+ * opening a link to another location in News.
  *
- * @see https://developer.apple.com/documentation/apple_news/componentlink
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/componentlink.json
  */
 class ComponentLink extends ComponentAddition
 {
     /**
-     * Always link for a ComponentLink object.
-     * @var string
-     */
-    protected $type = 'link';
-
-    /**
-     * The URL that should be opened when a user interacts with the
-     * component. Use a valid Apple News URL beginning with
-     * https://apple.news/, or a URL that is associated with an Apple News
-     * article by its canonicalURL in Metadata, or a URL to the iTunes Store,
-     * the App Store, the iBooks Store, Apple Podcasts, or Apple Music.
+     * The URL to open when a user interacts with the component.
      * @var string
      */
     protected $URL;
+
+    /**
+     * The type of addition. Use link.
+     * @var string
+     */
+    protected $type = 'link';
 
     public function __construct(array $data = [])
     {
@@ -77,11 +74,11 @@ class ComponentLink extends ComponentAddition
     public function toArray()
     {
         $data = parent::toArray();
-        if (isset($this->type)) {
-            $data['type'] = $this->type;
-        }
         if (isset($this->URL)) {
             $data['URL'] = $this->URL;
+        }
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
         }
         return $data;
     }

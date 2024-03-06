@@ -5,11 +5,12 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * Properties shared by all the animations.
  *
- * @see https://developer.apple.com/documentation/apple_news/componentanimation
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/componentanimation.json
  */
 class ComponentAnimation extends BaseSdkObject
 {
@@ -19,11 +20,11 @@ class ComponentAnimation extends BaseSdkObject
         'appear' => 'AppearAnimation',
         'fade_in' => 'FadeInAnimation',
         'move_in' => 'MoveInAnimation',
-        'scale_fade' => 'ScaleFadeAnimation'
+        'scale_fade' => 'ScaleFadeAnimation',
     ];
 
     /**
-     * The type of animation, for example, move_in.
+     * The type of animation, for example, move_in for a Move-In Animation.
      * @var string
      */
     protected $type;
@@ -39,14 +40,9 @@ class ComponentAnimation extends BaseSdkObject
     {
         if (isset($data[static::$typeProperty])) {
             $typeName = $data[static::$typeProperty];
-            $type = isset(static::$types[$typeName])
-                ? static::$types[$typeName]
-                : null;
+            $type = isset(static::$types[$typeName]) ? static::$types[$typeName] : null;
             if (!is_null($type)) {
-                $namespace = implode(
-                    '\\',
-                    array_slice(explode('\\', static::class), 0, -1)
-                );
+                $namespace = implode('\\', array_slice(explode('\\', static::class), 0, -1));
                 $typeClass = $namespace . '\\' . $type;
                 return new $typeClass($data);
             }
@@ -71,7 +67,7 @@ class ComponentAnimation extends BaseSdkObject
      */
     public function setType($type)
     {
-        Assert::oneOf($type, ["appear", "fade_in", "move_in", "scale_fade"]);
+        Assert::oneOf($type, ['appear', 'fade_in', 'move_in', 'scale_fade']);
 
         $this->type = $type;
         return $this;

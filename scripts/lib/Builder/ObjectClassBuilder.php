@@ -188,8 +188,8 @@ class ObjectClassBuilder
         $methods = [];
         foreach ($properties as $property) {
             $methods[] = $this->buildPropertyGetMethod($property);
-            $readOnly = $property['read_only'] ?? false;
             $isArray = is_string($property['type']) && current(explode(':', $property['type'])) === 'array';
+            $readOnly = $property['read_only'] ?? false;
             if (!$readOnly) {
                 $methods[] = $this->buildPropertySetMethod(
                     $property,

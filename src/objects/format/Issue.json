@@ -1,0 +1,33 @@
+{
+    "name": "Format\\Issue",
+    "description": "The object for defining information about an issue.",
+    "version": "1.11.0+",
+    "deprecated": false,
+    "from_class": null,
+    "extends": null,
+    "typed": null,
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/issue.json",
+    "properties": [
+        {
+            "name": "identifier",
+            "type": "string",
+            "required": true,
+            "description": "A string that references an issue. ",
+            "typed": false
+        },
+        {
+            "name": "order",
+            "type": "number",
+            "required": false,
+            "description": "A number, supporting floats, that suggests the order in which the article should appear in the issue. ",
+            "typed": false
+        },
+        {
+            "name": "tocByline",
+            "type": "string",
+            "required": false,
+            "description": "A string that represents a byline for the entire article. This string is displayed in the table of contents.",
+            "typed": false
+        }
+    ]
+}

@@ -53,7 +53,7 @@ class GradientFillTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -76,6 +76,6 @@ class GradientFillTest extends TestCase
      */
     public static function attachmentProvider()
     {
-        return [["fixed"], ["scroll"]];
+        return [['fixed'], ['scroll']];
     }
 }

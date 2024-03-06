@@ -28,7 +28,7 @@ class FadeInAnimationTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["fade_in"]];
+        return [['fade_in']];
     }
 
     /**

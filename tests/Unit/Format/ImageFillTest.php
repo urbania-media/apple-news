@@ -11,27 +11,6 @@ use Urbania\AppleNews\Tests\TestCase;
 class ImageFillTest extends TestCase
 {
     /**
-     * Test the property type
-     * @test
-     * @dataProvider typeProvider
-     * @covers ::getType
-     */
-    public function testPropertyType($value)
-    {
-        $object = new ImageFill();
-
-        $this->assertEquals($value, $object->getType());
-    }
-
-    /**
-     * Data provider for property type
-     */
-    public static function typeProvider()
-    {
-        return [["image"]];
-    }
-
-    /**
      * Test the property URL
      * @test
      * @dataProvider URLProvider
@@ -51,7 +30,7 @@ class ImageFillTest extends TestCase
      */
     public static function URLProvider()
     {
-        return [["http://example.com"], ["https://example.com"]];
+        return [['http://example.com'], ['https://example.com']];
     }
 
     /**
@@ -74,7 +53,7 @@ class ImageFillTest extends TestCase
      */
     public static function attachmentProvider()
     {
-        return [["fixed"], ["scroll"]];
+        return [['fixed'], ['scroll']];
     }
 
     /**
@@ -97,7 +76,7 @@ class ImageFillTest extends TestCase
      */
     public static function fillModeProvider()
     {
-        return [["fit"], ["cover"]];
+        return [['fit'], ['cover']];
     }
 
     /**
@@ -120,7 +99,28 @@ class ImageFillTest extends TestCase
      */
     public static function horizontalAlignmentProvider()
     {
-        return [["left"], ["center"], ["right"]];
+        return [['left'], ['center'], ['right']];
+    }
+
+    /**
+     * Test the property type
+     * @test
+     * @dataProvider typeProvider
+     * @covers ::getType
+     */
+    public function testPropertyType($value)
+    {
+        $object = new ImageFill();
+
+        $this->assertEquals($value, $object->getType());
+    }
+
+    /**
+     * Data provider for property type
+     */
+    public static function typeProvider()
+    {
+        return [['image']];
     }
 
     /**
@@ -143,6 +143,6 @@ class ImageFillTest extends TestCase
      */
     public static function verticalAlignmentProvider()
     {
-        return [["top"], ["center"], ["bottom"]];
+        return [['top'], ['center'], ['bottom']];
     }
 }

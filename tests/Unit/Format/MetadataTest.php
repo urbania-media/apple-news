@@ -76,7 +76,30 @@ class MetadataTest extends TestCase
      */
     public static function canonicalURLProvider()
     {
-        return [["http://example.com"], ["https://example.com"]];
+        return [['http://example.com'], ['https://example.com']];
+    }
+
+    /**
+     * Test the property contentGenerationType
+     * @test
+     * @dataProvider contentGenerationTypeProvider
+     * @covers ::getContentGenerationType
+     * @covers ::setContentGenerationType
+     */
+    public function testPropertyContentGenerationType($value)
+    {
+        $object = new Metadata();
+        $object->setContentGenerationType($value);
+
+        $this->assertEquals($value, $object->getContentGenerationType());
+    }
+
+    /**
+     * Data provider for property contentGenerationType
+     */
+    public static function contentGenerationTypeProvider()
+    {
+        return [['AI']];
     }
 
     /**
@@ -168,7 +191,7 @@ class MetadataTest extends TestCase
      */
     public static function excerptProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -191,7 +214,7 @@ class MetadataTest extends TestCase
      */
     public static function generatorIdentifierProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -214,7 +237,7 @@ class MetadataTest extends TestCase
      */
     public static function generatorNameProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -237,7 +260,30 @@ class MetadataTest extends TestCase
      */
     public static function generatorVersionProvider()
     {
-        return [["a string"]];
+        return [['a string']];
+    }
+
+    /**
+     * Test the property issue
+     * @test
+     * @dataProvider issueProvider
+     * @covers ::getIssue
+     * @covers ::setIssue
+     */
+    public function testPropertyIssue($value)
+    {
+        $object = new Metadata();
+        $object->setIssue($value);
+
+        $this->assertEquals($value, $object->getIssue());
+    }
+
+    /**
+     * Data provider for property issue
+     */
+    public static function issueProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\Issue()]];
     }
 
     /**
@@ -306,7 +352,7 @@ class MetadataTest extends TestCase
      */
     public static function thumbnailURLProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -352,6 +398,6 @@ class MetadataTest extends TestCase
      */
     public static function videoURLProvider()
     {
-        return [["http://example.com"], ["https://example.com"]];
+        return [['http://example.com'], ['https://example.com']];
     }
 }

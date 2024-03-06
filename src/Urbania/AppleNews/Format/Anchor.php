@@ -5,27 +5,35 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for anchoring one component to another component in your
  * article’s layout.
  *
- * @see https://developer.apple.com/documentation/apple_news/anchor
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/anchor.json
  */
 class Anchor extends BaseSdkObject
 {
     /**
-     * A value that sets the anchor point in the target component, relative
-     * to the originAnchorPosition.
+     * Sets the anchor point in the target component, relative to the
+     * originAnchorPosition. Valid values:
+     * If a component is anchored to a range of text in a body component and
+     * is full-width (such as on an iPhone), the following rules are used to
+     * determine the spacing before and after the anchored component:
+     *  Note the following:
+     * Example: To align the bottom of a component with the bottom of another
+     * component, both originAnchorPosition and targetAnchorPosition should
+     * be set to bottom.
      * @var string
      */
     protected $targetAnchorPosition;
 
     /**
-     * A string value that sets which point in the origin component gets
-     * anchored to the target component. The originating anchor is positioned
-     * as closely as possible to the intended targetAnchorPosition. If this
-     * property is omitted, the value of targetAnchorPosition is used.
+     * Sets which point in the origin component will get anchored to the
+     * target component. The originating anchor will be positioned as closely
+     * as possible to the intended targetAnchorPosition. If this property is
+     * omitted, the value of targetAnchorPosition is used.
      * @var string
      */
     protected $originAnchorPosition;
@@ -33,6 +41,9 @@ class Anchor extends BaseSdkObject
     /**
      * The length of the range of text the component should be anchored to.
      * If rangeLength is specified, rangeStart is required.
+     * Maximum value: (textLength - rangeStart)  where textLength is the
+     * number of characters in the component, including spaces.
+     * The length of a text range cannot exceed the length of the text.
      * @var integer
      */
     protected $rangeLength;
@@ -41,6 +52,7 @@ class Anchor extends BaseSdkObject
      * The start index of the range of text the component should be anchored
      * to. When a component is anchored to a component with a role of body,
      * the text might be flowed around the component.
+     * If rangeStart is specified, rangeLength is required.
      * @var integer
      */
     protected $rangeStart;
@@ -54,10 +66,12 @@ class Anchor extends BaseSdkObject
 
     /**
      * The identifier of the component to anchor to.
-     * targetComponentIdentifier cannot refer to the current component’s
+     * targetComponentIdentifier cannot refer to the current component's
      * parent, child components, or components in another container. When
-     * this property is omitted, the anchor is applied to the parent
+     * this property is omitted, the anchor will be applied to the parent
      * component, if one exists.
+     * If a parent component does not exist and targetComponentIdentifier is
+     * not specified, the anchor is ignored.
      * @var string
      */
     protected $targetComponentIdentifier;
@@ -85,9 +99,7 @@ class Anchor extends BaseSdkObject
         }
 
         if (isset($data['targetComponentIdentifier'])) {
-            $this->setTargetComponentIdentifier(
-                $data['targetComponentIdentifier']
-            );
+            $this->setTargetComponentIdentifier($data['targetComponentIdentifier']);
         }
     }
 
@@ -112,7 +124,7 @@ class Anchor extends BaseSdkObject
             return $this;
         }
 
-        Assert::oneOf($originAnchorPosition, ["top", "center", "bottom"]);
+        Assert::oneOf($originAnchorPosition, ['top', 'center', 'bottom']);
 
         $this->originAnchorPosition = $originAnchorPosition;
         return $this;
@@ -215,7 +227,7 @@ class Anchor extends BaseSdkObject
      */
     public function setTargetAnchorPosition($targetAnchorPosition)
     {
-        Assert::oneOf($targetAnchorPosition, ["top", "center", "bottom"]);
+        Assert::oneOf($targetAnchorPosition, ['top', 'center', 'bottom']);
 
         $this->targetAnchorPosition = $targetAnchorPosition;
         return $this;
@@ -271,8 +283,7 @@ class Anchor extends BaseSdkObject
             $data['target'] = $this->target;
         }
         if (isset($this->targetComponentIdentifier)) {
-            $data['targetComponentIdentifier'] =
-                $this->targetComponentIdentifier;
+            $data['targetComponentIdentifier'] = $this->targetComponentIdentifier;
         }
         return $data;
     }

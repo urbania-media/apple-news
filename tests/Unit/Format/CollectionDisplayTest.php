@@ -28,7 +28,7 @@ class CollectionDisplayTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["collection"]];
+        return [['collection']];
     }
 
     /**
@@ -51,7 +51,7 @@ class CollectionDisplayTest extends TestCase
      */
     public static function alignmentProvider()
     {
-        return [["left"], ["center"], ["right"]];
+        return [['left'], ['center'], ['right']];
     }
 
     /**
@@ -74,7 +74,7 @@ class CollectionDisplayTest extends TestCase
      */
     public static function distributionProvider()
     {
-        return [["wide"], ["narrow"]];
+        return [['wide'], ['narrow']];
     }
 
     /**
@@ -97,7 +97,7 @@ class CollectionDisplayTest extends TestCase
      */
     public static function gutterProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**
@@ -120,7 +120,7 @@ class CollectionDisplayTest extends TestCase
      */
     public static function maximumWidthProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**
@@ -143,7 +143,7 @@ class CollectionDisplayTest extends TestCase
      */
     public static function minimumWidthProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**
@@ -166,7 +166,7 @@ class CollectionDisplayTest extends TestCase
      */
     public static function rowSpacingProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**
@@ -212,6 +212,6 @@ class CollectionDisplayTest extends TestCase
      */
     public static function widowsProvider()
     {
-        return [["equalize"], ["optimize"]];
+        return [['equalize'], ['optimize'], ['allow']];
     }
 }

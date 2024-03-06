@@ -5,17 +5,18 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The behavior whereby a component reacts to the motion of the user’s
  * device.
  *
- * @see https://developer.apple.com/documentation/apple_news/motion
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/motion.json
  */
 class Motion extends Behavior
 {
     /**
-     * Always motion for this behavior.
+     * This behavior always has the type motion.
      * @var string
      */
     protected $type = 'motion';

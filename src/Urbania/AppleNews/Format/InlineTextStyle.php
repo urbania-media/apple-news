@@ -5,12 +5,13 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for applying text styling when not using HTML or Markdown
  * formatting.
  *
- * @see https://developer.apple.com/documentation/apple_news/inlinetextstyle
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/inlinetextstyle.json
  */
 class InlineTextStyle extends BaseSdkObject
 {
@@ -23,14 +24,14 @@ class InlineTextStyle extends BaseSdkObject
 
     /**
      * The starting point of the text to which the alternative styling should
-     * be applied. Note: the first available character is at 0, not 1.
+     * be applied. Note: the first available character is at , not 1.
      * @var integer
      */
     protected $rangeStart;
 
     /**
-     * A TextStyle or the name of a TextStyle object defined in the
-     * ArticleDocument.textStyles object.
+     * Either a text style object or the name of a  object defined in the
+     * object.
      * @var \Urbania\AppleNews\Format\TextStyle|string
      */
     protected $textStyle;
@@ -110,13 +111,13 @@ class InlineTextStyle extends BaseSdkObject
      */
     public function setTextStyle($textStyle)
     {
-        if (is_object($textStyle) || is_array($textStyle)) {
+        if (is_object($textStyle) || Utils::isAssociativeArray($textStyle)) {
             Assert::isSdkObject($textStyle, TextStyle::class);
         } else {
             Assert::string($textStyle);
         }
 
-        $this->textStyle = is_array($textStyle)
+        $this->textStyle = Utils::isAssociativeArray($textStyle)
             ? new TextStyle($textStyle)
             : $textStyle;
         return $this;

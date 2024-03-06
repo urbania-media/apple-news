@@ -5,24 +5,24 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for applying styles to table rows that meet certain
  * conditions.
  *
- * @see https://developer.apple.com/documentation/apple_news/conditionaltablerowstyle
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/conditionaltablerowstyle.json
  */
 class ConditionalTableRowStyle extends TableRowStyle
 {
     /**
-     * An array of one or more selectors, each of which specifies one or more
-     * conditions.
-     * @var Format\TableRowSelector[]
-     */
-    protected $selectors;
-
-    /**
      * The background color for the row.
+     * If this property is omitted, the background is transparent.
+     * The cell’s background color is highest priority, followed by column,
+     * and finally row. All three colors are applied, meaning that non-opaque
+     * values can cause combined colors. For example, using a red row
+     * together with a blue column, both with 50% opacity, creates a purple
+     * cell.
      * @var string
      */
     protected $backgroundColor;
@@ -34,20 +34,26 @@ class ConditionalTableRowStyle extends TableRowStyle
     protected $divider;
 
     /**
-     * The height of the row, as an integer in points, or using one of the
-     * available units of measure for components. See Specifying Measurements
-     * for Components.
-     * @var string|integer
+     * The height of the row, as a number in points, or using one of the
+     * available units of measure for components. See .
+     * By default, the height of each row is determined by the height of the
+     * content in that row.
+     * @var string|integer|float
      */
     protected $height;
+
+    /**
+     * An array of one or more selectors, each of which specifies one or more
+     * conditions.
+     * This conditional table row style will be applied to rows that meet all
+     * of the conditions of at least one of these selectors.
+     * @var Format\TableRowSelector[]
+     */
+    protected $selectors;
 
     public function __construct(array $data = [])
     {
         parent::__construct($data);
-
-        if (isset($data['selectors'])) {
-            $this->setSelectors($data['selectors']);
-        }
 
         if (isset($data['backgroundColor'])) {
             $this->setBackgroundColor($data['backgroundColor']);
@@ -59,6 +65,10 @@ class ConditionalTableRowStyle extends TableRowStyle
 
         if (isset($data['height'])) {
             $this->setHeight($data['height']);
+        }
+
+        if (isset($data['selectors'])) {
+            $this->setSelectors($data['selectors']);
         }
     }
 
@@ -112,7 +122,7 @@ class ConditionalTableRowStyle extends TableRowStyle
 
         Assert::isSdkObject($divider, TableStrokeStyle::class);
 
-        $this->divider = is_array($divider)
+        $this->divider = Utils::isAssociativeArray($divider)
             ? new TableStrokeStyle($divider)
             : $divider;
         return $this;
@@ -120,7 +130,7 @@ class ConditionalTableRowStyle extends TableRowStyle
 
     /**
      * Get the height
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getHeight()
     {
@@ -129,7 +139,7 @@ class ConditionalTableRowStyle extends TableRowStyle
 
     /**
      * Set the height
-     * @param string|integer $height
+     * @param string|integer|float $height
      * @return $this
      */
     public function setHeight($height)
@@ -153,9 +163,7 @@ class ConditionalTableRowStyle extends TableRowStyle
     public function addSelector($item)
     {
         return $this->setSelectors(
-            !is_null($this->selectors)
-                ? array_merge($this->selectors, [$item])
-                : [$item]
+            !is_null($this->selectors) ? array_merge($this->selectors, [$item]) : [$item]
         );
     }
 
@@ -168,9 +176,7 @@ class ConditionalTableRowStyle extends TableRowStyle
     {
         Assert::isArray($items);
         return $this->setSelectors(
-            !is_null($this->selectors)
-                ? array_merge($this->selectors, $items)
-                : $items
+            !is_null($this->selectors) ? array_merge($this->selectors, $items) : $items
         );
     }
 
@@ -193,17 +199,19 @@ class ConditionalTableRowStyle extends TableRowStyle
         Assert::isArray($selectors);
         Assert::allIsSdkObject($selectors, TableRowSelector::class);
 
-        $this->selectors = array_reduce(
-            array_keys($selectors),
-            function ($array, $key) use ($selectors) {
-                $item = $selectors[$key];
-                $array[$key] = is_array($item)
-                    ? new TableRowSelector($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->selectors = is_array($selectors)
+            ? array_reduce(
+                array_keys($selectors),
+                function ($array, $key) use ($selectors) {
+                    $item = $selectors[$key];
+                    $array[$key] = Utils::isAssociativeArray($item)
+                        ? new TableRowSelector($item)
+                        : $item;
+                    return $array;
+                },
+                []
+            )
+            : $selectors;
         return $this;
     }
 
@@ -214,6 +222,20 @@ class ConditionalTableRowStyle extends TableRowStyle
     public function toArray()
     {
         $data = parent::toArray();
+        if (isset($this->backgroundColor)) {
+            $data['backgroundColor'] =
+                $this->backgroundColor instanceof Arrayable
+                    ? $this->backgroundColor->toArray()
+                    : $this->backgroundColor;
+        }
+        if (isset($this->divider)) {
+            $data['divider'] =
+                $this->divider instanceof Arrayable ? $this->divider->toArray() : $this->divider;
+        }
+        if (isset($this->height)) {
+            $data['height'] =
+                $this->height instanceof Arrayable ? $this->height->toArray() : $this->height;
+        }
         if (isset($this->selectors)) {
             $data['selectors'] = !is_null($this->selectors)
                 ? array_reduce(
@@ -228,24 +250,6 @@ class ConditionalTableRowStyle extends TableRowStyle
                     []
                 )
                 : $this->selectors;
-        }
-        if (isset($this->backgroundColor)) {
-            $data['backgroundColor'] =
-                $this->backgroundColor instanceof Arrayable
-                    ? $this->backgroundColor->toArray()
-                    : $this->backgroundColor;
-        }
-        if (isset($this->divider)) {
-            $data['divider'] =
-                $this->divider instanceof Arrayable
-                    ? $this->divider->toArray()
-                    : $this->divider;
-        }
-        if (isset($this->height)) {
-            $data['height'] =
-                $this->height instanceof Arrayable
-                    ? $this->height->toArray()
-                    : $this->height;
         }
         return $data;
     }

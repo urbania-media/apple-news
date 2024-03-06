@@ -6,17 +6,20 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
- * See the fields returned by the article endpoints.
+ * See the fields the article endpoints returned.
  *
- * @see https://developer.apple.com/documentation/apple_news/article
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/article.json
  */
 class Article extends BaseSdkObject
 {
     /**
      * Text that appears alongside article headlines — author name, channel
      * name, subtitle, and so on.
+     * Maximum length: 100 characters.
+     * Default value: metadata.authors from the Apple News Format article.
      * @var string
      */
     protected $accessoryText;
@@ -40,35 +43,52 @@ class Article extends BaseSdkObject
     protected $id;
 
     /**
-     * Indicates whether or not this article should be considered for
-     * featuring in News. See (To be Deleted) Submitting Articles with Cover
-     * Art for Featured Stories.
+     * A Boolean value that indicates whether this article should be
+     * considered for featuring in Apple News.
+     * Default value: false
      * @var boolean
      */
     protected $isCandidateToBeFeatured;
 
     /**
-     * Indicates whether this article should be public (live) or should be a
-     * preview that is only visible to members of your channel. Set isPreview
-     * to false to publish the article right away and make it visible to all
-     * News users.
+     * A Boolean value that indicates whether this article should be public
+     * (live) or should be a preview that’s only visible to members of your
+     * channel. Set isPreview to false to publish the article immediately and
+     * make it visible to all News users.
+     * If your channel hasn’t been approved to publish articles in Apple
+     * News Format, setting isPreview to false results in an
+     * ONLY_PREVIEW_ALLOWED error.
+     * Default value: true if your channel hasn’t yet been approved to
+     * publish articles in Apple News Format; false if your channel has been
+     * approved.
      * @var boolean
      */
     protected $isPreview;
 
     /**
-     * Indicates whether this article consists of sponsored content for
-     * promotional purposes. Sponsored content must be marked as such;
-     * channels that do not follow this policy may be suspended.
+     * A Boolean value that indicates whether this article consists of
+     * sponsored content for promotional purposes. You must mark sponsored
+     * content as such; channels that don’t follow this policy may be
+     * suspended.
+     * When using isSponsored, if you don’t want the sponsored article to
+     * appear in your channel’s feed, set sections to [] (an empty array).
+     * Default value: false
      * @var boolean
      */
     protected $isSponsored;
 
     /**
-     * Indicates the viewing audience for the content. The types of audiences
-     * or ratings are KIDS, MATURE, and GENERAL or null if unspecified. Note
-     * that a MATURE rating indicates explicit content that is only
-     * appropriate for a specific audience.
+     * The URL of the channel in which the article appears.
+     * @var \Urbania\AppleNews\Api\Objects\ArticleLinksResponse
+     */
+    protected $links;
+
+    /**
+     * A string value that indicates the viewing audience for the content.
+     * The types of audiences or ratings are KIDS, MATURE, and GENERAL, or
+     * null if unspecified. A MATURE rating indicates explicit content
+     * that’s only appropriate for a specific audience.
+     * Default value: null
      * @var string
      */
     protected $maturityRating;
@@ -81,19 +101,24 @@ class Article extends BaseSdkObject
 
     /**
      * The current revision token for the article.
+     * You must send the latest revision when issuing a request to .
+     * The value of this field must match the latest revision from an earlier
+     * Create, Read, or Update Article call. This field prevents multiple
+     * users from updating an article simultaneously, which results in data
+     * loss.
+     * Required: Yes
      * @var string
      */
     protected $revision;
 
     /**
-     * The URL to the article within the News app. The shareUrl field applies
-     * only on devices with iOS 9 installed.
+     * The URL to the article within the News app.
      * @var string
      */
     protected $shareUrl;
 
     /**
-     * The current state of the article which can be one of the following:
+     * The current state of the article, which can be one of the following:
      * @var string
      */
     protected $state;
@@ -106,20 +131,17 @@ class Article extends BaseSdkObject
     protected $title;
 
     /**
-     * Article
+     * The article.
      * @var string
      */
     protected $type;
 
     /**
-     * A list of warning messages indicating problems with the article that
-     * are not fatal.
+     * A list of warning messages indicating nonfatal problems with the
+     * article.
      * @var Api\Objects\Warning[]
      */
     protected $warnings;
-
-    /** @var \Urbania\AppleNews\Api\Objects\ArticleLinks */
-    protected $links;
 
     public function __construct(array $data = [])
     {
@@ -149,6 +171,10 @@ class Article extends BaseSdkObject
 
         if (isset($data['isSponsored'])) {
             $this->setIsSponsored($data['isSponsored']);
+        }
+
+        if (isset($data['links'])) {
+            $this->setLinks($data['links']);
         }
 
         if (isset($data['maturityRating'])) {
@@ -181,10 +207,6 @@ class Article extends BaseSdkObject
 
         if (isset($data['warnings'])) {
             $this->setWarnings($data['warnings']);
-        }
-
-        if (isset($data['links'])) {
-            $this->setLinks($data['links']);
         }
     }
 
@@ -238,9 +260,7 @@ class Article extends BaseSdkObject
 
         Assert::isDate($createdAt);
 
-        $this->createdAt = is_string($createdAt)
-            ? Carbon::parse($createdAt)
-            : $createdAt;
+        $this->createdAt = is_string($createdAt) ? Carbon::parse($createdAt) : $createdAt;
         return $this;
     }
 
@@ -265,16 +285,13 @@ class Article extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($document) || is_array($document)) {
-            Assert::isSdkObject(
-                $document,
-                \Urbania\AppleNews\Format\ArticleDocument::class
-            );
+        if (is_object($document) || Utils::isAssociativeArray($document)) {
+            Assert::isSdkObject($document, \Urbania\AppleNews\Format\ArticleDocument::class);
         } else {
             Assert::string($document);
         }
 
-        $this->document = is_array($document)
+        $this->document = Utils::isAssociativeArray($document)
             ? new \Urbania\AppleNews\Format\ArticleDocument($document)
             : $document;
         return $this;
@@ -390,7 +407,7 @@ class Article extends BaseSdkObject
 
     /**
      * Get the links
-     * @return \Urbania\AppleNews\Api\Objects\ArticleLinks
+     * @return \Urbania\AppleNews\Api\Objects\ArticleLinksResponse
      */
     public function getLinks()
     {
@@ -399,7 +416,7 @@ class Article extends BaseSdkObject
 
     /**
      * Set the links
-     * @param \Urbania\AppleNews\Api\Objects\ArticleLinks|array $links
+     * @param \Urbania\AppleNews\Api\Objects\ArticleLinksResponse|array $links
      * @return $this
      */
     public function setLinks($links)
@@ -409,9 +426,11 @@ class Article extends BaseSdkObject
             return $this;
         }
 
-        Assert::isSdkObject($links, ArticleLinks::class);
+        Assert::isSdkObject($links, ArticleLinksResponse::class);
 
-        $this->links = is_array($links) ? new ArticleLinks($links) : $links;
+        $this->links = Utils::isAssociativeArray($links)
+            ? new ArticleLinksResponse($links)
+            : $links;
         return $this;
     }
 
@@ -436,7 +455,7 @@ class Article extends BaseSdkObject
             return $this;
         }
 
-        Assert::oneOf($maturityRating, ["KIDS", "MATURE", "GENERAL"]);
+        Assert::oneOf($maturityRating, ['KIDS', 'MATURE', 'GENERAL']);
 
         $this->maturityRating = $maturityRating;
         return $this;
@@ -465,9 +484,7 @@ class Article extends BaseSdkObject
 
         Assert::isDate($modifiedAt);
 
-        $this->modifiedAt = is_string($modifiedAt)
-            ? Carbon::parse($modifiedAt)
-            : $modifiedAt;
+        $this->modifiedAt = is_string($modifiedAt) ? Carbon::parse($modifiedAt) : $modifiedAt;
         return $this;
     }
 
@@ -547,12 +564,13 @@ class Article extends BaseSdkObject
         }
 
         Assert::oneOf($state, [
-            "PROCESSING",
-            "LIVE",
-            "PROCESSING_UPDATE",
-            "TAKEN_DOWN",
-            "FAILED_PROCESSING",
-            "FAILED_PROCESSING_UPDATE"
+            'PROCESSING',
+            'LIVE',
+            'PROCESSING_UPDATE',
+            'TAKEN_DOWN',
+            'FAILED_PROCESSING',
+            'FAILED_PROCESSING_UPDATE',
+            'DUPLICATE',
         ]);
 
         $this->state = $state;
@@ -621,9 +639,7 @@ class Article extends BaseSdkObject
     public function addWarning($item)
     {
         return $this->setWarnings(
-            !is_null($this->warnings)
-                ? array_merge($this->warnings, [$item])
-                : [$item]
+            !is_null($this->warnings) ? array_merge($this->warnings, [$item]) : [$item]
         );
     }
 
@@ -636,9 +652,7 @@ class Article extends BaseSdkObject
     {
         Assert::isArray($items);
         return $this->setWarnings(
-            !is_null($this->warnings)
-                ? array_merge($this->warnings, $items)
-                : $items
+            !is_null($this->warnings) ? array_merge($this->warnings, $items) : $items
         );
     }
 
@@ -666,15 +680,17 @@ class Article extends BaseSdkObject
         Assert::isArray($warnings);
         Assert::allIsSdkObject($warnings, Warning::class);
 
-        $this->warnings = array_reduce(
-            array_keys($warnings),
-            function ($array, $key) use ($warnings) {
-                $item = $warnings[$key];
-                $array[$key] = is_array($item) ? new Warning($item) : $item;
-                return $array;
-            },
-            []
-        );
+        $this->warnings = is_array($warnings)
+            ? array_reduce(
+                array_keys($warnings),
+                function ($array, $key) use ($warnings) {
+                    $item = $warnings[$key];
+                    $array[$key] = Utils::isAssociativeArray($item) ? new Warning($item) : $item;
+                    return $array;
+                },
+                []
+            )
+            : $warnings;
         return $this;
     }
 
@@ -695,9 +711,7 @@ class Article extends BaseSdkObject
         }
         if (isset($this->document)) {
             $data['document'] =
-                $this->document instanceof Arrayable
-                    ? $this->document->toArray()
-                    : $this->document;
+                $this->document instanceof Arrayable ? $this->document->toArray() : $this->document;
         }
         if (isset($this->id)) {
             $data['id'] = $this->id;
@@ -710,6 +724,10 @@ class Article extends BaseSdkObject
         }
         if (isset($this->isSponsored)) {
             $data['isSponsored'] = $this->isSponsored;
+        }
+        if (isset($this->links)) {
+            $data['links'] =
+                $this->links instanceof Arrayable ? $this->links->toArray() : $this->links;
         }
         if (isset($this->maturityRating)) {
             $data['maturityRating'] = $this->maturityRating;
@@ -748,12 +766,6 @@ class Article extends BaseSdkObject
                     []
                 )
                 : $this->warnings;
-        }
-        if (isset($this->links)) {
-            $data['links'] =
-                $this->links instanceof Arrayable
-                    ? $this->links->toArray()
-                    : $this->links;
         }
         return $data;
     }

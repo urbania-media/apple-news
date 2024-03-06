@@ -28,6 +28,6 @@ class AppearAnimationTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["appear"]];
+        return [['appear']];
     }
 }

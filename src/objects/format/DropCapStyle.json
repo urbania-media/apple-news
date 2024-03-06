@@ -6,7 +6,7 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/dropcapstyle",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/dropcapstyle.json",
     "properties": [
         {
             "name": "numberOfLines",
@@ -33,7 +33,7 @@
             "name": "numberOfCharacters",
             "type": "integer",
             "required": false,
-            "description": "A number that indicates the characters to render in the drop cap style.",
+            "description": "A number that indicates the characters to render in the drop cap style. \nDefault value: 1",
             "typed": false
         },
         {
@@ -47,7 +47,7 @@
             "name": "padding",
             "type": "integer",
             "required": false,
-            "description": "A number thay sets the padding of the drop cap in points. When padding is applied, the drop cap is smaller than the box that surrounds it.",
+            "description": "A number thay sets the padding of the drop cap in points. When padding is applied, the drop cap is smaller than the box that surrounds it.\nDefault value: ",
             "typed": false
         },
         {

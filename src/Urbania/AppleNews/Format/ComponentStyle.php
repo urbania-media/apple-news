@@ -5,25 +5,28 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for setting style properties for components, including
  * background color and fill, borders, and table styles.
  *
- * @see https://developer.apple.com/documentation/apple_news/componentstyle
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/componentstyle.json
  */
 class ComponentStyle extends BaseSdkObject
 {
     /**
-     * An array of component style properties that are applied conditionally,
-     * and the conditions that cause them to be applied.
-     * @var Format\ConditionalComponentStyle[]
+     * An instance or array of component style properties that are applied
+     * conditionally, and the conditions that cause them to be applied.
+     * @var Format\ConditionalComponentStyle[]|\Urbania\AppleNews\Format\ConditionalComponentStyle
      */
     protected $conditional;
 
     /**
      * The component's background color. The value defaults to transparent.
-     * @var string
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var string|none
      */
     protected $backgroundColor;
 
@@ -31,39 +34,53 @@ class ComponentStyle extends BaseSdkObject
      * The border for the component. Because the border is drawn inside the
      * component, it affects the size of the content within the component.
      * The bigger the border, the less available space for content.
-     * @var \Urbania\AppleNews\Format\Border
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\Border|none
      */
     protected $border;
 
     /**
-     * A Fill object, such as an ImageFill, that will be applied on top of
-     * the specified backgroundColor.
-     * @var \Urbania\AppleNews\Format\Fill
+     * A Fill object, such as an , that will be applied on top of the
+     * specified backgroundColor.
+     * By default, no fill is applied.
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\Fill|none
      */
     protected $fill;
 
     /**
      * The object that defines a mask that clips the contents of the
      * component to the specified masking behavior.
-     * @var \Urbania\AppleNews\Format\CornerMask
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\CornerMask|none
      */
     protected $mask;
 
     /**
-     * The opacity of the component, set as a float value between 0
+     * The opacity of the component, set as a float value between
      * (completely transparent) and 1 (completely opaque). The effects of the
-     * component’s opacity are inherited by any child components. See
-     * Nesting Components in an Article.
+     * component’s opacity are inherited by any child components. See .
      * @var integer|float
      */
     protected $opacity;
 
     /**
      * The styling for the rows, columns, and cells of the component, if it
-     * is a DataTable or HTMLTable component.
-     * @var \Urbania\AppleNews\Format\TableStyle
+     * is a  or  component.
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\TableStyle|none
      */
     protected $tableStyle;
+
+    /**
+     * The object that defines a component shadow.
+     * @var \Urbania\AppleNews\Format\ComponentShadow
+     */
+    protected $shadow;
 
     public function __construct(array $data = [])
     {
@@ -94,11 +111,15 @@ class ComponentStyle extends BaseSdkObject
         if (isset($data['tableStyle'])) {
             $this->setTableStyle($data['tableStyle']);
         }
+
+        if (isset($data['shadow'])) {
+            $this->setShadow($data['shadow']);
+        }
     }
 
     /**
      * Get the backgroundColor
-     * @return string
+     * @return string|none
      */
     public function getBackgroundColor()
     {
@@ -107,7 +128,7 @@ class ComponentStyle extends BaseSdkObject
 
     /**
      * Set the backgroundColor
-     * @param string $backgroundColor
+     * @param string|none $backgroundColor
      * @return $this
      */
     public function setBackgroundColor($backgroundColor)
@@ -117,7 +138,9 @@ class ComponentStyle extends BaseSdkObject
             return $this;
         }
 
-        Assert::isColor($backgroundColor);
+        if ($backgroundColor !== 'none') {
+            Assert::isColor($backgroundColor);
+        }
 
         $this->backgroundColor = $backgroundColor;
         return $this;
@@ -125,7 +148,7 @@ class ComponentStyle extends BaseSdkObject
 
     /**
      * Get the border
-     * @return \Urbania\AppleNews\Format\Border
+     * @return \Urbania\AppleNews\Format\Border|none
      */
     public function getBorder()
     {
@@ -134,7 +157,7 @@ class ComponentStyle extends BaseSdkObject
 
     /**
      * Set the border
-     * @param \Urbania\AppleNews\Format\Border|array $border
+     * @param \Urbania\AppleNews\Format\Border|array|none $border
      * @return $this
      */
     public function setBorder($border)
@@ -144,29 +167,19 @@ class ComponentStyle extends BaseSdkObject
             return $this;
         }
 
-        Assert::isSdkObject($border, Border::class);
+        if (is_object($border) || Utils::isAssociativeArray($border)) {
+            Assert::isSdkObject($border, Border::class);
+        } else {
+            Assert::eq($border, 'none');
+        }
 
-        $this->border = is_array($border) ? new Border($border) : $border;
+        $this->border = Utils::isAssociativeArray($border) ? new Border($border) : $border;
         return $this;
     }
 
     /**
-     * Add an item to conditional
-     * @param \Urbania\AppleNews\Format\ConditionalComponentStyle|array $item
-     * @return $this
-     */
-    public function addConditional($item)
-    {
-        return $this->setConditional(
-            !is_null($this->conditional)
-                ? array_merge($this->conditional, [$item])
-                : [$item]
-        );
-    }
-
-    /**
      * Get the conditional
-     * @return Format\ConditionalComponentStyle[]
+     * @return Format\ConditionalComponentStyle[]|\Urbania\AppleNews\Format\ConditionalComponentStyle
      */
     public function getConditional()
     {
@@ -175,7 +188,7 @@ class ComponentStyle extends BaseSdkObject
 
     /**
      * Set the conditional
-     * @param Format\ConditionalComponentStyle[] $conditional
+     * @param Format\ConditionalComponentStyle[]|\Urbania\AppleNews\Format\ConditionalComponentStyle|array $conditional
      * @return $this
      */
     public function setConditional($conditional)
@@ -185,26 +198,22 @@ class ComponentStyle extends BaseSdkObject
             return $this;
         }
 
-        Assert::isArray($conditional);
-        Assert::allIsSdkObject($conditional, ConditionalComponentStyle::class);
+        if (is_object($conditional) || Utils::isAssociativeArray($conditional)) {
+            Assert::isSdkObject($conditional, ConditionalComponentStyle::class);
+        } else {
+            Assert::isArray($conditional);
+            Assert::allIsSdkObject($conditional, ConditionalComponentStyle::class);
+        }
 
-        $this->conditional = array_reduce(
-            array_keys($conditional),
-            function ($array, $key) use ($conditional) {
-                $item = $conditional[$key];
-                $array[$key] = is_array($item)
-                    ? new ConditionalComponentStyle($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->conditional = Utils::isAssociativeArray($conditional)
+            ? new ConditionalComponentStyle($conditional)
+            : $conditional;
         return $this;
     }
 
     /**
      * Get the fill
-     * @return \Urbania\AppleNews\Format\Fill
+     * @return \Urbania\AppleNews\Format\Fill|none
      */
     public function getFill()
     {
@@ -213,7 +222,7 @@ class ComponentStyle extends BaseSdkObject
 
     /**
      * Set the fill
-     * @param \Urbania\AppleNews\Format\Fill|array $fill
+     * @param \Urbania\AppleNews\Format\Fill|array|none $fill
      * @return $this
      */
     public function setFill($fill)
@@ -223,15 +232,19 @@ class ComponentStyle extends BaseSdkObject
             return $this;
         }
 
-        Assert::isSdkObject($fill, Fill::class);
+        if (is_object($fill) || Utils::isAssociativeArray($fill)) {
+            Assert::isSdkObject($fill, Fill::class);
+        } else {
+            Assert::eq($fill, 'none');
+        }
 
-        $this->fill = is_array($fill) ? Fill::createTyped($fill) : $fill;
+        $this->fill = Utils::isAssociativeArray($fill) ? Fill::createTyped($fill) : $fill;
         return $this;
     }
 
     /**
      * Get the mask
-     * @return \Urbania\AppleNews\Format\CornerMask
+     * @return \Urbania\AppleNews\Format\CornerMask|none
      */
     public function getMask()
     {
@@ -240,7 +253,7 @@ class ComponentStyle extends BaseSdkObject
 
     /**
      * Set the mask
-     * @param \Urbania\AppleNews\Format\CornerMask|array $mask
+     * @param \Urbania\AppleNews\Format\CornerMask|array|none $mask
      * @return $this
      */
     public function setMask($mask)
@@ -250,9 +263,13 @@ class ComponentStyle extends BaseSdkObject
             return $this;
         }
 
-        Assert::isSdkObject($mask, CornerMask::class);
+        if (is_object($mask) || Utils::isAssociativeArray($mask)) {
+            Assert::isSdkObject($mask, CornerMask::class);
+        } else {
+            Assert::eq($mask, 'none');
+        }
 
-        $this->mask = is_array($mask) ? new CornerMask($mask) : $mask;
+        $this->mask = Utils::isAssociativeArray($mask) ? new CornerMask($mask) : $mask;
         return $this;
     }
 
@@ -284,8 +301,35 @@ class ComponentStyle extends BaseSdkObject
     }
 
     /**
+     * Get the shadow
+     * @return \Urbania\AppleNews\Format\ComponentShadow
+     */
+    public function getShadow()
+    {
+        return $this->shadow;
+    }
+
+    /**
+     * Set the shadow
+     * @param \Urbania\AppleNews\Format\ComponentShadow|array $shadow
+     * @return $this
+     */
+    public function setShadow($shadow)
+    {
+        if (is_null($shadow)) {
+            $this->shadow = null;
+            return $this;
+        }
+
+        Assert::isSdkObject($shadow, ComponentShadow::class);
+
+        $this->shadow = Utils::isAssociativeArray($shadow) ? new ComponentShadow($shadow) : $shadow;
+        return $this;
+    }
+
+    /**
      * Get the tableStyle
-     * @return \Urbania\AppleNews\Format\TableStyle
+     * @return \Urbania\AppleNews\Format\TableStyle|none
      */
     public function getTableStyle()
     {
@@ -294,7 +338,7 @@ class ComponentStyle extends BaseSdkObject
 
     /**
      * Set the tableStyle
-     * @param \Urbania\AppleNews\Format\TableStyle|array $tableStyle
+     * @param \Urbania\AppleNews\Format\TableStyle|array|none $tableStyle
      * @return $this
      */
     public function setTableStyle($tableStyle)
@@ -304,9 +348,13 @@ class ComponentStyle extends BaseSdkObject
             return $this;
         }
 
-        Assert::isSdkObject($tableStyle, TableStyle::class);
+        if (is_object($tableStyle) || Utils::isAssociativeArray($tableStyle)) {
+            Assert::isSdkObject($tableStyle, TableStyle::class);
+        } else {
+            Assert::eq($tableStyle, 'none');
+        }
 
-        $this->tableStyle = is_array($tableStyle)
+        $this->tableStyle = Utils::isAssociativeArray($tableStyle)
             ? new TableStyle($tableStyle)
             : $tableStyle;
         return $this;
@@ -320,19 +368,10 @@ class ComponentStyle extends BaseSdkObject
     {
         $data = [];
         if (isset($this->conditional)) {
-            $data['conditional'] = !is_null($this->conditional)
-                ? array_reduce(
-                    array_keys($this->conditional),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->conditional[$key] instanceof Arrayable
-                                ? $this->conditional[$key]->toArray()
-                                : $this->conditional[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->conditional;
+            $data['conditional'] =
+                $this->conditional instanceof Arrayable
+                    ? $this->conditional->toArray()
+                    : $this->conditional;
         }
         if (isset($this->backgroundColor)) {
             $data['backgroundColor'] =
@@ -342,21 +381,13 @@ class ComponentStyle extends BaseSdkObject
         }
         if (isset($this->border)) {
             $data['border'] =
-                $this->border instanceof Arrayable
-                    ? $this->border->toArray()
-                    : $this->border;
+                $this->border instanceof Arrayable ? $this->border->toArray() : $this->border;
         }
         if (isset($this->fill)) {
-            $data['fill'] =
-                $this->fill instanceof Arrayable
-                    ? $this->fill->toArray()
-                    : $this->fill;
+            $data['fill'] = $this->fill instanceof Arrayable ? $this->fill->toArray() : $this->fill;
         }
         if (isset($this->mask)) {
-            $data['mask'] =
-                $this->mask instanceof Arrayable
-                    ? $this->mask->toArray()
-                    : $this->mask;
+            $data['mask'] = $this->mask instanceof Arrayable ? $this->mask->toArray() : $this->mask;
         }
         if (isset($this->opacity)) {
             $data['opacity'] = $this->opacity;
@@ -366,6 +397,10 @@ class ComponentStyle extends BaseSdkObject
                 $this->tableStyle instanceof Arrayable
                     ? $this->tableStyle->toArray()
                     : $this->tableStyle;
+        }
+        if (isset($this->shadow)) {
+            $data['shadow'] =
+                $this->shadow instanceof Arrayable ? $this->shadow->toArray() : $this->shadow;
         }
         return $data;
     }

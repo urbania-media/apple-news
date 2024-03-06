@@ -30,7 +30,7 @@ class AdvertisementAutoPlacementTest extends TestCase
      */
     public static function bannerTypeProvider()
     {
-        return [["any"], ["standard"], ["double_height"], ["large"]];
+        return [['any'], ['standard'], ['double_height'], ['large']];
     }
 
     /**
@@ -53,7 +53,10 @@ class AdvertisementAutoPlacementTest extends TestCase
      */
     public static function conditionalProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\ConditionalAutoPlacement()]]];
+        return [
+            [new \Urbania\AppleNews\Format\ConditionalAutoPlacement()],
+            [[new \Urbania\AppleNews\Format\ConditionalAutoPlacement()]],
+        ];
     }
 
     /**
@@ -76,7 +79,7 @@ class AdvertisementAutoPlacementTest extends TestCase
      */
     public static function distanceFromMediaProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**

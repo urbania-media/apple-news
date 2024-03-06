@@ -7,12 +7,13 @@ use Urbania\AppleNews\Contracts\Componentable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
 use Urbania\AppleNews\Support\Concerns\FindsComponents;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The component for setting apart content that is not directly related
  * to the article, such as promotional content.
  *
- * @see https://developer.apple.com/documentation/apple_news/aside
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/aside.json
  */
 class Aside extends Container
 {
@@ -25,13 +26,22 @@ class Aside extends Container
     protected $role = 'aside';
 
     /**
-     * An array of ComponentLink objects. This can be used to create a
-     * ComponentLink, allowing a link to anywhere in News. Adding a link to
-     * an aside component will make the entire component interactable. Any
-     * links used in its child components are not  interactable.
+     * An array of ComponentLink objects. This can be used to create a ,
+     * allowing a link to anywhere in News. Adding a link to an aside
+     * component will make the entire component interactable. Any links used
+     * in its child components are not  interactable.
      * @var Format\ComponentLink[]
      */
     protected $additions;
+
+    /**
+     * A Boolean value that allows the placement of ad banners between
+     * components. Nested components inherit the value of the outermost
+     * container that explicitly sets allowAutoplacedAds. The default value
+     * is false.
+     * @var boolean
+     */
+    protected $allowAutoplacedAds;
 
     /**
      * An object that defines vertical alignment with another component.
@@ -41,14 +51,17 @@ class Aside extends Container
 
     /**
      * An object that defines an animation to be applied to the component.
-     * @var \Urbania\AppleNews\Format\ComponentAnimation
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\ComponentAnimation|none
      */
     protected $animation;
 
     /**
-     * An object that defines behavior for a component, like Parallax or
-     * Springy.
-     * @var \Urbania\AppleNews\Format\Behavior
+     * An object that defines behavior for a component, like  or .
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\Behavior|none
      */
     protected $behavior;
 
@@ -61,17 +74,21 @@ class Aside extends Container
     protected $components;
 
     /**
-     * An array of container properties that can be applied conditionally,
-     * and the conditions that cause them to be applied.
-     * @var Format\ConditionalContainer[]
+     * An instance or array of container properties that can be applied
+     * conditionally, and the conditions that cause them to be applied.
+     * @var Format\ConditionalContainer[]|\Urbania\AppleNews\Format\ConditionalContainer
      */
     protected $conditional;
 
     /**
-     * Defines how child components are positioned within this aside
-     * component. For example, this property can allow for displaying child
-     * components side-by-side and can make sure they are sized equally.
-     * @var \Urbania\AppleNews\Format\CollectionDisplay|\Urbania\AppleNews\Format\HorizontalStackDisplay
+     * An object that defines how to position child components within this
+     * aside component. A , for example, allows for displaying child
+     * components side by side.
+     * In versions of News prior to iOS 11, child components are positioned
+     * as if contentDisplay were not defined.
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\CollectionDisplay|\Urbania\AppleNews\Format\HorizontalStackDisplay|none
      */
     protected $contentDisplay;
 
@@ -94,6 +111,9 @@ class Aside extends Container
      * An inline ComponentLayout object that contains layout information, or
      * a string reference to a ComponentLayout object that is defined at the
      * top level of the document.
+     * If layout is not defined, size and position are based on various
+     * factors, such as the device type, the length of the content, and the
+     * role of this component.
      * @var \Urbania\AppleNews\Format\ComponentLayout|string
      */
     protected $layout;
@@ -102,7 +122,9 @@ class Aside extends Container
      * An inline ComponentStyle object that defines the appearance of this
      * component, or a string reference to a ComponentStyle object that is
      * defined at the top level of the document.
-     * @var \Urbania\AppleNews\Format\ComponentStyle|string
+     * The none value is used for conditional design elements. Adding it here
+     * has no effect.
+     * @var \Urbania\AppleNews\Format\ComponentStyle|string|none
      */
     protected $style;
 
@@ -112,6 +134,10 @@ class Aside extends Container
 
         if (isset($data['additions'])) {
             $this->setAdditions($data['additions']);
+        }
+
+        if (isset($data['allowAutoplacedAds'])) {
+            $this->setAllowAutoplacedAds($data['allowAutoplacedAds']);
         }
 
         if (isset($data['anchor'])) {
@@ -163,9 +189,7 @@ class Aside extends Container
     public function addAddition($item)
     {
         return $this->setAdditions(
-            !is_null($this->additions)
-                ? array_merge($this->additions, [$item])
-                : [$item]
+            !is_null($this->additions) ? array_merge($this->additions, [$item]) : [$item]
         );
     }
 
@@ -178,9 +202,7 @@ class Aside extends Container
     {
         Assert::isArray($items);
         return $this->setAdditions(
-            !is_null($this->additions)
-                ? array_merge($this->additions, $items)
-                : $items
+            !is_null($this->additions) ? array_merge($this->additions, $items) : $items
         );
     }
 
@@ -208,17 +230,46 @@ class Aside extends Container
         Assert::isArray($additions);
         Assert::allIsSdkObject($additions, ComponentLink::class);
 
-        $this->additions = array_reduce(
-            array_keys($additions),
-            function ($array, $key) use ($additions) {
-                $item = $additions[$key];
-                $array[$key] = is_array($item)
-                    ? new ComponentLink($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->additions = is_array($additions)
+            ? array_reduce(
+                array_keys($additions),
+                function ($array, $key) use ($additions) {
+                    $item = $additions[$key];
+                    $array[$key] = Utils::isAssociativeArray($item)
+                        ? new ComponentLink($item)
+                        : $item;
+                    return $array;
+                },
+                []
+            )
+            : $additions;
+        return $this;
+    }
+
+    /**
+     * Get the allowAutoplacedAds
+     * @return boolean
+     */
+    public function getAllowAutoplacedAds()
+    {
+        return $this->allowAutoplacedAds;
+    }
+
+    /**
+     * Set the allowAutoplacedAds
+     * @param boolean $allowAutoplacedAds
+     * @return $this
+     */
+    public function setAllowAutoplacedAds($allowAutoplacedAds)
+    {
+        if (is_null($allowAutoplacedAds)) {
+            $this->allowAutoplacedAds = null;
+            return $this;
+        }
+
+        Assert::boolean($allowAutoplacedAds);
+
+        $this->allowAutoplacedAds = $allowAutoplacedAds;
         return $this;
     }
 
@@ -245,13 +296,13 @@ class Aside extends Container
 
         Assert::isSdkObject($anchor, Anchor::class);
 
-        $this->anchor = is_array($anchor) ? new Anchor($anchor) : $anchor;
+        $this->anchor = Utils::isAssociativeArray($anchor) ? new Anchor($anchor) : $anchor;
         return $this;
     }
 
     /**
      * Get the animation
-     * @return \Urbania\AppleNews\Format\ComponentAnimation
+     * @return \Urbania\AppleNews\Format\ComponentAnimation|none
      */
     public function getAnimation()
     {
@@ -260,7 +311,7 @@ class Aside extends Container
 
     /**
      * Set the animation
-     * @param \Urbania\AppleNews\Format\ComponentAnimation|array $animation
+     * @param \Urbania\AppleNews\Format\ComponentAnimation|array|none $animation
      * @return $this
      */
     public function setAnimation($animation)
@@ -270,9 +321,13 @@ class Aside extends Container
             return $this;
         }
 
-        Assert::isSdkObject($animation, ComponentAnimation::class);
+        if (is_object($animation) || Utils::isAssociativeArray($animation)) {
+            Assert::isSdkObject($animation, ComponentAnimation::class);
+        } else {
+            Assert::eq($animation, 'none');
+        }
 
-        $this->animation = is_array($animation)
+        $this->animation = Utils::isAssociativeArray($animation)
             ? ComponentAnimation::createTyped($animation)
             : $animation;
         return $this;
@@ -280,7 +335,7 @@ class Aside extends Container
 
     /**
      * Get the behavior
-     * @return \Urbania\AppleNews\Format\Behavior
+     * @return \Urbania\AppleNews\Format\Behavior|none
      */
     public function getBehavior()
     {
@@ -289,7 +344,7 @@ class Aside extends Container
 
     /**
      * Set the behavior
-     * @param \Urbania\AppleNews\Format\Behavior|array $behavior
+     * @param \Urbania\AppleNews\Format\Behavior|array|none $behavior
      * @return $this
      */
     public function setBehavior($behavior)
@@ -299,9 +354,13 @@ class Aside extends Container
             return $this;
         }
 
-        Assert::isSdkObject($behavior, Behavior::class);
+        if (is_object($behavior) || Utils::isAssociativeArray($behavior)) {
+            Assert::isSdkObject($behavior, Behavior::class);
+        } else {
+            Assert::eq($behavior, 'none');
+        }
 
-        $this->behavior = is_array($behavior)
+        $this->behavior = Utils::isAssociativeArray($behavior)
             ? Behavior::createTyped($behavior)
             : $behavior;
         return $this;
@@ -315,9 +374,7 @@ class Aside extends Container
     public function addComponent($item)
     {
         return $this->setComponents(
-            !is_null($this->components)
-                ? array_merge($this->components, [$item])
-                : [$item]
+            !is_null($this->components) ? array_merge($this->components, [$item]) : [$item]
         );
     }
 
@@ -330,9 +387,7 @@ class Aside extends Container
     {
         Assert::isArray($items);
         return $this->setComponents(
-            !is_null($this->components)
-                ? array_merge($this->components, $items)
-                : $items
+            !is_null($this->components) ? array_merge($this->components, $items) : $items
         );
     }
 
@@ -360,41 +415,29 @@ class Aside extends Container
         Assert::isArray($components);
         Assert::allIsComponent($components);
 
-        $this->components = array_reduce(
-            array_keys($components),
-            function ($array, $key) use ($components) {
-                $item = $components[$key];
-                if ($item instanceof Componentable) {
-                    $array[$key] = $item->toComponent();
-                } elseif (is_array($item)) {
-                    $array[$key] = Component::createTyped($item);
-                } else {
-                    $array[$key] = $item;
-                }
-                return $array;
-            },
-            []
-        );
+        $this->components = is_array($components)
+            ? array_reduce(
+                array_keys($components),
+                function ($array, $key) use ($components) {
+                    $item = $components[$key];
+                    if ($item instanceof Componentable) {
+                        $array[$key] = $item->toComponent();
+                    } elseif (Utils::isAssociativeArray($item)) {
+                        $array[$key] = Component::createTyped($item);
+                    } else {
+                        $array[$key] = $item;
+                    }
+                    return $array;
+                },
+                []
+            )
+            : $components;
         return $this;
     }
 
     /**
-     * Add an item to conditional
-     * @param \Urbania\AppleNews\Format\ConditionalContainer|array $item
-     * @return $this
-     */
-    public function addConditional($item)
-    {
-        return $this->setConditional(
-            !is_null($this->conditional)
-                ? array_merge($this->conditional, [$item])
-                : [$item]
-        );
-    }
-
-    /**
      * Get the conditional
-     * @return Format\ConditionalContainer[]
+     * @return Format\ConditionalContainer[]|\Urbania\AppleNews\Format\ConditionalContainer
      */
     public function getConditional()
     {
@@ -403,7 +446,7 @@ class Aside extends Container
 
     /**
      * Set the conditional
-     * @param Format\ConditionalContainer[] $conditional
+     * @param Format\ConditionalContainer[]|\Urbania\AppleNews\Format\ConditionalContainer|array $conditional
      * @return $this
      */
     public function setConditional($conditional)
@@ -413,26 +456,22 @@ class Aside extends Container
             return $this;
         }
 
-        Assert::isArray($conditional);
-        Assert::allIsSdkObject($conditional, ConditionalContainer::class);
+        if (is_object($conditional) || Utils::isAssociativeArray($conditional)) {
+            Assert::isSdkObject($conditional, ConditionalContainer::class);
+        } else {
+            Assert::isArray($conditional);
+            Assert::allIsSdkObject($conditional, ConditionalContainer::class);
+        }
 
-        $this->conditional = array_reduce(
-            array_keys($conditional),
-            function ($array, $key) use ($conditional) {
-                $item = $conditional[$key];
-                $array[$key] = is_array($item)
-                    ? new ConditionalContainer($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->conditional = Utils::isAssociativeArray($conditional)
+            ? new ConditionalContainer($conditional)
+            : $conditional;
         return $this;
     }
 
     /**
      * Get the contentDisplay
-     * @return \Urbania\AppleNews\Format\CollectionDisplay|\Urbania\AppleNews\Format\HorizontalStackDisplay
+     * @return \Urbania\AppleNews\Format\CollectionDisplay|\Urbania\AppleNews\Format\HorizontalStackDisplay|none
      */
     public function getContentDisplay()
     {
@@ -441,7 +480,7 @@ class Aside extends Container
 
     /**
      * Set the contentDisplay
-     * @param \Urbania\AppleNews\Format\CollectionDisplay|array|\Urbania\AppleNews\Format\HorizontalStackDisplay $contentDisplay
+     * @param \Urbania\AppleNews\Format\CollectionDisplay|array|\Urbania\AppleNews\Format\HorizontalStackDisplay|none $contentDisplay
      * @return $this
      */
     public function setContentDisplay($contentDisplay)
@@ -451,30 +490,18 @@ class Aside extends Container
             return $this;
         }
 
-        Assert::isAnySdkObject($contentDisplay, [
-            CollectionDisplay::class,
-            HorizontalStackDisplay::class
-        ]);
-
-        if (is_array($contentDisplay)) {
-            $typeObjects = [
-                'collection' => CollectionDisplay::class,
-                'horizontal_stack' => HorizontalStackDisplay::class
-            ];
-            $this->contentDisplay = array_reduce(
-                array_keys($typeObjects),
-                function ($ret, $k) use ($typeObjects, $contentDisplay) {
-                    $classPath = $typeObjects[$k];
-                    return isset($contentDisplay['type']) &&
-                        $contentDisplay['type'] === $k
-                        ? new $classPath($contentDisplay)
-                        : $ret;
-                },
-                null
-            );
+        if (is_object($contentDisplay) || Utils::isAssociativeArray($contentDisplay)) {
+            Assert::isAnySdkObject($contentDisplay, [
+                CollectionDisplay::class,
+                HorizontalStackDisplay::class,
+            ]);
         } else {
-            $this->contentDisplay = $contentDisplay;
+            Assert::eq($contentDisplay, 'none');
         }
+
+        $this->contentDisplay = Utils::isAssociativeArray($contentDisplay)
+            ? new CollectionDisplay($contentDisplay)
+            : $contentDisplay;
         return $this;
     }
 
@@ -553,15 +580,13 @@ class Aside extends Container
             return $this;
         }
 
-        if (is_object($layout) || is_array($layout)) {
+        if (is_object($layout) || Utils::isAssociativeArray($layout)) {
             Assert::isSdkObject($layout, ComponentLayout::class);
         } else {
             Assert::string($layout);
         }
 
-        $this->layout = is_array($layout)
-            ? new ComponentLayout($layout)
-            : $layout;
+        $this->layout = Utils::isAssociativeArray($layout) ? new ComponentLayout($layout) : $layout;
         return $this;
     }
 
@@ -576,7 +601,7 @@ class Aside extends Container
 
     /**
      * Get the style
-     * @return \Urbania\AppleNews\Format\ComponentStyle|string
+     * @return \Urbania\AppleNews\Format\ComponentStyle|string|none
      */
     public function getStyle()
     {
@@ -585,7 +610,7 @@ class Aside extends Container
 
     /**
      * Set the style
-     * @param \Urbania\AppleNews\Format\ComponentStyle|array|string $style
+     * @param \Urbania\AppleNews\Format\ComponentStyle|array|string|none $style
      * @return $this
      */
     public function setStyle($style)
@@ -595,13 +620,13 @@ class Aside extends Container
             return $this;
         }
 
-        if (is_object($style) || is_array($style)) {
+        if (is_object($style) || Utils::isAssociativeArray($style)) {
             Assert::isSdkObject($style, ComponentStyle::class);
         } else {
             Assert::string($style);
         }
 
-        $this->style = is_array($style) ? new ComponentStyle($style) : $style;
+        $this->style = Utils::isAssociativeArray($style) ? new ComponentStyle($style) : $style;
         return $this;
     }
 
@@ -630,11 +655,12 @@ class Aside extends Container
                 )
                 : $this->additions;
         }
+        if (isset($this->allowAutoplacedAds)) {
+            $data['allowAutoplacedAds'] = $this->allowAutoplacedAds;
+        }
         if (isset($this->anchor)) {
             $data['anchor'] =
-                $this->anchor instanceof Arrayable
-                    ? $this->anchor->toArray()
-                    : $this->anchor;
+                $this->anchor instanceof Arrayable ? $this->anchor->toArray() : $this->anchor;
         }
         if (isset($this->animation)) {
             $data['animation'] =
@@ -644,9 +670,7 @@ class Aside extends Container
         }
         if (isset($this->behavior)) {
             $data['behavior'] =
-                $this->behavior instanceof Arrayable
-                    ? $this->behavior->toArray()
-                    : $this->behavior;
+                $this->behavior instanceof Arrayable ? $this->behavior->toArray() : $this->behavior;
         }
         if (isset($this->components)) {
             $data['components'] = !is_null($this->components)
@@ -664,19 +688,10 @@ class Aside extends Container
                 : $this->components;
         }
         if (isset($this->conditional)) {
-            $data['conditional'] = !is_null($this->conditional)
-                ? array_reduce(
-                    array_keys($this->conditional),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->conditional[$key] instanceof Arrayable
-                                ? $this->conditional[$key]->toArray()
-                                : $this->conditional[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->conditional;
+            $data['conditional'] =
+                $this->conditional instanceof Arrayable
+                    ? $this->conditional->toArray()
+                    : $this->conditional;
         }
         if (isset($this->contentDisplay)) {
             $data['contentDisplay'] =
@@ -692,15 +707,11 @@ class Aside extends Container
         }
         if (isset($this->layout)) {
             $data['layout'] =
-                $this->layout instanceof Arrayable
-                    ? $this->layout->toArray()
-                    : $this->layout;
+                $this->layout instanceof Arrayable ? $this->layout->toArray() : $this->layout;
         }
         if (isset($this->style)) {
             $data['style'] =
-                $this->style instanceof Arrayable
-                    ? $this->style->toArray()
-                    : $this->style;
+                $this->style instanceof Arrayable ? $this->style->toArray() : $this->style;
         }
         return $data;
     }

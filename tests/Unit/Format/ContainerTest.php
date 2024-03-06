@@ -28,7 +28,7 @@ class ContainerTest extends TestCase
      */
     public static function roleProvider()
     {
-        return [["container"]];
+        return [['container']];
     }
 
     /**
@@ -52,6 +52,29 @@ class ContainerTest extends TestCase
     public static function additionsProvider()
     {
         return [[[new \Urbania\AppleNews\Format\ComponentLink()]]];
+    }
+
+    /**
+     * Test the property allowAutoplacedAds
+     * @test
+     * @dataProvider allowAutoplacedAdsProvider
+     * @covers ::getAllowAutoplacedAds
+     * @covers ::setAllowAutoplacedAds
+     */
+    public function testPropertyAllowAutoplacedAds($value)
+    {
+        $object = new Container();
+        $object->setAllowAutoplacedAds($value);
+
+        $this->assertEquals($value, $object->getAllowAutoplacedAds());
+    }
+
+    /**
+     * Data provider for property allowAutoplacedAds
+     */
+    public static function allowAutoplacedAdsProvider()
+    {
+        return [[true], [false]];
     }
 
     /**
@@ -97,7 +120,7 @@ class ContainerTest extends TestCase
      */
     public static function animationProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentAnimation()]];
+        return [[new \Urbania\AppleNews\Format\ComponentAnimation()], ['none']];
     }
 
     /**
@@ -120,7 +143,7 @@ class ContainerTest extends TestCase
      */
     public static function behaviorProvider()
     {
-        return [[new \Urbania\AppleNews\Format\Behavior()]];
+        return [[new \Urbania\AppleNews\Format\Behavior()], ['none']];
     }
 
     /**
@@ -166,7 +189,10 @@ class ContainerTest extends TestCase
      */
     public static function conditionalProvider()
     {
-        return [[[new \Urbania\AppleNews\Format\ConditionalContainer()]]];
+        return [
+            [new \Urbania\AppleNews\Format\ConditionalContainer()],
+            [[new \Urbania\AppleNews\Format\ConditionalContainer()]],
+        ];
     }
 
     /**
@@ -191,7 +217,8 @@ class ContainerTest extends TestCase
     {
         return [
             [new \Urbania\AppleNews\Format\CollectionDisplay()],
-            [new \Urbania\AppleNews\Format\HorizontalStackDisplay()]
+            [new \Urbania\AppleNews\Format\HorizontalStackDisplay()],
+            ['none'],
         ];
     }
 
@@ -238,7 +265,7 @@ class ContainerTest extends TestCase
      */
     public static function identifierProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -261,10 +288,7 @@ class ContainerTest extends TestCase
      */
     public static function layoutProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\ComponentLayout()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\ComponentLayout()], ['a string']];
     }
 
     /**
@@ -287,6 +311,6 @@ class ContainerTest extends TestCase
      */
     public static function styleProvider()
     {
-        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ["a string"]];
+        return [[new \Urbania\AppleNews\Format\ComponentStyle()], ['a string'], ['none']];
     }
 }

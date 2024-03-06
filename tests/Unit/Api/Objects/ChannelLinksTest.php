@@ -30,7 +30,7 @@ class ChannelLinksTest extends TestCase
      */
     public static function defaultSectionProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -53,6 +53,6 @@ class ChannelLinksTest extends TestCase
      */
     public static function selfProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 }

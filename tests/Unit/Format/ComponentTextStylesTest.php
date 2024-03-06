@@ -30,8 +30,6 @@ class ComponentTextStylesTest extends TestCase
      */
     public static function stylesProvider()
     {
-        return [
-            [["test" => new \Urbania\AppleNews\Format\ComponentTextStyle()]]
-        ];
+        return [[['test' => new \Urbania\AppleNews\Format\ComponentTextStyle()]]];
     }
 }

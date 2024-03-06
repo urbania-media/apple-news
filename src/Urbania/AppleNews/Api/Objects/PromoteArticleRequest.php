@@ -5,17 +5,18 @@ namespace Urbania\AppleNews\Api\Objects;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
- * See the required field for the promote article request.
+ * See the required field for the Promote an Article request.
  *
- * @see https://developer.apple.com/documentation/apple_news/promotearticlerequest
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/promotearticlerequest.json
  */
 class PromoteArticleRequest extends BaseSdkObject
 {
     /**
-     * List of article UUIDs to be promoted for the specified section. This
-     * list may be empty.
+     * The list of article UUIDs you want to promote for the specified
+     * section.
      * @var string[]
      */
     protected $articleIds;
@@ -35,9 +36,7 @@ class PromoteArticleRequest extends BaseSdkObject
     public function addArticleId($item)
     {
         return $this->setArticleIds(
-            !is_null($this->articleIds)
-                ? array_merge($this->articleIds, [$item])
-                : [$item]
+            !is_null($this->articleIds) ? array_merge($this->articleIds, [$item]) : [$item]
         );
     }
 
@@ -50,9 +49,7 @@ class PromoteArticleRequest extends BaseSdkObject
     {
         Assert::isArray($items);
         return $this->setArticleIds(
-            !is_null($this->articleIds)
-                ? array_merge($this->articleIds, $items)
-                : $items
+            !is_null($this->articleIds) ? array_merge($this->articleIds, $items) : $items
         );
     }
 

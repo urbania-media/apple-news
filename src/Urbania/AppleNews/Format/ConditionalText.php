@@ -5,19 +5,20 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for defining conditional properties for a text component,
  * and when the conditional properties are in effect.
  *
- * @see https://developer.apple.com/documentation/apple_news/conditionaltext
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/conditionaltext.json
  */
-class ConditionalText extends BaseSdkObject
+class ConditionalText extends ConditionalComponent
 {
     /**
-     * An array of conditions that, when met, cause the conditional text
-     * component properties to be in effect.
-     * @var Format\Condition[]
+     * An instance or array of conditions that, when met, cause the
+     * conditional text component properties to take effect.
+     * @var Format\Condition[]|\Urbania\AppleNews\Format\Condition
      */
     protected $conditions;
 
@@ -29,14 +30,15 @@ class ConditionalText extends BaseSdkObject
 
     /**
      * An object that defines an animation to be applied to the component.
-     * @var \Urbania\AppleNews\Format\ComponentAnimation
+     * To remove a previously set condition, use none.
+     * @var \Urbania\AppleNews\Format\ComponentAnimation|none
      */
     protected $animation;
 
     /**
-     * An object that defines behavior for a component, like Parallax or
-     * Springy.
-     * @var \Urbania\AppleNews\Format\Behavior
+     * An object that defines behavior for a component, like  or .
+     * To remove a previously set condition, use none.
+     * @var \Urbania\AppleNews\Format\Behavior|none
      */
     protected $behavior;
 
@@ -52,14 +54,20 @@ class ConditionalText extends BaseSdkObject
      * object, supply rangeStart and rangeLength values, and either a text
      * style or the identifier of a text style that is defined at the top
      * level of the document.
-     * @var Format\InlineTextStyle[]
+     * Inline text styles are ignored when the format is set to html or
+     * markdown.
+     * To remove a previously set condition, use none.
+     * @var Format\InlineTextStyle[]|none
      */
     protected $inlineTextStyles;
 
     /**
-     * An inline ComponentLayout object that contains layout information, or
-     * a string reference to a ComponentLayout object that is defined at the
-     * top level of the document.
+     * An inline  object that contains layout information, or a string
+     * reference to a ComponentLayout object that is defined at the top level
+     * of the document.
+     * If layout is not defined, size and position are based on various
+     * factors, such as the device type, the length of the content, and the
+     * role of this component.
      * @var \Urbania\AppleNews\Format\ComponentLayout|string
      */
     protected $layout;
@@ -68,7 +76,8 @@ class ConditionalText extends BaseSdkObject
      * An inline ComponentStyle object that defines the appearance of this
      * component, or a string reference to a ComponentStyle object that is
      * defined at the top level of the document.
-     * @var \Urbania\AppleNews\Format\ComponentStyle|string
+     * To remove a previously set condition, use none.
+     * @var \Urbania\AppleNews\Format\ComponentStyle|string|none
      */
     protected $style;
 
@@ -82,6 +91,8 @@ class ConditionalText extends BaseSdkObject
 
     public function __construct(array $data = [])
     {
+        parent::__construct($data);
+
         if (isset($data['conditions'])) {
             $this->setConditions($data['conditions']);
         }
@@ -142,13 +153,13 @@ class ConditionalText extends BaseSdkObject
 
         Assert::isSdkObject($anchor, Anchor::class);
 
-        $this->anchor = is_array($anchor) ? new Anchor($anchor) : $anchor;
+        $this->anchor = Utils::isAssociativeArray($anchor) ? new Anchor($anchor) : $anchor;
         return $this;
     }
 
     /**
      * Get the animation
-     * @return \Urbania\AppleNews\Format\ComponentAnimation
+     * @return \Urbania\AppleNews\Format\ComponentAnimation|none
      */
     public function getAnimation()
     {
@@ -157,7 +168,7 @@ class ConditionalText extends BaseSdkObject
 
     /**
      * Set the animation
-     * @param \Urbania\AppleNews\Format\ComponentAnimation|array $animation
+     * @param \Urbania\AppleNews\Format\ComponentAnimation|array|none $animation
      * @return $this
      */
     public function setAnimation($animation)
@@ -167,9 +178,13 @@ class ConditionalText extends BaseSdkObject
             return $this;
         }
 
-        Assert::isSdkObject($animation, ComponentAnimation::class);
+        if (is_object($animation) || Utils::isAssociativeArray($animation)) {
+            Assert::isSdkObject($animation, ComponentAnimation::class);
+        } else {
+            Assert::eq($animation, 'none');
+        }
 
-        $this->animation = is_array($animation)
+        $this->animation = Utils::isAssociativeArray($animation)
             ? ComponentAnimation::createTyped($animation)
             : $animation;
         return $this;
@@ -177,7 +192,7 @@ class ConditionalText extends BaseSdkObject
 
     /**
      * Get the behavior
-     * @return \Urbania\AppleNews\Format\Behavior
+     * @return \Urbania\AppleNews\Format\Behavior|none
      */
     public function getBehavior()
     {
@@ -186,7 +201,7 @@ class ConditionalText extends BaseSdkObject
 
     /**
      * Set the behavior
-     * @param \Urbania\AppleNews\Format\Behavior|array $behavior
+     * @param \Urbania\AppleNews\Format\Behavior|array|none $behavior
      * @return $this
      */
     public function setBehavior($behavior)
@@ -196,46 +211,21 @@ class ConditionalText extends BaseSdkObject
             return $this;
         }
 
-        Assert::isSdkObject($behavior, Behavior::class);
+        if (is_object($behavior) || Utils::isAssociativeArray($behavior)) {
+            Assert::isSdkObject($behavior, Behavior::class);
+        } else {
+            Assert::eq($behavior, 'none');
+        }
 
-        $this->behavior = is_array($behavior)
+        $this->behavior = Utils::isAssociativeArray($behavior)
             ? Behavior::createTyped($behavior)
             : $behavior;
         return $this;
     }
 
     /**
-     * Add an item to conditions
-     * @param \Urbania\AppleNews\Format\Condition|array $item
-     * @return $this
-     */
-    public function addCondition($item)
-    {
-        return $this->setConditions(
-            !is_null($this->conditions)
-                ? array_merge($this->conditions, [$item])
-                : [$item]
-        );
-    }
-
-    /**
-     * Add items to conditions
-     * @param array $items
-     * @return $this
-     */
-    public function addConditions($items)
-    {
-        Assert::isArray($items);
-        return $this->setConditions(
-            !is_null($this->conditions)
-                ? array_merge($this->conditions, $items)
-                : $items
-        );
-    }
-
-    /**
      * Get the conditions
-     * @return Format\Condition[]
+     * @return Format\Condition[]|\Urbania\AppleNews\Format\Condition
      */
     public function getConditions()
     {
@@ -244,23 +234,21 @@ class ConditionalText extends BaseSdkObject
 
     /**
      * Set the conditions
-     * @param Format\Condition[] $conditions
+     * @param Format\Condition[]|\Urbania\AppleNews\Format\Condition|array $conditions
      * @return $this
      */
     public function setConditions($conditions)
     {
-        Assert::isArray($conditions);
-        Assert::allIsSdkObject($conditions, Condition::class);
+        if (is_object($conditions) || Utils::isAssociativeArray($conditions)) {
+            Assert::isSdkObject($conditions, Condition::class);
+        } else {
+            Assert::isArray($conditions);
+            Assert::allIsSdkObject($conditions, Condition::class);
+        }
 
-        $this->conditions = array_reduce(
-            array_keys($conditions),
-            function ($array, $key) use ($conditions) {
-                $item = $conditions[$key];
-                $array[$key] = is_array($item) ? new Condition($item) : $item;
-                return $array;
-            },
-            []
-        );
+        $this->conditions = Utils::isAssociativeArray($conditions)
+            ? new Condition($conditions)
+            : $conditions;
         return $this;
     }
 
@@ -292,37 +280,8 @@ class ConditionalText extends BaseSdkObject
     }
 
     /**
-     * Add an item to inlineTextStyles
-     * @param \Urbania\AppleNews\Format\InlineTextStyle|array $item
-     * @return $this
-     */
-    public function addInlineTextStyle($item)
-    {
-        return $this->setInlineTextStyles(
-            !is_null($this->inlineTextStyles)
-                ? array_merge($this->inlineTextStyles, [$item])
-                : [$item]
-        );
-    }
-
-    /**
-     * Add items to inlineTextStyles
-     * @param array $items
-     * @return $this
-     */
-    public function addInlineTextStyles($items)
-    {
-        Assert::isArray($items);
-        return $this->setInlineTextStyles(
-            !is_null($this->inlineTextStyles)
-                ? array_merge($this->inlineTextStyles, $items)
-                : $items
-        );
-    }
-
-    /**
      * Get the inlineTextStyles
-     * @return Format\InlineTextStyle[]
+     * @return Format\InlineTextStyle[]|none
      */
     public function getInlineTextStyles()
     {
@@ -331,7 +290,7 @@ class ConditionalText extends BaseSdkObject
 
     /**
      * Set the inlineTextStyles
-     * @param Format\InlineTextStyle[] $inlineTextStyles
+     * @param Format\InlineTextStyle[]|none $inlineTextStyles
      * @return $this
      */
     public function setInlineTextStyles($inlineTextStyles)
@@ -341,20 +300,26 @@ class ConditionalText extends BaseSdkObject
             return $this;
         }
 
-        Assert::isArray($inlineTextStyles);
-        Assert::allIsSdkObject($inlineTextStyles, InlineTextStyle::class);
+        if (is_array($inlineTextStyles)) {
+            Assert::isArray($inlineTextStyles);
+            Assert::allIsSdkObject($inlineTextStyles, InlineTextStyle::class);
+        } else {
+            Assert::eq($inlineTextStyles, 'none');
+        }
 
-        $this->inlineTextStyles = array_reduce(
-            array_keys($inlineTextStyles),
-            function ($array, $key) use ($inlineTextStyles) {
-                $item = $inlineTextStyles[$key];
-                $array[$key] = is_array($item)
-                    ? new InlineTextStyle($item)
-                    : $item;
-                return $array;
-            },
-            []
-        );
+        $this->inlineTextStyles = is_array($inlineTextStyles)
+            ? array_reduce(
+                array_keys($inlineTextStyles),
+                function ($array, $key) use ($inlineTextStyles) {
+                    $item = $inlineTextStyles[$key];
+                    $array[$key] = Utils::isAssociativeArray($item)
+                        ? new InlineTextStyle($item)
+                        : $item;
+                    return $array;
+                },
+                []
+            )
+            : $inlineTextStyles;
         return $this;
     }
 
@@ -379,21 +344,19 @@ class ConditionalText extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($layout) || is_array($layout)) {
+        if (is_object($layout) || Utils::isAssociativeArray($layout)) {
             Assert::isSdkObject($layout, ComponentLayout::class);
         } else {
             Assert::string($layout);
         }
 
-        $this->layout = is_array($layout)
-            ? new ComponentLayout($layout)
-            : $layout;
+        $this->layout = Utils::isAssociativeArray($layout) ? new ComponentLayout($layout) : $layout;
         return $this;
     }
 
     /**
      * Get the style
-     * @return \Urbania\AppleNews\Format\ComponentStyle|string
+     * @return \Urbania\AppleNews\Format\ComponentStyle|string|none
      */
     public function getStyle()
     {
@@ -402,7 +365,7 @@ class ConditionalText extends BaseSdkObject
 
     /**
      * Set the style
-     * @param \Urbania\AppleNews\Format\ComponentStyle|array|string $style
+     * @param \Urbania\AppleNews\Format\ComponentStyle|array|string|none $style
      * @return $this
      */
     public function setStyle($style)
@@ -412,13 +375,13 @@ class ConditionalText extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($style) || is_array($style)) {
+        if (is_object($style) || Utils::isAssociativeArray($style)) {
             Assert::isSdkObject($style, ComponentStyle::class);
         } else {
             Assert::string($style);
         }
 
-        $this->style = is_array($style) ? new ComponentStyle($style) : $style;
+        $this->style = Utils::isAssociativeArray($style) ? new ComponentStyle($style) : $style;
         return $this;
     }
 
@@ -443,13 +406,13 @@ class ConditionalText extends BaseSdkObject
             return $this;
         }
 
-        if (is_object($textStyle) || is_array($textStyle)) {
+        if (is_object($textStyle) || Utils::isAssociativeArray($textStyle)) {
             Assert::isSdkObject($textStyle, ComponentTextStyle::class);
         } else {
             Assert::string($textStyle);
         }
 
-        $this->textStyle = is_array($textStyle)
+        $this->textStyle = Utils::isAssociativeArray($textStyle)
             ? new ComponentTextStyle($textStyle)
             : $textStyle;
         return $this;
@@ -461,27 +424,16 @@ class ConditionalText extends BaseSdkObject
      */
     public function toArray()
     {
-        $data = [];
+        $data = parent::toArray();
         if (isset($this->conditions)) {
-            $data['conditions'] = !is_null($this->conditions)
-                ? array_reduce(
-                    array_keys($this->conditions),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->conditions[$key] instanceof Arrayable
-                                ? $this->conditions[$key]->toArray()
-                                : $this->conditions[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->conditions;
+            $data['conditions'] =
+                $this->conditions instanceof Arrayable
+                    ? $this->conditions->toArray()
+                    : $this->conditions;
         }
         if (isset($this->anchor)) {
             $data['anchor'] =
-                $this->anchor instanceof Arrayable
-                    ? $this->anchor->toArray()
-                    : $this->anchor;
+                $this->anchor instanceof Arrayable ? $this->anchor->toArray() : $this->anchor;
         }
         if (isset($this->animation)) {
             $data['animation'] =
@@ -491,39 +443,21 @@ class ConditionalText extends BaseSdkObject
         }
         if (isset($this->behavior)) {
             $data['behavior'] =
-                $this->behavior instanceof Arrayable
-                    ? $this->behavior->toArray()
-                    : $this->behavior;
+                $this->behavior instanceof Arrayable ? $this->behavior->toArray() : $this->behavior;
         }
         if (isset($this->hidden)) {
             $data['hidden'] = $this->hidden;
         }
         if (isset($this->inlineTextStyles)) {
-            $data['inlineTextStyles'] = !is_null($this->inlineTextStyles)
-                ? array_reduce(
-                    array_keys($this->inlineTextStyles),
-                    function ($items, $key) {
-                        $items[$key] =
-                            $this->inlineTextStyles[$key] instanceof Arrayable
-                                ? $this->inlineTextStyles[$key]->toArray()
-                                : $this->inlineTextStyles[$key];
-                        return $items;
-                    },
-                    []
-                )
-                : $this->inlineTextStyles;
+            $data['inlineTextStyles'] = $this->inlineTextStyles;
         }
         if (isset($this->layout)) {
             $data['layout'] =
-                $this->layout instanceof Arrayable
-                    ? $this->layout->toArray()
-                    : $this->layout;
+                $this->layout instanceof Arrayable ? $this->layout->toArray() : $this->layout;
         }
         if (isset($this->style)) {
             $data['style'] =
-                $this->style instanceof Arrayable
-                    ? $this->style->toArray()
-                    : $this->style;
+                $this->style instanceof Arrayable ? $this->style->toArray() : $this->style;
         }
         if (isset($this->textStyle)) {
             $data['textStyle'] =

@@ -30,7 +30,7 @@ class FadingStickyHeaderTest extends TestCase
      */
     public static function fadeColorProvider()
     {
-        return [["#fff"], ["#000"]];
+        return [['#fff'], ['#000']];
     }
 
     /**
@@ -51,6 +51,6 @@ class FadingStickyHeaderTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["fading_sticky_header"]];
+        return [['fading_sticky_header']];
     }
 }

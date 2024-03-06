@@ -11,6 +11,29 @@ use Urbania\AppleNews\Tests\TestCase;
 class ConditionTest extends TestCase
 {
     /**
+     * Test the property app
+     * @test
+     * @dataProvider appProvider
+     * @covers ::getApp
+     * @covers ::setApp
+     */
+    public function testPropertyApp($value)
+    {
+        $object = new Condition();
+        $object->setApp($value);
+
+        $this->assertEquals($value, $object->getApp());
+    }
+
+    /**
+     * Data provider for property app
+     */
+    public static function appProvider()
+    {
+        return [['any'], ['news'], ['stocks']];
+    }
+
+    /**
      * Test the property horizontalSizeClass
      * @test
      * @dataProvider horizontalSizeClassProvider
@@ -30,7 +53,7 @@ class ConditionTest extends TestCase
      */
     public static function horizontalSizeClassProvider()
     {
-        return [["any"], ["regular"], ["compact"]];
+        return [['any'], ['regular'], ['compact']];
     }
 
     /**
@@ -77,18 +100,18 @@ class ConditionTest extends TestCase
     public static function maxContentSizeCategoryProvider()
     {
         return [
-            ["XS"],
-            ["S"],
-            ["M"],
-            ["L"],
-            ["XL"],
-            ["XXL"],
-            ["XXXL"],
-            ["AX-M"],
-            ["AX-L"],
-            ["AX-XL"],
-            ["AX-XXL"],
-            ["AX-XXXL"]
+            ['XS'],
+            ['S'],
+            ['M'],
+            ['L'],
+            ['XL'],
+            ['XXL'],
+            ['XXXL'],
+            ['AX-M'],
+            ['AX-L'],
+            ['AX-XL'],
+            ['AX-XXL'],
+            ['AX-XXXL'],
         ];
     }
 
@@ -112,7 +135,7 @@ class ConditionTest extends TestCase
      */
     public static function maxSpecVersionProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -205,18 +228,18 @@ class ConditionTest extends TestCase
     public static function minContentSizeCategoryProvider()
     {
         return [
-            ["XS"],
-            ["S"],
-            ["M"],
-            ["L"],
-            ["XL"],
-            ["XXL"],
-            ["XXXL"],
-            ["AX-M"],
-            ["AX-L"],
-            ["AX-XL"],
-            ["AX-XXL"],
-            ["AX-XXXL"]
+            ['XS'],
+            ['S'],
+            ['M'],
+            ['L'],
+            ['XL'],
+            ['XXL'],
+            ['XXXL'],
+            ['AX-M'],
+            ['AX-L'],
+            ['AX-XL'],
+            ['AX-XXL'],
+            ['AX-XXXL'],
         ];
     }
 
@@ -240,7 +263,7 @@ class ConditionTest extends TestCase
      */
     public static function minSpecVersionProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -309,7 +332,30 @@ class ConditionTest extends TestCase
      */
     public static function platformProvider()
     {
-        return [["any"], ["ios"], ["macos"]];
+        return [['any'], ['ios'], ['macos'], ['web']];
+    }
+
+    /**
+     * Test the property preferredColorScheme
+     * @test
+     * @dataProvider preferredColorSchemeProvider
+     * @covers ::getPreferredColorScheme
+     * @covers ::setPreferredColorScheme
+     */
+    public function testPropertyPreferredColorScheme($value)
+    {
+        $object = new Condition();
+        $object->setPreferredColorScheme($value);
+
+        $this->assertEquals($value, $object->getPreferredColorScheme());
+    }
+
+    /**
+     * Data provider for property preferredColorScheme
+     */
+    public static function preferredColorSchemeProvider()
+    {
+        return [['any'], ['light'], ['dark']];
     }
 
     /**
@@ -332,7 +378,7 @@ class ConditionTest extends TestCase
      */
     public static function subscriptionStatusProvider()
     {
-        return [["bundle"], ["subscribed"]];
+        return [['bundle'], ['subscribed']];
     }
 
     /**
@@ -355,7 +401,30 @@ class ConditionTest extends TestCase
      */
     public static function verticalSizeClassProvider()
     {
-        return [["any"], ["regular"], ["compact"]];
+        return [['any'], ['regular'], ['compact']];
+    }
+
+    /**
+     * Test the property territory
+     * @test
+     * @dataProvider territoryProvider
+     * @covers ::getTerritory
+     * @covers ::setTerritory
+     */
+    public function testPropertyTerritory($value)
+    {
+        $object = new Condition();
+        $object->setTerritory($value);
+
+        $this->assertEquals($value, $object->getTerritory());
+    }
+
+    /**
+     * Data provider for property territory
+     */
+    public static function territoryProvider()
+    {
+        return [['US'], ['AU'], ['GB'], ['CA']];
     }
 
     /**
@@ -378,6 +447,6 @@ class ConditionTest extends TestCase
      */
     public static function viewLocationProvider()
     {
-        return [["any"], ["article"], ["issue_table_of_contents"], ["issue"]];
+        return [['any'], ['article'], ['issue_table_of_contents'], ['issue']];
     }
 }

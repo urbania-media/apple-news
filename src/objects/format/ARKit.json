@@ -6,13 +6,13 @@
     "from_class": null,
     "extends": "Format\\Component",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/arkit",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/arkit.json",
     "properties": [
         {
             "name": "caption",
             "type": "string",
             "required": true,
-            "description": "A string that describes the contents of the ARKit stage. This text is also used by VoiceOver for iOS and VoiceOver for macOS, if accessibilityCaption text is not provided.",
+            "description": "A string that describes the contents of the ARKit stage. The text is  used for VoiceOver. For more information about VoiceOver, see the  page in Accessibility.",
             "typed": false
         },
         {
@@ -35,7 +35,7 @@
             "name": "accessibilityCaption",
             "type": "string",
             "required": false,
-            "description": "A caption that describes the augmented reality experience. The text is used for VoiceOver for iOS and VoiceOver for macOS. If accessibilityCaption is not provided, the caption value is used for VoiceOver for iOS and VoiceOver for macOS.",
+            "description": "A caption that describes the augmented reality experience. The text is used for VoiceOver. For more information about VoiceOver, see the  page in Accessibility.  If accessibilityCaption is not provided, the caption value is used for VoiceOver for iOS, VoiceOver for iPadOS, and VoiceOver for macOS.",
             "typed": false
         },
         {
@@ -47,23 +47,32 @@
         },
         {
             "name": "animation",
-            "type": "Format\\ComponentAnimation",
+            "type": [
+                "Format\\ComponentAnimation",
+                "none"
+            ],
             "required": false,
-            "description": "A object that defines an animation to be applied to the component.",
+            "description": "A object that defines an animation to be applied to the component.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": true
         },
         {
             "name": "behavior",
-            "type": "Format\\Behavior",
+            "type": [
+                "Format\\Behavior",
+                "none"
+            ],
             "required": false,
-            "description": "An object that defines Behavior for a component, like Parallax or Springy.",
+            "description": "An object that defines  for a component, like  or .\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": true
         },
         {
             "name": "conditional",
-            "type": "array:Format\\ConditionalComponent",
+            "type": [
+                "Format\\ConditionalComponent",
+                "array:Format\\ConditionalComponent"
+            ],
             "required": false,
-            "description": "An array of component properties that can be applied conditionally, and the conditions that cause them to be applied.",
+            "description": "An instance or array of component properties that can be applied conditionally, and the conditions that cause them to be applied.",
             "typed": false
         },
         {
@@ -78,7 +87,7 @@
             "type": "boolean",
             "required": false,
             "description": "A boolean value that determines whether the component is hidden.",
-            "default": "false",
+            "default": true,
             "typed": false
         },
         {
@@ -95,17 +104,18 @@
                 "string"
             ],
             "required": false,
-            "description": "An inline ComponentLayout object that contains layout information, or a string reference to a ComponentLayout object that is defined at the top level of the document.",
+            "description": "An inline ComponentLayout object that contains layout information, or a string reference to a ComponentLayout object that is defined at the top level of the document. \nIf layout is not defined, size and position will be based on various factors, such as the device type, the length of the content, and the role of this component.",
             "typed": false
         },
         {
             "name": "style",
             "type": [
                 "Format\\ComponentStyle",
-                "string"
+                "string",
+                "none"
             ],
             "required": false,
-            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle object that is defined at the top level of the document.",
+            "description": "An inline ComponentStyle object that defines the appearance of this component, or a string reference to a ComponentStyle object that is defined at the top level of the document.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         }
     ]

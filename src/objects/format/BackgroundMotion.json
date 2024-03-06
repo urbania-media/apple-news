@@ -6,13 +6,13 @@
     "from_class": null,
     "extends": "Format\\Behavior",
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/backgroundmotion",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/backgroundmotion.json",
     "properties": [
         {
             "name": "type",
             "type": "string",
             "required": true,
-            "description": "Always background_motion for this behavior.",
+            "description": "This behavior always has the type background_motion.",
             "value": "background_motion",
             "read_only": true,
             "typed": false

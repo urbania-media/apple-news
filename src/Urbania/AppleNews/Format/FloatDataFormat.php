@@ -5,27 +5,29 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object that allows you to specify the number of digits after the
  * decimal point for numeric values in data table cells.
  *
- * @see https://developer.apple.com/documentation/apple_news/floatdataformat
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/floatdataformat.json
  */
 class FloatDataFormat extends DataFormat
 {
-    /**
-     * Always float for a FloatDataFormat object.
-     * @var string
-     */
-    protected $type = 'float';
-
     /**
      * The number of digits that can appear after the decimal point. The
      * number will be rounded to this number of digits after the decimal.
      * @var integer
      */
     protected $decimals;
+
+    /**
+     * The type of data format for this object. This must be float for a
+     * float data format object.
+     * @var string
+     */
+    protected $type = 'float';
 
     public function __construct(array $data = [])
     {
@@ -79,11 +81,11 @@ class FloatDataFormat extends DataFormat
     public function toArray()
     {
         $data = parent::toArray();
-        if (isset($this->type)) {
-            $data['type'] = $this->type;
-        }
         if (isset($this->decimals)) {
             $data['decimals'] = $this->decimals;
+        }
+        if (isset($this->type)) {
+            $data['type'] = $this->type;
         }
         return $data;
     }

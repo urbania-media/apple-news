@@ -6,13 +6,13 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/tablerowstyle",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/tablerowstyle.json",
     "properties": [
         {
             "name": "backgroundColor",
             "type": "Color",
             "required": false,
-            "description": "The background color for the table row.",
+            "description": "The background color for the table row.\nIf this property is omitted, the background is transparent.\nThe cell background color is highest priority, followed by the column, and finally the row. All three colors are applied, meaning that non-opaque values can cause combined colors. For example, using a red row together with a blue column, both with 50% opacity, creates a purple cell.",
             "typed": false
         },
         {
@@ -33,10 +33,10 @@
             "name": "height",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "The height of the table row, as an integer in points, or using the available units for components.",
+            "description": "The height of the table row, as a number in points, or using the available units for components.\nBy default, the height of each row is determined by the height of the content in that row. See ",
             "typed": false
         }
     ]

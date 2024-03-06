@@ -53,30 +53,7 @@ class TableColumnSelectorTest extends TestCase
      */
     public static function descriptorProvider()
     {
-        return [["a string"]];
-    }
-
-    /**
-     * Test the property odd
-     * @test
-     * @dataProvider oddProvider
-     * @covers ::getOdd
-     * @covers ::setOdd
-     */
-    public function testPropertyOdd($value)
-    {
-        $object = new TableColumnSelector();
-        $object->setOdd($value);
-
-        $this->assertEquals($value, $object->getOdd());
-    }
-
-    /**
-     * Data provider for property odd
-     */
-    public static function oddProvider()
-    {
-        return [[true], [false]];
+        return [['a string']];
     }
 
     /**
@@ -98,6 +75,29 @@ class TableColumnSelectorTest extends TestCase
      * Data provider for property even
      */
     public static function evenProvider()
+    {
+        return [[true], [false]];
+    }
+
+    /**
+     * Test the property odd
+     * @test
+     * @dataProvider oddProvider
+     * @covers ::getOdd
+     * @covers ::setOdd
+     */
+    public function testPropertyOdd($value)
+    {
+        $object = new TableColumnSelector();
+        $object->setOdd($value);
+
+        $this->assertEquals($value, $object->getOdd());
+    }
+
+    /**
+     * Data provider for property odd
+     */
+    public static function oddProvider()
     {
         return [[true], [false]];
     }

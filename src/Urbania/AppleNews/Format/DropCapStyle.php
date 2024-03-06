@@ -5,12 +5,13 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for defining the drop cap text style for use in the first
  * paragraph in a text component.
  *
- * @see https://developer.apple.com/documentation/apple_news/dropcapstyle
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/dropcapstyle.json
  */
 class DropCapStyle extends BaseSdkObject
 {
@@ -41,6 +42,7 @@ class DropCapStyle extends BaseSdkObject
     /**
      * A number that indicates the characters to render in the drop cap
      * style.
+     * Default value: 1
      * @var integer
      */
     protected $numberOfCharacters;
@@ -57,6 +59,7 @@ class DropCapStyle extends BaseSdkObject
     /**
      * A number thay sets the padding of the drop cap in points. When padding
      * is applied, the drop cap is smaller than the box that surrounds it.
+     * Default value:
      * @var integer
      */
     protected $padding;

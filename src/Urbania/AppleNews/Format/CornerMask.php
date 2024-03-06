@@ -5,11 +5,12 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * The object for creating rounded corners.
  *
- * @see https://developer.apple.com/documentation/apple_news/cornermask
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/cornermask.json
  */
 class CornerMask extends BaseSdkObject
 {
@@ -28,10 +29,17 @@ class CornerMask extends BaseSdkObject
     protected $bottomRight;
 
     /**
-     * A supported unit or integer that describes the radius of the corners
-     * in points. Corner radius cannot exceed half the component width or
+     * The type of curve to use for rendering the mask’s corner.
+     * Valid values:
+     * @var string
+     */
+    protected $curve;
+
+    /**
+     * A supported unit or number that describes the radius of the corners in
+     * points. Corner radius cannot exceed half the component width or
      * height, whichever is smaller.
-     * @var string|integer
+     * @var string|integer|float
      */
     protected $radius;
 
@@ -62,6 +70,10 @@ class CornerMask extends BaseSdkObject
 
         if (isset($data['bottomRight'])) {
             $this->setBottomRight($data['bottomRight']);
+        }
+
+        if (isset($data['curve'])) {
+            $this->setCurve($data['curve']);
         }
 
         if (isset($data['radius'])) {
@@ -136,8 +148,35 @@ class CornerMask extends BaseSdkObject
     }
 
     /**
+     * Get the curve
+     * @return string
+     */
+    public function getCurve()
+    {
+        return $this->curve;
+    }
+
+    /**
+     * Set the curve
+     * @param string $curve
+     * @return $this
+     */
+    public function setCurve($curve)
+    {
+        if (is_null($curve)) {
+            $this->curve = null;
+            return $this;
+        }
+
+        Assert::oneOf($curve, ['circular', 'continuous']);
+
+        $this->curve = $curve;
+        return $this;
+    }
+
+    /**
      * Get the radius
-     * @return string|integer
+     * @return string|integer|float
      */
     public function getRadius()
     {
@@ -146,7 +185,7 @@ class CornerMask extends BaseSdkObject
 
     /**
      * Set the radius
-     * @param string|integer $radius
+     * @param string|integer|float $radius
      * @return $this
      */
     public function setRadius($radius)
@@ -237,7 +276,7 @@ class CornerMask extends BaseSdkObject
             return $this;
         }
 
-        Assert::string($type);
+        Assert::oneOf($type, ['corners']);
 
         $this->type = $type;
         return $this;
@@ -256,11 +295,12 @@ class CornerMask extends BaseSdkObject
         if (isset($this->bottomRight)) {
             $data['bottomRight'] = $this->bottomRight;
         }
+        if (isset($this->curve)) {
+            $data['curve'] = $this->curve;
+        }
         if (isset($this->radius)) {
             $data['radius'] =
-                $this->radius instanceof Arrayable
-                    ? $this->radius->toArray()
-                    : $this->radius;
+                $this->radius instanceof Arrayable ? $this->radius->toArray() : $this->radius;
         }
         if (isset($this->topLeft)) {
             $data['topLeft'] = $this->topLeft;

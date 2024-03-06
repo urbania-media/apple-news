@@ -6,56 +6,81 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/componentstyle",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/componentstyle.json",
     "properties": [
         {
             "name": "conditional",
-            "type": "array:Format\\ConditionalComponentStyle",
+            "type": [
+                "Format\\ConditionalComponentStyle",
+                "array:Format\\ConditionalComponentStyle"
+            ],
             "required": false,
-            "description": "An array of component style properties that are applied conditionally, and the conditions that cause them to be applied.",
+            "description": "An instance or array of component style properties that are applied conditionally, and the conditions that cause them to be applied.",
             "typed": false
         },
         {
             "name": "backgroundColor",
-            "type": "Color",
+            "type": [
+                "Color",
+                "none"
+            ],
             "required": false,
-            "description": "The component's background color. The value defaults to transparent.",
+            "description": "The component's background color. The value defaults to transparent. \nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {
             "name": "border",
-            "type": "Format\\Border",
+            "type": [
+                "Format\\Border",
+                "none"
+            ],
             "required": false,
-            "description": "The border for the component. Because the border is drawn inside the component, it affects the size of the content within the component. The bigger the border, the less available space for content.",
+            "description": "The border for the component. Because the border is drawn inside the component, it affects the size of the content within the component. The bigger the border, the less available space for content.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {
             "name": "fill",
-            "type": "Format\\Fill",
+            "type": [
+                "Format\\Fill",
+                "none"
+            ],
             "required": false,
-            "description": "A Fill object, such as an ImageFill, that will be applied on top of the specified backgroundColor.",
+            "description": "A Fill object, such as an , that will be applied on top of the specified backgroundColor. \nBy default, no fill is applied.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": true
         },
         {
             "name": "mask",
-            "type": "Format\\CornerMask",
+            "type": [
+                "Format\\CornerMask",
+                "none"
+            ],
             "required": false,
-            "description": "The object that defines a mask that clips the contents of the component to the specified masking behavior.",
+            "description": "The object that defines a mask that clips the contents of the component to the specified masking behavior.\nThe none value is used for conditional design elements. Adding it here has no effect.",
             "typed": false
         },
         {
             "name": "opacity",
             "type": "number",
             "required": false,
-            "description": "The opacity of the component, set as a float value between 0 (completely transparent) and 1 (completely opaque). The effects of the component\u2019s opacity are inherited by any child components. See Nesting Components in an Article.",
-            "default": 1,
+            "description": "The opacity of the component, set as a float value between  (completely transparent) and 1 (completely opaque). The effects of the component\u2019s opacity are inherited by any child components. See .",
+            "default": "1",
             "typed": false
         },
         {
             "name": "tableStyle",
-            "type": "Format\\TableStyle",
+            "type": [
+                "Format\\TableStyle",
+                "none"
+            ],
             "required": false,
-            "description": "The styling for the rows, columns, and cells of the component, if it is a DataTable or HTMLTable component.",
+            "description": "The styling for the rows, columns, and cells of the component, if it is a  or  component.\nThe none value is used for conditional design elements. Adding it here has no effect.",
+            "typed": false
+        },
+        {
+            "name": "shadow",
+            "type": "Format\\ComponentShadow",
+            "required": false,
+            "description": "The object that defines a component shadow.",
             "typed": false
         }
     ]

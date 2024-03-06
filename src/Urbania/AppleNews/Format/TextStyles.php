@@ -5,12 +5,13 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * An object containing text style objects that can be referred to inline
  * in text.
  *
- * @see https://developer.apple.com/documentation/apple_news/articledocument/textstyles
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/articledocument/textstyles.json
  */
 class TextStyles extends BaseSdkObject
 {
@@ -52,15 +53,17 @@ class TextStyles extends BaseSdkObject
         }
         Assert::allIsSdkObject($styles, TextStyle::class);
 
-        $this->styles = array_reduce(
-            array_keys($styles),
-            function ($array, $key) use ($styles) {
-                $item = $styles[$key];
-                $array[$key] = is_array($item) ? new TextStyle($item) : $item;
-                return $array;
-            },
-            []
-        );
+        $this->styles = is_array($styles)
+            ? array_reduce(
+                array_keys($styles),
+                function ($array, $key) use ($styles) {
+                    $item = $styles[$key];
+                    $array[$key] = Utils::isAssociativeArray($item) ? new TextStyle($item) : $item;
+                    return $array;
+                },
+                []
+            )
+            : $styles;
         return $this;
     }
 

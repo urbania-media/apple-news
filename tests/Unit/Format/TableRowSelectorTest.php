@@ -30,30 +30,30 @@ class TableRowSelectorTest extends TestCase
      */
     public static function descriptorProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
-     * Test the property rowIndex
+     * Test the property even
      * @test
-     * @dataProvider rowIndexProvider
-     * @covers ::getRowIndex
-     * @covers ::setRowIndex
+     * @dataProvider evenProvider
+     * @covers ::getEven
+     * @covers ::setEven
      */
-    public function testPropertyRowIndex($value)
+    public function testPropertyEven($value)
     {
         $object = new TableRowSelector();
-        $object->setRowIndex($value);
+        $object->setEven($value);
 
-        $this->assertEquals($value, $object->getRowIndex());
+        $this->assertEquals($value, $object->getEven());
     }
 
     /**
-     * Data provider for property rowIndex
+     * Data provider for property even
      */
-    public static function rowIndexProvider()
+    public static function evenProvider()
     {
-        return [[1]];
+        return [[true], [false]];
     }
 
     /**
@@ -80,25 +80,25 @@ class TableRowSelectorTest extends TestCase
     }
 
     /**
-     * Test the property even
+     * Test the property rowIndex
      * @test
-     * @dataProvider evenProvider
-     * @covers ::getEven
-     * @covers ::setEven
+     * @dataProvider rowIndexProvider
+     * @covers ::getRowIndex
+     * @covers ::setRowIndex
      */
-    public function testPropertyEven($value)
+    public function testPropertyRowIndex($value)
     {
         $object = new TableRowSelector();
-        $object->setEven($value);
+        $object->setRowIndex($value);
 
-        $this->assertEquals($value, $object->getEven());
+        $this->assertEquals($value, $object->getRowIndex());
     }
 
     /**
-     * Data provider for property even
+     * Data provider for property rowIndex
      */
-    public static function evenProvider()
+    public static function rowIndexProvider()
     {
-        return [[true], [false]];
+        return [[1]];
     }
 }

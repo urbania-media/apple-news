@@ -6,20 +6,13 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/formattedtext",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/formattedtext.json",
     "properties": [
-        {
-            "name": "text",
-            "type": "string",
-            "required": true,
-            "description": "The text, including any HTML tags.",
-            "typed": false
-        },
         {
             "name": "type",
             "type": "string",
             "required": true,
-            "description": "Always formatted_text for this object.",
+            "description": "The type must be formatted_text.",
             "value": "formatted_text",
             "read_only": true,
             "typed": false
@@ -28,14 +21,14 @@
             "name": "additions",
             "type": "array:Format\\Addition",
             "required": false,
-            "description": "An array of Addition objects that supply additional information for ranges of text in the text property.",
+            "description": "An array of addition objects that supply additional information for ranges of text in the text property.\nThis property is ignored when format is set to html.",
             "typed": false
         },
         {
             "name": "format",
             "type": "enum:string",
             "required": false,
-            "description": "The formatting or markup method applied to the text. If format is set to html, neither additions nor inlineTextStyles are supported.",
+            "description": "The formatting or markup method applied to the text. If format is set to html, neither additions nor inlineTextStyles is supported.",
             "default": "none",
             "enum_values": [
                 "html",
@@ -47,7 +40,14 @@
             "name": "inlineTextStyles",
             "type": "array:Format\\InlineTextStyle",
             "required": false,
-            "description": "An array specifying ranges of characters and a TextStyle object to apply to each range.",
+            "description": "An array specifying ranges of characters and a  object to apply to each range.\nThis property is ignored when format is set to html.",
+            "typed": false
+        },
+        {
+            "name": "text",
+            "type": "string",
+            "required": true,
+            "description": "The text, including any HTML tags.",
             "typed": false
         },
         {
@@ -57,7 +57,7 @@
                 "string"
             ],
             "required": false,
-            "description": "A component TextStyle object, or the name string of one of your styles in the ArticleDocument.componentTextStyles object.",
+            "description": "Either a component text style object, or the name string of one of your styles in the  object.",
             "typed": false
         }
     ]

@@ -53,7 +53,7 @@ class DropCapStyleTest extends TestCase
      */
     public static function backgroundColorProvider()
     {
-        return [["#fff"], ["#000"]];
+        return [['#fff'], ['#000']];
     }
 
     /**
@@ -76,7 +76,7 @@ class DropCapStyleTest extends TestCase
      */
     public static function fontNameProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -168,6 +168,6 @@ class DropCapStyleTest extends TestCase
      */
     public static function textColorProvider()
     {
-        return [["#fff"], ["#000"]];
+        return [['#fff'], ['#000']];
     }
 }

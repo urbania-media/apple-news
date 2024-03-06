@@ -30,7 +30,7 @@ class SectionLinksTest extends TestCase
      */
     public static function channelProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 
     /**
@@ -53,6 +53,6 @@ class SectionLinksTest extends TestCase
      */
     public static function selfProvider()
     {
-        return [["a string"]];
+        return [['a string']];
     }
 }

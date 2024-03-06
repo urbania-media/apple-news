@@ -5,11 +5,12 @@ namespace Urbania\AppleNews\Api\Objects;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * See which objects make up the channel response.
  *
- * @see https://developer.apple.com/documentation/apple_news/channelresponse
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/channelresponse.json
  */
 class ChannelResponse extends Channel
 {
@@ -48,7 +49,7 @@ class ChannelResponse extends Channel
 
         Assert::isSdkObject($links, ChannelLinks::class);
 
-        $this->links = is_array($links) ? new ChannelLinks($links) : $links;
+        $this->links = Utils::isAssociativeArray($links) ? new ChannelLinks($links) : $links;
         return $this;
     }
 
@@ -61,9 +62,7 @@ class ChannelResponse extends Channel
         $data = parent::toArray();
         if (isset($this->links)) {
             $data['links'] =
-                $this->links instanceof Arrayable
-                    ? $this->links->toArray()
-                    : $this->links;
+                $this->links instanceof Arrayable ? $this->links->toArray() : $this->links;
         }
         return $data;
     }

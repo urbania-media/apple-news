@@ -6,46 +6,39 @@
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/componentlayout",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/componentlayout.json",
     "properties": [
         {
             "name": "columnSpan",
             "type": "integer",
             "required": false,
-            "description": "A number that indicates how many columns the component spans, based on the number of columns in the document.",
-            "minimum": 1,
+            "description": "A number that indicates how many columns the component spans, based on the number of columns in the document. \nBy default, the component spans the entire width of the document or the width of its container component.",
+            "minimum": "1",
             "typed": false
         },
         {
             "name": "columnStart",
             "type": "integer",
             "required": false,
-            "description": "A number that indicates which column the component\u2018s start position is in, based on the number of columns in the document or parent container.",
-            "minimum": 0,
+            "description": "A number that indicates which column the component\u2018s start position is in, based on the number of columns in the document or parent container. \nBy default, the component starts in the first column (note that the first column is 0, not 1).",
+            "minimum": "0",
             "typed": false
         },
         {
             "name": "conditional",
-            "type": "array:Format\\ConditionalComponentLayout",
-            "required": false,
-            "description": "An array of component layout properties that can be applied conditionally, and the conditions that cause them to be applied.",
-            "typed": false
-        },
-        {
-            "name": "contentInset",
             "type": [
-                "Format\\ContentInset",
-                "boolean"
+                "Format\\ConditionalComponentLayout",
+                "array:Format\\ConditionalComponentLayout"
             ],
             "required": false,
-            "description": "A value that defines a content inset for the component. If applied, the inset is equivalent to half the document gutter. For example, if the article's layout sets the document gutter to 40pt, the content inset is 20 points.",
+            "description": "An instance or array of component layout properties that can be applied conditionally, and the conditions that cause them to be applied.",
             "typed": false
         },
         {
             "name": "horizontalContentAlignment",
             "type": "enum:string",
             "required": false,
-            "description": "A string value that sets the alignment of the content within the component. This property applies only when the width of the content is less than the width of the component.",
+            "description": "A string value that sets the alignment of the content within the component. This property applies only when the width of the content is less than the width of the component.\nThis property is supported for , , , , and . All other components ignore this property.",
             "default": "center",
             "enum_values": [
                 "left",
@@ -58,7 +51,7 @@
             "name": "ignoreDocumentGutter",
             "type": "enum:boolean|string",
             "required": false,
-            "description": "A value that indicates whether the gutters (if any) to the left and right of the component should be ignored. The gutter size is defined in the Layout object at the root level of the document.",
+            "description": "A value that indicates whether the gutters (if any) to the left and right of the component should be ignored. The gutter size is defined in the Layout object at the root level of the document. \nUse this option if you want to position two components right next to each other without a gutter between them. This property applies only when a gutter actually exists to the left or right of the component. The first column does not have a left gutter, and the last column does not have a right gutter.\nValid values:\nYou can also set this property to true to indicate that both gutters should be ignored, or set it to false to ignore none of the gutters. By default, none of the gutters are ignored.",
             "enum_values": [
                 "none",
                 "left",
@@ -73,7 +66,22 @@
             "name": "ignoreDocumentMargin",
             "type": "enum:boolean|string",
             "required": false,
-            "description": "A value that indicates whether a document\u2019s margins should be respected or ignored by the parent container. Ignoring document margins will position the component at the edge of the display. This property affects the layout only if the component is in the first or last column.",
+            "description": "A value that indicates whether the component should respect or ignore the document\u2019s margins. Ignoring document margins positions the component based on the document's width and margin. \nValid values:\nInstead of specifying margins, you can set this property to true to indicate that both margins should be ignored, or set it to false to ignore neither of the margins. By default, neither margin is  ignored. \nThe layout of a parent component will always constrain any child components. As such, setting ignoreDocumentMargin to true for a component will have no effect if it is inside of a container with ignoreDocumentMargin set to false.\nSpecifying a value other than none for ignoreViewportPadding will take precedence over any value defined for ignoreDocumentMargin.\nOn a device with screen size wider than the document width and margin combined, a component with ignoreDocumentMargin property set to true will extend the width of the document plus the margin, but will not extend into the viewport padding.",
+            "enum_values": [
+                "none",
+                "left",
+                "right",
+                "both",
+                true,
+                false
+            ],
+            "typed": false
+        },
+        {
+            "name": "ignoreViewportPadding",
+            "type": "enum:boolean|string",
+            "required": false,
+            "description": "A value that indicates whether the component should respect or ignore the viewport padding. Ignoring viewport padding positions the component at the edge of the display screen. This property affects the layout only if the component is in the first or last column. \nValid values:\nInstead of specifying padding, you can set this property to true to indicate that paddings on both sides should be ignored, or set it to false to ignore neither padding. By default, neither padding is ignored.\nThe layout of a parent component will always constrain any child components. Setting ignoreViewportPadding to true for a component will have no effect if it is inside of a container with ignoreViewportPadding set to false.\nIf ignoreViewportPadding is set to true, left, right, or both it overrides the layout\u2019s ignoreDocumentMargin value and spans the entire screen.\nIf ignoreViewportPadding is set to none, the value of ignoreDocumentMargin is accepted. \nBy default, components do not ignore the viewport padding, even if you previously specified ignoreDocumentMargin to span the entire width of the screen. To achieve the same functionality, you must update your article to use ignoreViewportPadding.",
             "enum_values": [
                 "none",
                 "left",
@@ -98,40 +106,40 @@
             "name": "maximumContentWidth",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "A value that sets the maximum width of the content within the component. Specify this value as an integer in points or using one of the available units of measure for components. See Specifying Measurements for Components.",
+            "description": "A value that sets the maximum width of the content within the component. Specify this value as a number in points or using one of the available units of measure for components. See .\nThis property is supported for , ,, , and . All other components ignore this property.",
             "typed": false
         },
         {
             "name": "minimumHeight",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "A value that sets the minimum height of the component. A component is taller than its defined minimumHeight when the contents require the component to be taller. The minimum height can be defined as an integer in points or using one of the available units of measure for components. See Specifying Measurements for Components.",
+            "description": "A value that sets the minimum height of the component. A component is taller than its defined minimumHeight when the contents require the component to be taller. The minimum height can be defined as a number in points or using one of the available units of measure for components. See .",
             "typed": false
         },
         {
             "name": "minimumWidth",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "A value that defines the minimum width of the layout when used within a  with  as the specified contentDisplay type. The minimum width can be defined as an integer in points or using one of the available units of measure for components. See Specifying Measurements for Components.",
+            "description": "A value that defines the minimum width of the layout when used within a  with  as the specified contentDisplay type. The minimum width can be defined as a number in points or using one of the available units of measure for components. See .",
             "typed": false
         },
         {
             "name": "maximumWidth",
             "type": [
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "A value that defines the maximum width of the layout when used within a  with  as the specified contentDisplay type. The maximum width can be defined as an integer in points or using one of the available units of measure for components. See Specifying Measurements for Components.",
+            "description": "A value that defines the maximum width of the layout when used within a  with  as the specified contentDisplay type. The maximum width can be defined as a number in points or using one of the available units of measure for components. See .",
             "typed": false
         },
         {
@@ -139,10 +147,10 @@
             "type": [
                 "Format\\Padding",
                 "SupportedUnits",
-                "integer"
+                "number"
             ],
             "required": false,
-            "description": "A value that defines the padding between the content of the component and the edges of the component. Padding can be defined as an integer in points or using one of the available units of measure for components. See Specifying Measurements for Components.",
+            "description": "A value that defines the padding between the content of the component and the edges of the component. Padding can be defined as a number in points or using one of the available units of measure for components. See .",
             "typed": false
         }
     ]

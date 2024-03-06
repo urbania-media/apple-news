@@ -30,7 +30,7 @@ class TableCellStyleTest extends TestCase
      */
     public static function backgroundColorProvider()
     {
-        return [["#fff"], ["#000"]];
+        return [['#fff'], ['#000']];
     }
 
     /**
@@ -99,7 +99,7 @@ class TableCellStyleTest extends TestCase
      */
     public static function heightProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**
@@ -122,7 +122,7 @@ class TableCellStyleTest extends TestCase
      */
     public static function horizontalAlignmentProvider()
     {
-        return [["left"], ["center"], ["right"]];
+        return [['left'], ['center'], ['right']];
     }
 
     /**
@@ -145,7 +145,7 @@ class TableCellStyleTest extends TestCase
      */
     public static function minimumWidthProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**
@@ -168,13 +168,7 @@ class TableCellStyleTest extends TestCase
      */
     public static function paddingProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\Padding()],
-            ["1vh"],
-            [1],
-            ["1vmin"],
-            [1]
-        ];
+        return [[new \Urbania\AppleNews\Format\Padding()], ['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**
@@ -197,10 +191,7 @@ class TableCellStyleTest extends TestCase
      */
     public static function textStyleProvider()
     {
-        return [
-            [new \Urbania\AppleNews\Format\ComponentTextStyle()],
-            ["a string"]
-        ];
+        return [[new \Urbania\AppleNews\Format\ComponentTextStyle()], ['a string']];
     }
 
     /**
@@ -223,7 +214,7 @@ class TableCellStyleTest extends TestCase
      */
     public static function verticalAlignmentProvider()
     {
-        return [["top"], ["center"], ["bottom"]];
+        return [['top'], ['center'], ['bottom']];
     }
 
     /**

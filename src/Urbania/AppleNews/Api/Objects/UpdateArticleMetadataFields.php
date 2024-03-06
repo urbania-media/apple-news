@@ -5,81 +5,110 @@ namespace Urbania\AppleNews\Api\Objects;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
- * See the metadata fields for the update article request.
+ * See the metadata fields for the Update an Article request.
  *
- * @see https://developer.apple.com/documentation/apple_news/update_article_metadata_fields
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/update_article_metadata_fields.json
  */
 class UpdateArticleMetadataFields extends BaseSdkObject
 {
     /**
-     * Text to include below the article excerpt in the channel view, such as
-     * a byline or category label.
+     * The current revision token for the article. The value of this field
+     * must match the latest revision from an earlier Create, Read, or Update
+     * Article call. This field prevents multiple users from updating an
+     * article simultaneously, which results in data loss.
+     * @var string
+     */
+    protected $revision;
+
+    /**
+     * The text to include below the article excerpt in the channel view,
+     * such as a byline or category label.
      * @var string
      */
     protected $accessoryText;
 
     /**
-     * Indicates whether or not this article should be considered for
-     * featuring in News. See (To be Deleted) Submitting Articles with Cover
-     * Art for Featured Stories.
+     * A Boolean that indicates whether this article should be considered for
+     * featuring in Apple News.
      * @var boolean
      */
     protected $isCandidateToBeFeatured;
 
     /**
-     * Indicates whether or not the article should be temporarily hidden from
-     * display in the News feed.
+     * A Boolean that indicates whether the article should be temporarily
+     * hidden from display in the News feed. Note that a hidden article is
+     * accessible if you have a direct link to the article.
      * @var boolean
      */
     protected $isHidden;
 
     /**
-     * Indicates whether this article should be public (live) or should be a
-     * preview that is only visible to members of your channel. Set isPreview
-     * to false to publish the article right away and make it visible to all
-     * News users.
-     * If your channel has not yet been approved to publish articles in Apple
-     * News Format, setting isPreview to false will result in an
+     * A Boolean that indicates whether this article should be public (live)
+     * or should be a preview that’s only visible to members of your
+     * channel. Set isPreview to false to publish the article immediately and
+     * make it visible to all News users.
+     * If your channel hasn’t yet been approved to publish articles in
+     * Apple News Format, setting isPreview to false results in an
      * ONLY_PREVIEW_ALLOWED error.
-     * Default value: true if your channel has not yet been approved to
-     * publish articles in Apple News Format; false if your channel has been
-     * approved.
      * @var boolean
      */
     protected $isPreview;
 
     /**
-     * Indicates whether this article consists of sponsored content for
-     * promotional purposes. Sponsored content must be marked as such;
-     * channels that do not follow this policy may be suspended.
+     * A Boolean that indicates whether this article consists of sponsored
+     * content for promotional purposes. You must mark sponsored content as
+     * such; channels that don’t follow this policy may be suspended.
+     * When using isSponsored, if you don’t want the sponsored article to
+     * appear in your channel’s feed, set sections to [] (an empty array).
      * @var boolean
      */
     protected $isSponsored;
 
+    /** @var \Urbania\AppleNews\Api\Objects\ArticleLinks */
+    protected $links;
+
     /**
-     * Indicates the viewing audience for the content. Note that a MATURE
-     * rating indicates explicit content that is appropriate for a specific
-     * audience only.
+     * A string that indicates the viewing audience for the content.
+     * MATURE indicates explicit content that’s only appropriate for a
+     * specific audience.
+     * By default, the article inherits the value you set for your channel in
+     * News Publisher.
      * @var string
      */
     protected $maturityRating;
 
     /**
-     * The current revision token for the article. The value of this field
-     * must match the latest revision from an earlier Create, Read, or Update
-     * Article call. This field prevents multiple users from updating an
-     * article simultaneously, which would result in data loss.
-     * @var string
+     * The target country codes required for publishing the updated article.
+     * If you don’t specify the targetTerritoryCountryCodes in , or in
+     * Update Article Metadata Fields, the updated article is visible in all
+     * of your channel's territories.
+     * If you specify targetTerritoryCountryCodes in Create Article Metadata
+     * Fields and no targetTerritoryCountryCodes is specified in Update
+     * Article Metadata Fields, the article is visible in all the countries
+     * specified in Create Article Metadata Fields.
+     * If you specify targetTerritoryCountryCodes in Create Article Metadata
+     * Fields, and a subset of country codes are specified in Update Article
+     * Metadata Fields, the article is visible only in the subset of
+     * countries specified in Update Article Metadata Fields.
+     * Country codes must be in ISO 3166-1 alpha-2 code format; for example,
+     * AU for Australia. For a complete list of ISO country codes, see .
+     * If you specify a country code that isn’t not defined in your
+     * channel's territories, the  ARTICLE_TERRITORY_NOT_ALLOWED error is
+     * generated by the server. If you specify an invalid country code, the
+     * server generates an INVALID_ARTICLE_TERRITORY error.
+     * @var string[]
      */
-    protected $revision;
-
-    /** @var \Urbania\AppleNews\Api\Objects\ArticleLinks */
-    protected $links;
+    protected $targetTerritoryCountryCodes;
 
     public function __construct(array $data = [])
     {
+        if (isset($data['revision'])) {
+            $this->setRevision($data['revision']);
+        }
+
         if (isset($data['accessoryText'])) {
             $this->setAccessoryText($data['accessoryText']);
         }
@@ -100,12 +129,16 @@ class UpdateArticleMetadataFields extends BaseSdkObject
             $this->setIsSponsored($data['isSponsored']);
         }
 
+        if (isset($data['links'])) {
+            $this->setLinks($data['links']);
+        }
+
         if (isset($data['maturityRating'])) {
             $this->setMaturityRating($data['maturityRating']);
         }
 
-        if (isset($data['revision'])) {
-            $this->setRevision($data['revision']);
+        if (isset($data['targetTerritoryCountryCodes'])) {
+            $this->setTargetTerritoryCountryCodes($data['targetTerritoryCountryCodes']);
         }
 
         if (isset($data['links'])) {
@@ -271,7 +304,7 @@ class UpdateArticleMetadataFields extends BaseSdkObject
 
         Assert::isSdkObject($links, ArticleLinks::class);
 
-        $this->links = is_array($links) ? new ArticleLinks($links) : $links;
+        $this->links = Utils::isAssociativeArray($links) ? new ArticleLinks($links) : $links;
         return $this;
     }
 
@@ -296,7 +329,7 @@ class UpdateArticleMetadataFields extends BaseSdkObject
             return $this;
         }
 
-        Assert::oneOf($maturityRating, ["KIDS", "MATURE", "GENERAL"]);
+        Assert::oneOf($maturityRating, ['KIDS', 'MATURE', 'GENERAL']);
 
         $this->maturityRating = $maturityRating;
         return $this;
@@ -325,12 +358,72 @@ class UpdateArticleMetadataFields extends BaseSdkObject
     }
 
     /**
+     * Add an item to targetTerritoryCountryCodes
+     * @param string $item
+     * @return $this
+     */
+    public function addTargetTerritoryCountryCode($item)
+    {
+        return $this->setTargetTerritoryCountryCodes(
+            !is_null($this->targetTerritoryCountryCodes)
+                ? array_merge($this->targetTerritoryCountryCodes, [$item])
+                : [$item]
+        );
+    }
+
+    /**
+     * Add items to targetTerritoryCountryCodes
+     * @param array $items
+     * @return $this
+     */
+    public function addTargetTerritoryCountryCodes($items)
+    {
+        Assert::isArray($items);
+        return $this->setTargetTerritoryCountryCodes(
+            !is_null($this->targetTerritoryCountryCodes)
+                ? array_merge($this->targetTerritoryCountryCodes, $items)
+                : $items
+        );
+    }
+
+    /**
+     * Get the targetTerritoryCountryCodes
+     * @return string[]
+     */
+    public function getTargetTerritoryCountryCodes()
+    {
+        return $this->targetTerritoryCountryCodes;
+    }
+
+    /**
+     * Set the targetTerritoryCountryCodes
+     * @param string[] $targetTerritoryCountryCodes
+     * @return $this
+     */
+    public function setTargetTerritoryCountryCodes($targetTerritoryCountryCodes)
+    {
+        if (is_null($targetTerritoryCountryCodes)) {
+            $this->targetTerritoryCountryCodes = null;
+            return $this;
+        }
+
+        Assert::isArray($targetTerritoryCountryCodes);
+        Assert::allString($targetTerritoryCountryCodes);
+
+        $this->targetTerritoryCountryCodes = $targetTerritoryCountryCodes;
+        return $this;
+    }
+
+    /**
      * Get the object as array
      * @return array
      */
     public function toArray()
     {
         $data = [];
+        if (isset($this->revision)) {
+            $data['revision'] = $this->revision;
+        }
         if (isset($this->accessoryText)) {
             $data['accessoryText'] = $this->accessoryText;
         }
@@ -346,17 +439,19 @@ class UpdateArticleMetadataFields extends BaseSdkObject
         if (isset($this->isSponsored)) {
             $data['isSponsored'] = $this->isSponsored;
         }
+        if (isset($this->links)) {
+            $data['links'] =
+                $this->links instanceof Arrayable ? $this->links->toArray() : $this->links;
+        }
         if (isset($this->maturityRating)) {
             $data['maturityRating'] = $this->maturityRating;
         }
-        if (isset($this->revision)) {
-            $data['revision'] = $this->revision;
+        if (isset($this->targetTerritoryCountryCodes)) {
+            $data['targetTerritoryCountryCodes'] = $this->targetTerritoryCountryCodes;
         }
         if (isset($this->links)) {
             $data['links'] =
-                $this->links instanceof Arrayable
-                    ? $this->links->toArray()
-                    : $this->links;
+                $this->links instanceof Arrayable ? $this->links->toArray() : $this->links;
         }
         return $data;
     }

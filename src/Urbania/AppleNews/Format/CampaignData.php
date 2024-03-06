@@ -5,11 +5,12 @@ namespace Urbania\AppleNews\Format;
 use Illuminate\Contracts\Support\Arrayable;
 use Urbania\AppleNews\Support\Assert;
 use Urbania\AppleNews\Support\BaseSdkObject;
+use Urbania\AppleNews\Support\Utils;
 
 /**
  * Custom key-value pairs for use in advertisement campaigns.
  *
- * @see https://developer.apple.com/documentation/apple_news/metadata/campaigndata
+ * @see https://developer.apple.com/tutorials/data/documentation/apple_news/metadata/campaigndata.json
  */
 class CampaignData extends BaseSdkObject
 {

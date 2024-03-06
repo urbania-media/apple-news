@@ -57,6 +57,29 @@ class CornerMaskTest extends TestCase
     }
 
     /**
+     * Test the property curve
+     * @test
+     * @dataProvider curveProvider
+     * @covers ::getCurve
+     * @covers ::setCurve
+     */
+    public function testPropertyCurve($value)
+    {
+        $object = new CornerMask();
+        $object->setCurve($value);
+
+        $this->assertEquals($value, $object->getCurve());
+    }
+
+    /**
+     * Data provider for property curve
+     */
+    public static function curveProvider()
+    {
+        return [['circular'], ['continuous']];
+    }
+
+    /**
      * Test the property radius
      * @test
      * @dataProvider radiusProvider
@@ -76,7 +99,7 @@ class CornerMaskTest extends TestCase
      */
     public static function radiusProvider()
     {
-        return [["1vh"], [1], ["1vmin"], [1]];
+        return [['1vh'], [1], ['1vmin'], [1.1], [1]];
     }
 
     /**
@@ -145,6 +168,6 @@ class CornerMaskTest extends TestCase
      */
     public static function typeProvider()
     {
-        return [["a string"]];
+        return [['corners']];
     }
 }

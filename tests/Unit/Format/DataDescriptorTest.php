@@ -30,14 +30,7 @@ class DataDescriptorTest extends TestCase
      */
     public static function dataTypeProvider()
     {
-        return [
-            ["string"],
-            ["text"],
-            ["image"],
-            ["number"],
-            ["integer"],
-            ["float"]
-        ];
+        return [['string'], ['text'], ['image'], ['number'], ['integer'], ['float']];
     }
 
     /**
@@ -60,7 +53,30 @@ class DataDescriptorTest extends TestCase
      */
     public static function keyProvider()
     {
-        return [["a string"]];
+        return [['a string']];
+    }
+
+    /**
+     * Test the property label
+     * @test
+     * @dataProvider labelProvider
+     * @covers ::getLabel
+     * @covers ::setLabel
+     */
+    public function testPropertyLabel($value)
+    {
+        $object = new DataDescriptor();
+        $object->setLabel($value);
+
+        $this->assertEquals($value, $object->getLabel());
+    }
+
+    /**
+     * Data provider for property label
+     */
+    public static function labelProvider()
+    {
+        return [[new \Urbania\AppleNews\Format\FormattedText()], ['a string']];
     }
 
     /**
@@ -106,29 +122,6 @@ class DataDescriptorTest extends TestCase
      */
     public static function identifierProvider()
     {
-        return [["a string"]];
-    }
-
-    /**
-     * Test the property label
-     * @test
-     * @dataProvider labelProvider
-     * @covers ::getLabel
-     * @covers ::setLabel
-     */
-    public function testPropertyLabel($value)
-    {
-        $object = new DataDescriptor();
-        $object->setLabel($value);
-
-        $this->assertEquals($value, $object->getLabel());
-    }
-
-    /**
-     * Data provider for property label
-     */
-    public static function labelProvider()
-    {
-        return [[new \Urbania\AppleNews\Format\FormattedText()], ["a string"]];
+        return [['a string']];
     }
 }

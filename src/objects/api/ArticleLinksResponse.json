@@ -1,12 +1,12 @@
 {
-    "name": "Api\\Objects\\ArticleLinks",
-    "description": "See the links returned by the article endpoints.",
-    "version": "1.0.0+",
+    "name": "Api\\Objects\\ArticleLinksResponse",
+    "description": "See the links the article endpoints returned.",
+    "version": "2.2.0+",
     "deprecated": false,
     "from_class": null,
     "extends": null,
     "typed": null,
-    "url": "https:\/\/developer.apple.com\/documentation\/apple_news\/articlelinks",
+    "url": "https:\/\/developer.apple.com\/tutorials\/data\/documentation\/apple_news\/articlelinksresponse.json",
     "properties": [
         {
             "name": "channel",
@@ -19,14 +19,14 @@
             "name": "sections",
             "type": "array:string",
             "required": false,
-            "description": "The sections, if any, in which this article appears.",
+            "description": "The URL of the sections, if any, in which this article appears.",
             "typed": false
         },
         {
             "name": "self",
             "type": "string",
             "required": false,
-            "description": "The URL at which this resource can be read, updated, and deleted.",
+            "description": "The URL at which you can read, update, or delete the article.",
             "typed": false
         }
     ]
