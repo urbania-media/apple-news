@@ -479,10 +479,7 @@ class Article extends BaseObject implements ArticleContract
     public function toArray()
     {
         $document = !is_null($this->documentWithTheme) ? $this->documentWithTheme : $this->document;
-        return [
-            'metadata' => $this->getMetadata(),
-            'document' => $document,
-        ];
+        return isset($document) ? $document->toArray() : [];
     }
 
     /**
