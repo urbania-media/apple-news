@@ -20,7 +20,7 @@ class ArticlesClient
     /**
      * Find an article by the ID
      * @param  string $articleId The article ID
-     * @return ArticleResponse The article
+     * @return Response The article
      */
     public function find($articleId)
     {
@@ -39,7 +39,7 @@ class ArticlesClient
      * Search ofr article in a channel
      * @param  array  $query     The query parameters
      * @param  string $channelId The channel ID
-     * @return ArticleResponse The list of articles
+     * @return Response The list of articles
      */
     public function search(array $query = [], $channelId = null)
     {
@@ -66,7 +66,7 @@ class ArticlesClient
      * Create an Article
      * @param  Article $article   The article object
      * @param  string  $channelId The channel ID
-     * @return ArticleResponse The new article
+     * @return Response The new article
      */
     public function create(Article $article, $channelId = null)
     {
@@ -90,7 +90,7 @@ class ArticlesClient
     /**
      * Update an Article
      * @param  Article $article   The article object
-     * @return ArticleResponse The updated article
+     * @return Response The updated article
      */
     public function update(Article $article, $articleId = null)
     {
