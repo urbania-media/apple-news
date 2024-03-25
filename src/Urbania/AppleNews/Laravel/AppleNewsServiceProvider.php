@@ -39,7 +39,7 @@ class AppleNewsServiceProvider extends BaseServiceProvider
         // Publish
         $this->publishes(
             [
-                $configPath => config_path('apple-news.php')
+                $configPath => config_path('apple-news.php'),
             ],
             'config'
         );
@@ -90,6 +90,15 @@ class AppleNewsServiceProvider extends BaseServiceProvider
                 return $this->app['config']->get('apple-news.channel_id');
             });
 
+        $this->app
+            ->when(\Urbania\AppleNews\Laravel\Api::class)
+            ->needs('$opts')
+            ->give(function () {
+                return [
+                    'debug' => $this->app['config']->get('apple-news.debug', false),
+                ];
+            });
+
         $this->app->bind(
             \Urbania\AppleNews\Contracts\Api::class,
             \Urbania\AppleNews\Laravel\Api::class
@@ -98,9 +107,7 @@ class AppleNewsServiceProvider extends BaseServiceProvider
 
     public function registerArticle()
     {
-        $this->app->bind(\Urbania\AppleNews\Contracts\Article::class, function (
-            $app
-        ) {
+        $this->app->bind(\Urbania\AppleNews\Contracts\Article::class, function ($app) {
             $defaults = value($app['config']->get('apple-news.article', []));
             $article = new \Urbania\AppleNews\Article($defaults);
             return $article;

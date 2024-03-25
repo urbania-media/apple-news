@@ -23,7 +23,7 @@ return [
         'version' => '1.7',
         'layout' => [
             'columns' => 12,
-            'width' => 1024
+            'width' => 1024,
         ],
     ],
 
@@ -44,7 +44,7 @@ return [
             'driver' => 'html',
 
             // Any article defaults that will override the global article defaults
-            'article' => null
+            'article' => null,
         ],
 
         'wordpress' => [
@@ -63,7 +63,9 @@ return [
             'postUrlPattern' => null,
 
             // Any article defaults that will override the global article defaults
-            'article' => null
-        ]
-    ]
+            'article' => null,
+        ],
+    ],
+
+    'debug' => env('APPLENEWS_DEBUG', false),
 ];

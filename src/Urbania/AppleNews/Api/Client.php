@@ -6,6 +6,7 @@ use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Exception\ClientException;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class Client
 {
@@ -13,13 +14,18 @@ class Client
     protected $key;
     protected $handler;
     protected $client;
+    protected $hmacMiddleware;
 
     public function __construct($apiKey, $apiSecret, $opts = [])
     {
-        $this->options = array_merge([
-            'base_uri' => 'https://news-api.apple.com',
-            'middlewares' => [],
-        ], $opts);
+        $this->options = array_merge(
+            [
+                'base_uri' => 'https://news-api.apple.com',
+                'middlewares' => [],
+                'debug' => false,
+            ],
+            $opts
+        );
         $this->hmacMiddleware = $this->createHmacMiddleware($apiKey, $apiSecret);
         $this->handler = $this->createHandlerStack($this->hmacMiddleware);
         $this->client = $this->createClient($this->handler);
@@ -53,16 +59,29 @@ class Client
 
     public function makeRequest($path, $method = 'GET', $params = [])
     {
+        $debug = data_get($this->options, 'debug', false);
         try {
-            $response = $this->client->request($method, $path, $method === 'GET' ? [
-                'query' => $params,
-            ] : [
-                'multipart' => $params,
-            ]);
+            $response = $this->client->request(
+                $method,
+                $path,
+                $method === 'GET'
+                    ? [
+                        'query' => $params,
+                    ]
+                    : [
+                        'multipart' => $params,
+                    ]
+            );
             return new Response($response);
         } catch (ClientException $e) {
+            if ($debug) {
+                Log::error($e);
+            }
             return new Response($e->getResponse());
         } catch (Exception $e) {
+            if ($debug) {
+                Log::error($e);
+            }
             return null;
         }
     }
