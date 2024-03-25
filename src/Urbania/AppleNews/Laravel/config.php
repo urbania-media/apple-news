@@ -67,5 +67,5 @@ return [
         ],
     ],
 
-    'debug' => env('APPLENEWS_DEBUG', false),
+    'debug' => env('APPLE_NEWS_DEBUG', false),
 ];
