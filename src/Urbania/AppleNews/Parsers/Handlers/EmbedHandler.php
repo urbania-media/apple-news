@@ -27,11 +27,15 @@ class EmbedHandler implements HtmlHandler
     protected function getEmbedUrl($block)
     {
         $url = parse_url($block['attributes']['src']);
-        return sprintf(
+        $url = sprintf(
             '%s//%s%s',
             isset($url['scheme']) ? $url['scheme'] . ':' : 'https:',
             $url['host'],
             $url['path']
         );
+        if (preg_match('/youtube\.com\/shorts\/([^/]+)$/', $url, $matches) === 1) {
+            $url = 'https://youtube.com/watch?v=' . $matches[1];
+        }
+        return $url;
     }
 }
