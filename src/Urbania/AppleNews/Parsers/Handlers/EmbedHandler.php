@@ -34,7 +34,7 @@ class EmbedHandler implements HtmlHandler
             $url['path']
         );
         if (preg_match('/youtube\.com\/shorts\/([^\/]+)$/', $url, $matches) === 1) {
-            $url = 'https://youtube.com/watch?v=' . $matches[1];
+            $url = 'https://youtube.com/embed/' . $matches[1];
         }
         return $url;
     }
