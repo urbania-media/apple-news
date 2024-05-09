@@ -26,9 +26,7 @@ class ArticlesClient
     {
         Assert::uuid($articleId);
 
-        $response = $this->client->makeRequest(
-            sprintf('/articles/%s', $articleId)
-        );
+        $response = $this->client->makeRequest(sprintf('/articles/%s', $articleId));
 
         $response->setObjectType(ArticleResponse::class);
 
@@ -107,6 +105,20 @@ class ArticlesClient
         );
 
         $response->setObjectType(ArticleResponse::class);
+
+        return $response;
+    }
+
+    /**
+     * Delete an Article
+     * @param  string  $articleId The article ID
+     * @return Response The updated article
+     */
+    public function delete($articleId = null)
+    {
+        Assert::uuid($articleId);
+
+        $response = $this->client->makeRequest(sprintf('/articles/%s', $articleId), 'DELETE');
 
         return $response;
     }
